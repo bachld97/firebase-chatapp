@@ -4,8 +4,8 @@
  * VmObservable: ViewModel's observable fields to update UI
  */
 public protocol ViewModelDelegate {
-    associatedtype ControlObservable
-    associatedtype VmObservable
+    associatedtype Input
+    associatedtype Output
     
-    func transform(input: ControlObservable) -> VmObservable
+    func transform(input: Input) -> Output
 }

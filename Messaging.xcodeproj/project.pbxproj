@@ -12,6 +12,27 @@
 		141823592135025700DC0E98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141823572135025700DC0E98 /* Main.storyboard */; };
 		1418235B2135025800DC0E98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1418235A2135025800DC0E98 /* Assets.xcassets */; };
 		1418235E2135025800DC0E98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1418235C2135025800DC0E98 /* LaunchScreen.storyboard */; };
+		14182371213507E500DC0E98 /* ViewFor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14182370213507E500DC0E98 /* ViewFor.swift */; };
+		141823732135081E00DC0E98 /* ViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823722135081E00DC0E98 /* ViewModelDelegate.swift */; };
+		143517A121352D3C0039874F /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143517A021352D3C0039874F /* BaseVC.swift */; };
+		143517A621352F200039874F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143517A521352F200039874F /* LoginViewModel.swift */; };
+		1439D99221365C3D0094C12C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99021365C3D0094C12C /* LoginVC.swift */; };
+		1439D99321365C3D0094C12C /* LoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1439D99121365C3D0094C12C /* LoginVC.xib */; };
+		1439D995213660270094C12C /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D994213660270094C12C /* ObservableType.swift */; };
+		1439D99721367FD30094C12C /* SimpleError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99621367FD30094C12C /* SimpleError.swift */; };
+		1439D99921369D1B0094C12C /* SignupUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99821369D1B0094C12C /* SignupUseCase.swift */; };
+		1439D99B21369D230094C12C /* SignupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99A21369D230094C12C /* SignupRequest.swift */; };
+		1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99C21369FA30094C12C /* SignupViewModel.swift */; };
+		1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99E21369FAE0094C12C /* SignupVC.swift */; };
+		1439D9A121369FAE0094C12C /* SignupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1439D99F21369FAE0094C12C /* SignupVC.xib */; };
+		1451585721350BB70038CE74 /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1451585621350BB70038CE74 /* UseCase.swift */; };
+		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
+		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
+		14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9782136561E00A31FBB /* LoginUseCase.swift */; };
+		14CEE97B2136562500A31FBB /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97A2136562500A31FBB /* LoginRequest.swift */; };
+		14CEE9802136584000A31FBB /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97F2136584000A31FBB /* UserRepository.swift */; };
+		14CEE9822136584900A31FBB /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9812136584900A31FBB /* UserRepositoryImpl.swift */; };
+		5859E7E5EBD1974D0D960EA4 /* Pods_Messaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688BB3FD82712A498F73AC1E /* Pods_Messaging.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +43,29 @@
 		1418235A2135025800DC0E98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1418235D2135025800DC0E98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1418235F2135025800DC0E98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14182370213507E500DC0E98 /* ViewFor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFor.swift; sourceTree = "<group>"; };
+		141823722135081E00DC0E98 /* ViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDelegate.swift; sourceTree = "<group>"; };
+		143517A021352D3C0039874F /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
+		143517A521352F200039874F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		1439D99021365C3D0094C12C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		1439D99121365C3D0094C12C /* LoginVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginVC.xib; sourceTree = "<group>"; };
+		1439D994213660270094C12C /* ObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservableType.swift; path = Messaging/Common/Utils/ObservableType.swift; sourceTree = SOURCE_ROOT; };
+		1439D99621367FD30094C12C /* SimpleError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleError.swift; sourceTree = "<group>"; };
+		1439D99821369D1B0094C12C /* SignupUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupUseCase.swift; sourceTree = "<group>"; };
+		1439D99A21369D230094C12C /* SignupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupRequest.swift; sourceTree = "<group>"; };
+		1439D99C21369FA30094C12C /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		1439D99E21369FAE0094C12C /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
+		1439D99F21369FAE0094C12C /* SignupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignupVC.xib; sourceTree = "<group>"; };
+		1451585621350BB70038CE74 /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
+		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
+		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		14CEE9782136561E00A31FBB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
+		14CEE97A2136562500A31FBB /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		14CEE97F2136584000A31FBB /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		14CEE9812136584900A31FBB /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
+		4B07CD619E165CAEFC760603 /* Pods-Messaging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messaging.release.xcconfig"; path = "Pods/Target Support Files/Pods-Messaging/Pods-Messaging.release.xcconfig"; sourceTree = "<group>"; };
+		688BB3FD82712A498F73AC1E /* Pods_Messaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B60F17E0E37B45990389656D /* Pods-Messaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messaging.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Messaging/Pods-Messaging.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5859E7E5EBD1974D0D960EA4 /* Pods_Messaging.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +85,8 @@
 			children = (
 				141823522135025700DC0E98 /* Messaging */,
 				141823512135025700DC0E98 /* Products */,
+				3278A6DABA3D162198D7551F /* Pods */,
+				330CD3B42F6045788F6771B8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,6 +101,15 @@
 		141823522135025700DC0E98 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
+				1418236C2135072000DC0E98 /* Login */,
+				143517A421352E6B0039874F /* SignUp */,
+				141823652135055E00DC0E98 /* Main */,
+				141823692135070C00DC0E98 /* ChatHistory */,
+				1418236B2135071900DC0E98 /* Contact */,
+				1418236D2135072400DC0E98 /* PersonalProfile */,
+				1418236A2135071300DC0E98 /* ChatDetail */,
+				1418236E2135073200DC0E98 /* ChangePass */,
+				1418236F213507D900DC0E98 /* Common */,
 				141823532135025700DC0E98 /* AppDelegate.swift */,
 				141823552135025700DC0E98 /* ViewController.swift */,
 				141823572135025700DC0E98 /* Main.storyboard */,
@@ -64,6 +120,146 @@
 			path = Messaging;
 			sourceTree = "<group>";
 		};
+		141823652135055E00DC0E98 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		141823662135056E00DC0E98 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				1451585821350C8F0038CE74 /* Model */,
+				141823682135062B00DC0E98 /* Impl */,
+				141823672135060D00DC0E98 /* Datasource */,
+				14CEE97F2136584000A31FBB /* UserRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		141823672135060D00DC0E98 /* Datasource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Datasource;
+			sourceTree = "<group>";
+		};
+		141823682135062B00DC0E98 /* Impl */ = {
+			isa = PBXGroup;
+			children = (
+				14CEE9812136584900A31FBB /* UserRepositoryImpl.swift */,
+			);
+			path = Impl;
+			sourceTree = "<group>";
+		};
+		141823692135070C00DC0E98 /* ChatHistory */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChatHistory;
+			sourceTree = "<group>";
+		};
+		1418236A2135071300DC0E98 /* ChatDetail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChatDetail;
+			sourceTree = "<group>";
+		};
+		1418236B2135071900DC0E98 /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Contact;
+			sourceTree = "<group>";
+		};
+		1418236C2135072000DC0E98 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				143517A521352F200039874F /* LoginViewModel.swift */,
+				14CEE9782136561E00A31FBB /* LoginUseCase.swift */,
+				14CEE97A2136562500A31FBB /* LoginRequest.swift */,
+				1439D99021365C3D0094C12C /* LoginVC.swift */,
+				1439D99121365C3D0094C12C /* LoginVC.xib */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		1418236D2135072400DC0E98 /* PersonalProfile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PersonalProfile;
+			sourceTree = "<group>";
+		};
+		1418236E2135073200DC0E98 /* ChangePass */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ChangePass;
+			sourceTree = "<group>";
+		};
+		1418236F213507D900DC0E98 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				14CEE975213655E600A31FBB /* Utils */,
+				141823662135056E00DC0E98 /* Repository */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		143517A421352E6B0039874F /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				1439D99821369D1B0094C12C /* SignupUseCase.swift */,
+				1439D99A21369D230094C12C /* SignupRequest.swift */,
+				1439D99C21369FA30094C12C /* SignupViewModel.swift */,
+				1439D99E21369FAE0094C12C /* SignupVC.swift */,
+				1439D99F21369FAE0094C12C /* SignupVC.xib */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		1451585821350C8F0038CE74 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				14CEE97121363C2200A31FBB /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		14CEE975213655E600A31FBB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				1439D994213660270094C12C /* ObservableType.swift */,
+				14182370213507E500DC0E98 /* ViewFor.swift */,
+				143517A021352D3C0039874F /* BaseVC.swift */,
+				141823722135081E00DC0E98 /* ViewModelDelegate.swift */,
+				1451585621350BB70038CE74 /* UseCase.swift */,
+				14CEE96D2136332F00A31FBB /* RxBinding.swift */,
+				1439D99621367FD30094C12C /* SimpleError.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		3278A6DABA3D162198D7551F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B60F17E0E37B45990389656D /* Pods-Messaging.debug.xcconfig */,
+				4B07CD619E165CAEFC760603 /* Pods-Messaging.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		330CD3B42F6045788F6771B8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				688BB3FD82712A498F73AC1E /* Pods_Messaging.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -71,9 +267,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 141823622135025800DC0E98 /* Build configuration list for PBXNativeTarget "Messaging" */;
 			buildPhases = (
+				365450D4FFEEEEE2625EDEF7 /* [CP] Check Pods Manifest.lock */,
 				1418234C2135025700DC0E98 /* Sources */,
 				1418234D2135025700DC0E98 /* Frameworks */,
 				1418234E2135025700DC0E98 /* Resources */,
+				3B5A3D4D76AEB9563C82009E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -122,6 +320,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1439D99321365C3D0094C12C /* LoginVC.xib in Resources */,
+				1439D9A121369FAE0094C12C /* SignupVC.xib in Resources */,
 				1418235E2135025800DC0E98 /* LaunchScreen.storyboard in Resources */,
 				1418235B2135025800DC0E98 /* Assets.xcassets in Resources */,
 				141823592135025700DC0E98 /* Main.storyboard in Resources */,
@@ -130,12 +330,73 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		365450D4FFEEEEE2625EDEF7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Messaging-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3B5A3D4D76AEB9563C82009E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Messaging/Pods-Messaging-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Toast/Toast.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Messaging/Pods-Messaging-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1418234C2135025700DC0E98 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1439D99721367FD30094C12C /* SimpleError.swift in Sources */,
+				1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */,
+				1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */,
+				1451585721350BB70038CE74 /* UseCase.swift in Sources */,
+				143517A121352D3C0039874F /* BaseVC.swift in Sources */,
+				1439D99B21369D230094C12C /* SignupRequest.swift in Sources */,
+				14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */,
+				1439D99221365C3D0094C12C /* LoginVC.swift in Sources */,
+				14CEE97B2136562500A31FBB /* LoginRequest.swift in Sources */,
+				14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */,
+				14CEE9822136584900A31FBB /* UserRepositoryImpl.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
+				1439D99921369D1B0094C12C /* SignupUseCase.swift in Sources */,
+				143517A621352F200039874F /* LoginViewModel.swift in Sources */,
+				1439D995213660270094C12C /* ObservableType.swift in Sources */,
+				141823732135081E00DC0E98 /* ViewModelDelegate.swift in Sources */,
+				14CEE9802136584000A31FBB /* UserRepository.swift in Sources */,
+				14182371213507E500DC0E98 /* ViewFor.swift in Sources */,
+				14CEE97221363C2200A31FBB /* User.swift in Sources */,
 				141823542135025700DC0E98 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,11 +539,13 @@
 		};
 		141823632135025800DC0E98 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B60F17E0E37B45990389656D /* Pods-Messaging.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JBZT66W7TF;
 				INFOPLIST_FILE = Messaging/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,11 +559,13 @@
 		};
 		141823642135025800DC0E98 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B07CD619E165CAEFC760603 /* Pods-Messaging.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JBZT66W7TF;
 				INFOPLIST_FILE = Messaging/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

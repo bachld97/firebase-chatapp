@@ -5,7 +5,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // TODO: Load MainVC, tabbed view displaying ChatHistory, UserContact and PersonalProfile
+        let vc = LoginVC.instance()
+        let nc = UINavigationController(rootViewController: vc)
+        AppDelegate.sharedInstance.window?.rootViewController = nc
     }
 }
 
