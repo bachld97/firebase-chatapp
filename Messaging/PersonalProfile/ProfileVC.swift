@@ -27,5 +27,12 @@ class ProfileVC: UIViewController {
         self.view.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Profile"
+        
+        
+        let logOutImg = UIImage(named: "ic_logout")?.withRenderingMode(.alwaysOriginal)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: logOutImg,
+                                                                 style: .plain,
+                                                                 target: nil,
+                                                                 action: nil)
     }
 }

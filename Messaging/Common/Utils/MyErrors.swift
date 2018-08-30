@@ -6,3 +6,6 @@ class SimpleError : Error {
     }
 }
 
+class SessionExpireError : Error {
+    
+}

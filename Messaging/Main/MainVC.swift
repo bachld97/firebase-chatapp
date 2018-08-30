@@ -21,7 +21,7 @@ class MainVC: UITabBarController {
 
     private func setupTabs() {
         let chatVC = ChatHistoryVC.instance()
-        let contactVC = ContactVC.instance()
+        let contactVC = SeeContactVC.instance()
         let profileVC = ProfileVC.instance()
         
         let chatTab = UINavigationController(rootViewController: chatVC)

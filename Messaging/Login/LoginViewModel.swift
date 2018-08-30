@@ -22,7 +22,7 @@ final class LoginViewModel : ViewModelDelegate {
 
 	func transform(input: Input) -> Output {
         // let success = PublishSubject<Void>()
-        let error = PublishSubject<Error>()
+        let errorTracker = ErrorTracker()
 
 		(input.username <-> self.username)
 			.disposed(by: self.disposeBag) 
@@ -55,27 +55,22 @@ final class LoginViewModel : ViewModelDelegate {
                     }
                     .flatMap { [unowned self] (request) -> Observable<Bool> in
                         return self.loginUseCase.execute(request: request)
-                            .do(onNext: { [unowned self] (loginSuccess: Bool) in
-                                if loginSuccess {
-                                    self.displayLogic?.goMain()
-                                    // success.onNext(())
-                                    // success.onCompleted()
-                                } else {
-                                    error.onNext(SimpleError(message: "Wrong log in information"))
-                                }
+                            .do(onNext: { [unowned self] (_: Bool) in
+                                // login will throw error if login info is wrong
+                                self.displayLogic?.goMain()
                             })
                     }
-                    .asDriverIfErrorNotify(error)
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
         }
         .drive()
         .disposed(by: self.disposeBag)
         
         // TODO: How to create an observable here?
         // success.disposed(by: disposeBag)
-        error.disposed(by: disposeBag)
         return Output(
             // loginSuccess: success.asSingle(),
-            error: error.asObservable().asDriverOnErrorJustComplete())
+            error: errorTracker.asDriver())
 	}
 }
 
