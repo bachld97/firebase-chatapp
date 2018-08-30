@@ -25,6 +25,13 @@
 		1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99C21369FA30094C12C /* SignupViewModel.swift */; };
 		1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99E21369FAE0094C12C /* SignupVC.swift */; };
 		1439D9A121369FAE0094C12C /* SignupVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1439D99F21369FAE0094C12C /* SignupVC.xib */; };
+		14461A4D21379CAF0062FAC6 /* ChatVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14461A4B21379CAF0062FAC6 /* ChatVC.xib */; };
+		14461A4E21379CAF0062FAC6 /* ChatHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A4C21379CAF0062FAC6 /* ChatHistoryVC.swift */; };
+		14461A5121379CC40062FAC6 /* ContactVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14461A4F21379CC40062FAC6 /* ContactVC.xib */; };
+		14461A5221379CC40062FAC6 /* ContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A5021379CC40062FAC6 /* ContactVC.swift */; };
+		14461A5421379CDD0062FAC6 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A5321379CDD0062FAC6 /* MainVC.swift */; };
+		14461A5721379CEC0062FAC6 /* ProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14461A5521379CEB0062FAC6 /* ProfileVC.xib */; };
+		14461A5821379CEC0062FAC6 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A5621379CEC0062FAC6 /* ProfileVC.swift */; };
 		1451585721350BB70038CE74 /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1451585621350BB70038CE74 /* UseCase.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
 		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
@@ -56,6 +63,13 @@
 		1439D99C21369FA30094C12C /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		1439D99E21369FAE0094C12C /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
 		1439D99F21369FAE0094C12C /* SignupVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignupVC.xib; sourceTree = "<group>"; };
+		14461A4B21379CAF0062FAC6 /* ChatVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChatVC.xib; sourceTree = "<group>"; };
+		14461A4C21379CAF0062FAC6 /* ChatHistoryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatHistoryVC.swift; sourceTree = "<group>"; };
+		14461A4F21379CC40062FAC6 /* ContactVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactVC.xib; sourceTree = "<group>"; };
+		14461A5021379CC40062FAC6 /* ContactVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactVC.swift; sourceTree = "<group>"; };
+		14461A5321379CDD0062FAC6 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
+		14461A5521379CEB0062FAC6 /* ProfileVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileVC.xib; sourceTree = "<group>"; };
+		14461A5621379CEC0062FAC6 /* ProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		1451585621350BB70038CE74 /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
 		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -106,7 +120,7 @@
 				141823652135055E00DC0E98 /* Main */,
 				141823692135070C00DC0E98 /* ChatHistory */,
 				1418236B2135071900DC0E98 /* Contact */,
-				1418236D2135072400DC0E98 /* PersonalProfile */,
+				1418236D2135072400DC0E98 /* Profile */,
 				1418236A2135071300DC0E98 /* ChatDetail */,
 				1418236E2135073200DC0E98 /* ChangePass */,
 				1418236F213507D900DC0E98 /* Common */,
@@ -123,6 +137,7 @@
 		141823652135055E00DC0E98 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				14461A5321379CDD0062FAC6 /* MainVC.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -156,6 +171,8 @@
 		141823692135070C00DC0E98 /* ChatHistory */ = {
 			isa = PBXGroup;
 			children = (
+				14461A4C21379CAF0062FAC6 /* ChatHistoryVC.swift */,
+				14461A4B21379CAF0062FAC6 /* ChatVC.xib */,
 			);
 			path = ChatHistory;
 			sourceTree = "<group>";
@@ -170,6 +187,8 @@
 		1418236B2135071900DC0E98 /* Contact */ = {
 			isa = PBXGroup;
 			children = (
+				14461A5021379CC40062FAC6 /* ContactVC.swift */,
+				14461A4F21379CC40062FAC6 /* ContactVC.xib */,
 			);
 			path = Contact;
 			sourceTree = "<group>";
@@ -186,10 +205,13 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		1418236D2135072400DC0E98 /* PersonalProfile */ = {
+		1418236D2135072400DC0E98 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				14461A5621379CEC0062FAC6 /* ProfileVC.swift */,
+				14461A5521379CEB0062FAC6 /* ProfileVC.xib */,
 			);
+			name = Profile;
 			path = PersonalProfile;
 			sourceTree = "<group>";
 		};
@@ -320,10 +342,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14461A5721379CEC0062FAC6 /* ProfileVC.xib in Resources */,
+				14461A5121379CC40062FAC6 /* ContactVC.xib in Resources */,
 				1439D99321365C3D0094C12C /* LoginVC.xib in Resources */,
 				1439D9A121369FAE0094C12C /* SignupVC.xib in Resources */,
 				1418235E2135025800DC0E98 /* LaunchScreen.storyboard in Resources */,
 				1418235B2135025800DC0E98 /* Assets.xcassets in Resources */,
+				14461A4D21379CAF0062FAC6 /* ChatVC.xib in Resources */,
 				141823592135025700DC0E98 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,6 +406,7 @@
 				1439D99721367FD30094C12C /* SimpleError.swift in Sources */,
 				1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */,
 				1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */,
+				14461A5421379CDD0062FAC6 /* MainVC.swift in Sources */,
 				1451585721350BB70038CE74 /* UseCase.swift in Sources */,
 				143517A121352D3C0039874F /* BaseVC.swift in Sources */,
 				1439D99B21369D230094C12C /* SignupRequest.swift in Sources */,
@@ -389,11 +415,14 @@
 				14CEE97B2136562500A31FBB /* LoginRequest.swift in Sources */,
 				14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */,
 				14CEE9822136584900A31FBB /* UserRepositoryImpl.swift in Sources */,
+				14461A5821379CEC0062FAC6 /* ProfileVC.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
 				1439D99921369D1B0094C12C /* SignupUseCase.swift in Sources */,
+				14461A5221379CC40062FAC6 /* ContactVC.swift in Sources */,
 				143517A621352F200039874F /* LoginViewModel.swift in Sources */,
 				1439D995213660270094C12C /* ObservableType.swift in Sources */,
 				141823732135081E00DC0E98 /* ViewModelDelegate.swift in Sources */,
+				14461A4E21379CAF0062FAC6 /* ChatHistoryVC.swift in Sources */,
 				14CEE9802136584000A31FBB /* UserRepository.swift in Sources */,
 				14182371213507E500DC0E98 /* ViewFor.swift in Sources */,
 				14CEE97221363C2200A31FBB /* User.swift in Sources */,
