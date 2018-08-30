@@ -61,9 +61,9 @@ extension LoginVC : LoginDisplayLogic {
     }
     
     func goMain() {
-        print("Go main called")
-//        let vc = MainVC.instance()
-        //        self.navigationController?.setViewControllers([vc], animated: true)
+        let vc = MainVC.instance()
+        AppDelegate.sharedInstance.window?.rootViewController = vc
+        // self.navigationController?.setViewControllers([vc], animated: true)
     }
     
     func hideKeyboard() {

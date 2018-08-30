@@ -6,5 +6,5 @@ protocol UserRepository {
 }
 
 class UserRepositoryFactory {
-    public static let sharedInstance = UserRepositoryFailImpl()
+    public static let sharedInstance = UserRepositoryImpl()
 }
