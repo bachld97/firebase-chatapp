@@ -10,8 +10,8 @@ protocol LoginDisplayLogic : class {
 final class LoginViewModel : ViewModelDelegate {
 	private let disposeBag : DisposeBag
 
-	private let username = BehaviorRelay<String>(value: "")
-	private let password = BehaviorRelay<String>(value: "")
+	private let username = BehaviorRelay<String>(value: "bachld10832")
+	private let password = BehaviorRelay<String>(value: "helloworld")
     private let loginUseCase = LoginUseCase()
 	private weak var displayLogic: LoginDisplayLogic?
 

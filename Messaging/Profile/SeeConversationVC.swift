@@ -16,10 +16,5 @@ class SeeConversationVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let addImg = UIImage(named: "ic_add")?.withRenderingMode(.alwaysOriginal)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: addImg,
-                                                                 style: .plain,
-                                                                 target: nil,
-                                                                 action: nil)
     }
 }

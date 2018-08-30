@@ -14,8 +14,7 @@ class LoginVC : BaseVC, ViewFor {
     @IBOutlet weak var usernameTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var signupButton: UIButton!
-    
+
     private let disposeBag = DisposeBag()
     
     required init?(coder aDecoder: NSCoder) {
@@ -30,8 +29,15 @@ class LoginVC : BaseVC, ViewFor {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         self.navigationItem.title = "Login"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+
+        let retryImg = UIImage(named: "ic_signup")?.withRenderingMode(.alwaysOriginal)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: retryImg,
+                                                                 style: .plain,
+                                                                 target: nil,
+                                                                 action: nil)
+        super.viewDidLoad()
     }
 
     override func bindViewModel() {
@@ -41,7 +47,7 @@ class LoginVC : BaseVC, ViewFor {
         
         let input = LoginViewModel.Input(
             trigger: viewWillAppear,
-            signUpTrigger: signupButton.rx.tap.asDriver(),
+            signUpTrigger: self.navigationItem.rightBarButtonItem!.rx.tap.asDriver(),
             loginTrigger: loginButton.rx.tap.asDriver(),
             username: usernameTF.rx.text.orEmpty,
             password: passwordTF.rx.text.orEmpty)

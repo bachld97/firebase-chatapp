@@ -27,5 +27,10 @@ class ChatHistoryVC : UIViewController {
         self.view.backgroundColor = UIColor.white
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Messages"
+        let addImg = UIImage(named: "ic_add")?.withRenderingMode(.alwaysOriginal)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: addImg,
+                                                                 style: .plain,
+                                                                 target: nil,
+                                                                 action: nil)
     }
 }
