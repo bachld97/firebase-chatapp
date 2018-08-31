@@ -27,7 +27,7 @@ class UserRepositoryImpl : UserRepository {
     
     func autoLogin() -> Observable<Bool> {
         return Observable.deferred {
-            return Observable.just(true)
+            return Observable.just(false)
         }
     }
 }
