@@ -112,7 +112,7 @@
                         <constraint firstAttribute="height" constant="40" id="BZ8-IA-Mno"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
-                    <state key="normal" title="Login">
+                    <state key="normal" title="LOGIN">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                 </button>

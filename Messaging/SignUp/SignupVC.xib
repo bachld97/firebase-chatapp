@@ -67,7 +67,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="CV1-Px-MBu"/>
                     </constraints>
-                    <state key="normal" title="Register">
+                    <state key="normal" title="REGISTER">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                 </button>
