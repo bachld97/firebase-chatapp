@@ -8,14 +8,14 @@
 
 import UIKit
 
-class ProfileVC: UIViewController {
+class SeeProfileVC : UIViewController {
     
     class func instance() -> UIViewController {
-        return ProfileVC()
+        return SeeProfileVC()
     }
     
     init() {
-        super.init(nibName: "ProfileVC", bundle: nil)
+        super.init(nibName: "SeeProfileVC", bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {

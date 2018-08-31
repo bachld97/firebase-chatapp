@@ -24,12 +24,10 @@ final class SeeContactViewModel : ViewModelDelegate {
         let errorTracker = ErrorTracker()
         input.trigger
             .flatMap { [unowned self] (_) -> Driver<[Contact]?> in
-                return Observable.deferred {
-                    print("leh")
+                return Observable.deferred { [unowned self] in
                     return self.seeContactUseCase
                         .execute(request: SeeContactRequest())
                         .do(onNext: { [unowned self] (contacts) in
-                            print("neh")
                             if contacts != nil {
                                 self.displayLogic?.displayContact(contacts: contacts)
                             } else {
@@ -46,11 +44,9 @@ final class SeeContactViewModel : ViewModelDelegate {
         input.reloadTrigger
             .flatMap { [unowned self] (_) -> Driver<[Contact]?> in
                 return Observable.deferred {
-                    print("leh")
                     return self.seeContactUseCase
                         .execute(request: SeeContactRequest())
                         .do(onNext: { [unowned self] (contacts) in
-                            print("neh")
                             if contacts != nil {
                                 self.displayLogic?.displayContact(contacts: contacts)
                             } else {

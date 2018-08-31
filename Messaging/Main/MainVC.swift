@@ -22,7 +22,7 @@ class MainVC: UITabBarController {
     private func setupTabs() {
         let chatVC = ChatHistoryVC.instance()
         let contactVC = SeeContactVC.instance()
-        let profileVC = ProfileVC.instance()
+        let profileVC = SeeProfileVC.instance()
         
         let chatTab = UINavigationController(rootViewController: chatVC)
         let contactTab = UINavigationController(rootViewController: contactVC)
