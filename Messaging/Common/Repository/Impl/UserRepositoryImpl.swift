@@ -2,19 +2,33 @@ import RxSwift
 
 class UserRepositoryImpl : UserRepository {
     func login(request: LoginRequest) -> Observable<Bool>{
-        return Observable.just(true)
+        return Observable.deferred {
+            return Observable.just(true)
+        }
     }
     
     func signup(request: SignupRequest) -> Observable<Bool> {
-        return Observable.just(true)
+        return Observable.deferred {
+            return Observable.just(true)
+        }
     }
     
     func getUser() -> Observable<User?> {
-        return Observable.just(nil)
+        return Observable.deferred {
+            return Observable.just(nil)
+        }
     }
     
     func logout() -> Observable<Bool> {
-        return Observable.just(true)
+        return Observable.deferred {
+            return Observable.just(true)
+        }
+    }
+    
+    func autoLogin() -> Observable<Bool> {
+        return Observable.deferred {
+            return Observable.just(true)
+        }
     }
 }
 

@@ -26,7 +26,7 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
             .flatMap { [unowned self] (_) -> Driver<[Conversation]?> in
                 return Observable.deferred { [unowned self] in
                     return self.seeChatHistoryUseCase
-                        .execute(request: SeeChatHistoryRequest())
+                        .execute(request: ())
                         .do(onNext: { [unowned self] (conversations) in
                             if conversations != nil {
                                 self.displayLogic?.showChatHistory(conversations: conversations!)
@@ -45,7 +45,7 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
             .flatMap { [unowned self] (_) -> Driver<[Conversation]?> in
                 return Observable.deferred { [unowned self] in
                     return self.seeChatHistoryUseCase
-                        .execute(request: SeeChatHistoryRequest())
+                        .execute(request: ())
                         .do(onNext: { [unowned self] (conversations) in
                             if conversations != nil {
                                 self.displayLogic?.showChatHistory(conversations: conversations!)

@@ -1,12 +1,12 @@
 import RxSwift
 
 class SeeProfileUseCase : UseCase {
-    typealias TRequest = SeeProfileRequest
+    typealias TRequest = Void
     typealias TResponse = User
     
     private let repository: UserRepository = UserRepositoryFactory.sharedInstance
     
-    func execute(request: SeeProfileRequest) -> Observable<User> {
+    func execute(request: Void) -> Observable<User> {
         return Observable.deferred { [unowned self] in
             return self.repository
                 .getUser()

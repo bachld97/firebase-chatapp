@@ -9,14 +9,13 @@
 /* Begin PBXBuildFile section */
 		140C33F22138D37900DC3535 /* SeeProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33F12138D37900DC3535 /* SeeProfileViewModel.swift */; };
 		140C33F42138D69E00DC3535 /* SeeProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33F32138D69E00DC3535 /* SeeProfileUseCase.swift */; };
-		140C33F62138D6A600DC3535 /* SeeProfileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33F52138D6A600DC3535 /* SeeProfileRequest.swift */; };
 		140C33F82138E1A400DC3535 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33F72138E1A400DC3535 /* Conversation.swift */; };
 		140C33FA2138E51800DC3535 /* SeeConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33F92138E51800DC3535 /* SeeConversationViewModel.swift */; };
 		140C33FC2138E52100DC3535 /* SeeChatHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33FB2138E52100DC3535 /* SeeChatHistoryUseCase.swift */; };
-		140C33FE2138E53000DC3535 /* SeeChatHistoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33FD2138E53000DC3535 /* SeeChatHistoryRequest.swift */; };
 		140C34002138E69200DC3535 /* ConversationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33FF2138E69200DC3535 /* ConversationRepository.swift */; };
 		140C34022138E95000DC3535 /* ConversationRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34012138E95000DC3535 /* ConversationRepositoryImpl.swift */; };
 		140C34042138EC0700DC3535 /* SeeChatHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34032138EC0700DC3535 /* SeeChatHistoryViewModel.swift */; };
+		140C34062138F74F00DC3535 /* AutoLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34052138F74F00DC3535 /* AutoLoginUseCase.swift */; };
 		141823542135025700DC0E98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823532135025700DC0E98 /* AppDelegate.swift */; };
 		141823562135025700DC0E98 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823552135025700DC0E98 /* ViewController.swift */; };
 		141823592135025700DC0E98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141823572135025700DC0E98 /* Main.storyboard */; };
@@ -69,14 +68,13 @@
 /* Begin PBXFileReference section */
 		140C33F12138D37900DC3535 /* SeeProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeProfileViewModel.swift; sourceTree = "<group>"; };
 		140C33F32138D69E00DC3535 /* SeeProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeProfileUseCase.swift; sourceTree = "<group>"; };
-		140C33F52138D6A600DC3535 /* SeeProfileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeProfileRequest.swift; sourceTree = "<group>"; };
 		140C33F72138E1A400DC3535 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		140C33F92138E51800DC3535 /* SeeConversationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeConversationViewModel.swift; path = Messaging/Common/Repository/Model/SeeConversationViewModel.swift; sourceTree = SOURCE_ROOT; };
 		140C33FB2138E52100DC3535 /* SeeChatHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeChatHistoryUseCase.swift; path = Messaging/ChatHistory/SeeChatHistoryUseCase.swift; sourceTree = SOURCE_ROOT; };
-		140C33FD2138E53000DC3535 /* SeeChatHistoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeChatHistoryRequest.swift; path = Messaging/ChatHistory/SeeChatHistoryRequest.swift; sourceTree = SOURCE_ROOT; };
 		140C33FF2138E69200DC3535 /* ConversationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRepository.swift; sourceTree = "<group>"; };
 		140C34012138E95000DC3535 /* ConversationRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRepositoryImpl.swift; sourceTree = "<group>"; };
 		140C34032138EC0700DC3535 /* SeeChatHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeChatHistoryViewModel.swift; sourceTree = "<group>"; };
+		140C34052138F74F00DC3535 /* AutoLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLoginUseCase.swift; sourceTree = "<group>"; };
 		141823502135025700DC0E98 /* Messaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141823532135025700DC0E98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		141823552135025700DC0E98 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -228,7 +226,6 @@
 			isa = PBXGroup;
 			children = (
 				140C33FB2138E52100DC3535 /* SeeChatHistoryUseCase.swift */,
-				140C33FD2138E53000DC3535 /* SeeChatHistoryRequest.swift */,
 				14461A4C21379CAF0062FAC6 /* ChatHistoryVC.swift */,
 				14461A4B21379CAF0062FAC6 /* ChatVC.xib */,
 				140C34032138EC0700DC3535 /* SeeChatHistoryViewModel.swift */,
@@ -266,6 +263,7 @@
 				14CEE97A2136562500A31FBB /* LoginRequest.swift */,
 				1439D99021365C3D0094C12C /* LoginVC.swift */,
 				1439D99121365C3D0094C12C /* LoginVC.xib */,
+				140C34052138F74F00DC3535 /* AutoLoginUseCase.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -277,7 +275,6 @@
 				14461A5521379CEB0062FAC6 /* SeeProfileVC.xib */,
 				140C33F12138D37900DC3535 /* SeeProfileViewModel.swift */,
 				140C33F32138D69E00DC3535 /* SeeProfileUseCase.swift */,
-				140C33F52138D6A600DC3535 /* SeeProfileRequest.swift */,
 			);
 			name = SeeProfile;
 			path = PersonalProfile;
@@ -501,7 +498,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1439D99721367FD30094C12C /* MyErrors.swift in Sources */,
-				140C33F62138D6A600DC3535 /* SeeProfileRequest.swift in Sources */,
 				1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */,
 				14461A5B21379DFF0062FAC6 /* SeeConversationVC.swift in Sources */,
 				1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */,
@@ -512,8 +508,8 @@
 				143517A121352D3C0039874F /* BaseVC.swift in Sources */,
 				14461A662137A3C60062FAC6 /* Contact.swift in Sources */,
 				1439D99B21369D230094C12C /* SignupRequest.swift in Sources */,
+				140C34062138F74F00DC3535 /* AutoLoginUseCase.swift in Sources */,
 				14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */,
-				140C33FE2138E53000DC3535 /* SeeChatHistoryRequest.swift in Sources */,
 				1439D99221365C3D0094C12C /* LoginVC.swift in Sources */,
 				14CEE97B2136562500A31FBB /* LoginRequest.swift in Sources */,
 				14461A742137E8CC0062FAC6 /* ContactRemoteSource.swift in Sources */,

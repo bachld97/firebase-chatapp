@@ -27,7 +27,7 @@ class SeeProfileViewModel : ViewModelDelegate {
             .flatMap { [unowned self] (_) -> Driver<User> in
                 return Observable.deferred {
                     return self.seeProfileUseCase
-                    .execute(request: SeeProfileRequest())
+                    .execute(request: ())
                         .do(onNext: { [unowned self] user in
                             self.displayLogic?.display(user: user)
                         })
@@ -42,7 +42,7 @@ class SeeProfileViewModel : ViewModelDelegate {
             .flatMap { [unowned self] (_) -> Driver<User> in
                 return Observable.deferred {
                     return self.seeProfileUseCase
-                        .execute(request: SeeProfileRequest())
+                        .execute(request: ())
                         .do(onNext: { [unowned self] user in
                             self.displayLogic?.display(user: user)
                         })

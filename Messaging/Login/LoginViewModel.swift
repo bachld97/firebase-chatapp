@@ -13,6 +13,7 @@ final class LoginViewModel : ViewModelDelegate {
 	private let username = BehaviorRelay<String>(value: "bachld10832")
 	private let password = BehaviorRelay<String>(value: "helloworld")
     private let loginUseCase = LoginUseCase()
+    private let autoLoginUseCase = AutoLoginUseCase()
 	private weak var displayLogic: LoginDisplayLogic?
 
 	init(displayLogic: LoginDisplayLogic) {
@@ -29,9 +30,21 @@ final class LoginViewModel : ViewModelDelegate {
 		(input.password <-> self.password)
 			.disposed(by: self.disposeBag)
         
-        // input.trigger is used for auto login in this case
-        // input.trigger.
-        
+        input.trigger
+            .flatMap { [unowned self] (_) -> Driver<Bool> in
+                return self.autoLoginUseCase
+                    .execute(request: ())
+                    .do(onNext: { [unowned self] (result) in
+                        if result {
+                            self.displayLogic?.goMain()
+                        }
+                    })
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+
 		input.signUpTrigger
 			.drive(onNext: { [unowned self] in // Similar to .subscribe()
 					self.displayLogic?.goSignup()

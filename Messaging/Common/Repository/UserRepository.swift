@@ -5,6 +5,7 @@ protocol UserRepository {
     func signup(request: SignupRequest) -> Observable<Bool>
     func getUser() -> Observable<User?>
     func logout() -> Observable<Bool>
+    func autoLogin() -> Observable<Bool>
 } 
 
 class UserRepositoryFactory {
