@@ -30,6 +30,12 @@ class UserRepositoryImpl : UserRepository {
             return Observable.just(false)
         }
     }
+    
+    func changePassword(request: ChangePassRequest) -> Observable<Bool> {
+        return Observable.deferred {
+            return Observable.just(true)
+        }
+    }
 }
 
 //// Test UI for fail login

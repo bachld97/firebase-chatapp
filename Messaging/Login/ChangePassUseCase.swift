@@ -1,9 +1,13 @@
-//
-//  ChangePassUseCase.swift
-//  Messaging
-//
-//  Created by CPU12071 on 8/31/18.
-//  Copyright © 2018 Le Duy Bach. All rights reserved.
-//
+import RxSwift
 
-import Foundation
+class ChangePassUseCase: UseCase {
+    typealias TRequest = ChangePassRequest
+    typealias Tresponse = Bool
+    
+    private let repository: UserRepository = UserRepositoryFactory.sharedInstance
+    
+    func execute(request: ChangePassRequest) -> Observable<Bool> {
+        return repository
+            .changePassword(request: request)
+    }
+}

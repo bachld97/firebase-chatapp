@@ -19,8 +19,8 @@
 		140C34082139240600DC3535 /* ChangePassVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34072139240600DC3535 /* ChangePassVIewModel.swift */; };
 		140C340A2139241600DC3535 /* ChangePassRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34092139241600DC3535 /* ChangePassRequest.swift */; };
 		140C340C2139242000DC3535 /* ChangePassUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C340B2139242000DC3535 /* ChangePassUseCase.swift */; };
-		140C340F2139243100DC3535 /* ChangePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C340D2139243100DC3535 /* ChangePassViewController.swift */; };
-		140C34102139243100DC3535 /* ChangePassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 140C340E2139243100DC3535 /* ChangePassViewController.xib */; };
+		140C340F2139243100DC3535 /* ChangePassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C340D2139243100DC3535 /* ChangePassVC.swift */; };
+		140C34102139243100DC3535 /* ChangePassVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 140C340E2139243100DC3535 /* ChangePassVC.xib */; };
 		141823542135025700DC0E98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823532135025700DC0E98 /* AppDelegate.swift */; };
 		141823562135025700DC0E98 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823552135025700DC0E98 /* ViewController.swift */; };
 		141823592135025700DC0E98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141823572135025700DC0E98 /* Main.storyboard */; };
@@ -83,8 +83,8 @@
 		140C34072139240600DC3535 /* ChangePassVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassVIewModel.swift; path = Messaging/Login/ChangePassVIewModel.swift; sourceTree = SOURCE_ROOT; };
 		140C34092139241600DC3535 /* ChangePassRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassRequest.swift; path = Messaging/Login/ChangePassRequest.swift; sourceTree = SOURCE_ROOT; };
 		140C340B2139242000DC3535 /* ChangePassUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassUseCase.swift; path = Messaging/Login/ChangePassUseCase.swift; sourceTree = SOURCE_ROOT; };
-		140C340D2139243100DC3535 /* ChangePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassViewController.swift; path = Messaging/Login/ChangePassViewController.swift; sourceTree = SOURCE_ROOT; };
-		140C340E2139243100DC3535 /* ChangePassViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ChangePassViewController.xib; path = Messaging/Login/ChangePassViewController.xib; sourceTree = SOURCE_ROOT; };
+		140C340D2139243100DC3535 /* ChangePassVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassVC.swift; path = Messaging/Login/ChangePassVC.swift; sourceTree = SOURCE_ROOT; };
+		140C340E2139243100DC3535 /* ChangePassVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ChangePassVC.xib; path = Messaging/Login/ChangePassVC.xib; sourceTree = SOURCE_ROOT; };
 		141823502135025700DC0E98 /* Messaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141823532135025700DC0E98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		141823552135025700DC0E98 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -296,8 +296,8 @@
 				140C34072139240600DC3535 /* ChangePassVIewModel.swift */,
 				140C34092139241600DC3535 /* ChangePassRequest.swift */,
 				140C340B2139242000DC3535 /* ChangePassUseCase.swift */,
-				140C340D2139243100DC3535 /* ChangePassViewController.swift */,
-				140C340E2139243100DC3535 /* ChangePassViewController.xib */,
+				140C340D2139243100DC3535 /* ChangePassVC.swift */,
+				140C340E2139243100DC3535 /* ChangePassVC.xib */,
 			);
 			path = ChangePass;
 			sourceTree = "<group>";
@@ -451,7 +451,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14461A5721379CEC0062FAC6 /* SeeProfileVC.xib in Resources */,
-				140C34102139243100DC3535 /* ChangePassViewController.xib in Resources */,
+				140C34102139243100DC3535 /* ChangePassVC.xib in Resources */,
 				14461A5121379CC40062FAC6 /* SeeContactVC.xib in Resources */,
 				1439D99321365C3D0094C12C /* LoginVC.xib in Resources */,
 				14461A5C21379DFF0062FAC6 /* SeeConversationVC.xib in Resources */,
@@ -540,7 +540,7 @@
 				14461A5821379CEC0062FAC6 /* SeeProfileVC.swift in Sources */,
 				14461A722137AD5B0062FAC6 /* ErrorTracker.swift in Sources */,
 				14461A642137A1650062FAC6 /* SeeContactUseCase.swift in Sources */,
-				140C340F2139243100DC3535 /* ChangePassViewController.swift in Sources */,
+				140C340F2139243100DC3535 /* ChangePassVC.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
 				140C33F22138D37900DC3535 /* SeeProfileViewModel.swift in Sources */,
 				140C33FA2138E51800DC3535 /* SeeConversationViewModel.swift in Sources */,

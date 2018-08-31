@@ -6,6 +6,7 @@ protocol UserRepository {
     func getUser() -> Observable<User?>
     func logout() -> Observable<Bool>
     func autoLogin() -> Observable<Bool>
+    func changePassword(request: ChangePassRequest) -> Observable<Bool>
 } 
 
 class UserRepositoryFactory {

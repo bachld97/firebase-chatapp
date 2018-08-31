@@ -1,9 +1,6 @@
-//
-//  ChangePassRequest.swift
-//  Messaging
-//
-//  Created by CPU12071 on 8/31/18.
-//  Copyright © 2018 Le Duy Bach. All rights reserved.
-//
 
-import Foundation
+struct ChangePassRequest {
+    let oldPass: String
+    let newPass: String
+}
+
