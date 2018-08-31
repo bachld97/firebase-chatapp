@@ -1,25 +1,29 @@
 PODS:
+  - IQKeyboardManagerSwift (6.1.1)
   - RxCocoa (4.2.0):
     - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
   - Toast (4.0.0)
 
 DEPENDENCIES:
+  - IQKeyboardManagerSwift
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
   - Toast
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - IQKeyboardManagerSwift
     - RxCocoa
     - RxSwift
     - Toast
 
 SPEC CHECKSUMS:
+  IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: 3c6edd26694901b21843d0c61dbdcbbedb806a1e
+PODFILE CHECKSUM: df3d2d55c4f5beba3320996ee84045e4121e656a
 
 COCOAPODS: 1.5.3

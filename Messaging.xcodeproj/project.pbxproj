@@ -16,6 +16,11 @@
 		140C34022138E95000DC3535 /* ConversationRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34012138E95000DC3535 /* ConversationRepositoryImpl.swift */; };
 		140C34042138EC0700DC3535 /* SeeChatHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34032138EC0700DC3535 /* SeeChatHistoryViewModel.swift */; };
 		140C34062138F74F00DC3535 /* AutoLoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34052138F74F00DC3535 /* AutoLoginUseCase.swift */; };
+		140C34082139240600DC3535 /* ChangePassVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34072139240600DC3535 /* ChangePassVIewModel.swift */; };
+		140C340A2139241600DC3535 /* ChangePassRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34092139241600DC3535 /* ChangePassRequest.swift */; };
+		140C340C2139242000DC3535 /* ChangePassUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C340B2139242000DC3535 /* ChangePassUseCase.swift */; };
+		140C340F2139243100DC3535 /* ChangePassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C340D2139243100DC3535 /* ChangePassViewController.swift */; };
+		140C34102139243100DC3535 /* ChangePassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 140C340E2139243100DC3535 /* ChangePassViewController.xib */; };
 		141823542135025700DC0E98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823532135025700DC0E98 /* AppDelegate.swift */; };
 		141823562135025700DC0E98 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823552135025700DC0E98 /* ViewController.swift */; };
 		141823592135025700DC0E98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141823572135025700DC0E98 /* Main.storyboard */; };
@@ -75,6 +80,11 @@
 		140C34012138E95000DC3535 /* ConversationRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRepositoryImpl.swift; sourceTree = "<group>"; };
 		140C34032138EC0700DC3535 /* SeeChatHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeChatHistoryViewModel.swift; sourceTree = "<group>"; };
 		140C34052138F74F00DC3535 /* AutoLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLoginUseCase.swift; sourceTree = "<group>"; };
+		140C34072139240600DC3535 /* ChangePassVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassVIewModel.swift; path = Messaging/Login/ChangePassVIewModel.swift; sourceTree = SOURCE_ROOT; };
+		140C34092139241600DC3535 /* ChangePassRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassRequest.swift; path = Messaging/Login/ChangePassRequest.swift; sourceTree = SOURCE_ROOT; };
+		140C340B2139242000DC3535 /* ChangePassUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassUseCase.swift; path = Messaging/Login/ChangePassUseCase.swift; sourceTree = SOURCE_ROOT; };
+		140C340D2139243100DC3535 /* ChangePassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassViewController.swift; path = Messaging/Login/ChangePassViewController.swift; sourceTree = SOURCE_ROOT; };
+		140C340E2139243100DC3535 /* ChangePassViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ChangePassViewController.xib; path = Messaging/Login/ChangePassViewController.xib; sourceTree = SOURCE_ROOT; };
 		141823502135025700DC0E98 /* Messaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141823532135025700DC0E98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		141823552135025700DC0E98 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -283,6 +293,11 @@
 		1418236E2135073200DC0E98 /* ChangePass */ = {
 			isa = PBXGroup;
 			children = (
+				140C34072139240600DC3535 /* ChangePassVIewModel.swift */,
+				140C34092139241600DC3535 /* ChangePassRequest.swift */,
+				140C340B2139242000DC3535 /* ChangePassUseCase.swift */,
+				140C340D2139243100DC3535 /* ChangePassViewController.swift */,
+				140C340E2139243100DC3535 /* ChangePassViewController.xib */,
 			);
 			path = ChangePass;
 			sourceTree = "<group>";
@@ -436,6 +451,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14461A5721379CEC0062FAC6 /* SeeProfileVC.xib in Resources */,
+				140C34102139243100DC3535 /* ChangePassViewController.xib in Resources */,
 				14461A5121379CC40062FAC6 /* SeeContactVC.xib in Resources */,
 				1439D99321365C3D0094C12C /* LoginVC.xib in Resources */,
 				14461A5C21379DFF0062FAC6 /* SeeConversationVC.xib in Resources */,
@@ -475,12 +491,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Messaging/Pods-Messaging-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast/Toast.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast.framework",
@@ -502,10 +520,13 @@
 				14461A5B21379DFF0062FAC6 /* SeeConversationVC.swift in Sources */,
 				1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */,
 				14461A622137A0430062FAC6 /* SeeContactRequest.swift in Sources */,
+				140C340C2139242000DC3535 /* ChangePassUseCase.swift in Sources */,
 				14461A5421379CDD0062FAC6 /* MainVC.swift in Sources */,
 				1451585721350BB70038CE74 /* UseCase.swift in Sources */,
 				140C34002138E69200DC3535 /* ConversationRepository.swift in Sources */,
+				140C340A2139241600DC3535 /* ChangePassRequest.swift in Sources */,
 				143517A121352D3C0039874F /* BaseVC.swift in Sources */,
+				140C34082139240600DC3535 /* ChangePassVIewModel.swift in Sources */,
 				14461A662137A3C60062FAC6 /* Contact.swift in Sources */,
 				1439D99B21369D230094C12C /* SignupRequest.swift in Sources */,
 				140C34062138F74F00DC3535 /* AutoLoginUseCase.swift in Sources */,
@@ -519,6 +540,7 @@
 				14461A5821379CEC0062FAC6 /* SeeProfileVC.swift in Sources */,
 				14461A722137AD5B0062FAC6 /* ErrorTracker.swift in Sources */,
 				14461A642137A1650062FAC6 /* SeeContactUseCase.swift in Sources */,
+				140C340F2139243100DC3535 /* ChangePassViewController.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
 				140C33F22138D37900DC3535 /* SeeProfileViewModel.swift in Sources */,
 				140C33FA2138E51800DC3535 /* SeeConversationViewModel.swift in Sources */,

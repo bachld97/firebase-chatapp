@@ -3,7 +3,6 @@ import RxCocoa
 
 protocol SeeProfileDisplayLogic : class {
     func goChangePass()
-    func reload()
     func forceLogout()
     func display(user: User)
 }
@@ -18,7 +17,6 @@ class SeeProfileViewModel : ViewModelDelegate {
         self.displayLogic = displayLogic
         self.disposeBag = DisposeBag()
     }
-    
     
     func transform(input: SeeProfileViewModel.Input) -> SeeProfileViewModel.Output {
         let errorTracker = ErrorTracker()
@@ -38,34 +36,21 @@ class SeeProfileViewModel : ViewModelDelegate {
         .drive()
         .disposed(by: disposeBag)
 
-        input.reloadTrigger
-            .flatMap { [unowned self] (_) -> Driver<User> in
-                return Observable.deferred {
-                    return self.seeProfileUseCase
-                        .execute(request: ())
-                        .do(onNext: { [unowned self] user in
-                            self.displayLogic?.display(user: user)
-                        })
-                    }
-                    .trackError(errorTracker)
-                    .asDriverOnErrorJustComplete()
-            }
-            .drive()
-            .disposed(by: disposeBag)
-//        input.trigger
+//        input.reloadTrigger
 //            .flatMap { [unowned self] (_) -> Driver<User> in
 //                return Observable.deferred {
 //                    return self.seeProfileUseCase
-//                        .execute(request: SeeProfileRequest())
+//                        .execute(request: ())
+//                        .do(onNext: { [unowned self] user in
+//                            self.displayLogic?.display(user: user)
+//                        })
 //                    }
 //                    .trackError(errorTracker)
 //                    .asDriverOnErrorJustComplete()
 //            }
-//            .drive(onNext: { [unowned self] user in
-//                self.displayLogic?.display(user: user)
-//            })
+//            .drive()
 //            .disposed(by: disposeBag)
-        
+
         input.changePassTrigger
             .drive(onNext: { [unowned self] in
                 self.displayLogic?.goChangePass()
@@ -80,7 +65,8 @@ class SeeProfileViewModel : ViewModelDelegate {
 extension SeeProfileViewModel {
     struct Input {
         let trigger: Driver<Void>
-        let reloadTrigger: Driver<Void>
+        // let reloadTrigger: Driver<Void>
+        let logoutTrigger: Driver<Void>
         let changePassTrigger: Driver<Void>
     }
     

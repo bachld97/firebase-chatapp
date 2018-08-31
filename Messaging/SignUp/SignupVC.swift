@@ -51,8 +51,7 @@ class SignupVC : BaseVC, ViewFor {
 
 extension SignupVC : SignupDisplayLogic {
     func goMain() {
-        let vc = MainVC.instance()
-        self.navigationController?.setViewControllers([vc], animated: true)
+        goToMainScreen()
     }
     
     func hideKeyboard() {

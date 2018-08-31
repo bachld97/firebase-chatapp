@@ -76,6 +76,6 @@ extension SeeContactVC : SeeContactDisplayLogic {
     }
     
     func forceLogout() {
-        print("Session expired")
+        logoutWithSessionExpire()
     }
 }
