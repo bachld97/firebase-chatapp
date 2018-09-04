@@ -1,15 +1,18 @@
 import UIKit
 import RxSwift
 import RxCocoa
-
+import RxDataSources
 
 class SeeContactVC: BaseVC, ViewFor {
     class func instance() -> UIViewController {
         return SeeContactVC()
     }
     
+    @IBOutlet weak var contactTableView: UITableView!
     public typealias ViewModelType = SeeContactViewModel
     var viewModel: SeeContactViewModel!
+    private var items : RxTableViewSectionedReloadDataSource<SectionModel<String, ContactItem>>!
+    
     private let disposeBag = DisposeBag()
     
     init() {
@@ -32,7 +35,6 @@ class SeeContactVC: BaseVC, ViewFor {
                                                                  style: .plain,
                                                                  target: nil,
                                                                  action: nil)
-        
         super.viewDidLoad()
     }
     
@@ -56,6 +58,30 @@ class SeeContactVC: BaseVC, ViewFor {
                 self.handleError(e: error)
             }
         }).disposed(by: self.disposeBag)
+        
+        output.items
+            .map { [SectionModel(model: "Items", items: $0)]}
+            .drive(self.contactTableView.rx.items(dataSource: self.items))
+            .disposed(by: self.disposeBag)
+    }
+    
+    override func prepareUI() {
+        self.contactTableView.tableFooterView = UIView()
+        self.contactTableView.rowHeight = UITableViewAutomaticDimension
+        self.contactTableView.estimatedRowHeight = 72
+        self.contactTableView.register(UINib(nibName: "ContactCell", bundle: nil), forCellReuseIdentifier: "ContactCell")
+        self.items = RxTableViewSectionedReloadDataSource<SectionModel<String, ContactItem>>(configureCell: { (_, tv, ip, item) -> UITableViewCell in
+            let cell = tv.dequeueReusableCell(withIdentifier: "ContactCell", for: ip) as! ContactCell
+            cell.bind(item: item)
+            return cell
+        })
+        
+        // Set up click
+        self.contactTableView.rx.itemSelected.asDriver()
+            .drive(onNext: { (ip) in
+                self.goConversation()
+            })
+            .disposed(by: self.disposeBag)
     }
 }
 
@@ -63,12 +89,6 @@ extension SeeContactVC : SeeContactDisplayLogic {
     func goConversation() {
         let vc = SeeConversationVC.instance()
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func displayContact(contacts: [Contact]?) {
-        if contacts != nil {
-            print("Contact loaded: \(contacts!.count)")
-        }
     }
     
     func showEmpty() {

@@ -7,6 +7,7 @@ import UIKit
 class SeeProfileVC : BaseVC , ViewFor {
     var viewModel: SeeProfileViewModel!
     private let disposeBag = DisposeBag()
+    @IBOutlet weak var usernameLabel: UILabel!
     
 
     @IBOutlet weak var goChangePassButton: UIButton!
@@ -80,6 +81,6 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
     }
     
     func display(user: User) {
-        
+        self.usernameLabel.text = user.userName
     }
 }

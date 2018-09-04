@@ -1,4 +1,5 @@
-class Conversation {
+final class Conversation {
     
+
 }
 

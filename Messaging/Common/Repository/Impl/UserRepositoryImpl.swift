@@ -15,7 +15,7 @@ class UserRepositoryImpl : UserRepository {
     
     func getUser() -> Observable<User?> {
         return Observable.deferred {
-            return Observable.just(nil)
+            return Observable.just(User(userId: "111", userName: "Duy Bach", userAvatarUrl: nil))
         }
     }
     

@@ -5,14 +5,14 @@ protocol SeeContactDisplayLogic : class {
     func goConversation()
     func forceLogout()
     func showEmpty()
-    func displayContact(contacts: [Contact]?)
 }
 
 final class SeeContactViewModel : ViewModelDelegate {
+    
+    public let items = BehaviorRelay<[ContactItem]>(value: [])
+    
     private let disposeBag : DisposeBag
     private weak var displayLogic: SeeContactDisplayLogic?
-    
-    // onTrigger: Load list of contacts
     private let seeContactUseCase = SeeContactUseCase()
     
     init(displayLogic: SeeContactDisplayLogic) {
@@ -26,10 +26,14 @@ final class SeeContactViewModel : ViewModelDelegate {
             .flatMap { [unowned self] (_) -> Driver<[Contact]?> in
                 return Observable.deferred { [unowned self] in
                     return self.seeContactUseCase
-                        .execute(request: SeeContactRequest())
+                        .execute(request: ())
                         .do(onNext: { [unowned self] (contacts) in
                             if contacts != nil {
-                                self.displayLogic?.displayContact(contacts: contacts)
+                                var items: [ContactItem] = []
+                                items.append(contentsOf: contacts!.map { contact in
+                                    return ContactItem(contact: contact)
+                                })
+                                self.items.accept(items)
                             } else {
                                 self.displayLogic?.showEmpty()
                             }
@@ -45,10 +49,14 @@ final class SeeContactViewModel : ViewModelDelegate {
             .flatMap { [unowned self] (_) -> Driver<[Contact]?> in
                 return Observable.deferred {
                     return self.seeContactUseCase
-                        .execute(request: SeeContactRequest())
+                        .execute(request: ())
                         .do(onNext: { [unowned self] (contacts) in
                             if contacts != nil {
-                                self.displayLogic?.displayContact(contacts: contacts)
+                                var items: [ContactItem] = []
+                                items.append(contentsOf: contacts!.map { contact in
+                                    return ContactItem(contact: contact)
+                                })
+                                self.items.accept(items)
                             } else {
                                 self.displayLogic?.showEmpty()
                             }
@@ -61,7 +69,8 @@ final class SeeContactViewModel : ViewModelDelegate {
             .disposed(by: self.disposeBag)
         
         
-        return Output(error: errorTracker.asDriver())
+        return Output(error: errorTracker.asDriver(),
+                      items: self.items.asDriver())
     }
 }
 
@@ -73,5 +82,6 @@ extension SeeContactViewModel {
     
     public struct Output {
         let error: Driver<Error>
+        let items: Driver<[ContactItem]>
     }
 }

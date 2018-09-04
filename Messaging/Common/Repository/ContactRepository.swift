@@ -1,7 +1,7 @@
 import RxSwift
 
 protocol ContactRepository {
-    func seeContact(request: SeeContactRequest) -> Observable<[Contact]?>
+    func seeContact() -> Observable<[Contact]?>
 }
 
 class ContactRepositoryFactory {

@@ -13,7 +13,7 @@ class ContactRepositoryImpl : ContactRepository {
         self.localSource = localSource
     }
     
-    func seeContact(request: SeeContactRequest) -> Observable<[Contact]?> {
+    func seeContact() -> Observable<[Contact]?> {
         return Observable.deferred {
             return self.userRepository
                 .getUser()

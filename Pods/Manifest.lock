@@ -1,6 +1,11 @@
 PODS:
+  - Differentiator (3.0.2)
   - IQKeyboardManagerSwift (6.1.1)
   - RxCocoa (4.2.0):
+    - RxSwift (~> 4.0)
+  - RxDataSources (3.0.2):
+    - Differentiator (~> 3.0)
+    - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
   - Toast (4.0.0)
@@ -8,22 +13,27 @@ PODS:
 DEPENDENCIES:
   - IQKeyboardManagerSwift
   - RxCocoa (~> 4.0)
+  - RxDataSources
   - RxSwift (~> 4.0)
   - Toast
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Differentiator
     - IQKeyboardManagerSwift
     - RxCocoa
+    - RxDataSources
     - RxSwift
     - Toast
 
 SPEC CHECKSUMS:
+  Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
   IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
+  RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: df3d2d55c4f5beba3320996ee84045e4121e656a
+PODFILE CHECKSUM: 85a23df72820770dc6c8ba3e386390dc2a44d599
 
 COCOAPODS: 1.5.3

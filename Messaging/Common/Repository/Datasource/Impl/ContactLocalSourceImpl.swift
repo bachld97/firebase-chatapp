@@ -6,8 +6,11 @@ class ContactLocalSourceImpl : ContactLocalSource {
     }
     
     func loadContacts(of user: User) -> Observable<[Contact]?> {
-        return Observable.just(nil)
+        var contacts = [Contact]()
+        contacts.append(Contact(userId: "ldbach", userName: "Bach Le", userAvatarUrl: nil))
+        contacts.append(Contact(userId: "hello", userName: "Loo Hee", userAvatarUrl: nil))
+        contacts.append(Contact(userId: "aaa22", userName: "Um hum", userAvatarUrl: nil))
+        return Observable.just(contacts)
     }
-    
     
 }

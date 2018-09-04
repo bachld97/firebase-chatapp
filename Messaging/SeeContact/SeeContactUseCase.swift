@@ -1,13 +1,13 @@
 import RxSwift
 
 class SeeContactUseCase : UseCase {
-    typealias TRequest = SeeContactRequest
+    typealias TRequest = Void
     typealias TResponse = [Contact]?
     
-    private let repository = ContactRepositoryFactory.sharedInstance
+    private let repository: ContactRepository = ContactRepositoryFactory.sharedInstance
     
-    public func execute(request: SeeContactRequest) -> Observable<[Contact]?> {
-        return repository.seeContact(request: request)
+    public func execute(request: Void) -> Observable<[Contact]?> {
+        return repository.seeContact()
     }
 }
 
