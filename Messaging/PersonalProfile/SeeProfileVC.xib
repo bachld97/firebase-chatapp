@@ -29,14 +29,14 @@
                     <state key="normal" title="Change password"/>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4yz-iR-qc6">
-                    <rect key="frame" x="16" y="52" width="343" height="343"/>
+                    <rect key="frame" x="16" y="36" width="343" height="343"/>
                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="4yz-iR-qc6" secondAttribute="height" multiplier="1:1" id="1VL-VN-bBr"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzy-dL-5Zp">
-                    <rect key="frame" x="16" y="403" width="343" height="21"/>
+                    <rect key="frame" x="16" y="387" width="343" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -44,7 +44,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="4yz-iR-qc6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="32" id="0C1-lI-5kX"/>
+                <constraint firstItem="4yz-iR-qc6" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="16" id="0C1-lI-5kX"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4yz-iR-qc6" secondAttribute="trailing" constant="16" id="1aD-sy-HD8"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="w7f-Lr-47V" secondAttribute="bottom" constant="16" id="ATg-pm-C6L"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="mzy-dL-5Zp" secondAttribute="trailing" constant="16" id="AcN-9N-4YD"/>

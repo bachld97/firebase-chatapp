@@ -64,6 +64,11 @@
 		147945CD213E31830055CE79 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 147945CB213E31830055CE79 /* ContactCell.xib */; };
 		147945CF213E73570055CE79 /* SeeConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945CE213E73570055CE79 /* SeeConversationViewModel.swift */; };
 		147945D1213E78CD0055CE79 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D0213E78CD0055CE79 /* Utils.swift */; };
+		147945D3213E7FB70055CE79 /* UserLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D2213E7FB70055CE79 /* UserLocalSource.swift */; };
+		147945D5213E80050055CE79 /* UserRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D4213E80050055CE79 /* UserRemoteSource.swift */; };
+		147945D7213E80340055CE79 /* UserRemoteSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D6213E80340055CE79 /* UserRemoteSourceImpl.swift */; };
+		147945D9213E80590055CE79 /* UserLocalSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */; };
+		147945DB213E85860055CE79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 147945DA213E85850055CE79 /* GoogleService-Info.plist */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
 		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
 		14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9782136561E00A31FBB /* LoginUseCase.swift */; };
@@ -133,6 +138,11 @@
 		147945CB213E31830055CE79 /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
 		147945CE213E73570055CE79 /* SeeConversationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeConversationViewModel.swift; path = Messaging/SeeContact/SeeConversationViewModel.swift; sourceTree = SOURCE_ROOT; };
 		147945D0213E78CD0055CE79 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		147945D2213E7FB70055CE79 /* UserLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalSource.swift; sourceTree = "<group>"; };
+		147945D4213E80050055CE79 /* UserRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemoteSource.swift; sourceTree = "<group>"; };
+		147945D6213E80340055CE79 /* UserRemoteSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemoteSourceImpl.swift; sourceTree = "<group>"; };
+		147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalSourceImpl.swift; sourceTree = "<group>"; };
+		147945DA213E85850055CE79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
 		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		14CEE9782136561E00A31FBB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -190,6 +200,7 @@
 				141823552135025700DC0E98 /* ViewController.swift */,
 				141823572135025700DC0E98 /* Main.storyboard */,
 				1418235A2135025800DC0E98 /* Assets.xcassets */,
+				147945DA213E85850055CE79 /* GoogleService-Info.plist */,
 				1418235C2135025800DC0E98 /* LaunchScreen.storyboard */,
 				1418235F2135025800DC0E98 /* Info.plist */,
 			);
@@ -225,6 +236,8 @@
 				14461A772137EA890062FAC6 /* Impl */,
 				14461A732137E8CC0062FAC6 /* ContactRemoteSource.swift */,
 				14461A752137E8D80062FAC6 /* ContactLocalSource.swift */,
+				147945D2213E7FB70055CE79 /* UserLocalSource.swift */,
+				147945D4213E80050055CE79 /* UserRemoteSource.swift */,
 			);
 			path = Datasource;
 			sourceTree = "<group>";
@@ -232,6 +245,7 @@
 		141823682135062B00DC0E98 /* Impl */ = {
 			isa = PBXGroup;
 			children = (
+				140C34012138E95000DC3535 /* ConversationRepositoryImpl.swift */,
 				14CEE9812136584900A31FBB /* UserRepositoryImpl.swift */,
 				14461A692137A6DE0062FAC6 /* ContactRepositoryImpl.swift */,
 			);
@@ -351,7 +365,8 @@
 			children = (
 				14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */,
 				14461A7A2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift */,
-				140C34012138E95000DC3535 /* ConversationRepositoryImpl.swift */,
+				147945D6213E80340055CE79 /* UserRemoteSourceImpl.swift */,
+				147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -464,6 +479,7 @@
 				14461A5121379CC40062FAC6 /* SeeContactVC.xib in Resources */,
 				1439D99321365C3D0094C12C /* LoginVC.xib in Resources */,
 				14461A5C21379DFF0062FAC6 /* SeeConversationVC.xib in Resources */,
+				147945DB213E85860055CE79 /* GoogleService-Info.plist in Resources */,
 				1439D9A121369FAE0094C12C /* SignupVC.xib in Resources */,
 				147945CD213E31830055CE79 /* ContactCell.xib in Resources */,
 				1418235E2135025800DC0E98 /* LaunchScreen.storyboard in Resources */,
@@ -502,20 +518,28 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Messaging/Pods-Messaging-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast/Toast.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -530,6 +554,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				147945CC213E31830055CE79 /* ContactCell.swift in Sources */,
+				147945D9213E80590055CE79 /* UserLocalSourceImpl.swift in Sources */,
 				1439D99721367FD30094C12C /* MyErrors.swift in Sources */,
 				1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */,
 				14461A5B21379DFF0062FAC6 /* SeeConversationVC.swift in Sources */,
@@ -544,6 +569,7 @@
 				14461A662137A3C60062FAC6 /* Contact.swift in Sources */,
 				1439D99B21369D230094C12C /* SignupRequest.swift in Sources */,
 				140C34062138F74F00DC3535 /* AutoLoginUseCase.swift in Sources */,
+				147945D5213E80050055CE79 /* UserRemoteSource.swift in Sources */,
 				14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */,
 				1439D99221365C3D0094C12C /* LoginVC.swift in Sources */,
 				14CEE97B2136562500A31FBB /* LoginRequest.swift in Sources */,
@@ -551,11 +577,13 @@
 				140C33F42138D69E00DC3535 /* SeeProfileUseCase.swift in Sources */,
 				14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */,
 				14CEE9822136584900A31FBB /* UserRepositoryImpl.swift in Sources */,
+				147945D3213E7FB70055CE79 /* UserLocalSource.swift in Sources */,
 				14461A5821379CEC0062FAC6 /* SeeProfileVC.swift in Sources */,
 				14461A722137AD5B0062FAC6 /* ErrorTracker.swift in Sources */,
 				14461A642137A1650062FAC6 /* SeeContactUseCase.swift in Sources */,
 				140C340F2139243100DC3535 /* ChangePassVC.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
+				147945D7213E80340055CE79 /* UserRemoteSourceImpl.swift in Sources */,
 				140C33F22138D37900DC3535 /* SeeProfileViewModel.swift in Sources */,
 				1439D99921369D1B0094C12C /* SignupUseCase.swift in Sources */,
 				14461A5221379CC40062FAC6 /* SeeContactVC.swift in Sources */,

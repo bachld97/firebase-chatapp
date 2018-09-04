@@ -22,31 +22,40 @@ class BaseVC : UIViewController {
             self.view.makeToast(error.message, duration: 3.0, position: CSToastPositionCenter)
         } else if e is SessionExpireError {
             self.logoutWithSessionExpire()
+        } else if e is WrongLoginInformationError || e is AccountNotFoundError {
+            let msg = "Account does not exists or your password is incorrect. Please check your login information and try again."
+            self.view.makeToast(msg, duration: 3.0, position: CSToastPositionCenter)
         }
     }
     
     final func logoutWithSessionExpire() {
-        let alertController = UIAlertController(title: "Session expired",
-                                                message: "The current session is expired, please login again. Sorry for this inconvenience.",
-                                                preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title: "Logout",
-                                          style: .default,
-                                          handler: { [unowned self] (_) in
-                                            self.doLogout()
+        let alertController = UIAlertController(
+            title: "Session expired",
+            message: "The current session is expired, please login again. Sorry for this inconvenience.",
+            preferredStyle: .alert)
+        let defaultAction = UIAlertAction(
+            title: "Logout",
+            style: .default,
+            handler: { [unowned self] (_) in
+                self.doLogout()
         })
+        
         alertController.addAction(defaultAction)
         
         self.present(alertController, animated: true, completion: nil)
     }
     
     final func logoutNormally() {
-        let alertController = UIAlertController(title: "Logging out",
-                                                message: "You will not receive notification for incoming messages if you logout. Are you sure to proceed?",
-                                                preferredStyle: .alert)
-        let defaultAction = UIAlertAction(title: "Logout",
-                                          style: .default,
-                                          handler: { [unowned self] (_) in
-                                            self.doLogout()
+        let alertController = UIAlertController(
+            title: "Logging out",
+            message: "You will not receive notification for incoming messages if you logout. Are you sure to proceed?",
+            preferredStyle: .alert)
+        
+        let defaultAction = UIAlertAction(
+            title: "Logout",
+            style: .default,
+            handler: { [unowned self] (_) in
+                self.doLogout()
         })
         
         let cancelAction = UIAlertAction(title: "Cancel",

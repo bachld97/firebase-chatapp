@@ -10,5 +10,7 @@ protocol UserRepository {
 } 
 
 class UserRepositoryFactory {
-    public static let sharedInstance = UserRepositoryImpl()
+    public static let sharedInstance = UserRepositoryImpl(
+        localSource: UserLocalSourceFactory.sharedInstance,
+        remoteSource: UserRemoteSourceFactory.sharedInstance)
 }

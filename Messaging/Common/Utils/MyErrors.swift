@@ -6,6 +6,7 @@ class SimpleError : Error {
     }
 }
 
-class SessionExpireError : Error {
-    
-}
+class SessionExpireError: Error {}
+class AccountNotFoundError: Error {}
+class WrongLoginInformationError: Error {}
+class UnknownError: Error {}

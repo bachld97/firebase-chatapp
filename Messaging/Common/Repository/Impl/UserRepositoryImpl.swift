@@ -1,9 +1,24 @@
 import RxSwift
 
 class UserRepositoryImpl : UserRepository {
+    
+    private let localSource: UserLocalSource
+    private let remoteSource: UserRemoteSource
+    
+    init(localSource: UserLocalSource,
+         remoteSource: UserRemoteSource) {
+        self.localSource = localSource
+        self.remoteSource = remoteSource
+    }
+
     func login(request: LoginRequest) -> Observable<Bool>{
         return Observable.deferred {
-            return Observable.just(true)
+            return self.remoteSource
+                .login(request: request)
+                .flatMap { [unowned self] (user) -> Observable<Bool> in
+                    return self.localSource
+                        .persistUser(user: user)
+            }
         }
     }
     

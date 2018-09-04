@@ -63,7 +63,6 @@ class SeeProfileVC : BaseVC , ViewFor {
             .drive()
             .disposed(by: self.disposeBag)
     }
-    
 }
 
 
@@ -78,10 +77,9 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
         self.usernameLabel.text = user.userName
         
         guard let avaUrl = user.userAvatarUrl else {
-            print("Ava nil")
             return
         }
-        print(avaUrl)
+        
         ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
     }
     
