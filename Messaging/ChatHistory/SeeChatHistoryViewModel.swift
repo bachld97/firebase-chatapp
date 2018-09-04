@@ -2,7 +2,6 @@ import RxSwift
 import RxCocoa
 
 protocol SeeChatHistoryDisplayLogic: class {
-    func forceLogout()
     func goConversation()
     func showEmpty()
     func showChatHistory(conversations: [Conversation]?)

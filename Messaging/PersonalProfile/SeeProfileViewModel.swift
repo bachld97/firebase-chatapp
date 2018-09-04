@@ -3,7 +3,6 @@ import RxCocoa
 
 protocol SeeProfileDisplayLogic : class {
     func goChangePass()
-    func forceLogout()
     func display(user: User)
     func logout()
 }
@@ -58,12 +57,13 @@ class SeeProfileViewModel : ViewModelDelegate {
             })
             .disposed(by: self.disposeBag)
         
+        // Should evoke logoutUseCase as well
         input.logoutTrigger
             .drive(onNext: { [unowned self] in
                 self.displayLogic?.logout()
             })
             .disposed(by: self.disposeBag)
-
+        
         return Output(
             error: errorTracker.asDriver())
     }

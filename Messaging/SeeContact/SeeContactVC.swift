@@ -52,11 +52,7 @@ class SeeContactVC: BaseVC, ViewFor {
         let output = viewModel.transform(input: input)
         
         output.error.drive(onNext: { [unowned self] (error) in
-            if error is SessionExpireError {
-                self.forceLogout()
-            } else {
-                self.handleError(e: error)
-            }
+            self.handleError(e: error)
         }).disposed(by: self.disposeBag)
         
         output.items
@@ -88,14 +84,11 @@ class SeeContactVC: BaseVC, ViewFor {
 extension SeeContactVC : SeeContactDisplayLogic {
     func goConversation() {
         let vc = SeeConversationVC.instance()
-        self.navigationController?.pushViewController(vc, animated: true)
+        present(vc, animated: true, completion: nil)
+        // self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func showEmpty() {
         print("Empty")
-    }
-    
-    func forceLogout() {
-        logoutWithSessionExpire()
     }
 }

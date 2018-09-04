@@ -20,6 +20,8 @@ class BaseVC : UIViewController {
     open func handleError(e: Error) {
         if let error = e as? SimpleError {
             self.view.makeToast(error.message, duration: 3.0, position: CSToastPositionCenter)
+        } else if e is SessionExpireError {
+            self.logoutWithSessionExpire()
         }
     }
     
@@ -33,7 +35,7 @@ class BaseVC : UIViewController {
                                             self.doLogout()
         })
         alertController.addAction(defaultAction)
-        //and finally presenting our alert using this method
+        
         self.present(alertController, animated: true, completion: nil)
     }
     
@@ -49,13 +51,11 @@ class BaseVC : UIViewController {
         
         let cancelAction = UIAlertAction(title: "Cancel",
                                           style: .cancel,
-                                          handler: { [unowned self] (_) in
-                                            self.doLogout()
-        })
+                                          handler: nil)
         
         alertController.addAction(defaultAction)
         alertController.addAction(cancelAction)
-        //and finally presenting our alert using this method
+        
         self.present(alertController, animated: true, completion: nil)
     }
     

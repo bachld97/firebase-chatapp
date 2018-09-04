@@ -57,11 +57,7 @@ class SeeProfileVC : BaseVC , ViewFor {
         
         output.error
             .do(onNext: { [unowned self] (error) in
-                if error is SessionExpireError {
-                    self.forceLogout()
-                } else {
-                    self.handleError(e: error)
-                }
+                self.handleError(e: error)
             })
             .drive()
             .disposed(by: self.disposeBag)
@@ -73,11 +69,8 @@ class SeeProfileVC : BaseVC , ViewFor {
 extension SeeProfileVC : SeeProfileDisplayLogic {
     func goChangePass() {
         let vc = ChangePassVC.instance()
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func forceLogout() {
-        logoutWithSessionExpire()
+        self.present(vc, animated: true, completion: nil)
+        // self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func display(user: User) {

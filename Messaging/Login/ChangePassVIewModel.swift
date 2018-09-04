@@ -66,6 +66,13 @@ class ChangePassViewModel: ViewModelDelegate {
             }
             .drive()
             .disposed(by: self.disposeBag)
+        
+        input.cancelTrigger
+            .drive(onNext: { [unowned self] in
+                self.displayLogic?.goBack()
+            })
+        .disposed(by: self.disposeBag)
+
         return Output(error: errorTracker.asDriver())
     }
 }
@@ -76,6 +83,7 @@ extension ChangePassViewModel {
         let oldPassword: ControlProperty<String>
         let newPassword: ControlProperty<String>
         let confirmPassword: ControlProperty<String>
+        let cancelTrigger: Driver<Void>
     }
     
     struct Output {

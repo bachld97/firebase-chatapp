@@ -3,7 +3,6 @@ import RxCocoa
 
 protocol SeeContactDisplayLogic : class {
     func goConversation()
-    func forceLogout()
     func showEmpty()
 }
 
