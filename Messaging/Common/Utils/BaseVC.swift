@@ -22,9 +22,6 @@ class BaseVC : UIViewController {
             self.view.makeToast(error.message, duration: 3.0, position: CSToastPositionCenter)
         } else if e is SessionExpireError {
             self.logoutWithSessionExpire()
-        } else if e is WrongLoginInformationError || e is AccountNotFoundError {
-            let msg = "Account does not exists or your password is incorrect. Please check your login information and try again."
-            self.view.makeToast(msg, duration: 3.0, position: CSToastPositionCenter)
         }
     }
     
