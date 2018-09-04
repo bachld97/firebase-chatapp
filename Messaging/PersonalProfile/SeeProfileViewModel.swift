@@ -5,6 +5,7 @@ protocol SeeProfileDisplayLogic : class {
     func goChangePass()
     func forceLogout()
     func display(user: User)
+    func logout()
 }
 
 class SeeProfileViewModel : ViewModelDelegate {
@@ -54,6 +55,12 @@ class SeeProfileViewModel : ViewModelDelegate {
         input.changePassTrigger
             .drive(onNext: { [unowned self] in
                 self.displayLogic?.goChangePass()
+            })
+            .disposed(by: self.disposeBag)
+        
+        input.logoutTrigger
+            .drive(onNext: { [unowned self] in
+                self.displayLogic?.logout()
             })
             .disposed(by: self.disposeBag)
 

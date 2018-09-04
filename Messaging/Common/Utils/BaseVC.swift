@@ -37,6 +37,28 @@ class BaseVC : UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    final func logoutNormally() {
+        let alertController = UIAlertController(title: "Logging out",
+                                                message: "You will not receive notification for incoming messages if you logout. Are you sure to proceed?",
+                                                preferredStyle: .alert)
+        let defaultAction = UIAlertAction(title: "Logout",
+                                          style: .default,
+                                          handler: { [unowned self] (_) in
+                                            self.doLogout()
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                          style: .cancel,
+                                          handler: { [unowned self] (_) in
+                                            self.doLogout()
+        })
+        
+        alertController.addAction(defaultAction)
+        alertController.addAction(cancelAction)
+        //and finally presenting our alert using this method
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     @objc private func doLogout() {
         let vc = LoginVC.instance()
         let nc = UINavigationController(rootViewController: vc)

@@ -83,4 +83,8 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
     func display(user: User) {
         self.usernameLabel.text = user.userName
     }
+    
+    func logout() {
+        logoutNormally()
+    }
 }
