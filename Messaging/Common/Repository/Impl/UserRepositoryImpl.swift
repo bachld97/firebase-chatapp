@@ -24,7 +24,12 @@ class UserRepositoryImpl : UserRepository {
     
     func signup(request: SignupRequest) -> Observable<Bool> {
         return Observable.deferred {
-            return Observable.just(true)
+            return self.remoteSource
+                .signup(request: request)
+                .flatMap { [unowned self] (user) -> Observable<Bool> in
+                    return self.localSource
+                        .persistUser(user: user)
+            }
         }
     }
     

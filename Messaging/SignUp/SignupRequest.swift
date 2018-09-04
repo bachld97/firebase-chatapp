@@ -5,9 +5,12 @@ struct SignupRequest {
     
     func toDictionary() -> [String:Any] {
         return [
-            "username" : self.username,
             "password" : self.password,
             "fullname" : self.fullname
         ]
+    }
+    
+    func toUser() -> User {
+        return User(userId: username, userName: fullname, userAvatarUrl: nil)
     }
 }

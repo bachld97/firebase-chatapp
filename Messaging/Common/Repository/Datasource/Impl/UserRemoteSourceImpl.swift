@@ -42,4 +42,25 @@ class UserFirebaseSource : UserRemoteSource {
             }
         }
     }
+    
+    func signup(request: SignupRequest) -> Observable<User> {
+        return Observable.create { [unowned self] (observer) -> Disposable in
+            let dbRequest = self.ref.child("users").observe(.value, with: { (snapshot) in
+                if !snapshot.exists() || !snapshot.hasChild(request.username) {
+                    // Success
+                    self.ref.child("users/\(request.username)")
+                        .setValue(request.toDictionary())
+                    let user = request.toUser()
+                    observer.onNext(user)
+                    observer.onCompleted()
+                } else {
+                    observer.onError(UsernameAlreadyExistError())
+                }
+            })
+            
+            return Disposables.create {
+                self.ref.child("users").removeObserver(withHandle: dbRequest)
+            }
+        }
+    }
 }
