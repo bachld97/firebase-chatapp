@@ -75,15 +75,17 @@ class SeeContactVC: BaseVC, ViewFor {
         // Set up click
         self.contactTableView.rx.itemSelected.asDriver()
             .drive(onNext: { (ip) in
-                self.goConversation()
+                self.contactTableView.deselectRow(at: ip, animated: false)
+                let item = self.items.sectionModels[0].items[ip.row]
+                self.goConversation(item)
             })
             .disposed(by: self.disposeBag)
     }
 }
 
 extension SeeContactVC : SeeContactDisplayLogic {
-    func goConversation() {
-        let vc = SeeConversationVC.instance()
+    func goConversation(_ item: ContactItem) {
+        let vc = SeeConversationVC.instance(contactItem: item)
         present(vc, animated: true, completion: nil)
         // self.navigationController?.pushViewController(vc, animated: true)
     }

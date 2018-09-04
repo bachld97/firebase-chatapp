@@ -15,7 +15,8 @@ class UserRepositoryImpl : UserRepository {
     
     func getUser() -> Observable<User?> {
         return Observable.deferred {
-            return Observable.just(User(userId: "111", userName: "Duy Bach", userAvatarUrl: nil))
+            let sampleUrl = "https://3.img-dpreview.com/files/p/E~TS590x0~articles/8692662059/8283897908.jpeg"
+            return Observable.just(User(userId: "111", userName: "Duy Bach", userAvatarUrl: sampleUrl))
         }
     }
     

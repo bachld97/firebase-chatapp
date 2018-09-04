@@ -10,7 +10,6 @@
 		140C33F22138D37900DC3535 /* SeeProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33F12138D37900DC3535 /* SeeProfileViewModel.swift */; };
 		140C33F42138D69E00DC3535 /* SeeProfileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33F32138D69E00DC3535 /* SeeProfileUseCase.swift */; };
 		140C33F82138E1A400DC3535 /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33F72138E1A400DC3535 /* Conversation.swift */; };
-		140C33FA2138E51800DC3535 /* SeeConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33F92138E51800DC3535 /* SeeConversationViewModel.swift */; };
 		140C33FC2138E52100DC3535 /* SeeChatHistoryUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33FB2138E52100DC3535 /* SeeChatHistoryUseCase.swift */; };
 		140C34002138E69200DC3535 /* ConversationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C33FF2138E69200DC3535 /* ConversationRepository.swift */; };
 		140C34022138E95000DC3535 /* ConversationRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C34012138E95000DC3535 /* ConversationRepositoryImpl.swift */; };
@@ -63,6 +62,8 @@
 		147945C9213E31010055CE79 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945C8213E31010055CE79 /* ContactItem.swift */; };
 		147945CC213E31830055CE79 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945CA213E31830055CE79 /* ContactCell.swift */; };
 		147945CD213E31830055CE79 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 147945CB213E31830055CE79 /* ContactCell.xib */; };
+		147945CF213E73570055CE79 /* SeeConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945CE213E73570055CE79 /* SeeConversationViewModel.swift */; };
+		147945D1213E78CD0055CE79 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D0213E78CD0055CE79 /* Utils.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
 		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
 		14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9782136561E00A31FBB /* LoginUseCase.swift */; };
@@ -76,7 +77,6 @@
 		140C33F12138D37900DC3535 /* SeeProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeProfileViewModel.swift; sourceTree = "<group>"; };
 		140C33F32138D69E00DC3535 /* SeeProfileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeProfileUseCase.swift; sourceTree = "<group>"; };
 		140C33F72138E1A400DC3535 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
-		140C33F92138E51800DC3535 /* SeeConversationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeConversationViewModel.swift; path = Messaging/Common/Repository/Model/SeeConversationViewModel.swift; sourceTree = SOURCE_ROOT; };
 		140C33FB2138E52100DC3535 /* SeeChatHistoryUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeChatHistoryUseCase.swift; path = Messaging/ChatHistory/SeeChatHistoryUseCase.swift; sourceTree = SOURCE_ROOT; };
 		140C33FF2138E69200DC3535 /* ConversationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRepository.swift; sourceTree = "<group>"; };
 		140C34012138E95000DC3535 /* ConversationRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -131,6 +131,8 @@
 		147945C8213E31010055CE79 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
 		147945CA213E31830055CE79 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		147945CB213E31830055CE79 /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
+		147945CE213E73570055CE79 /* SeeConversationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeConversationViewModel.swift; path = Messaging/SeeContact/SeeConversationViewModel.swift; sourceTree = SOURCE_ROOT; };
+		147945D0213E78CD0055CE79 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
 		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		14CEE9782136561E00A31FBB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -252,7 +254,7 @@
 			children = (
 				14461A5921379DFF0062FAC6 /* SeeConversationVC.swift */,
 				14461A5A21379DFF0062FAC6 /* SeeConversationVC.xib */,
-				140C33F92138E51800DC3535 /* SeeConversationViewModel.swift */,
+				147945CE213E73570055CE79 /* SeeConversationViewModel.swift */,
 			);
 			path = SeeConversation;
 			sourceTree = "<group>";
@@ -375,6 +377,7 @@
 				14CEE96D2136332F00A31FBB /* RxBinding.swift */,
 				1439D99621367FD30094C12C /* MyErrors.swift */,
 				14461A712137AD5B0062FAC6 /* ErrorTracker.swift */,
+				147945D0213E78CD0055CE79 /* Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -554,10 +557,10 @@
 				140C340F2139243100DC3535 /* ChangePassVC.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
 				140C33F22138D37900DC3535 /* SeeProfileViewModel.swift in Sources */,
-				140C33FA2138E51800DC3535 /* SeeConversationViewModel.swift in Sources */,
 				1439D99921369D1B0094C12C /* SignupUseCase.swift in Sources */,
 				14461A5221379CC40062FAC6 /* SeeContactVC.swift in Sources */,
 				140C33F82138E1A400DC3535 /* Conversation.swift in Sources */,
+				147945D1213E78CD0055CE79 /* Utils.swift in Sources */,
 				140C34042138EC0700DC3535 /* SeeChatHistoryViewModel.swift in Sources */,
 				14461A5E21379E620062FAC6 /* SeeContactViewModel.swift in Sources */,
 				143517A621352F200039874F /* LoginViewModel.swift in Sources */,
@@ -571,6 +574,7 @@
 				147945C9213E31010055CE79 /* ContactItem.swift in Sources */,
 				141823732135081E00DC0E98 /* ViewModelDelegate.swift in Sources */,
 				14461A6A2137A6DE0062FAC6 /* ContactRepositoryImpl.swift in Sources */,
+				147945CF213E73570055CE79 /* SeeConversationViewModel.swift in Sources */,
 				14461A682137A65D0062FAC6 /* ContactRepository.swift in Sources */,
 				14461A4E21379CAF0062FAC6 /* ChatHistoryVC.swift in Sources */,
 				14CEE9802136584000A31FBB /* UserRepository.swift in Sources */,

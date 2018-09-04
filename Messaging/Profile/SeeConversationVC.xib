@@ -12,6 +12,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConversationViewController" customModule="Messaging" customModuleProvider="target">
             <connections>
+                <outlet property="conversationLabel" destination="sNo-UT-khr" id="3sr-d7-bEW"/>
+                <outlet property="goBackButton" destination="rtQ-uk-cUw" id="AOU-7w-4WK"/>
+                <outlet property="tableView" destination="fQN-26-m81" id="b6w-9d-4Kf"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

@@ -2,7 +2,7 @@ import RxSwift
 import RxCocoa
 
 protocol SeeContactDisplayLogic : class {
-    func goConversation()
+    func goConversation(_ item: ContactItem)
     func showEmpty()
 }
 

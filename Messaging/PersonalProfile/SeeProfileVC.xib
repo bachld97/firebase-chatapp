@@ -13,6 +13,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController" customModule="Messaging" customModuleProvider="target">
             <connections>
+                <outlet property="avaImageView" destination="4yz-iR-qc6" id="Cgq-L0-N0B"/>
                 <outlet property="goChangePassButton" destination="w7f-Lr-47V" id="G6j-yu-Eif"/>
                 <outlet property="usernameLabel" destination="mzy-dL-5Zp" id="4zm-wA-lbi"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

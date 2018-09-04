@@ -9,7 +9,8 @@ class SeeProfileVC : BaseVC , ViewFor {
     private let disposeBag = DisposeBag()
     @IBOutlet weak var usernameLabel: UILabel!
     
-
+    @IBOutlet weak var avaImageView: UIImageView!
+    
     @IBOutlet weak var goChangePassButton: UIButton!
     typealias ViewModelType = SeeProfileViewModel
     
@@ -75,6 +76,13 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
     
     func display(user: User) {
         self.usernameLabel.text = user.userName
+        
+        guard let avaUrl = user.userAvatarUrl else {
+            print("Ava nil")
+            return
+        }
+        print(avaUrl)
+        ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
     }
     
     func logout() {
