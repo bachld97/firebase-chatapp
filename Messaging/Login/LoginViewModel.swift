@@ -11,7 +11,7 @@ final class LoginViewModel : ViewModelDelegate {
 	private let disposeBag : DisposeBag
 
 	private let username = BehaviorRelay<String>(value: "bachld10832")
-	private let password = BehaviorRelay<String>(value: "helloworld")
+	private let password = BehaviorRelay<String>(value: "admin")
     private let loginUseCase = LoginUseCase()
     private let autoLoginUseCase = AutoLoginUseCase()
 	private weak var displayLogic: LoginDisplayLogic?

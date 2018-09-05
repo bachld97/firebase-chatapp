@@ -26,15 +26,14 @@ class AddContactVC: BaseVC, ViewFor {
     }
     
     init() {
-        super.init(nibName: "SeeContactVC", bundle: nil)
+        super.init(nibName: "AddContactVC", bundle: nil)
         self.viewModel = AddContactViewModel(displayLogic: self)
     }
     
     override func prepareUI() {
         self.tableView.tableFooterView = UIView()
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 72
-        
+        self.tableView.rowHeight = 90
+
         self.tableView.register(
             UINib(nibName: "AcceptedContactCell", bundle: nil),
             forCellReuseIdentifier: "AcceptedContactCell")

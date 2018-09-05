@@ -67,8 +67,8 @@
 		14615407213F68910032EE95 /* AddContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615405213F68910032EE95 /* AddContactVC.swift */; };
 		14615408213F68910032EE95 /* AddContactVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14615406213F68910032EE95 /* AddContactVC.xib */; };
 		1461540A213F7C800032EE95 /* ContactRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615409213F7C800032EE95 /* ContactRequest.swift */; };
-		1461540D213F8AA20032EE95 /* AcceotedContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1461540B213F8AA20032EE95 /* AcceotedContactCell.swift */; };
-		1461540E213F8AA30032EE95 /* AcceotedContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1461540C213F8AA20032EE95 /* AcceotedContactCell.xib */; };
+		1461540D213F8AA20032EE95 /* AcceptedContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1461540B213F8AA20032EE95 /* AcceptedContactCell.swift */; };
+		1461540E213F8AA30032EE95 /* AcceptedContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1461540C213F8AA20032EE95 /* AcceptedContactCell.xib */; };
 		14615411213F8ABA0032EE95 /* RequestedContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1461540F213F8ABA0032EE95 /* RequestedContactCell.swift */; };
 		14615412213F8ABA0032EE95 /* RequestedContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14615410213F8ABA0032EE95 /* RequestedContactCell.xib */; };
 		14615415213F8AC60032EE95 /* RequestingContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615413213F8AC60032EE95 /* RequestingContactCell.swift */; };
@@ -85,6 +85,7 @@
 		147945D7213E80340055CE79 /* UserRemoteSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D6213E80340055CE79 /* UserRemoteSourceImpl.swift */; };
 		147945D9213E80590055CE79 /* UserLocalSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */; };
 		147945DB213E85860055CE79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 147945DA213E85850055CE79 /* GoogleService-Info.plist */; };
+		149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
 		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
 		14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9782136561E00A31FBB /* LoginUseCase.swift */; };
@@ -157,8 +158,8 @@
 		14615405213F68910032EE95 /* AddContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactVC.swift; sourceTree = "<group>"; };
 		14615406213F68910032EE95 /* AddContactVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddContactVC.xib; sourceTree = "<group>"; };
 		14615409213F7C800032EE95 /* ContactRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRequest.swift; sourceTree = "<group>"; };
-		1461540B213F8AA20032EE95 /* AcceotedContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceotedContactCell.swift; sourceTree = "<group>"; };
-		1461540C213F8AA20032EE95 /* AcceotedContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AcceotedContactCell.xib; sourceTree = "<group>"; };
+		1461540B213F8AA20032EE95 /* AcceptedContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptedContactCell.swift; sourceTree = "<group>"; };
+		1461540C213F8AA20032EE95 /* AcceptedContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AcceptedContactCell.xib; sourceTree = "<group>"; };
 		1461540F213F8ABA0032EE95 /* RequestedContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestedContactCell.swift; sourceTree = "<group>"; };
 		14615410213F8ABA0032EE95 /* RequestedContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RequestedContactCell.xib; sourceTree = "<group>"; };
 		14615413213F8AC60032EE95 /* RequestingContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestingContactCell.swift; sourceTree = "<group>"; };
@@ -175,6 +176,7 @@
 		147945D6213E80340055CE79 /* UserRemoteSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemoteSourceImpl.swift; sourceTree = "<group>"; };
 		147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalSourceImpl.swift; sourceTree = "<group>"; };
 		147945DA213E85850055CE79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFirebaseSource.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
 		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		14CEE9782136561E00A31FBB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				14461A7A2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift */,
 				147945D6213E80340055CE79 /* UserRemoteSourceImpl.swift */,
 				147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */,
+				149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -425,8 +428,8 @@
 				14615403213F68770032EE95 /* SearchContactRequest.swift */,
 				14615405213F68910032EE95 /* AddContactVC.swift */,
 				14615406213F68910032EE95 /* AddContactVC.xib */,
-				1461540B213F8AA20032EE95 /* AcceotedContactCell.swift */,
-				1461540C213F8AA20032EE95 /* AcceotedContactCell.xib */,
+				1461540B213F8AA20032EE95 /* AcceptedContactCell.swift */,
+				1461540C213F8AA20032EE95 /* AcceptedContactCell.xib */,
 				1461540F213F8ABA0032EE95 /* RequestedContactCell.swift */,
 				14615410213F8ABA0032EE95 /* RequestedContactCell.xib */,
 				14615413213F8AC60032EE95 /* RequestingContactCell.swift */,
@@ -545,7 +548,7 @@
 				14461A4D21379CAF0062FAC6 /* ChatVC.xib in Resources */,
 				141823592135025700DC0E98 /* Main.storyboard in Resources */,
 				14615408213F68910032EE95 /* AddContactVC.xib in Resources */,
-				1461540E213F8AA30032EE95 /* AcceotedContactCell.xib in Resources */,
+				1461540E213F8AA30032EE95 /* AcceptedContactCell.xib in Resources */,
 				14615412213F8ABA0032EE95 /* RequestedContactCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -656,7 +659,7 @@
 				140C33F82138E1A400DC3535 /* Conversation.swift in Sources */,
 				147945D1213E78CD0055CE79 /* Utils.swift in Sources */,
 				140C34042138EC0700DC3535 /* SeeChatHistoryViewModel.swift in Sources */,
-				1461540D213F8AA20032EE95 /* AcceotedContactCell.swift in Sources */,
+				1461540D213F8AA20032EE95 /* AcceptedContactCell.swift in Sources */,
 				14461A5E21379E620062FAC6 /* SeeContactViewModel.swift in Sources */,
 				143517A621352F200039874F /* LoginViewModel.swift in Sources */,
 				1439D995213660270094C12C /* ObservableType.swift in Sources */,
@@ -670,6 +673,7 @@
 				14461A7B2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift in Sources */,
 				140C34022138E95000DC3535 /* ConversationRepositoryImpl.swift in Sources */,
 				14615402213F686F0032EE95 /* AddContactRequest.swift in Sources */,
+				149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */,
 				14461A762137E8D80062FAC6 /* ContactLocalSource.swift in Sources */,
 				147945C9213E31010055CE79 /* ContactItem.swift in Sources */,
 				141823732135081E00DC0E98 /* ViewModelDelegate.swift in Sources */,

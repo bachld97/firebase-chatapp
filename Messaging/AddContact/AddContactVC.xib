@@ -15,7 +15,7 @@
                 <outlet property="backButton" destination="gQO-8h-1jP" id="boO-zW-oBZ"/>
                 <outlet property="searchButton" destination="YpZ-gm-bAB" id="F0D-gm-ZH2"/>
                 <outlet property="searchQueryTF" destination="W82-Dv-GMM" id="2dg-aa-nUQ"/>
-                <outlet property="tableView" destination="gII-OW-Zng" id="lsQ-je-Z9e"/>
+                <outlet property="tableView" destination="gII-OW-Zng" id="oov-fU-vjO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

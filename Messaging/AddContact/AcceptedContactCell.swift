@@ -1,5 +1,5 @@
 //
-//  RequestingTableViewCell.swift
+//  AcceptedContactCellTableViewCell.swift
 //  Messaging
 //
 //  Created by CPU12071 on 9/5/18.
@@ -8,11 +8,12 @@
 
 import UIKit
 
-class RequestingContactCell: UITableViewCell {
+class AcceptedContactCell: UITableViewCell {
+
     @IBOutlet weak var nameLabel: UILabel!
-    
-    @IBOutlet weak var avaImageView: UIImageView!
     @IBOutlet weak var idLabel: UILabel!
+    @IBOutlet weak var avaImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,6 +25,6 @@ class RequestingContactCell: UITableViewCell {
         let avaUrl = item.contact.userAvatarUrl
         if avaUrl != nil {
             ImageLoader.load(urlString: avaUrl!, into: self.avaImageView)
-        }
+        } 
     }
 }

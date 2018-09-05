@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="avaImageView" destination="4yz-iR-qc6" id="Cgq-L0-N0B"/>
                 <outlet property="goChangePassButton" destination="w7f-Lr-47V" id="G6j-yu-Eif"/>
+                <outlet property="userIdLabel" destination="yDR-A5-kLG" id="WYc-Da-uma"/>
                 <outlet property="usernameLabel" destination="mzy-dL-5Zp" id="4zm-wA-lbi"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -36,9 +37,15 @@
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mzy-dL-5Zp">
-                    <rect key="frame" x="16" y="387" width="343" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <rect key="frame" x="16" y="403" width="343" height="23"/>
+                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
                     <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserId" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDR-A5-kLG">
+                    <rect key="frame" x="32" y="434" width="311" height="20"/>
+                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
@@ -50,8 +57,11 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="mzy-dL-5Zp" secondAttribute="trailing" constant="16" id="AcN-9N-4YD"/>
                 <constraint firstItem="w7f-Lr-47V" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="24" id="B89-wJ-PMu"/>
                 <constraint firstItem="4yz-iR-qc6" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="F6M-dd-dYA"/>
+                <constraint firstItem="yDR-A5-kLG" firstAttribute="top" secondItem="mzy-dL-5Zp" secondAttribute="bottom" constant="8" id="Hcu-U4-Ftr"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="yDR-A5-kLG" secondAttribute="trailing" constant="32" id="UnX-EP-Z1U"/>
                 <constraint firstItem="mzy-dL-5Zp" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="aB8-bq-XDw"/>
-                <constraint firstItem="mzy-dL-5Zp" firstAttribute="top" secondItem="4yz-iR-qc6" secondAttribute="bottom" constant="8" id="sZg-TW-5bE"/>
+                <constraint firstItem="yDR-A5-kLG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="32" id="hDo-IK-vCG"/>
+                <constraint firstItem="mzy-dL-5Zp" firstAttribute="top" secondItem="4yz-iR-qc6" secondAttribute="bottom" constant="24" id="sZg-TW-5bE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="w7f-Lr-47V" secondAttribute="trailing" constant="24" id="sl8-Ks-6xV"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
