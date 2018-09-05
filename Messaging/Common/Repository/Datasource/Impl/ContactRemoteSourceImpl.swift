@@ -1,7 +1,7 @@
 import RxSwift
 
 class ContactRemoteSourceImpl : ContactRemoteSource {
-    func loadContacts() -> Observable<[Contact]?> {
+    func loadContacts(of user: User) -> Observable<[Contact]?> {
         return Observable.just(nil)
     }
     

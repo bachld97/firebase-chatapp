@@ -23,7 +23,8 @@ class ContactRepositoryImpl : ContactRepository {
                         return Observable.error(SessionExpireError())
                     }
                     // TODO: Merge streams from local and remote, diff them.
-                    return self.localSource.loadContacts(of: user)
+                    return self.remoteSource.loadContacts(of: user)
+                    // return self.localSource.loadContacts(of: user)
             }
         }
     }
