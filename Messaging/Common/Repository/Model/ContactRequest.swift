@@ -12,4 +12,5 @@ enum ContactRelation {
     case stranger
     case requesting
     case requested
+    case accepted
 }

@@ -1,39 +1,113 @@
-//
-//  AddContactViewController.swift
-//  Messaging
-//
-//  Created by CPU12071 on 9/5/18.
-//  Copyright © 2018 Le Duy Bach. All rights reserved.
-//
-
+import RxSwift
 import UIKit
+import RxCocoa
+import RxDataSources
 
-class AddContactVC: BaseVC {
+class AddContactVC: BaseVC, ViewFor {
+    var viewModel: AddContactViewModel!
+    
+    typealias ViewModelType = AddContactViewModel
+    private let disposeBag: DisposeBag = DisposeBag()
+    
+    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var searchQueryTF: UITextField!
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
+    
+    private var items: RxTableViewSectionedReloadDataSource<SectionModel<String, AddContactViewModel.Item>>!
     
     class func instance() -> UIViewController {
         return AddContactVC()
     }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.viewModel = AddContactViewModel(displayLogic: self)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    init() {
+        super.init(nibName: "SeeContactVC", bundle: nil)
+        self.viewModel = AddContactViewModel(displayLogic: self)
     }
-    */
-
+    
+    override func prepareUI() {
+        self.tableView.tableFooterView = UIView()
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 72
+        
+        self.tableView.register(
+            UINib(nibName: "AcceptedContactCell", bundle: nil),
+            forCellReuseIdentifier: "AcceptedContactCell")
+        
+        self.tableView.register(
+            UINib(nibName: "RequestingContactCell", bundle: nil),
+            forCellReuseIdentifier: "RequestingContactCell")
+        
+        self.tableView.register(
+            UINib(nibName: "StrangerContactCell", bundle: nil),
+            forCellReuseIdentifier: "StrangerContactCell")
+        
+        self.tableView.register(
+            UINib(nibName: "RequestedContactCell", bundle: nil),
+            forCellReuseIdentifier: "RequestedContactCell")
+        
+        self.items = RxTableViewSectionedReloadDataSource<SectionModel<String, AddContactViewModel.Item>>(configureCell: { (_, tv, ip, item) -> UITableViewCell in
+            switch item {
+            case .accepted(let contactItem):
+                let cell = tv.dequeueReusableCell(withIdentifier: "AcceptedContactCell")
+                    as! AcceptedContactCell
+                cell.bind(item: contactItem)
+                return cell
+                
+            case .requested(let contactItem):
+                let cell = tv.dequeueReusableCell(withIdentifier: "RequestedContactCell")
+                    as! RequestedContactCell
+                cell.bind(item: contactItem)
+                return cell
+                
+            case .requesting(let contactItem):
+                let cell = tv.dequeueReusableCell(withIdentifier: "RequestingContactCell")
+                    as! RequestingContactCell
+                cell.bind(item: contactItem)
+                return cell
+                
+            case .stranger(let contactItem):
+                let cell = tv.dequeueReusableCell(withIdentifier: "StrangerContactCell")
+                    as! StrangerContactCell
+                cell.bind(item: contactItem)
+                return cell
+            }
+        })
+    }
+    
+    override func bindViewModel() {
+        let input = AddContactViewModel.Input(
+            goBackTrigger: self.backButton.rx.tap.asDriver(),
+            searchQuery: self.searchQueryTF.rx.text.orEmpty,
+            searchTrigger: self.searchButton.rx.tap.asDriver())
+        
+        let output = self.viewModel.transform(input: input)
+        
+        output.items
+            .map { [SectionModel(model: "Items", items: $0)]}
+            .drive (self.tableView.rx.items(dataSource: self.items))
+            .disposed(by: self.disposeBag)
+        
+        output.error
+            .drive(onNext: { [unowned self] (error) in
+                self.handleError(e: error)
+            })
+            .disposed(by: self.disposeBag)
+    }
 }
+
+extension AddContactVC : AddContactDisplayLogic {
+    func goBack() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func hideKeyboard() {
+        self.view.resignFirstResponder()
+    }
+}
+

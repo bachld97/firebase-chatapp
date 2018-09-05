@@ -45,7 +45,7 @@ class SeeContactVC: BaseVC, ViewFor {
         
         let input = SeeContactViewModel.Input(
                 trigger: viewWillAppear,
-                reloadTrigger: self.navigationItem.rightBarButtonItem!.rx.tap.asDriver())
+                goAddTrigger: self.navigationItem.rightBarButtonItem!.rx.tap.asDriver())
         
         
         

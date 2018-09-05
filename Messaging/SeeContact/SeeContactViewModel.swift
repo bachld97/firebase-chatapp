@@ -45,29 +45,12 @@ final class SeeContactViewModel : ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
         
-        input.reloadTrigger
-            .flatMap { [unowned self] (_) -> Driver<[Contact]?> in
-                return Observable.deferred {
-                    return self.seeContactUseCase
-                        .execute(request: ())
-                        .do(onNext: { [unowned self] (contacts) in
-                            if contacts != nil {
-                                var items: [ContactItem] = []
-                                items.append(contentsOf: contacts!.map { contact in
-                                    return ContactItem(contact: contact)
-                                })
-                                self.items.accept(items)
-                            } else {
-                                self.displayLogic?.showEmpty()
-                            }
-                        })
-                    }
-                    .trackError(errorTracker)
-                    .asDriverOnErrorJustComplete()
-            }
-            .drive()
+        input.goAddTrigger
+            .drive(onNext: { [unowned self] in
+                self.displayLogic?.goAddContact()
+            })
             .disposed(by: self.disposeBag)
-        
+
         
         return Output(error: errorTracker.asDriver(),
                       items: self.items.asDriver())
@@ -77,7 +60,7 @@ final class SeeContactViewModel : ViewModelDelegate {
 extension SeeContactViewModel {
     public struct Input {
         let trigger: Driver<Void>
-        let reloadTrigger: Driver<Void>
+        let goAddTrigger: Driver<Void>
     }
     
     public struct Output {
