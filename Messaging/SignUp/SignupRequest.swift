@@ -6,7 +6,7 @@ struct SignupRequest {
     func toDictionary() -> [String:Any] {
         return [
             "password" : self.password,
-            "fullname" : self.fullname
+            "full-name" : self.fullname
         ]
     }
     

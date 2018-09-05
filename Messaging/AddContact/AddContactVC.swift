@@ -80,7 +80,12 @@ class AddContactVC: BaseVC, ViewFor {
     }
     
     override func bindViewModel() {
+        let viewWillAppear = self.rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
+        
         let input = AddContactViewModel.Input(
+            trigger: viewWillAppear,
             goBackTrigger: self.backButton.rx.tap.asDriver(),
             searchQuery: self.searchQueryTF.rx.text.orEmpty,
             searchTrigger: self.searchButton.rx.tap.asDriver())
