@@ -1,6 +1,7 @@
 import RxSwift
 
 class ContactRepositoryImpl : ContactRepository {
+
     private let userRepository: UserRepository
     private let remoteSource: ContactRemoteSource
     private let localSource: ContactLocalSource
@@ -13,12 +14,12 @@ class ContactRepositoryImpl : ContactRepository {
         self.localSource = localSource
     }
     
-    func seeContact() -> Observable<[Contact]?> {
+    func seeContact() -> Observable<[Contact]> {
         return Observable.deferred {
             return self.userRepository
                 .getUser()
                 .take(1)
-                .flatMap { [unowned self] (user) -> Observable<[Contact]?> in
+                .flatMap { [unowned self] (user) -> Observable<[Contact]> in
                     guard let user = user else {
                         return Observable.error(SessionExpireError())
                     }
@@ -31,9 +32,18 @@ class ContactRepositoryImpl : ContactRepository {
     
     func searchContact(request: SearchContactRequest) -> Observable<[ContactRequest]> {
         return Observable.deferred {
-            return self.remoteSource.loadUsers(idContains: request.usernameContains)
-                .flatMap { [unowned self] (contacts) in
-                    return self.remoteSource.determineRelation(contacts: contacts)
+            return self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap { [unowned self] (user) -> Observable<[ContactRequest]> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    return self.remoteSource.loadUsers(of: user, idContains: request.usernameContains)
+                        .flatMap { [unowned self] (contacts) in
+                            return self.remoteSource.determineRelation(of: user, withEach: contacts)
+                    }
             }
         }
     }

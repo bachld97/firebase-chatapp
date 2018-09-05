@@ -23,20 +23,16 @@ final class SeeContactViewModel : ViewModelDelegate {
     func transform(input: Input) -> Output {
         let errorTracker = ErrorTracker()
         input.trigger
-            .flatMap { [unowned self] (_) -> Driver<[Contact]?> in
+            .flatMap { [unowned self] (_) -> Driver<[Contact]> in
                 return Observable.deferred { [unowned self] in
                     return self.seeContactUseCase
                         .execute(request: ())
                         .do(onNext: { [unowned self] (contacts) in
-                            if contacts != nil {
-                                var items: [ContactItem] = []
-                                items.append(contentsOf: contacts!.map { contact in
-                                    return ContactItem(contact: contact)
-                                })
-                                self.items.accept(items)
-                            } else {
-                                self.displayLogic?.showEmpty()
-                            }
+                            var items: [ContactItem] = []
+                            items.append(contentsOf: contacts.map { contact in
+                                return ContactItem(contact: contact)
+                            })
+                            self.items.accept(items) 
                         })
                     }
                     .trackError(errorTracker)

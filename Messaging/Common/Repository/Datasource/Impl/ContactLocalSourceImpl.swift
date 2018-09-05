@@ -5,7 +5,7 @@ class ContactLocalSourceImpl : ContactLocalSource {
         return Observable.just(true)
     }
     
-    func loadContacts(of user: User) -> Observable<[Contact]?> {
+    func loadContacts(of user: User) -> Observable<[Contact]> {
         var contacts = [Contact]()
         
         let sampleUrl1 = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Mars_sample_returnjpl.jpg/220px-Mars_sample_returnjpl.jpg"

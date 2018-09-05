@@ -57,7 +57,6 @@
 		14461A742137E8CC0062FAC6 /* ContactRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A732137E8CC0062FAC6 /* ContactRemoteSource.swift */; };
 		14461A762137E8D80062FAC6 /* ContactLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A752137E8D80062FAC6 /* ContactLocalSource.swift */; };
 		14461A792137EA970062FAC6 /* ContactLocalSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */; };
-		14461A7B2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A7A2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift */; };
 		1451585721350BB70038CE74 /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1451585621350BB70038CE74 /* UseCase.swift */; };
 		146153FC213F68450032EE95 /* AddContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FB213F68450032EE95 /* AddContactViewModel.swift */; };
 		146153FE213F68570032EE95 /* AddContactUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FD213F68570032EE95 /* AddContactUseCase.swift */; };
@@ -148,7 +147,6 @@
 		14461A732137E8CC0062FAC6 /* ContactRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactRemoteSource.swift; path = Messaging/Common/Utils/ContactRemoteSource.swift; sourceTree = SOURCE_ROOT; };
 		14461A752137E8D80062FAC6 /* ContactLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactLocalSource.swift; path = Messaging/Common/Utils/ContactLocalSource.swift; sourceTree = SOURCE_ROOT; };
 		14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLocalSourceImpl.swift; sourceTree = "<group>"; };
-		14461A7A2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRemoteSourceImpl.swift; sourceTree = "<group>"; };
 		1451585621350BB70038CE74 /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
 		146153FB213F68450032EE95 /* AddContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewModel.swift; sourceTree = "<group>"; };
 		146153FD213F68570032EE95 /* AddContactUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactUseCase.swift; sourceTree = "<group>"; };
@@ -399,7 +397,6 @@
 			isa = PBXGroup;
 			children = (
 				14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */,
-				14461A7A2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift */,
 				147945D6213E80340055CE79 /* UserRemoteSourceImpl.swift */,
 				147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */,
 				149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */,
@@ -670,7 +667,6 @@
 				14461A6D2137A7E70062FAC6 /* GetUserUseCase.swift in Sources */,
 				14615415213F8AC60032EE95 /* RequestingContactCell.swift in Sources */,
 				14615400213F68650032EE95 /* SearchContactUseCase.swift in Sources */,
-				14461A7B2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift in Sources */,
 				140C34022138E95000DC3535 /* ConversationRepositoryImpl.swift in Sources */,
 				14615402213F686F0032EE95 /* AddContactRequest.swift in Sources */,
 				149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */,

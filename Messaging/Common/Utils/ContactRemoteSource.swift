@@ -1,9 +1,9 @@
 import RxSwift
 
 protocol ContactRemoteSource {
-    func loadContacts(of user: User) -> Observable<[Contact]?>
-    func loadUsers(idContains: String) -> Observable<[Contact]>
-    func determineRelation(contacts: [Contact]) -> Observable<[ContactRequest]>
+    func loadContacts(of user: User) -> Observable<[Contact]>
+    func loadUsers(of user: User, idContains: String) -> Observable<[Contact]>
+    func determineRelation(of user: User, withEach contacts: [Contact]) -> Observable<[ContactRequest]>
 }
 
 class ContactRemoteSourceFactory {
