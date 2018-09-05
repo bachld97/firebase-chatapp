@@ -35,9 +35,9 @@ class AddContactViewModel: ViewModelDelegate {
             .flatMap { [unowned self] (_) -> Driver<[ContactRequest]> in
                 self.displayLogic?.hideKeyboard()
                 return Observable.deferred { [unowned self] in
-                    guard !self.searchQuery.value.isEmpty else {
-                        return Observable.error(EmptyQueryError())
-                    }
+//                    guard !self.searchQuery.value.isEmpty else {
+//                        return Observable.error(EmptyQueryError())
+//                    }
                     
                     return Observable.just(SearchContactRequest(usernameContains: self.searchQuery.value))
                     }

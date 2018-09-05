@@ -81,13 +81,11 @@ class ContactFirebaseSource: ContactRemoteSource {
                 var res = [String]()
                 if let contactDict = snapshot.value as? [String : Any] {
                     contactDict.forEach { (key, value) in
-                        if key.lowercased().contains(idContains.lowercased())
-                            && !key.elementsEqual(user.userId) {
+                        if !key.elementsEqual(user.userId)
+                            && (key.lowercased().contains(idContains.lowercased()) || idContains.isEmpty) {
                             res.append(key)
-                        }
-                        
-                        if let value = value as? [String : String] {
-                            if value["full-name"]?.lowercased()
+                        } else if let value = value as? [String : String] {
+                            if !key.elementsEqual(user.userId) && value["full-name"]?.lowercased()
                                 .contains(idContains.lowercased()) ?? false {
                                 res.append(key)
                             }
