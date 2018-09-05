@@ -16,47 +16,44 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ContactCell" customModule="Messaging" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="71.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Fe-V1-CL7">
-                        <rect key="frame" x="8" y="7" width="56" height="56"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Fe-V1-CL7">
+                        <rect key="frame" x="8" y="8" width="56" height="56"/>
                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="56" id="cJS-wP-GAW"/>
-                            <constraint firstAttribute="width" constant="56" id="lTw-R0-QJu"/>
+                            <constraint firstAttribute="height" constant="56" id="VHx-N0-MZN"/>
+                            <constraint firstAttribute="width" constant="56" id="dxr-If-DMx"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="bachld10832" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiG-Ha-mq1">
-                        <rect key="frame" x="80" y="42" width="208" height="18"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bachld10832" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiG-Ha-mq1">
+                        <rect key="frame" x="80" y="41" width="208" height="18"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="24" id="bDD-BF-tnL"/>
+                            <constraint firstAttribute="height" constant="18" id="JUz-bH-5Ui"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="15"/>
                         <color key="textColor" red="0.55938689720812185" green="0.55938689720812185" blue="0.55938689720812185" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Le Duy Bach" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ih6-qx-SVY">
-                        <rect key="frame" x="80" y="11" width="208" height="23"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="24" id="wJA-xv-BYr"/>
-                        </constraints>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Le Duy Bach" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ih6-qx-SVY">
+                        <rect key="frame" x="80" y="16" width="224" height="23"/>
                         <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="TiG-Ha-mq1" firstAttribute="top" secondItem="Ih6-qx-SVY" secondAttribute="bottom" id="0hH-VK-ank"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="TiG-Ha-mq1" secondAttribute="trailing" constant="16" id="4IL-EF-skA"/>
-                    <constraint firstItem="Ih6-qx-SVY" firstAttribute="leading" secondItem="4Fe-V1-CL7" secondAttribute="trailing" constant="16" id="BzV-PP-pRK"/>
-                    <constraint firstItem="4Fe-V1-CL7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="HdA-AQ-n5M"/>
-                    <constraint firstItem="4Fe-V1-CL7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="P1B-4o-1SQ"/>
-                    <constraint firstAttribute="bottom" secondItem="4Fe-V1-CL7" secondAttribute="bottom" constant="8" id="QPU-Le-v3J"/>
-                    <constraint firstItem="TiG-Ha-mq1" firstAttribute="leading" secondItem="4Fe-V1-CL7" secondAttribute="trailing" constant="16" id="adK-hZ-uLS"/>
-                    <constraint firstItem="Ih6-qx-SVY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="ajt-z8-1sT"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Ih6-qx-SVY" secondAttribute="trailing" constant="16" id="uio-2A-lJ1"/>
+                    <constraint firstItem="Ih6-qx-SVY" firstAttribute="leading" secondItem="4Fe-V1-CL7" secondAttribute="trailing" constant="16" id="5yI-Gc-rjn"/>
+                    <constraint firstItem="TiG-Ha-mq1" firstAttribute="top" secondItem="Ih6-qx-SVY" secondAttribute="bottom" constant="2" id="8MP-H7-60T"/>
+                    <constraint firstItem="4Fe-V1-CL7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Itd-Am-pIg"/>
+                    <constraint firstItem="TiG-Ha-mq1" firstAttribute="leading" secondItem="4Fe-V1-CL7" secondAttribute="trailing" constant="16" id="Nxb-nv-jYT"/>
+                    <constraint firstAttribute="bottom" secondItem="4Fe-V1-CL7" secondAttribute="bottom" constant="8" id="Rrt-Jd-X8p"/>
+                    <constraint firstItem="Ih6-qx-SVY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="enD-Y9-P46"/>
+                    <constraint firstAttribute="trailing" secondItem="Ih6-qx-SVY" secondAttribute="trailing" constant="16" id="hXh-SZ-ftV"/>
+                    <constraint firstItem="4Fe-V1-CL7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="itd-k6-L4K"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="TiG-Ha-mq1" secondAttribute="trailing" constant="16" id="rDQ-kO-lI1"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -65,6 +62,7 @@
                 <outlet property="fullnameLabel" destination="Ih6-qx-SVY" id="wib-Am-rRa"/>
                 <outlet property="usernameLabel" destination="TiG-Ha-mq1" id="Pme-fb-vCi"/>
             </connections>
+            <point key="canvasLocation" x="25" y="54"/>
         </tableViewCell>
     </objects>
 </document>

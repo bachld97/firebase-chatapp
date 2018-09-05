@@ -93,4 +93,9 @@ extension SeeContactVC : SeeContactDisplayLogic {
     func showEmpty() {
         print("Empty")
     }
+    
+    func goAddContact() {
+        let vc = AddContactVC.instance()
+        present(vc, animated: true, completion: nil)
+    }
 }

@@ -27,4 +27,13 @@ class ContactRepositoryImpl : ContactRepository {
             }
         }
     }
+    
+    func searchContact(request: SearchContactRequest) -> Observable<[ContactRequest]> {
+        return Observable.deferred {
+            return self.remoteSource.loadUsers(idContains: request.usernameContains)
+                .flatMap { [unowned self] (contacts) in
+                    return self.remoteSource.determineRelation(contacts: contacts)
+            }
+        }
+    }
 }

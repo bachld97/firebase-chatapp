@@ -59,6 +59,14 @@
 		14461A792137EA970062FAC6 /* ContactLocalSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */; };
 		14461A7B2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A7A2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift */; };
 		1451585721350BB70038CE74 /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1451585621350BB70038CE74 /* UseCase.swift */; };
+		146153FC213F68450032EE95 /* AddContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FB213F68450032EE95 /* AddContactViewModel.swift */; };
+		146153FE213F68570032EE95 /* AddContactUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FD213F68570032EE95 /* AddContactUseCase.swift */; };
+		14615400213F68650032EE95 /* SearchContactUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FF213F68650032EE95 /* SearchContactUseCase.swift */; };
+		14615402213F686F0032EE95 /* AddContactRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615401213F686F0032EE95 /* AddContactRequest.swift */; };
+		14615404213F68770032EE95 /* SearchContactRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615403213F68770032EE95 /* SearchContactRequest.swift */; };
+		14615407213F68910032EE95 /* AddContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615405213F68910032EE95 /* AddContactVC.swift */; };
+		14615408213F68910032EE95 /* AddContactVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14615406213F68910032EE95 /* AddContactVC.xib */; };
+		1461540A213F7C800032EE95 /* ContactRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615409213F7C800032EE95 /* ContactRequest.swift */; };
 		147945C9213E31010055CE79 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945C8213E31010055CE79 /* ContactItem.swift */; };
 		147945CC213E31830055CE79 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945CA213E31830055CE79 /* ContactCell.swift */; };
 		147945CD213E31830055CE79 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 147945CB213E31830055CE79 /* ContactCell.xib */; };
@@ -133,6 +141,14 @@
 		14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLocalSourceImpl.swift; sourceTree = "<group>"; };
 		14461A7A2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRemoteSourceImpl.swift; sourceTree = "<group>"; };
 		1451585621350BB70038CE74 /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
+		146153FB213F68450032EE95 /* AddContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewModel.swift; sourceTree = "<group>"; };
+		146153FD213F68570032EE95 /* AddContactUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactUseCase.swift; sourceTree = "<group>"; };
+		146153FF213F68650032EE95 /* SearchContactUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactUseCase.swift; sourceTree = "<group>"; };
+		14615401213F686F0032EE95 /* AddContactRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactRequest.swift; sourceTree = "<group>"; };
+		14615403213F68770032EE95 /* SearchContactRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactRequest.swift; sourceTree = "<group>"; };
+		14615405213F68910032EE95 /* AddContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactVC.swift; sourceTree = "<group>"; };
+		14615406213F68910032EE95 /* AddContactVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddContactVC.xib; sourceTree = "<group>"; };
+		14615409213F7C800032EE95 /* ContactRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRequest.swift; sourceTree = "<group>"; };
 		147945C8213E31010055CE79 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
 		147945CA213E31830055CE79 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		147945CB213E31830055CE79 /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
@@ -187,6 +203,7 @@
 		141823522135025700DC0E98 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
+				146153FA213F68350032EE95 /* AddContact */,
 				1418236C2135072000DC0E98 /* Login */,
 				143517A421352E6B0039874F /* SignUp */,
 				141823652135055E00DC0E98 /* Main */,
@@ -377,8 +394,23 @@
 				14CEE97121363C2200A31FBB /* User.swift */,
 				14461A652137A3C60062FAC6 /* Contact.swift */,
 				140C33F72138E1A400DC3535 /* Conversation.swift */,
+				14615409213F7C800032EE95 /* ContactRequest.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		146153FA213F68350032EE95 /* AddContact */ = {
+			isa = PBXGroup;
+			children = (
+				146153FB213F68450032EE95 /* AddContactViewModel.swift */,
+				146153FD213F68570032EE95 /* AddContactUseCase.swift */,
+				146153FF213F68650032EE95 /* SearchContactUseCase.swift */,
+				14615401213F686F0032EE95 /* AddContactRequest.swift */,
+				14615403213F68770032EE95 /* SearchContactRequest.swift */,
+				14615405213F68910032EE95 /* AddContactVC.swift */,
+				14615406213F68910032EE95 /* AddContactVC.xib */,
+			);
+			path = AddContact;
 			sourceTree = "<group>";
 		};
 		14CEE975213655E600A31FBB /* Utils */ = {
@@ -486,6 +518,7 @@
 				1418235B2135025800DC0E98 /* Assets.xcassets in Resources */,
 				14461A4D21379CAF0062FAC6 /* ChatVC.xib in Resources */,
 				141823592135025700DC0E98 /* Main.storyboard in Resources */,
+				14615408213F68910032EE95 /* AddContactVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,12 +591,14 @@
 				1439D99721367FD30094C12C /* MyErrors.swift in Sources */,
 				1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */,
 				14461A5B21379DFF0062FAC6 /* SeeConversationVC.swift in Sources */,
+				14615407213F68910032EE95 /* AddContactVC.swift in Sources */,
 				1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */,
 				140C340C2139242000DC3535 /* ChangePassUseCase.swift in Sources */,
 				14461A5421379CDD0062FAC6 /* MainVC.swift in Sources */,
 				1451585721350BB70038CE74 /* UseCase.swift in Sources */,
 				140C34002138E69200DC3535 /* ConversationRepository.swift in Sources */,
 				140C340A2139241600DC3535 /* ChangePassRequest.swift in Sources */,
+				146153FC213F68450032EE95 /* AddContactViewModel.swift in Sources */,
 				143517A121352D3C0039874F /* BaseVC.swift in Sources */,
 				140C34082139240600DC3535 /* ChangePassVIewModel.swift in Sources */,
 				14461A662137A3C60062FAC6 /* Contact.swift in Sources */,
@@ -578,10 +613,12 @@
 				14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */,
 				14CEE9822136584900A31FBB /* UserRepositoryImpl.swift in Sources */,
 				147945D3213E7FB70055CE79 /* UserLocalSource.swift in Sources */,
+				146153FE213F68570032EE95 /* AddContactUseCase.swift in Sources */,
 				14461A5821379CEC0062FAC6 /* SeeProfileVC.swift in Sources */,
 				14461A722137AD5B0062FAC6 /* ErrorTracker.swift in Sources */,
 				14461A642137A1650062FAC6 /* SeeContactUseCase.swift in Sources */,
 				140C340F2139243100DC3535 /* ChangePassVC.swift in Sources */,
+				1461540A213F7C800032EE95 /* ContactRequest.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
 				147945D7213E80340055CE79 /* UserRemoteSourceImpl.swift in Sources */,
 				140C33F22138D37900DC3535 /* SeeProfileViewModel.swift in Sources */,
@@ -593,11 +630,14 @@
 				14461A5E21379E620062FAC6 /* SeeContactViewModel.swift in Sources */,
 				143517A621352F200039874F /* LoginViewModel.swift in Sources */,
 				1439D995213660270094C12C /* ObservableType.swift in Sources */,
+				14615404213F68770032EE95 /* SearchContactRequest.swift in Sources */,
 				140C33FC2138E52100DC3535 /* SeeChatHistoryUseCase.swift in Sources */,
 				14461A792137EA970062FAC6 /* ContactLocalSourceImpl.swift in Sources */,
 				14461A6D2137A7E70062FAC6 /* GetUserUseCase.swift in Sources */,
+				14615400213F68650032EE95 /* SearchContactUseCase.swift in Sources */,
 				14461A7B2137ECCC0062FAC6 /* ContactRemoteSourceImpl.swift in Sources */,
 				140C34022138E95000DC3535 /* ConversationRepositoryImpl.swift in Sources */,
+				14615402213F686F0032EE95 /* AddContactRequest.swift in Sources */,
 				14461A762137E8D80062FAC6 /* ContactLocalSource.swift in Sources */,
 				147945C9213E31010055CE79 /* ContactItem.swift in Sources */,
 				141823732135081E00DC0E98 /* ViewModelDelegate.swift in Sources */,

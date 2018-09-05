@@ -44,7 +44,7 @@ class LoginVC : BaseVC, ViewFor {
         let viewWillAppear = self.rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
                 .mapToVoid()
                 .asDriverOnErrorJustComplete()
-        
+
         let input = LoginViewModel.Input(
             trigger: viewWillAppear,
             signUpTrigger: self.navigationItem.rightBarButtonItem!.rx.tap.asDriver(),

@@ -6,6 +6,8 @@ class SimpleError : Error {
     }
 }
 
+class EmptyQueryError: Error {}
+
 class SessionExpireError: Error {}
 
 class AccountNotFoundError: SimpleError {
