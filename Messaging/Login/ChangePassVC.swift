@@ -58,6 +58,23 @@ extension ChangePassVC :  ChangePassDisplayLogic {
         self.dismiss(animated: true, completion: nil)
     }
     
+    func showSuccess() {
+        let alertController = UIAlertController(
+            title: "Password changed",
+            message: "Your password has been changed successfully.",
+            preferredStyle: .alert)
+        let defaultAction = UIAlertAction(
+            title: "Got it!",
+            style: .cancel,
+            handler: { [unowned self] (_) in
+                self.goBack()
+        })
+        
+        alertController.addAction(defaultAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     func showFail() {
         self.view.makeToast("Cannot change password. The old password is not correct", duration: 3.0, position: CSToastPositionBottom)
     }

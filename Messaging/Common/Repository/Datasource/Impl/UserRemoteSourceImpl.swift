@@ -7,6 +7,34 @@ class UserFirebaseSource : UserRemoteSource {
     init() {
         ref = Database.database().reference()
     }
+    
+    func changePassword(of user: User, request: ChangePassRequest) -> Observable<Bool> {
+        return Observable.create { [unowned self] (observer) -> Disposable in
+            
+            let dbRequest = self.ref.child("users/\(user.userId)")
+                .observe(.value, with: { (snapshot) in
+                    guard (snapshot.childSnapshot(forPath: "password")
+                        .value as! String).elementsEqual(request.oldPass) else {
+                            observer.onError(WrongOldPasswordError())
+                            observer.onCompleted()
+                            return
+                    }
+                    
+                    self.ref.child("users/\(user.userId)")
+                        .updateChildValues(["password" : request.newPass])
+                    
+                    observer.onNext(true)
+                    observer.onCompleted()
+                }) { (error) in
+                    observer.onError(error)
+            }
+
+            return Disposables.create { [unowned self] in
+                self.ref.child("user/\(user.userId)")
+                    .removeObserver(withHandle: dbRequest)
+            }
+        }
+    }
 
     func login(request: LoginRequest) -> Observable<User> {
         return Observable.create { [unowned self] (observer) -> Disposable in

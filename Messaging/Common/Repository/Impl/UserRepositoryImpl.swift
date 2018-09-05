@@ -12,7 +12,7 @@ class UserRepositoryImpl : UserRepository {
     }
 
     func login(request: LoginRequest) -> Observable<Bool>{
-        return Observable.deferred {
+        return Observable.deferred { [unowned self] in
             return self.remoteSource
                 .login(request: request)
                 .flatMap { [unowned self] (user) -> Observable<Bool> in
@@ -23,7 +23,7 @@ class UserRepositoryImpl : UserRepository {
     }
     
     func signup(request: SignupRequest) -> Observable<Bool> {
-        return Observable.deferred {
+        return Observable.deferred { [unowned self] in
             return self.remoteSource
                 .signup(request: request)
                 .flatMap { [unowned self] (user) -> Observable<Bool> in
@@ -40,8 +40,8 @@ class UserRepositoryImpl : UserRepository {
     }
     
     func logout() -> Observable<Bool> {
-        return Observable.deferred {
-            return Observable.just(true)
+        return Observable.deferred { [unowned self] in
+            return self.localSource.removeUser()
         }
     }
     
@@ -52,8 +52,16 @@ class UserRepositoryImpl : UserRepository {
     }
     
     func changePassword(request: ChangePassRequest) -> Observable<Bool> {
-        return Observable.deferred {
-            return Observable.just(true)
+        return Observable.deferred { [unowned self] in
+            return self.localSource
+                .getUser()
+                .take(1)
+                .flatMap { [unowned self] (user) -> Observable<Bool> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    return self.remoteSource.changePassword(of: user, request: request)
+            }
         }
     }
 }

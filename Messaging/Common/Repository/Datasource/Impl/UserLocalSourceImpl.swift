@@ -17,4 +17,9 @@ class UserLocalSourceImpl : UserLocalSource {
         let sampleUrl = "https://3.img-dpreview.com/files/p/E~TS590x0~articles/8692662059/8283897908.jpeg"
         return Observable.just(User(userId: "bachld10832", userName: "Le Duy Bach", userAvatarUrl: sampleUrl))
     }
+    
+    func removeUser() -> Observable<Bool> {
+        user = nil
+        return Observable.just(true)
+    }
 }

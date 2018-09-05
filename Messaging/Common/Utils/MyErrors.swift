@@ -16,6 +16,11 @@ class AccountNotFoundError: SimpleError {
     }
 }
 
+class WrongOldPasswordError: SimpleError {
+    init() {
+        super.init(message: "Change password failed. The password you entered is not correct.")
+    }
+}
 
 class WrongLoginInformationError: SimpleError {
     init() {

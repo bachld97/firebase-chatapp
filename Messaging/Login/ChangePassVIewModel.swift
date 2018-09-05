@@ -4,6 +4,7 @@ import RxCocoa
 protocol ChangePassDisplayLogic : class {
     func goBack()
     func showFail()
+    func showSuccess()
 }
 
 class ChangePassViewModel: ViewModelDelegate {
@@ -12,9 +13,9 @@ class ChangePassViewModel: ViewModelDelegate {
     private weak var displayLogic: ChangePassDisplayLogic?
     private let changePassUseCase = ChangePassUseCase()
     
-    private let oldPassword = BehaviorRelay<String>(value: "112")
-    private let newPassword = BehaviorRelay<String>(value: "222")
-    private let confirmPassword = BehaviorRelay<String>(value: "883")
+    private let oldPassword = BehaviorRelay<String>(value: "")
+    private let newPassword = BehaviorRelay<String>(value: "")
+    private let confirmPassword = BehaviorRelay<String>(value: "")
     
     init(displayLogic: ChangePassDisplayLogic) {
         self.displayLogic = displayLogic
@@ -55,7 +56,7 @@ class ChangePassViewModel: ViewModelDelegate {
                         .execute(request: request)
                         .do(onNext: { [unowned self] (success) in
                             if success {
-                                self.displayLogic?.goBack()
+                                self.displayLogic?.showSuccess()
                             } else {
                                 self.displayLogic?.showFail()
                             }

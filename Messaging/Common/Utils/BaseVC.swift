@@ -32,7 +32,7 @@ class BaseVC : UIViewController {
             preferredStyle: .alert)
         let defaultAction = UIAlertAction(
             title: "Logout",
-            style: .default,
+            style: .cancel,
             handler: { [unowned self] (_) in
                 self.doLogout()
         })
