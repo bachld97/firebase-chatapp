@@ -1,7 +1,7 @@
 struct SearchContactRequest {
-    let usernameContains: String
+    let searchString: String
     
-    init(usernameContains: String) {
-        self.usernameContains = usernameContains
+    init(searchString: String) {
+        self.searchString = searchString
     }
 }

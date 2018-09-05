@@ -40,7 +40,7 @@ class ContactRepositoryImpl : ContactRepository {
                         return Observable.error(SessionExpireError())
                     }
                     
-                    return self.remoteSource.loadUsers(of: user, idContains: request.usernameContains)
+                    return self.remoteSource.loadUsers(of: user, with: request.searchString)
                         .flatMap { [unowned self] (contacts) in
                             return self.remoteSource.determineRelation(of: user, withEach: contacts)
                     }

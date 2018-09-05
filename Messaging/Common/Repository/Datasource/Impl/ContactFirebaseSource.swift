@@ -68,7 +68,7 @@ class ContactFirebaseSource: ContactRemoteSource {
         }
     }
     
-    func loadUsers(of user: User, idContains: String) -> Observable<[Contact]> {
+    func loadUsers(of user: User, with searchString: String) -> Observable<[Contact]> {
         // Go into users, filter keys
         return Observable.create { [unowned self] (observer) in
             let dbRequest = self.ref.child("users").observe(.value, with: { (snapshot) in
@@ -82,11 +82,11 @@ class ContactFirebaseSource: ContactRemoteSource {
                 if let contactDict = snapshot.value as? [String : Any] {
                     contactDict.forEach { (key, value) in
                         if !key.elementsEqual(user.userId)
-                            && (key.lowercased().contains(idContains.lowercased()) || idContains.isEmpty) {
+                            && (key.lowercased().contains(searchString.lowercased()) || searchString.isEmpty) {
                             res.append(key)
                         } else if let value = value as? [String : String] {
                             if !key.elementsEqual(user.userId) && value["full-name"]?.lowercased()
-                                .contains(idContains.lowercased()) ?? false {
+                                .contains(searchString.lowercased()) ?? false {
                                 res.append(key)
                             }
                         }

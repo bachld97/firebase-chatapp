@@ -39,7 +39,7 @@ class AddContactViewModel: ViewModelDelegate {
 //                        return Observable.error(EmptyQueryError())
 //                    }
                     
-                    return Observable.just(SearchContactRequest(usernameContains: self.searchQuery.value))
+                    return Observable.just(SearchContactRequest(searchString: self.searchQuery.value))
                     }
                     .flatMap { [unowned self] (request) -> Observable<[ContactRequest]> in
                         return self.searchContactUseCase.execute(request: request)
