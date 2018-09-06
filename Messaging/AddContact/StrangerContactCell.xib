@@ -62,6 +62,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="addFriendButton" destination="Vlf-AE-SB8" id="sfS-J1-cur"/>
                 <outlet property="avaImageView" destination="edW-42-T8R" id="pp6-ie-pol"/>
                 <outlet property="idLabel" destination="h0Z-9B-hd0" id="W95-gz-yIo"/>
                 <outlet property="nameLabel" destination="vK6-6L-5Rw" id="L3M-rG-Eya"/>

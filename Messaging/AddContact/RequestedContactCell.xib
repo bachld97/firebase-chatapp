@@ -71,7 +71,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="acceptButton" destination="YE1-UV-6k2" id="jwO-IF-tVf"/>
                 <outlet property="avaImageView" destination="NQ1-QN-4GW" id="vJZ-52-me4"/>
+                <outlet property="cancelButton" destination="m2P-PI-zYp" id="3mp-yn-CT3"/>
                 <outlet property="idLabel" destination="VqC-zh-qEA" id="Gj0-gv-UmW"/>
                 <outlet property="nameLabel" destination="mGt-Ra-uOx" id="7ZA-JB-a1r"/>
             </connections>

@@ -64,6 +64,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="avaImageView" destination="5DR-Te-tqe" id="2kt-Eb-yYl"/>
+                <outlet property="cancelButton" destination="dy9-Lk-zLx" id="UqF-Y6-WAB"/>
                 <outlet property="idLabel" destination="qJA-7u-DE5" id="8Ti-9U-FPu"/>
                 <outlet property="nameLabel" destination="8fi-fp-lNC" id="u5F-Qn-SAa"/>
             </connections>
