@@ -204,6 +204,4 @@ class ContactFirebaseSource: ContactRemoteSource {
     func removeFriend(of user: User, for contact: Contact) -> Observable<Bool> {
         return changeRelationship(between: user, and: contact, newRelationship: "stranger")
     }
-    
-
 }

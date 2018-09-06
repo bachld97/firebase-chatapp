@@ -30,11 +30,12 @@ class SeeContactVC: BaseVC, ViewFor {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.title = "Contacts"
         
-        let retryImg = UIImage(named: "ic_reload")?.withRenderingMode(.alwaysOriginal)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: retryImg,
-                                                                 style: .plain,
-                                                                 target: nil,
-                                                                 action: nil)
+        let retryImg = UIImage(named: "ic_search_user")?.withRenderingMode(.alwaysOriginal)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: retryImg,
+            style: .plain,
+            target: nil,
+            action: nil)
         super.viewDidLoad()
     }
     
