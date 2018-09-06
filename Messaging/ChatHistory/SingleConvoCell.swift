@@ -10,11 +10,19 @@ import UIKit
 
 class SingleConvoCell: UITableViewCell {
 
+    @IBOutlet weak var convoNameLabel: UILabel!
+    @IBOutlet weak var lastMessContentLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var avaImageView: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
 
     func bind(convoItem: ConversationItem) {
-        
+        let senderId = convoItem.conversation.lastMessDict["sent-by"] ?? "Unknown user"
+        convoNameLabel.text = convoItem.conversation.nicknameDict[senderId] ?? senderId
+        timeLabel.text = convoItem.conversation.lastMessDict["at-time"] ?? ""
+        lastMessContentLabel.text = convoItem.conversation.lastMessDict["content"] ?? "No content"
     }
 }

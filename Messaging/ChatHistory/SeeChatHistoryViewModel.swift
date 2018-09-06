@@ -40,7 +40,7 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
                             })
                             
                             self.items.accept(items)
-                        })
+                        }) 
                 }
                 .trackError(errorTracker)
                 .asDriverOnErrorJustComplete()
