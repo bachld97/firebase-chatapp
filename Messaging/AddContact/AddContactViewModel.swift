@@ -119,7 +119,59 @@ class AddContactViewModel: ViewModelDelegate {
             })
             .disposed(by: self.disposeBag)
  
+        input.acceptTrigger
+            .flatMap { [unowned self] (contactItem) -> Driver<Bool> in
+                return self.acceptRequestUseCase
+                    .execute(request: AcceptFriendRequest(acceptedContact: contactItem.contact))
+                    .do(onNext: { [unowned self] (result) in
+                        // TODO: Update UI?
+                    })
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
 
+
+        input.addTrigger
+            .flatMap { [unowned self] (contactItem) -> Driver<Bool> in
+                return self.sendRequestUseCase
+                    .execute(request: AddFriendRequest(contactToAdd: contactItem.contact))
+                    .do(onNext: { [unowned self] (result) in
+                        // TODO: Update UI?
+                    })
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
+        input.cancelTrigger
+            .flatMap { [unowned self] (contactItem) -> Driver<Bool> in
+                return self.cancelRequestUseCase
+                    .execute(request: CancelFriendRequest(canceledContact: contactItem.contact))
+                    .do(onNext: { [unowned self] (result) in
+                        // TODO: Update UI?
+                    })
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
+        input.unfriendTrigger
+            .flatMap { [unowned self] (contactItem) -> Driver<Bool> in
+                return self.unfriendUseCase
+                    .execute(request: UnfriendRequest(contactToRemove: contactItem.contact))
+                    .do(onNext: { [unowned self] (result) in
+                        // TODO: Update UI?
+                    })
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
         return Output(
             error: errorTracker.asDriver(),
             items: self.items.asDriver())

@@ -1,7 +1,6 @@
 import RxSwift
 
 class ContactRepositoryImpl : ContactRepository {
-
     private let userRepository: UserRepository
     private let remoteSource: ContactRemoteSource
     private let localSource: ContactLocalSource
