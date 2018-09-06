@@ -12,6 +12,7 @@ class RequestedContactCell: UITableViewCell {
     
     private var contactItem: ContactItem?
     private var disposeBag = DisposeBag()
+    private var imageTask: URLSessionTask?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,7 +29,9 @@ class RequestedContactCell: UITableViewCell {
         nameLabel.text = item.contact.userName
         idLabel.text = item.contact.userId
         let avaUrl = item.contact.userAvatarUrl
-        ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
+        
+        imageTask?.cancel()
+        imageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
 
         acceptButton.rx.tap.asDriver()
             .drive(onNext: { [unowned self] in

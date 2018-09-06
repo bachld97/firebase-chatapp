@@ -15,6 +15,7 @@ class ContactCell: UITableViewCell {
     @IBOutlet weak var fullnameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var avaImageView: UIImageView!
+    private var imageTask: URLSessionTask?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,8 +27,8 @@ class ContactCell: UITableViewCell {
         self.usernameLabel.text = item.contact.userId
         
         let avaUrl = item.contact.userAvatarUrl
-        if avaUrl != nil {
-            ImageLoader.load(urlString: avaUrl!, into: self.avaImageView)
-        }
+        
+        imageTask?.cancel()
+        imageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
     }
 }

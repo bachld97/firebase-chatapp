@@ -5,6 +5,8 @@ import RxSwift
 import UIKit
 
 class SeeProfileVC : BaseVC , ViewFor {
+    private var imageTask: URLSessionTask?
+    
     var viewModel: SeeProfileViewModel!
     private let disposeBag = DisposeBag()
     @IBOutlet weak var usernameLabel: UILabel!
@@ -68,6 +70,7 @@ class SeeProfileVC : BaseVC , ViewFor {
 
 
 extension SeeProfileVC : SeeProfileDisplayLogic {
+
     func goChangePass() {
         let vc = ChangePassVC.instance()
         self.present(vc, animated: true, completion: nil)
@@ -82,7 +85,8 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
             return
         }
         
-        ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
+        imageTask?.cancel()
+        imageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
     }
     
     func logout() {

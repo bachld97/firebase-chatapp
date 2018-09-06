@@ -6,7 +6,6 @@ protocol SeeChatHistoryDisplayLogic: class {
     func showEmpty()
     func showChatHistory(conversations: [Conversation]?)
 }
-
 class SeeChatHistoryViewModel: ViewModelDelegate {
     
     init(displayLogic: SeeChatHistoryDisplayLogic) {
@@ -22,16 +21,12 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
         let errorTracker = ErrorTracker()
         
         input.trigger
-            .flatMap { [unowned self] (_) -> Driver<[Conversation]?> in
+            .flatMap { [unowned self] (_) -> Driver<[Conversation]> in
                 return Observable.deferred { [unowned self] in
                     return self.seeChatHistoryUseCase
                         .execute(request: ())
                         .do(onNext: { [unowned self] (conversations) in
-                            if conversations != nil {
-                                self.displayLogic?.showChatHistory(conversations: conversations!)
-                            } else {
-                                self.displayLogic?.showEmpty()
-                            }
+                            // TODO: Inflate the table
                         })
                 }
                 .trackError(errorTracker)
@@ -41,16 +36,12 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
         .disposed(by: self.disposeBag)
         
         input.reloadTrigger
-            .flatMap { [unowned self] (_) -> Driver<[Conversation]?> in
+            .flatMap { [unowned self] (_) -> Driver<[Conversation]> in
                 return Observable.deferred { [unowned self] in
                     return self.seeChatHistoryUseCase
                         .execute(request: ())
                         .do(onNext: { [unowned self] (conversations) in
-                            if conversations != nil {
-                                self.displayLogic?.showChatHistory(conversations: conversations!)
-                            } else {
-                                self.displayLogic?.showEmpty()
-                            }
+                            // TODO: Inflate the table
                         })
                     }
                     .trackError(errorTracker)

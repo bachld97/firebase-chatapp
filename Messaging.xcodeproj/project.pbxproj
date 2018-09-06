@@ -81,7 +81,7 @@
 		147945D1213E78CD0055CE79 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D0213E78CD0055CE79 /* Utils.swift */; };
 		147945D3213E7FB70055CE79 /* UserLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D2213E7FB70055CE79 /* UserLocalSource.swift */; };
 		147945D5213E80050055CE79 /* UserRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D4213E80050055CE79 /* UserRemoteSource.swift */; };
-		147945D7213E80340055CE79 /* UserRemoteSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D6213E80340055CE79 /* UserRemoteSourceImpl.swift */; };
+		147945D7213E80340055CE79 /* UserFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D6213E80340055CE79 /* UserFirebaseSource.swift */; };
 		147945D9213E80590055CE79 /* UserLocalSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */; };
 		147945DB213E85860055CE79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 147945DA213E85850055CE79 /* GoogleService-Info.plist */; };
 		14848ACB2140C7FC00DAA9F8 /* AcceptRequestUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ACA2140C7FC00DAA9F8 /* AcceptRequestUseCase.swift */; };
@@ -92,6 +92,9 @@
 		14848AD52140C88A00DAA9F8 /* CancelFriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848AD42140C88A00DAA9F8 /* CancelFriendRequest.swift */; };
 		14848AD72140C89500DAA9F8 /* AddFriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848AD62140C89500DAA9F8 /* AddFriendRequest.swift */; };
 		14848AD92140C89D00DAA9F8 /* UnfriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848AD82140C89D00DAA9F8 /* UnfriendRequest.swift */; };
+		14848ADB214113C300DAA9F8 /* ConversationLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADA214113C300DAA9F8 /* ConversationLocalSource.swift */; };
+		14848ADD2141140E00DAA9F8 /* ConversationRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADC2141140E00DAA9F8 /* ConversationRemoteSource.swift */; };
+		14848ADF2141149D00DAA9F8 /* ConversationFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */; };
 		149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
 		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
@@ -179,7 +182,7 @@
 		147945D0213E78CD0055CE79 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		147945D2213E7FB70055CE79 /* UserLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalSource.swift; sourceTree = "<group>"; };
 		147945D4213E80050055CE79 /* UserRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemoteSource.swift; sourceTree = "<group>"; };
-		147945D6213E80340055CE79 /* UserRemoteSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemoteSourceImpl.swift; sourceTree = "<group>"; };
+		147945D6213E80340055CE79 /* UserFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFirebaseSource.swift; sourceTree = "<group>"; };
 		147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalSourceImpl.swift; sourceTree = "<group>"; };
 		147945DA213E85850055CE79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14848ACA2140C7FC00DAA9F8 /* AcceptRequestUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptRequestUseCase.swift; sourceTree = "<group>"; };
@@ -190,6 +193,9 @@
 		14848AD42140C88A00DAA9F8 /* CancelFriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelFriendRequest.swift; sourceTree = "<group>"; };
 		14848AD62140C89500DAA9F8 /* AddFriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendRequest.swift; sourceTree = "<group>"; };
 		14848AD82140C89D00DAA9F8 /* UnfriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfriendRequest.swift; sourceTree = "<group>"; };
+		14848ADA214113C300DAA9F8 /* ConversationLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationLocalSource.swift; sourceTree = "<group>"; };
+		14848ADC2141140E00DAA9F8 /* ConversationRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRemoteSource.swift; sourceTree = "<group>"; };
+		14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFirebaseSource.swift; sourceTree = "<group>"; };
 		149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFirebaseSource.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
 		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -287,6 +293,8 @@
 				14461A752137E8D80062FAC6 /* ContactLocalSource.swift */,
 				147945D2213E7FB70055CE79 /* UserLocalSource.swift */,
 				147945D4213E80050055CE79 /* UserRemoteSource.swift */,
+				14848ADA214113C300DAA9F8 /* ConversationLocalSource.swift */,
+				14848ADC2141140E00DAA9F8 /* ConversationRemoteSource.swift */,
 			);
 			path = Datasource;
 			sourceTree = "<group>";
@@ -413,9 +421,10 @@
 			isa = PBXGroup;
 			children = (
 				14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */,
-				147945D6213E80340055CE79 /* UserRemoteSourceImpl.swift */,
+				147945D6213E80340055CE79 /* UserFirebaseSource.swift */,
 				147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */,
 				149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */,
+				14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */,
 			);
 			path = Impl;
 			sourceTree = "<group>";
@@ -701,10 +710,12 @@
 				140C340F2139243100DC3535 /* ChangePassVC.swift in Sources */,
 				1461540A213F7C800032EE95 /* ContactRequest.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
-				147945D7213E80340055CE79 /* UserRemoteSourceImpl.swift in Sources */,
+				147945D7213E80340055CE79 /* UserFirebaseSource.swift in Sources */,
 				140C33F22138D37900DC3535 /* SeeProfileViewModel.swift in Sources */,
 				1439D99921369D1B0094C12C /* SignupUseCase.swift in Sources */,
 				14461A5221379CC40062FAC6 /* SeeContactVC.swift in Sources */,
+				14848ADB214113C300DAA9F8 /* ConversationLocalSource.swift in Sources */,
+				14848ADF2141149D00DAA9F8 /* ConversationFirebaseSource.swift in Sources */,
 				140C33F82138E1A400DC3535 /* Conversation.swift in Sources */,
 				147945D1213E78CD0055CE79 /* Utils.swift in Sources */,
 				140C34042138EC0700DC3535 /* SeeChatHistoryViewModel.swift in Sources */,
@@ -727,6 +738,7 @@
 				149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */,
 				14461A762137E8D80062FAC6 /* ContactLocalSource.swift in Sources */,
 				147945C9213E31010055CE79 /* ContactItem.swift in Sources */,
+				14848ADD2141140E00DAA9F8 /* ConversationRemoteSource.swift in Sources */,
 				141823732135081E00DC0E98 /* ViewModelDelegate.swift in Sources */,
 				14461A6A2137A6DE0062FAC6 /* ContactRepositoryImpl.swift in Sources */,
 				147945CF213E73570055CE79 /* SeeConversationViewModel.swift in Sources */,

@@ -10,6 +10,7 @@ class StrangerContactCell: UITableViewCell {
     
     private var contactItem: ContactItem?
     private var disposeBag = DisposeBag()
+    private var imageTask: URLSessionTask?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,8 +27,10 @@ class StrangerContactCell: UITableViewCell {
         self.nameLabel.text = item.contact.userName
         self.idLabel.text = item.contact.userId
         let avaUrl = item.contact.userAvatarUrl
-        ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
-
+        
+        imageTask?.cancel()
+        imageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
+        
         addFriendButton.rx.tap.asDriver()
             .drive(onNext: { [unowned self] in
                 if self.contactItem != nil {
