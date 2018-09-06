@@ -12,8 +12,15 @@ class AddContactViewModel: ViewModelDelegate {
     private weak var displayLogic: AddContactDisplayLogic?
     private let disposeBag: DisposeBag
     private let searchQuery = BehaviorRelay<String>(value: "")
-    private let addContactUseCase = AddContactUseCase()
+    
+    // private let addContactUseCase = AddContactUseCase()
     private let searchContactUseCase = SearchContactUseCase()
+    
+    private let acceptRequestUseCase = AcceptRequestUseCase()
+    private let cancelRequestUseCase = CancelRequestUseCase()
+    private let sendRequestUseCase = SendRequestUseCase()
+    private let unfriendUseCase = UnfriendUseCase()
+    
     public let items = BehaviorRelay<[Item]>(value: [])
     
     init(displayLogic: AddContactDisplayLogic) {
@@ -111,7 +118,7 @@ class AddContactViewModel: ViewModelDelegate {
                 self.displayLogic?.goConversation(contactItem)
             })
             .disposed(by: self.disposeBag)
-        
+ 
 
         return Output(
             error: errorTracker.asDriver(),

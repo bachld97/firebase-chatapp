@@ -6,6 +6,22 @@ class ContactRepositoryImpl : ContactRepository {
     private let remoteSource: ContactRemoteSource
     private let localSource: ContactLocalSource
     
+    func acceptRequest(request: AcceptFriendRequest) -> Observable<Bool> {
+        fatalError("Not implemented")
+    }
+    
+    func cancelFriendRequest(request: CancelFriendRequest) -> Observable<Bool> {
+        fatalError("Not implemented")
+    }
+    
+    func addFriendRequest(request: AddFriendRequest) -> Observable<Bool> {
+        fatalError("Not implemented")
+    }
+    
+    func unfriendRequest(request: UnfriendRequest) -> Observable<Bool> {
+        fatalError("Not implemented")
+    }
+    
     init(userRepository: UserRepository,
          remoteSource: ContactRemoteSource,
          localSource: ContactLocalSource) {
