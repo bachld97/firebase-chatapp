@@ -73,7 +73,9 @@
             <connections>
                 <outlet property="avaImageView" destination="RqK-jN-2LC" id="QaZ-hs-dbG"/>
                 <outlet property="idLabel" destination="NuY-6s-Efg" id="P0R-y9-V8t"/>
+                <outlet property="messageButton" destination="iRx-e7-N9P" id="0Xz-0H-pip"/>
                 <outlet property="nameLabel" destination="bZv-91-DDr" id="4aj-0B-pqQ"/>
+                <outlet property="unfriendButton" destination="k2e-vG-nYW" id="z2y-0U-aU0"/>
             </connections>
             <point key="canvasLocation" x="26" y="75"/>
         </tableViewCell>

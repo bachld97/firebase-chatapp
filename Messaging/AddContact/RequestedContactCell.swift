@@ -1,12 +1,5 @@
-//
-//  RequestedTableViewCell.swift
-//  Messaging
-//
-//  Created by CPU12071 on 9/5/18.
-//  Copyright © 2018 Le Duy Bach. All rights reserved.
-//
-
 import UIKit
+import RxSwift
 
 class RequestedContactCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
@@ -18,7 +11,7 @@ class RequestedContactCell: UITableViewCell {
         // Initialization code
     }
 
-    func bind(item: ContactItem) {
+    func bind(item: ContactItem, acceptRequest: PublishSubject<ContactItem>, cancelRequest: PublishSubject<ContactItem>) {
         nameLabel.text = item.contact.userName
         idLabel.text = item.contact.userId
         let avaUrl = item.contact.userAvatarUrl

@@ -1,12 +1,5 @@
-//
-//  StrangerTableViewCell.swift
-//  Messaging
-//
-//  Created by CPU12071 on 9/5/18.
-//  Copyright © 2018 Le Duy Bach. All rights reserved.
-//
-
 import UIKit
+import RxSwift
 
 class StrangerContactCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
@@ -17,7 +10,7 @@ class StrangerContactCell: UITableViewCell {
         super.awakeFromNib()
     }
 
-    func bind(item: ContactItem) {
+    func bind(item: ContactItem, addRequest: PublishSubject<ContactItem>) {
         nameLabel.text = item.contact.userName
         idLabel.text = item.contact.userId
         let avaUrl = item.contact.userAvatarUrl

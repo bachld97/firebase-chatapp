@@ -14,6 +14,13 @@ class AddContactVC: BaseVC, ViewFor {
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    private let addRequest = PublishSubject<ContactItem>()
+    private let cancelRequest = PublishSubject<ContactItem>()
+    private let acceptRequest = PublishSubject<ContactItem>()
+    private let unfriendRequest = PublishSubject<ContactItem>()
+    private let messageRequest = PublishSubject<ContactItem>()
+    
+    
     private var items: RxTableViewSectionedReloadDataSource<SectionModel<String, AddContactViewModel.Item>>!
     
     class func instance() -> UIViewController {
@@ -50,32 +57,33 @@ class AddContactVC: BaseVC, ViewFor {
             UINib(nibName: "RequestedContactCell", bundle: nil),
             forCellReuseIdentifier: "RequestedContactCell")
         
-        self.items = RxTableViewSectionedReloadDataSource<SectionModel<String, AddContactViewModel.Item>>(configureCell: { (_, tv, ip, item) -> UITableViewCell in
-            switch item {
-            case .accepted(let contactItem):
-                let cell = tv.dequeueReusableCell(withIdentifier: "AcceptedContactCell")
-                    as! AcceptedContactCell
-                cell.bind(item: contactItem)
-                return cell
-                
-            case .requested(let contactItem):
-                let cell = tv.dequeueReusableCell(withIdentifier: "RequestedContactCell")
-                    as! RequestedContactCell
-                cell.bind(item: contactItem)
-                return cell
-                
-            case .requesting(let contactItem):
-                let cell = tv.dequeueReusableCell(withIdentifier: "RequestingContactCell")
-                    as! RequestingContactCell
-                cell.bind(item: contactItem)
-                return cell
-                
-            case .stranger(let contactItem):
-                let cell = tv.dequeueReusableCell(withIdentifier: "StrangerContactCell")
-                    as! StrangerContactCell
-                cell.bind(item: contactItem)
-                return cell
-            }
+        self.items = RxTableViewSectionedReloadDataSource<SectionModel<String, AddContactViewModel.Item>>(
+            configureCell: { [unowned self] (_, tv, ip, item) -> UITableViewCell in
+                switch item {
+                case .accepted(let contactItem):
+                    let cell = tv.dequeueReusableCell(withIdentifier: "AcceptedContactCell")
+                        as! AcceptedContactCell
+                    cell.bind(item: contactItem, messageRequest: self.messageRequest, unfriendRequest: self.unfriendRequest)
+                    return cell
+                    
+                case .requested(let contactItem):
+                    let cell = tv.dequeueReusableCell(withIdentifier: "RequestedContactCell")
+                        as! RequestedContactCell
+                    cell.bind(item: contactItem, acceptRequest: self.acceptRequest, cancelRequest: self.cancelRequest)
+                    return cell
+                    
+                case .requesting(let contactItem):
+                    let cell = tv.dequeueReusableCell(withIdentifier: "RequestingContactCell")
+                        as! RequestingContactCell
+                    cell.bind(item: contactItem, cancelRequest: self.cancelRequest)
+                    return cell
+                    
+                case .stranger(let contactItem):
+                    let cell = tv.dequeueReusableCell(withIdentifier: "StrangerContactCell")
+                        as! StrangerContactCell
+                    cell.bind(item: contactItem, addRequest: self.addRequest)
+                    return cell
+                }
         })
     }
     
@@ -88,7 +96,12 @@ class AddContactVC: BaseVC, ViewFor {
             trigger: viewWillAppear,
             goBackTrigger: self.backButton.rx.tap.asDriver(),
             searchQuery: self.searchQueryTF.rx.text.orEmpty,
-            searchTrigger: self.searchButton.rx.tap.asDriver())
+            searchTrigger: self.searchButton.rx.tap.asDriver(),
+            messageTrigger: self.messageRequest.asDriverOnErrorJustComplete(),
+            unfriendTrigger: self.unfriendRequest.asDriverOnErrorJustComplete(),
+            cancelTrigger: self.cancelRequest.asDriverOnErrorJustComplete(),
+            acceptTrigger: self.acceptRequest.asDriverOnErrorJustComplete(),
+            addTrigger: self.addRequest.asDriverOnErrorJustComplete())
         
         let output = self.viewModel.transform(input: input)
         
@@ -112,6 +125,12 @@ extension AddContactVC : AddContactDisplayLogic {
     
     func hideKeyboard() {
         self.view.resignFirstResponder()
+    }
+    
+    func goConversation(_ item: ContactItem) {
+        let vc = SeeConversationVC.instance(contactItem: item)
+        present(vc, animated: true, completion: nil)
+        // self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

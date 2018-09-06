@@ -47,8 +47,6 @@ class SeeContactVC: BaseVC, ViewFor {
                 trigger: viewWillAppear,
                 goAddTrigger: self.navigationItem.rightBarButtonItem!.rx.tap.asDriver())
         
-        
-        
         let output = viewModel.transform(input: input)
         
         output.error.drive(onNext: { [unowned self] (error) in

@@ -5,6 +5,7 @@ import RxDataSources
 protocol AddContactDisplayLogic: class {
     func goBack()
     func hideKeyboard()
+    func  goConversation(_ item: ContactItem)
 }
 
 class AddContactViewModel: ViewModelDelegate {
@@ -105,24 +106,13 @@ class AddContactViewModel: ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
         
+        input.messageTrigger
+            .drive(onNext: { [unowned self] (contactItem) in
+                self.displayLogic?.goConversation(contactItem)
+            })
+            .disposed(by: self.disposeBag)
         
-        // TODO: Different trigger for different use case?
-        // Accept, Request, Cancel request (change state in 2 places)
-        // TODO: Make separated section for Requesting, Requested, Stranger
-//        input.addTrigger
-//            .flatMap { [unowned self] (contact) in
-//                self.addContactUseCase
-//                    .execute(request: AddContactRequest(contactToAdd: contact))
-//                    .do(onNext: { (_) in
-//                        // TODO: Change state of newly requested user from stranger to requested
-//                    })
-//                    .trackError(errorTracker)
-//                    .asDriverOnErrorJustComplete()
-//            }
-//            .drive()
-//            .disposed(by: self.disposeBag)
-        
-        
+
         return Output(
             error: errorTracker.asDriver(),
             items: self.items.asDriver())
@@ -135,7 +125,12 @@ extension AddContactViewModel {
         let goBackTrigger: Driver<Void>
         let searchQuery: ControlProperty<String>
         let searchTrigger: Driver<Void>
-        // let addTrigger: Driver<Contact>
+        
+        let messageTrigger: Driver<ContactItem>
+        let unfriendTrigger: Driver<ContactItem>
+        let cancelTrigger: Driver<ContactItem>
+        let acceptTrigger: Driver<ContactItem>
+        let addTrigger: Driver<ContactItem>
     }
     
     struct Output {
