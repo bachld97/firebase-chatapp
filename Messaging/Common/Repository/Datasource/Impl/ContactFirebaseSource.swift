@@ -2,7 +2,6 @@ import RxSwift
 import FirebaseDatabase
 
 class ContactFirebaseSource: ContactRemoteSource {
-
     var ref: DatabaseReference!
     
     init() {
@@ -141,4 +140,70 @@ class ContactFirebaseSource: ContactRemoteSource {
             }
         }
     }
+    
+    private func changeRelationship(between user: User, and contact: Contact, newRelationship: String) -> Observable<Bool> {
+        return Observable.create { [unowned self] (observer) in
+            
+            self.ref.child("contacts/\(user.userId)")
+                .updateChildValues(["\(contact.userId)" : newRelationship]) { (error, _) in
+                    if error != nil {
+                        print("\(String(describing: error))")
+                        observer.onError(error!)
+                    }
+            }
+            
+            self.ref.child("contacts/\(contact.userId)")
+                .updateChildValues(["\(user.userId)" : newRelationship]) { (error, _) in
+                    if error != nil {
+                        print("\(String(describing: error))")
+                        observer.onError(error!)
+                    }
+            }
+            
+            observer.onNext(true)
+            observer.onCompleted()
+            
+            return Disposables.create()
+        }
+    }
+    
+    func acceptFriendRequest(of user: User, for contact: Contact) -> Observable<Bool> {
+        return changeRelationship(between: user, and: contact, newRelationship: "accepted")
+    }
+    
+    func removeFriendRequest(of user: User, for contact: Contact) -> Observable<Bool> {
+        return changeRelationship(between: user, and: contact, newRelationship: "stranger")
+    }
+    
+    func sendFriendRequest(from user: User, to contact: Contact) -> Observable<Bool> {
+        return Observable.create { [unowned self] (observer) in
+            
+            self.ref.child("contacts/\(user.userId)")
+                .updateChildValues(["\(contact.userId)" : "requesting"]) { (error, _) in
+                    if error != nil {
+                        print("\(String(describing: error))")
+                        observer.onError(error!)
+                    }
+            }
+            
+            self.ref.child("contacts/\(contact.userId)")
+                .updateChildValues(["\(user.userId)" : "requested"]) { (error, _) in
+                    if error != nil {
+                        print("\(String(describing: error))")
+                        observer.onError(error!)
+                    }
+            }
+            
+            observer.onNext(true)
+            observer.onCompleted()
+            
+            return Disposables.create()
+        }
+    }
+    
+    func removeFriend(of user: User, for contact: Contact) -> Observable<Bool> {
+        return changeRelationship(between: user, and: contact, newRelationship: "stranger")
+    }
+    
+
 }

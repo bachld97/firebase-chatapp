@@ -21,6 +21,8 @@ class StrangerContactCell: UITableViewCell {
     }
 
     func bind(item: ContactItem, addRequest: PublishSubject<ContactItem>) {
+        self.contactItem = item
+        
         self.nameLabel.text = item.contact.userName
         self.idLabel.text = item.contact.userId
         let avaUrl = item.contact.userAvatarUrl

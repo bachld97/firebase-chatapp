@@ -5,22 +5,6 @@ class ContactRepositoryImpl : ContactRepository {
     private let remoteSource: ContactRemoteSource
     private let localSource: ContactLocalSource
     
-    func acceptRequest(request: AcceptFriendRequest) -> Observable<Bool> {
-        fatalError("Not implemented")
-    }
-    
-    func cancelFriendRequest(request: CancelFriendRequest) -> Observable<Bool> {
-        fatalError("Not implemented")
-    }
-    
-    func addFriendRequest(request: AddFriendRequest) -> Observable<Bool> {
-        fatalError("Not implemented")
-    }
-    
-    func unfriendRequest(request: UnfriendRequest) -> Observable<Bool> {
-        fatalError("Not implemented")
-    }
-    
     init(userRepository: UserRepository,
          remoteSource: ContactRemoteSource,
          localSource: ContactLocalSource) {
@@ -62,4 +46,59 @@ class ContactRepositoryImpl : ContactRepository {
             }
         }
     }
+    
+    func acceptRequest(request: AcceptFriendRequest) -> Observable<Bool> {
+        return Observable.deferred {
+            return self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap { [unowned self] (user) -> Observable<Bool> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    return self.remoteSource.acceptFriendRequest(of: user, for: request.acceptedContact)
+            }
+        }
+    }
+    
+    func cancelFriendRequest(request: CancelFriendRequest) -> Observable<Bool> {
+        return self.userRepository
+            .getUser()
+            .take(1)
+            .flatMap { [unowned self] (user) -> Observable<Bool> in
+                guard let user = user else {
+                    return Observable.error(SessionExpireError())
+                }
+                
+                return self.remoteSource.removeFriendRequest(of: user, for: request.canceledContact)
+        }
+    }
+    
+    func addFriendRequest(request: AddFriendRequest) -> Observable<Bool> {
+        return self.userRepository
+            .getUser()
+            .take(1)
+            .flatMap { [unowned self] (user) -> Observable<Bool> in
+                guard let user = user else {
+                    return Observable.error(SessionExpireError())
+                }
+                
+                return self.remoteSource.sendFriendRequest(from: user, to: request.contactToAdd)
+        }
+    }
+    
+    func unfriendRequest(request: UnfriendRequest) -> Observable<Bool> {
+        return self.userRepository
+            .getUser()
+            .take(1)
+            .flatMap { [unowned self] (user) -> Observable<Bool> in
+                guard let user = user else {
+                    return Observable.error(SessionExpireError())
+                }
+                
+                return self.remoteSource.removeFriend(of: user, for: request.contactToRemove)
+        }
+    }
+    
 }

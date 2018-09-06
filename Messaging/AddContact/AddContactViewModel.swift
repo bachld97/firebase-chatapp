@@ -123,7 +123,7 @@ class AddContactViewModel: ViewModelDelegate {
             .flatMap { [unowned self] (contactItem) -> Driver<Bool> in
                 return self.acceptRequestUseCase
                     .execute(request: AcceptFriendRequest(acceptedContact: contactItem.contact))
-                    .do(onNext: { [unowned self] (result) in
+                    .do(onNext: { (result) in
                         // TODO: Update UI?
                     })
                     .trackError(errorTracker)
@@ -137,7 +137,7 @@ class AddContactViewModel: ViewModelDelegate {
             .flatMap { [unowned self] (contactItem) -> Driver<Bool> in
                 return self.sendRequestUseCase
                     .execute(request: AddFriendRequest(contactToAdd: contactItem.contact))
-                    .do(onNext: { [unowned self] (result) in
+                    .do(onNext: {  (result) in
                         // TODO: Update UI?
                     })
                     .trackError(errorTracker)
@@ -150,7 +150,7 @@ class AddContactViewModel: ViewModelDelegate {
             .flatMap { [unowned self] (contactItem) -> Driver<Bool> in
                 return self.cancelRequestUseCase
                     .execute(request: CancelFriendRequest(canceledContact: contactItem.contact))
-                    .do(onNext: { [unowned self] (result) in
+                    .do(onNext: {  (result) in
                         // TODO: Update UI?
                     })
                     .trackError(errorTracker)
@@ -163,7 +163,7 @@ class AddContactViewModel: ViewModelDelegate {
             .flatMap { [unowned self] (contactItem) -> Driver<Bool> in
                 return self.unfriendUseCase
                     .execute(request: UnfriendRequest(contactToRemove: contactItem.contact))
-                    .do(onNext: { [unowned self] (result) in
+                    .do(onNext: {  (result) in
                         // TODO: Update UI?
                     })
                     .trackError(errorTracker)

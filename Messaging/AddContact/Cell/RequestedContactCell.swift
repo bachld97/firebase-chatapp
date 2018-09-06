@@ -15,7 +15,6 @@ class RequestedContactCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     override func prepareForReuse() {
@@ -24,6 +23,8 @@ class RequestedContactCell: UITableViewCell {
     }
 
     func bind(item: ContactItem, acceptRequest: PublishSubject<ContactItem>, cancelRequest: PublishSubject<ContactItem>) {
+        self.contactItem = item
+        
         nameLabel.text = item.contact.userName
         idLabel.text = item.contact.userId
         let avaUrl = item.contact.userAvatarUrl
