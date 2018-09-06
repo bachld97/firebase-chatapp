@@ -63,41 +63,47 @@ class ContactRepositoryImpl : ContactRepository {
     }
     
     func cancelFriendRequest(request: CancelFriendRequest) -> Observable<Bool> {
-        return self.userRepository
-            .getUser()
-            .take(1)
-            .flatMap { [unowned self] (user) -> Observable<Bool> in
-                guard let user = user else {
-                    return Observable.error(SessionExpireError())
-                }
-                
-                return self.remoteSource.removeFriendRequest(of: user, for: request.canceledContact)
+        return Observable.deferred { [unowned self] in
+            return self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap { [unowned self] (user) -> Observable<Bool> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    return self.remoteSource.removeFriendRequest(of: user, for: request.canceledContact)
+            }
         }
     }
     
     func addFriendRequest(request: AddFriendRequest) -> Observable<Bool> {
-        return self.userRepository
-            .getUser()
-            .take(1)
-            .flatMap { [unowned self] (user) -> Observable<Bool> in
-                guard let user = user else {
-                    return Observable.error(SessionExpireError())
-                }
-                
-                return self.remoteSource.sendFriendRequest(from: user, to: request.contactToAdd)
+        return Observable.deferred { [unowned self] in
+            return self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap { [unowned self] (user) -> Observable<Bool> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    return self.remoteSource.sendFriendRequest(from: user, to: request.contactToAdd)
+            }
         }
     }
     
     func unfriendRequest(request: UnfriendRequest) -> Observable<Bool> {
-        return self.userRepository
-            .getUser()
-            .take(1)
-            .flatMap { [unowned self] (user) -> Observable<Bool> in
-                guard let user = user else {
-                    return Observable.error(SessionExpireError())
-                }
-                
-                return self.remoteSource.removeFriend(of: user, for: request.contactToRemove)
+        return Observable.deferred { [unowned self] in
+            return self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap { [unowned self] (user) -> Observable<Bool> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    return self.remoteSource.removeFriend(of: user, for: request.contactToRemove)
+            }
         }
     }
     

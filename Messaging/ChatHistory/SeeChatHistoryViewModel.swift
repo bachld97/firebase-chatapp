@@ -4,7 +4,6 @@ import RxCocoa
 protocol SeeChatHistoryDisplayLogic: class {
     func goConversation()
     func showEmpty()
-    func showChatHistory(conversations: [Conversation]?)
 }
 class SeeChatHistoryViewModel: ViewModelDelegate {
     
@@ -25,8 +24,11 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
                 return Observable.deferred { [unowned self] in
                     return self.seeChatHistoryUseCase
                         .execute(request: ())
-                        .do(onNext: { [unowned self] (conversations) in
+                        .do(onNext: { [unowned self] in
                             // TODO: Inflate the table
+                            $0.forEach {
+                                print("\($0.nicknameDict)")
+                            }
                         })
                 }
                 .trackError(errorTracker)
@@ -35,20 +37,22 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
         .drive()
         .disposed(by: self.disposeBag)
         
-        input.reloadTrigger
-            .flatMap { [unowned self] (_) -> Driver<[Conversation]> in
-                return Observable.deferred { [unowned self] in
-                    return self.seeChatHistoryUseCase
-                        .execute(request: ())
-                        .do(onNext: { [unowned self] (conversations) in
-                            // TODO: Inflate the table
-                        })
-                    }
-                    .trackError(errorTracker)
-                    .asDriverOnErrorJustComplete()
-            }
-            .drive()
-            .disposed(by: self.disposeBag)
+        
+        //        TODO: Use publishSubject to establish reload (pull to refresh)
+//        input.reloadTrigger
+//            .flatMap { [unowned self] (_) -> Driver<[Conversation]> in
+//                return Observable.deferred { [unowned self] in
+//                    return self.seeChatHistoryUseCase
+//                        .execute(request: ())
+//                        .do(onNext: { [unowned self] (conversations) in
+//                            // TODO: Inflate the table
+//                        })
+//                    }
+//                    .trackError(errorTracker)
+//                    .asDriverOnErrorJustComplete()
+//            }
+//            .drive()
+//            .disposed(by: self.disposeBag)
         
         return Output(
             error: errorTracker.asDriver())
@@ -58,7 +62,6 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
 extension SeeChatHistoryViewModel {
     struct Input {
         let trigger: Driver<Void>
-        let reloadTrigger: Driver<Void>
     }
     
     struct Output {

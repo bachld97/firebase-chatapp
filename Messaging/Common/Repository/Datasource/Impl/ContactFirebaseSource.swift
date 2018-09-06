@@ -61,7 +61,7 @@ class ContactFirebaseSource: ContactRemoteSource {
                 observer.onError(error)
             }
             
-            return Disposables.create {
+            return Disposables.create { [unowned self] in
                 self.ref.removeObserver(withHandle: dbRequest)
             }
         }

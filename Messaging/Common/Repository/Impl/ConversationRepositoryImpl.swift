@@ -13,8 +13,24 @@ class ConversationRepositoryImpl : ConversationRepository {
         self.localSource = localSource
         self.userRepository = userRepository
     }
-
+    
     func loadChatHistory() -> Observable<[Conversation]> {
-        return Observable.just([])
+        return Observable.deferred { [unowned self]  in
+            return self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap { [unowned self] (user) -> Observable<[Conversation]> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    return self.remoteSource
+                        .loadConversations(of: user)
+            }
+        }
     }
+    
+//    func loadConversation() -> Observable<[Message]> {
+//        
+//    }
 }
