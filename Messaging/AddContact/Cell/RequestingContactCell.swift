@@ -27,9 +27,8 @@ class RequestingContactCell: UITableViewCell {
         nameLabel.text = item.contact.userName
         idLabel.text = item.contact.userId
         let avaUrl = item.contact.userAvatarUrl
-        if avaUrl != nil {
-            ImageLoader.load(urlString: avaUrl!, into: self.avaImageView)
-        }
+        ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
+        
         
         cancelButton.rx.tap.asDriver()
             .drive(onNext: { [unowned self] in

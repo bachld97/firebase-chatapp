@@ -20,8 +20,7 @@ class AddContactVC: BaseVC, ViewFor {
     private let unfriendRequest = PublishSubject<ContactItem>()
     private let messageRequest = PublishSubject<ContactItem>()
     
-    private let redoSearch = PublishSubject<Void>()
-    
+
     
     private var items: RxTableViewSectionedReloadDataSource<SectionModel<String, AddContactViewModel.Item>>!
     
@@ -103,9 +102,8 @@ class AddContactVC: BaseVC, ViewFor {
             unfriendTrigger: self.unfriendRequest.asDriverOnErrorJustComplete(),
             cancelTrigger: self.cancelRequest.asDriverOnErrorJustComplete(),
             acceptTrigger: self.acceptRequest.asDriverOnErrorJustComplete(),
-            addTrigger: self.addRequest.asDriverOnErrorJustComplete(),
-            redoSearch: self.redoSearch.asDriverOnErrorJustComplete())
-        
+            addTrigger: self.addRequest.asDriverOnErrorJustComplete())
+
         let output = self.viewModel.transform(input: input)
         
         output.items
@@ -135,10 +133,6 @@ extension AddContactVC : AddContactDisplayLogic {
         let vc = SeeConversationVC.instance(contactItem: item)
         present(vc, animated: true, completion: nil)
         // self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func redoSearchContact() {
-        redoSearch.onNext(())
     }
 }
 

@@ -15,7 +15,7 @@ class ContactFirebaseSource: ContactRemoteSource {
             let dbRequest = self.ref.child("contacts").observe(.value, with: { (snapshot) in
                 guard snapshot.exists() && snapshot.hasChild(user.userId) else {
                     observer.onNext([])
-                    observer.onCompleted()
+                    // observer.onCompleted()
                     return
                 }
                 
@@ -28,7 +28,7 @@ class ContactFirebaseSource: ContactRemoteSource {
                     }
                 }
                 observer.onNext(res)
-                observer.onCompleted()
+                // observer.onCompleted()
             }) { (error) in
                 observer.onError(error)
             }
@@ -129,7 +129,7 @@ class ContactFirebaseSource: ContactRemoteSource {
                 }
                 
                 observer.onNext(res)
-                observer.onCompleted()
+                // observer.onCompleted()
             }) { (error) in
                 observer.onError(error)
             }

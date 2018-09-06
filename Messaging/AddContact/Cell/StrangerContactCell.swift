@@ -26,10 +26,8 @@ class StrangerContactCell: UITableViewCell {
         self.nameLabel.text = item.contact.userName
         self.idLabel.text = item.contact.userId
         let avaUrl = item.contact.userAvatarUrl
-        if avaUrl != nil {
-            ImageLoader.load(urlString: avaUrl!, into: self.avaImageView)
-        }
-        
+        ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
+
         addFriendButton.rx.tap.asDriver()
             .drive(onNext: { [unowned self] in
                 if self.contactItem != nil {
