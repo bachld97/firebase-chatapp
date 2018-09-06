@@ -16,6 +16,8 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
     private weak var displayLogic : SeeChatHistoryDisplayLogic?
     private let seeChatHistoryUseCase = SeeChatHistoryUseCase()
     
+    public let items = BehaviorRelay<[Item]>(value: [])
+    
     func transform(input: SeeChatHistoryViewModel.Input) -> SeeChatHistoryViewModel.Output {
         let errorTracker = ErrorTracker()
         
@@ -25,10 +27,19 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
                     return self.seeChatHistoryUseCase
                         .execute(request: ())
                         .do(onNext: { [unowned self] in
-                            // TODO: Inflate the table
-                            $0.forEach {
-                                print("\($0.nicknameDict)")
-                            }
+                            var items: [Item] = []
+                            
+                            items.append(contentsOf: $0.map { (conversation) in
+                                let convoItem = ConversationItem(conversation: conversation)
+                                switch conversation.convoType {
+                                case .group:
+                                    return Item.group(convoItem)
+                                case .single:
+                                    return Item.single(convoItem)
+                                }
+                            })
+                            
+                            self.items.accept(items)
                         })
                 }
                 .trackError(errorTracker)
@@ -55,7 +66,8 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
 //            .disposed(by: self.disposeBag)
         
         return Output(
-            error: errorTracker.asDriver())
+            error: errorTracker.asDriver(),
+            items: self.items.asDriver())
     }
 }
 
@@ -66,5 +78,11 @@ extension SeeChatHistoryViewModel {
     
     struct Output {
         let error: Driver<Error>
+        let items: Driver<[Item]>
+    }
+    
+    enum Item {
+        case single(ConversationItem)
+        case group(ConversationItem)
     }
 }
