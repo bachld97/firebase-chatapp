@@ -16,19 +16,29 @@ class SeeConversationVC: BaseVC, ViewFor {
         return SeeConversationVC(contactItem: item)
     }
     
+    class func instance(conversationItem item: ConversationItem) -> UIViewController {
+        return SeeConversationVC(conversationItem: item)
+    }
+    
 //    class func instance(_ item: ChatHistoryItem) -> UIViewController {
 //        return SeeConversationVC()
 //    }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        fatalError("Cannot instantiate like this")
     }
     
-    init(contactItem: ContactItem) {
+    private init(contactItem: ContactItem) {
         super.init(nibName: "SeeConversationVC", bundle: nil)
         self.viewModel = SeeConversationViewModel(
             displayLogic: self,
             contactItem: contactItem)
+    }
+    
+    private init(conversationItem: ConversationItem) {
+        super.init(nibName: "SeeConversationVC", bundle: nil)
+        self.viewModel = SeeConversationViewModel(displayLogic: self, conversationItem: conversationItem)
     }
     
 

@@ -50,19 +50,28 @@ class SeeChatHistoryVC: BaseVC, ViewFor {
         forCellReuseIdentifier: "GroupConvoCell")
         
         self.items = RxTableViewSectionedReloadDataSource<SectionModel<String, SeeChatHistoryViewModel.Item>>(configureCell: { (_, tv, ip, item) -> UITableViewCell in
-            switch item {
-            case .single(let convoItem):
+            let convoItem = item.convoItem
+            switch item.convoType {
+            case .single:
                 let cell = tv.dequeueReusableCell(withIdentifier: "SingleConvoCell")
                     as! SingleConvoCell
                 cell.bind(convoItem: convoItem)
                 return cell
-            case .group(let convoItem):
+            case .group:
                 let cell = tv.dequeueReusableCell(withIdentifier: "GroupConvoCell")
                     as! GroupConvoCell
                 cell.bind(convoItem: convoItem)
                 return cell
             }
         })
+        
+        self.tableView.rx.itemSelected.asDriver()
+            .drive(onNext: { [unowned self] (ip) in
+                self.tableView.deselectRow(at: ip, animated: false)
+                let item = self.items.sectionModels[0].items[ip.row]
+                self.goConversation(item: item.convoItem)
+            })
+            .disposed(by: self.disposeBag)
     }
     
     override func bindViewModel() {
@@ -89,7 +98,9 @@ class SeeChatHistoryVC: BaseVC, ViewFor {
 }
 
 extension SeeChatHistoryVC: SeeChatHistoryDisplayLogic {
-    func goConversation() {
+    func goConversation(item: ConversationItem) {
+        let vc = SeeConversationVC.instance(conversationItem: item)
+        present(vc, animated: true, completion: nil)
     }
     
     func showEmpty() {

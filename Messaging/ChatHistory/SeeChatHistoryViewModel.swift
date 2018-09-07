@@ -2,7 +2,7 @@ import RxSwift
 import RxCocoa
 
 protocol SeeChatHistoryDisplayLogic: class {
-    func goConversation()
+    func goConversation(item: ConversationItem)
     func showEmpty()
 }
 class SeeChatHistoryViewModel: ViewModelDelegate {
@@ -33,9 +33,9 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
                                 let convoItem = ConversationItem(conversation: conversation)
                                 switch conversation.convoType {
                                 case .group:
-                                    return Item.group(convoItem)
+                                    return Item(convoItem: convoItem, convoType: .group)
                                 case .single:
-                                    return Item.single(convoItem)
+                                    return Item(convoItem: convoItem, convoType: .single)
                                 }
                             })
                             
@@ -81,8 +81,18 @@ extension SeeChatHistoryViewModel {
         let items: Driver<[Item]>
     }
     
-    enum Item {
-        case single(ConversationItem)
-        case group(ConversationItem)
+    class Item {
+        let convoItem: ConversationItem
+        let convoType: ItemType
+        
+        init(convoItem: ConversationItem, convoType: ItemType) {
+            self.convoItem = convoItem
+            self.convoType = convoType
+        }
+    }
+    
+    enum ItemType {
+        case single
+        case group
     }
 }

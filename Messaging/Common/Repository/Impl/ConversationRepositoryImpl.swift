@@ -30,7 +30,15 @@ class ConversationRepositoryImpl : ConversationRepository {
         }
     }
     
-//    func loadConversation() -> Observable<[Message]> {
-//        
-//    }
+    func loadMessages(with contactId: String) -> Observable<[Message]> {
+        return Observable.deferred {
+            return Observable.just([])
+        }
+    }
+    
+    func loadMessages(of conversationId: String) -> Observable<[Message]> { 
+        return Observable.deferred {
+            return Observable.just([])
+        }
+    }
 }

@@ -27,6 +27,10 @@
 		1418235E2135025800DC0E98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1418235C2135025800DC0E98 /* LaunchScreen.storyboard */; };
 		14182371213507E500DC0E98 /* ViewFor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14182370213507E500DC0E98 /* ViewFor.swift */; };
 		141823732135081E00DC0E98 /* ViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823722135081E00DC0E98 /* ViewModelDelegate.swift */; };
+		142E515421421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E515321421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift */; };
+		142E515621421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E515521421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift */; };
+		142E515821421CE500FC0593 /* LoadConvoFromContactIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E515721421CE500FC0593 /* LoadConvoFromContactIdUseCase.swift */; };
+		142E515A21421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E515921421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift */; };
 		143517A121352D3C0039874F /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143517A021352D3C0039874F /* BaseVC.swift */; };
 		143517A621352F200039874F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143517A521352F200039874F /* LoginViewModel.swift */; };
 		1439D99221365C3D0094C12C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99021365C3D0094C12C /* LoginVC.swift */; };
@@ -133,6 +137,10 @@
 		1418235F2135025800DC0E98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14182370213507E500DC0E98 /* ViewFor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFor.swift; sourceTree = "<group>"; };
 		141823722135081E00DC0E98 /* ViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDelegate.swift; sourceTree = "<group>"; };
+		142E515321421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadConvoFromContactIdRequest.swift; sourceTree = "<group>"; };
+		142E515521421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadConvoFromConvoIdRequest.swift; sourceTree = "<group>"; };
+		142E515721421CE500FC0593 /* LoadConvoFromContactIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadConvoFromContactIdUseCase.swift; sourceTree = "<group>"; };
+		142E515921421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadConvoFromConvoIdUseCase.swift; sourceTree = "<group>"; };
 		143517A021352D3C0039874F /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		143517A521352F200039874F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1439D99021365C3D0094C12C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -337,6 +345,9 @@
 		1418236A2135071300DC0E98 /* SeeConversation */ = {
 			isa = PBXGroup;
 			children = (
+				142E515221421BF500FC0593 /* Cell */,
+				142E515121421BE800FC0593 /* Request */,
+				142E515021421BDD00FC0593 /* UseCase */,
 				14461A5921379DFF0062FAC6 /* SeeConversationVC.swift */,
 				14461A5A21379DFF0062FAC6 /* SeeConversationVC.xib */,
 				147945CE213E73570055CE79 /* SeeConversationViewModel.swift */,
@@ -402,6 +413,31 @@
 				141823662135056E00DC0E98 /* Repository */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		142E515021421BDD00FC0593 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				142E515721421CE500FC0593 /* LoadConvoFromContactIdUseCase.swift */,
+				142E515921421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		142E515121421BE800FC0593 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				142E515321421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift */,
+				142E515521421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		142E515221421BF500FC0593 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		143517A421352E6B0039874F /* SignUp */ = {
@@ -688,6 +724,7 @@
 				14461A5B21379DFF0062FAC6 /* SeeConversationVC.swift in Sources */,
 				14615407213F68910032EE95 /* AddContactVC.swift in Sources */,
 				1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */,
+				142E515621421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift in Sources */,
 				140C340C2139242000DC3535 /* ChangePassUseCase.swift in Sources */,
 				14461A5421379CDD0062FAC6 /* MainVC.swift in Sources */,
 				14843FE5214116AC00D5366B /* Message.swift in Sources */,
@@ -715,6 +752,7 @@
 				14CEE9822136584900A31FBB /* UserRepositoryImpl.swift in Sources */,
 				147945D3213E7FB70055CE79 /* UserLocalSource.swift in Sources */,
 				146153FE213F68570032EE95 /* AddContactUseCase.swift in Sources */,
+				142E515421421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift in Sources */,
 				14848AD12140C84500DAA9F8 /* UnfriendUseCase.swift in Sources */,
 				14461A5821379CEC0062FAC6 /* SeeProfileVC.swift in Sources */,
 				14461A722137AD5B0062FAC6 /* ErrorTracker.swift in Sources */,
@@ -735,6 +773,7 @@
 				1461540D213F8AA20032EE95 /* AcceptedContactCell.swift in Sources */,
 				14848AD32140C88100DAA9F8 /* AcceptFriendRequest.swift in Sources */,
 				14461A5E21379E620062FAC6 /* SeeContactViewModel.swift in Sources */,
+				142E515821421CE500FC0593 /* LoadConvoFromContactIdUseCase.swift in Sources */,
 				143517A621352F200039874F /* LoginViewModel.swift in Sources */,
 				1439D995213660270094C12C /* ObservableType.swift in Sources */,
 				14615404213F68770032EE95 /* SearchContactRequest.swift in Sources */,
@@ -746,6 +785,7 @@
 				14848ACD2140C80F00DAA9F8 /* CancelRequestUseCase.swift in Sources */,
 				14615400213F68650032EE95 /* SearchContactUseCase.swift in Sources */,
 				140C34022138E95000DC3535 /* ConversationRepositoryImpl.swift in Sources */,
+				142E515A21421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift in Sources */,
 				14615402213F686F0032EE95 /* AddContactRequest.swift in Sources */,
 				149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */,
 				14461A762137E8D80062FAC6 /* ContactLocalSource.swift in Sources */,

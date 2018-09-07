@@ -73,7 +73,7 @@ class SeeContactVC: BaseVC, ViewFor {
         
         // Set up click
         self.contactTableView.rx.itemSelected.asDriver()
-            .drive(onNext: { (ip) in
+            .drive(onNext: { [unowned self] (ip) in
                 self.contactTableView.deselectRow(at: ip, animated: false)
                 let item = self.items.sectionModels[0].items[ip.row]
                 self.goConversation(item)
