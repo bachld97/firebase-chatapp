@@ -53,7 +53,16 @@ class SeeConversationViewModel : ViewModelDelegate {
     func transformWithContactItem(input: Input, contactItem: ContactItem) -> Output {
         let errorTracker = ErrorTracker()
         
-        // set up
+        input.trigger
+            .flatMap { [unowned self] (_) -> Driver<[Message]> in
+                let request = LoadConvoFromContactIdRequest(contactId: contactItem.contact.userId)
+                return self.loadConvoFromContactIdUseCase
+                    .execute(request: request)
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
 
         input.goBackTrigger
             .drive(onNext: { [unowned self] in
@@ -68,8 +77,17 @@ class SeeConversationViewModel : ViewModelDelegate {
     func transfromWithConversationItem(input: Input, conversationItem: ConversationItem) -> Output {
         let errorTracker = ErrorTracker()
         
-        // set up
-        
+
+        input.trigger
+            .flatMap { [unowned self] (_) -> Driver<[Message]> in
+                let request = LoadConvoFromConvoIdRequest(convoId: conversationItem.conversation.convoId)
+                return self.loadConvoFromConvoIdUseCase
+                    .execute(request: request)
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
         
 
         input.goBackTrigger

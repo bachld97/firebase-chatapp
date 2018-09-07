@@ -38,31 +38,31 @@ class UserFirebaseSource : UserRemoteSource {
 
     func login(request: LoginRequest) -> Observable<User> {
         return Observable.create { [unowned self] (observer) -> Disposable in
-            let dbRequest = self.ref.child("users").observe(.value, with: { (snapshot) in
-                if !snapshot.exists() || !snapshot.hasChild(request.username) {
-                    print("Account not exists")
+            let dbRequest = self.ref.child("users/\(request.username)").observe(.value, with: { (snapshot) in
+                guard snapshot.exists() else {
                     observer.onError(AccountNotFoundError())
                     return
                 }
                 
-                if let userDict = snapshot.childSnapshot(forPath: request.username).value as? [String : String] {
-                    let password = userDict["password"]!
-                    let fullname = userDict["full-name"]!
-                    let ava = userDict["ava-url"]
-
-                    if !request.password.elementsEqual(password) {
-                        print("Wrong pass")
-                        observer.onError(WrongLoginInformationError())
-                        return
-                    } else {
-                        observer.onNext(User(userId: request.username, userName: fullname, userAvatarUrl: ava))
-                        observer.onCompleted()
-                        return
-                    }
-                } else {
+                guard let userDict = snapshot.value as? [String : String] else {
                     print("Should never happens")
                     observer.onError(UnknownError())
+                    return
                 }
+
+                let password = userDict["password"]!
+                let fullname = userDict["full-name"]!
+                let ava = userDict["ava-url"]
+                
+                if !request.password.elementsEqual(password) {
+                    observer.onError(WrongLoginInformationError())
+                    return
+                } else {
+                    observer.onNext(User(userId: request.username, userName: fullname, userAvatarUrl: ava))
+                    observer.onCompleted()
+                    return
+                }
+                
             })
             
             return Disposables.create {

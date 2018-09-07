@@ -32,13 +32,25 @@ class ConversationRepositoryImpl : ConversationRepository {
     
     func loadMessages(with contactId: String) -> Observable<[Message]> {
         return Observable.deferred {
-            return Observable.just([])
+            return self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap { [unowned self] (user) -> Observable<[Message]> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    return self.remoteSource
+                        .loadMessages(of: user, with: contactId)
+            }
         }
     }
     
     func loadMessages(of conversationId: String) -> Observable<[Message]> { 
         return Observable.deferred {
-            return Observable.just([])
+            
+            return self.remoteSource
+                .loadMessages(of: conversationId)
         }
     }
 }
