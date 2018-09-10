@@ -80,7 +80,7 @@ class SeeConversationViewModel : ViewModelDelegate {
 
         input.trigger
             .flatMap { [unowned self] (_) -> Driver<[Message]> in
-                let request = LoadConvoFromConvoIdRequest(convoId: conversationItem.conversation.convoId)
+                let request = LoadConvoFromConvoIdRequest(convoId: conversationItem.conversation.id)
                 return self.loadConvoFromConvoIdUseCase
                     .execute(request: request)
                     .trackError(errorTracker)

@@ -52,111 +52,91 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         }
     }
     
-    func loadConversations(of user: User) -> Observable<[Conversation]> {
-        return Observable.create { [unowned self] (observer) in
-            
-            let dbRequest = self.ref.child("chat-history/\(user.userId)")
+
+    func loadChatHistory(of user: User) -> Observable<[Conversation]> {
+        return Observable.create { [unowned self] (obs) in
+            let  dbRequest = self.ref.child("conversations")
+                .queryOrdered(byChild: "users/\(user.userId)/avail")
+                .queryEqual(toValue: true)
                 .observe(.value, with: { (snapshot) in
                     
                     guard snapshot.exists() else {
-                        observer.onNext([])
+                        obs.onNext([])
                         return
                     }
                     
-                    var conversationIds = [ConvoWrapper]()
-                    if let historyDict = snapshot.value as? [String: String] {
-                        historyDict.forEach { (key, value) in
-                            conversationIds.append(ConvoWrapper(convoId: key, convoType: value))
+                    var items: [Conversation] = []
+                    
+                    for v in snapshot.children {
+                        guard let dict = v as? DataSnapshot else {
+                            continue
+                        }
+                        
+                        let item = self.parseConversation(from: dict)
+                        
+                        if item != nil {
+                            items.append(item!)
                         }
                     }
                     
-                    observer.onNext(conversationIds)
-                }) { (error) in
-                    observer.onError(error)
-            }
+                    print(items.count)
+                    obs.onNext(items)
+                }, withCancel: { (error) in
+                    obs.onError(error)
+                })
             
             return Disposables.create { [unowned self] in
-                self.ref.child("chat-history/\(user.userId)")
+                self.ref.child("conversations")
                     .removeObserver(withHandle: dbRequest)
             }
-            }.flatMap { [unowned self] (convoIds) -> Observable<[Conversation]> in
-                return self.loadConversationDetail(convoIds)
         }
-        
     }
     
-    private func loadConversationDetail(_ wrappers: [ConvoWrapper]) -> Observable<[Conversation]> {
-        return Observable.create { [unowned self] (observer) in
-            let dbRequest = self.ref.child("conversations")
-                .observe(.value, with: { (snapshot) in
-                    
-                    var res = [Conversation]()
-                    guard let snapshotDict = snapshot.value as? [String: Any] else {
-                        observer.onNext([])
-                        return
-                    }
-                    
-                    for (key, value) in snapshotDict {
-                        guard let indx = wrappers.index(where: { (wrapper) -> Bool in
-                            return wrapper.convoId.elementsEqual(key)
-                        }) else {
-                            continue
-                        }
-                        
-                        guard let bigDict = value as? [String : Any]  else {
-                            continue
-                        }
-                        
-                        guard let nicknameDict = bigDict["joined-by"]
-                            as? [String: String] else {
-                                continue
-                        }
-                        
-                        guard let lastMessDict = bigDict["most-recent"]
-                            as? [String : String] else {
-                                continue
-                        }
-                        
-                        let convoType: ConvoType
-                        if wrappers[indx].convoType.elementsEqual("single") {
-                            convoType = .single
-                        } else {
-                            convoType = .group
-                        }
-                        
-                        let conv = Conversation(convoId: wrappers[indx].convoId,
-                            convoType: convoType,
-                            nicknameDict: nicknameDict,
-                            lastMessDict: lastMessDict)
-                        
-                        res.append(conv)
-                    }
-                    
-                    observer.onNext(res)
-                    observer.onCompleted()
-                }) { (error) in
-                    
-                    observer.onError(error)
-            }
-            
-            return Disposables.create { [unowned self] in
-                self.ref.child("conversation").removeObserver(withHandle: dbRequest)
-            }
+    private func parseConversation(from snapshot: DataSnapshot) -> Conversation? {
+        
+        guard let dict = snapshot.value as? [String: Any] else {
+            return nil
         }
+        
+        guard let lastMessage = dict["last-message"] as? [String : String] else {
+            return nil
+        }
+        
+        guard let usersDict = dict["users"] as? [String: Any] else {
+            return nil
+        }
+
+        let convId = snapshot.key
+
+        guard let isPrivate = dict["is-private"] as? Bool else {
+            return nil
+        }
+        
+        let nickname = parseNicknames(from: usersDict)
+
+        guard let message = parseMessage(from: lastMessage) else {
+            return nil
+        }
+        
+        let type: ConvoType = isPrivate ? .single : .group
+        let res = Conversation(
+            id: convId,
+            type: type,
+            lastMess: message,
+            nickname: nickname)
+        return res
     }
-
-//    func loadMessage(withId messageId: String) -> Observable<Message> {
-//
-//    }
-}
-
-class ConvoWrapper {
-    let convoId: String
-    let convoType: String
- 
-    init(convoId: String, convoType: String) {
-        self.convoId = convoId
-        self.convoType = convoType
+    
+    private func parseNicknames(from userDict: [String: Any]) -> [String: String] {
+        var res = [String: String]()
+        for (key, value) in userDict {
+            res[key] = (value as! [String : Any])["nickname"] as? String ?? key
+        }
+        return res
+    }
+    
+    private func parseMessage(from messageDict: [String : String]) -> Message? {
+        return Message()
     }
 }
 

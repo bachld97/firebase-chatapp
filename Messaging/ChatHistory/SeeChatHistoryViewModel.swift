@@ -31,7 +31,7 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
                             
                             items.append(contentsOf: $0.map { (conversation) in
                                 let convoItem = ConversationItem(conversation: conversation)
-                                switch conversation.convoType {
+                                switch conversation.type {
                                 case .group:
                                     return Item(convoItem: convoItem, convoType: .group)
                                 case .single:

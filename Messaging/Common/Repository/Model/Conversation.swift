@@ -1,17 +1,18 @@
 final class Conversation {
-    let convoType: ConvoType
-    let nicknameDict: [String : String]
-    let lastMessDict: [String: String]
-    let convoId: String
+    let id: String
+    let type: ConvoType
+    let lastMess: Message
+    let nickname: [String: String]
+    
 
-    init(convoId: String,
-         convoType: ConvoType,
-         nicknameDict: [String : String],
-         lastMessDict: [String: String]) {
-        self.convoId = convoId
-        self.convoType = convoType
-        self.nicknameDict = nicknameDict
-        self.lastMessDict = lastMessDict 
+    init(id: String,
+         type: ConvoType,
+         lastMess: Message,
+         nickname: [String : String]) {
+        self.id = id
+        self.type = type
+        self.lastMess = lastMess
+        self.nickname = nickname
     }
 }
 

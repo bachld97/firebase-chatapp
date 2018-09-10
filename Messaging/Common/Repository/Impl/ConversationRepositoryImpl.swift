@@ -25,7 +25,7 @@ class ConversationRepositoryImpl : ConversationRepository {
                     }
                     
                     return self.remoteSource
-                        .loadConversations(of: user)
+                        .loadChatHistory(of: user)
             }
         }
     }
