@@ -12,8 +12,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     func loadMessages(of conversationId: String) -> Observable<[Message]> {
         return Observable.create { [unowned self] (observer) in
             let dbRequest = self.ref
-                .child("conversations/\(conversationId)/messages")
-                .observe(.value, with: { (snapshot) in
+                .child("messages/\(conversationId)")
+                .observe(.value, with: { [unowned self] (snapshot) in
                     
                     // Iterate over the messages
                     guard let bigDict = snapshot.value as? [String: Any] else {
@@ -21,21 +21,25 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                         return
                     }
                     
-                    // var messages: [Message] = []
-                    for (messId, messValue) in bigDict {
+                    var messages: [Message] = []
+                    for (_, messValue) in bigDict {
                         guard let messageDict = messValue as? [String : String] else {
                             continue
                         }
                         
-                        print("\(messId): \(messageDict)")
+                        
+                        let mess = self.parseMessage(from: messageDict)
+                        if mess != nil {
+                            messages.append(mess!)
+                        }
                     }
                     
-                    // observer.onNext(messages) 
+                    observer.onNext(messages)
                 }, withCancel: { (error) in
                     observer.onError(error)
                 })
             
-
+            
             return Disposables.create {
                 self.ref.child("conversations/\(conversationId)/messages")
                     .removeObserver(withHandle: dbRequest)
@@ -43,19 +47,62 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         }
     }
     
-    func loadMessages(of user: User, with contactId: String) -> Observable<[Message]> {
-        return Observable.create { (_) in
+    func createConversationIfNotExist(of user: User, with contact: Contact) -> Observable<Bool> {
+        return Observable.create { (obs) in
+            let uid = [user.userId, contact.userId].sorted()
+                .joined(separator: " ")
             
-            return Disposables.create {
-                
+            let createConversation = self.ref.child("conversations/\(uid)")
+                .observe(.value, with: { [unowned self] (snapshot) in
+                    // if snapshot !exist, create that node
+                    // else just proceed
+                    if !snapshot.exists() {
+                        // Create
+                        var convDict = [String : Any]()
+                        convDict["is-private"] = true
+                        
+                        var userDict = [String : Any]()
+                        userDict["nickname"] = user.userName
+                        userDict["avail"] = true
+                        
+                        var contactDict = [String : Any]()
+                        contactDict["nickname"] = contact.userName
+                        contactDict["avail"] = true
+                        
+                        var usersDict = [String : Any]()
+                        usersDict[user.userId] = userDict
+                        usersDict[contact.userId] = contactDict
+                        
+                        convDict["users"] = usersDict
+                        
+                        self.ref.child("conversations/\(uid)")
+                            .setValue(convDict)
+                    }
+                }, withCancel: { (error) in
+                    // Ignore
+                })
+            
+            return Disposables.create { [unowned self] in
+                self.ref.child("conversations/\(uid)")
+                    .removeObserver(withHandle: createConversation)
             }
+        }
+    }
+    
+    func loadMessages(of user: User, with contact: Contact) -> Observable<[Message]> {
+        let uid = [user.userId, contact.userId].sorted()
+            .joined(separator: " ")
+        
+        return createConversationIfNotExist(of: user, with: contact)
+            .flatMap { [unowned self] (_) in
+                return self.loadMessages(of: uid)
         }
     }
     
 
     func loadChatHistory(of user: User) -> Observable<[Conversation]> {
         return Observable.create { [unowned self] (obs) in
-            let  dbRequest = self.ref.child("conversations")
+            let dbRequest = self.ref.child("conversations")
                 .queryOrdered(byChild: "users/\(user.userId)/avail")
                 .queryEqual(toValue: true)
                 .observe(.value, with: { (snapshot) in
@@ -112,6 +159,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             return nil
         }
         
+        let displayAva = dict["display-ava"] as? String
+
         let nickname = parseNicknames(from: usersDict)
 
         guard let message = parseMessage(from: lastMessage) else {
@@ -123,7 +172,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             id: convId,
             type: type,
             lastMess: message,
-            nickname: nickname)
+            nickname: nickname,
+            displayAva: displayAva)
         return res
     }
     
@@ -135,6 +185,10 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         return res
     }
     
+    
+    // TODO: Add avaUrl of sender to this last message to easily display it
+    // Is this a huge duplication? Because each user may enter many conversations
+    // Therefore his avaUrl is duplicated accross many many nodes.
     private func parseMessage(from messageDict: [String : String]) -> Message? {
         return Message()
     }

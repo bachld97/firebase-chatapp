@@ -2,7 +2,7 @@ import RxSwift
 
 protocol ConversationRepository {
     func loadChatHistory() -> Observable<[Conversation]>
-    func loadMessages(with contactId: String) -> Observable<[Message]>
+    func loadMessages(with contact: Contact) -> Observable<[Message]>
     func loadMessages(of conversationId: String) -> Observable<[Message]>
 }
 

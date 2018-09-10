@@ -2,7 +2,7 @@ import RxSwift
 
 protocol ConversationRemoteSource {
     func loadChatHistory(of user: User) -> Observable<[Conversation]>
-    func loadMessages(of user: User, with contactId: String) -> Observable<[Message]>
+    func loadMessages(of user: User, with contact: Contact) -> Observable<[Message]>
     func loadMessages(of conversationId: String) -> Observable<[Message]>
 }
 

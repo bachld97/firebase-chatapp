@@ -55,7 +55,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         
         input.trigger
             .flatMap { [unowned self] (_) -> Driver<[Message]> in
-                let request = LoadConvoFromContactIdRequest(contactId: contactItem.contact.userId)
+                let request = LoadConvoFromContactRequest(contact: contactItem.contact)
                 return self.loadConvoFromContactIdUseCase
                     .execute(request: request)
                     .trackError(errorTracker)

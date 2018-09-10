@@ -30,7 +30,7 @@ class ConversationRepositoryImpl : ConversationRepository {
         }
     }
     
-    func loadMessages(with contactId: String) -> Observable<[Message]> {
+    func loadMessages(with contact: Contact) -> Observable<[Message]> {
         return Observable.deferred {
             return self.userRepository
                 .getUser()
@@ -41,7 +41,7 @@ class ConversationRepositoryImpl : ConversationRepository {
                     }
                     
                     return self.remoteSource
-                        .loadMessages(of: user, with: contactId)
+                        .loadMessages(of: user, with: contact)
             }
         }
     }
