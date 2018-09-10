@@ -11,6 +11,7 @@ class SeeConversationVC: BaseVC, ViewFor {
     @IBOutlet weak var goBackButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var conversationLabel: UILabel!
+    @IBOutlet weak var sendMessageButton: UIButton!
     
     class func instance(contactItem item: ContactItem) -> UIViewController {
         return SeeConversationVC(contactItem: item)
@@ -50,6 +51,7 @@ class SeeConversationVC: BaseVC, ViewFor {
         let input = SeeConversationViewModel.Input(
             trigger: viewWillAppear,
             goBackTrigger: goBackButton.rx.tap.asDriver(),
+            sendMessTrigger: sendMessageButton.rx.tap.asDriver(),
             conversationLabel: conversationLabel.rx.text)
         
         let output = self.viewModel.transform(input: input)

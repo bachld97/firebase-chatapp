@@ -52,8 +52,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             let uid = [user.userId, contact.userId].sorted()
                 .joined(separator: " ")
             
-            let createConversation = self.ref.child("conversations/\(uid)")
-                .observe(.value, with: { [unowned self] (snapshot) in
+            self.ref.child("conversations/\(uid)")
+                .observeSingleEvent(of: .value, with: { [unowned self] (snapshot) in
                     // if snapshot !exist, create that node
                     // else just proceed
                     if !snapshot.exists() {
@@ -82,10 +82,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                     // Ignore
                 })
             
-            return Disposables.create { [unowned self] in
-                self.ref.child("conversations/\(uid)")
-                    .removeObserver(withHandle: createConversation)
-            }
+            return Disposables.create()
         }
     }
     
@@ -145,7 +142,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             return nil
         }
         
-        guard let lastMessage = dict["last-message"] as? [String : String] else {
+        guard let lastMessage = dict["last-message"] as? [String : Any] else {
             return nil
         }
         
@@ -185,12 +182,30 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         return res
     }
     
-    
-    // TODO: Add avaUrl of sender to this last message to easily display it
-    // Is this a huge duplication? Because each user may enter many conversations
-    // Therefore his avaUrl is duplicated accross many many nodes.
-    private func parseMessage(from messageDict: [String : String]) -> Message? {
+    private func parseMessage(from messageDict: [String : Any]) -> Message? {
         return Message()
     }
-}
 
+    func sendMessage(message: Message, to conversation: String) -> Observable<Bool> {
+        let jsonMessage = self.mapToJson(message: message)
+        self.ref.child("conversations/\(conversation)/last-message")
+            .setValue(jsonMessage)
+        self.ref.child("messages/\(conversation)")
+            .childByAutoId()
+            .setValue(jsonMessage)
+        return Observable.just(true)
+    }
+    
+    private func mapToJson(message: Message) -> [String : Any] {
+        var res = [String : Any]()
+        res["at-time"] = "123456"
+        res["sent-by"] = "bachld10832"
+        
+        var data = [String: String]()
+        data["type"] = "text"
+        data["content"] = "Hello world"
+        
+        res["data"] = data
+        return res
+    }
+}

@@ -14,11 +14,15 @@ class SeeConversationViewModel : ViewModelDelegate {
 
     private let loadConvoFromContactIdUseCase = LoadConvoFromContactIdUseCase()
     private let loadConvoFromConvoIdUseCase = LoadConvoFromConvoIdUseCase()
+    private let sendMessageUseCase = SendMessageUseCase()
     
+    private let conversationId: String
+
     init(displayLogic: SeeConversationDisplayLogic, contactItem: ContactItem) {
         self.displayLogic = displayLogic
         self.contactItem = contactItem
         self.disposeBag = DisposeBag()
+        self.conversationId = "how-to-get-this"
         self.conversationItem = nil
     }
     
@@ -26,6 +30,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.displayLogic = displayLogic
         self.conversationItem = conversationItem
         self.disposeBag = DisposeBag()
+        self.conversationId = conversationItem.conversation.id
         self.contactItem = nil
     }
 
@@ -89,6 +94,18 @@ class SeeConversationViewModel : ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
         
+        input.sendMessTrigger
+            .flatMap { [unowned self] (_) -> Driver<Bool> in
+                let message = Message()
+                return self.sendMessageUseCase
+                    .execute(request: SendMessageRequest(
+                        message: message,
+                        conversationId: self.conversationId))
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
 
         input.goBackTrigger
             .drive(onNext: { [unowned self] in
@@ -105,6 +122,7 @@ extension SeeConversationViewModel {
     struct Input {
         let trigger: Driver<Void>
         let goBackTrigger: Driver<Void>
+        let sendMessTrigger: Driver<Void>
         let conversationLabel: Binder<String?>
     }
     

@@ -1,6 +1,10 @@
 import RxSwift
 
 class ConversationRepositoryImpl : ConversationRepository {
+    func sendMessage(_ request: SendMessageRequest) -> Observable<Bool> {
+        return remoteSource.sendMessage(message: request.message, to: request.conversationId)
+    }
+    
     
     private let remoteSource: ConversationRemoteSource
     private let localSource: ConversationLocalSource
