@@ -2,6 +2,7 @@ import RxSwift
 import FirebaseDatabase
 
 class ConversationFirebaseSource: ConversationRemoteSource {
+
     
     var ref: DatabaseReference!
     
@@ -186,6 +187,10 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         return Message()
     }
 
+    func sendMessage(message: Message, from user: User, to contact: Contact) -> Observable<Bool> {
+        return Observable.just(true)
+    }
+    
     func sendMessage(message: Message, to conversation: String) -> Observable<Bool> {
         let jsonMessage = self.mapToJson(message: message)
         self.ref.child("conversations/\(conversation)/last-message")

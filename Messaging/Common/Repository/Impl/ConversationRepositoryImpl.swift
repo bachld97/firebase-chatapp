@@ -1,10 +1,25 @@
 import RxSwift
 
 class ConversationRepositoryImpl : ConversationRepository {
-    func sendMessage(_ request: SendMessageRequest) -> Observable<Bool> {
+    func sendMessage(request: SendMessageRequest) -> Observable<Bool> {
         return remoteSource.sendMessage(message: request.message, to: request.conversationId)
     }
     
+    func sendMessageToUser(request: SendMessageToUserRequest) -> Observable<Bool> {
+        return Observable.deferred { [unowned self] in
+            return self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap { [unowned self] (user) -> Observable<Bool> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    return self.remoteSource
+                        .sendMessage(message: request.message, from: user, to: request.toUser)
+            }
+        }
+    }
     
     private let remoteSource: ConversationRemoteSource
     private let localSource: ConversationLocalSource

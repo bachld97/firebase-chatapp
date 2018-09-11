@@ -6,6 +6,6 @@ class SendMessageUseCase : UseCase {
     private let repository: ConversationRepository = ConversationRepositoryFactory.sharedInstance
     
     func execute(request: SendMessageRequest) -> Observable<Bool> {
-        return repository.sendMessage(request)
+        return repository.sendMessage(request: request)
     }
 }

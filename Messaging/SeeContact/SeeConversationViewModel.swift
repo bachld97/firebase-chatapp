@@ -15,14 +15,12 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let loadConvoFromContactIdUseCase = LoadConvoFromContactIdUseCase()
     private let loadConvoFromConvoIdUseCase = LoadConvoFromConvoIdUseCase()
     private let sendMessageUseCase = SendMessageUseCase()
-    
-    private let conversationId: String
+    private let sendMessageToUserUseCase = SendMessageToUserUseCase()
 
     init(displayLogic: SeeConversationDisplayLogic, contactItem: ContactItem) {
         self.displayLogic = displayLogic
         self.contactItem = contactItem
         self.disposeBag = DisposeBag()
-        self.conversationId = "how-to-get-this"
         self.conversationItem = nil
     }
     
@@ -30,7 +28,6 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.displayLogic = displayLogic
         self.conversationItem = conversationItem
         self.disposeBag = DisposeBag()
-        self.conversationId = conversationItem.conversation.id
         self.contactItem = nil
     }
 
@@ -75,14 +72,25 @@ class SeeConversationViewModel : ViewModelDelegate {
             })
             .disposed(by: self.disposeBag)
         
+        input.sendMessTrigger
+            .flatMap { [unowned self] (_) -> Driver<Bool> in
+                let message = Message()
+                return self.sendMessageToUserUseCase
+                    .execute(request: SendMessageToUserRequest(
+                        message: message,
+                        toUser: contactItem.contact))
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+
         return Output(
             error: errorTracker.asDriver())
     }
     
     func transfromWithConversationItem(input: Input, conversationItem: ConversationItem) -> Output {
         let errorTracker = ErrorTracker()
-        
-
         input.trigger
             .flatMap { [unowned self] (_) -> Driver<[Message]> in
                 let request = LoadConvoFromConvoIdRequest(convoId: conversationItem.conversation.id)
@@ -100,7 +108,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                 return self.sendMessageUseCase
                     .execute(request: SendMessageRequest(
                         message: message,
-                        conversationId: self.conversationId))
+                        conversationId: conversationItem.conversation.id))
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             }

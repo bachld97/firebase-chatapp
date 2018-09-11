@@ -4,7 +4,8 @@ protocol ConversationRepository {
     func loadChatHistory() -> Observable<[Conversation]>
     func loadMessages(with contact: Contact) -> Observable<[Message]>
     func loadMessages(of conversationId: String) -> Observable<[Message]>
-    func sendMessage(_ request: SendMessageRequest) -> Observable<Bool>
+    func sendMessage(request: SendMessageRequest) -> Observable<Bool>
+    func sendMessageToUser(request: SendMessageToUserRequest) -> Observable<Bool>
 }
 
 class ConversationRepositoryFactory {

@@ -105,7 +105,7 @@ class AddContactViewModel: ViewModelDelegate {
             .drive(onNext: { [unowned self] (contactItem) in
                 self.displayLogic?.goConversation(contactItem)
             })
-            .disposed(by: self.disposeBag)
+            .disposed(by: self.disposeBag) 
         
         input.acceptTrigger
             .flatMap { [unowned self] (contactItem) -> Driver<Bool> in
