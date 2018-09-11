@@ -6,6 +6,10 @@ protocol ConversationRepository {
     func loadMessages(of conversationId: String) -> Observable<[Message]>
     func sendMessage(request: SendMessageRequest) -> Observable<Bool>
     func sendMessageToUser(request: SendMessageToUserRequest) -> Observable<Bool>
+    
+    
+    func getConversationLabel(conversationId: String) -> Observable<String>
+    func getContactNickname(contact: Contact) -> Observable<String>
 }
 
 class ConversationRepositoryFactory {

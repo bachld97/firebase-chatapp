@@ -21,6 +21,19 @@ class ConversationRepositoryImpl : ConversationRepository {
         }
     }
     
+    func getContactNickname(contact: Contact) -> Observable<String> {
+        return Observable.just("Private")
+    }
+    
+    func getConversationLabel(conversationId: String) -> Observable<String> {
+        if conversationId.contains(" ") {
+            // Private
+            return Observable.just("Private")
+        }
+        
+        return Observable.just("Group")
+    }
+    
     private let remoteSource: ConversationRemoteSource
     private let localSource: ConversationLocalSource
     private let userRepository: UserRepository

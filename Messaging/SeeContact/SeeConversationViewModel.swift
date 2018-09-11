@@ -16,6 +16,8 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let loadConvoFromConvoIdUseCase = LoadConvoFromConvoIdUseCase()
     private let sendMessageUseCase = SendMessageUseCase()
     private let sendMessageToUserUseCase = SendMessageToUserUseCase()
+    private let getConversationLabelUseCase = GetConversationLabelUseCase()
+    private let getContactNicknameUseCase = GetContactNicknameUseCase()
 
     init(displayLogic: SeeConversationDisplayLogic, contactItem: ContactItem) {
         self.displayLogic = displayLogic
@@ -60,6 +62,10 @@ class SeeConversationViewModel : ViewModelDelegate {
                 let request = LoadConvoFromContactRequest(contact: contactItem.contact)
                 return self.loadConvoFromContactIdUseCase
                     .execute(request: request)
+                    .do(onNext: { (messages) in
+                        print(messages)
+                        // TODO: Inflate UI
+                    })
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             }
@@ -74,7 +80,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         
         input.sendMessTrigger
             .flatMap { [unowned self] (_) -> Driver<Bool> in
-                let message = Message()
+                let message = self.parseMessage()
                 return self.sendMessageToUserUseCase
                     .execute(request: SendMessageToUserRequest(
                         message: message,
@@ -85,6 +91,12 @@ class SeeConversationViewModel : ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
 
+        
+        self.getContactNicknameUseCase
+            .execute(request: GetContactNickNameRequest(contact: contactItem.contact))
+            .bind(to: input.conversationLabel)
+            .disposed(by: self.disposeBag)
+        
         return Output(
             error: errorTracker.asDriver())
     }
@@ -104,7 +116,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         
         input.sendMessTrigger
             .flatMap { [unowned self] (_) -> Driver<Bool> in
-                let message = Message()
+                let message = self.parseMessage()
                 return self.sendMessageUseCase
                     .execute(request: SendMessageRequest(
                         message: message,
@@ -121,8 +133,23 @@ class SeeConversationViewModel : ViewModelDelegate {
             })
             .disposed(by: self.disposeBag)
         
+        let request = GetConversationLabelRequest(
+            conversationId: conversationItem.conversation.id)
+        
+        self.getConversationLabelUseCase
+            .execute(request: request)
+            .do(onNext: { (s) in
+                print(s)
+            })
+            .bind(to: input.conversationLabel)
+            .disposed(by: self.disposeBag)
+        
         return Output(
             error: errorTracker.asDriver())
+    }
+    
+    private func parseMessage() -> Message {
+        return Message()
     }
 }
 

@@ -188,7 +188,9 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     }
 
     func sendMessage(message: Message, from user: User, to contact: Contact) -> Observable<Bool> {
-        return Observable.just(true)
+        let uid = [user.userId, contact.userId].sorted()
+            .joined(separator: " ")
+        return self.sendMessage(message: message, to: uid)
     }
     
     func sendMessage(message: Message, to conversation: String) -> Observable<Bool> {

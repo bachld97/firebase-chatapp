@@ -63,6 +63,10 @@
 		1451585721350BB70038CE74 /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1451585621350BB70038CE74 /* UseCase.swift */; };
 		1458BC222147596E005A93AD /* SendMessageToUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458BC212147596E005A93AD /* SendMessageToUserRequest.swift */; };
 		1458BC242147597F005A93AD /* SendMessageToUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458BC232147597F005A93AD /* SendMessageToUserUseCase.swift */; };
+		1458BC2621475FB9005A93AD /* GetConversationLabelUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458BC2521475FB9005A93AD /* GetConversationLabelUseCase.swift */; };
+		1458BC2821475FC9005A93AD /* GetContactNicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458BC2721475FC9005A93AD /* GetContactNicknameUseCase.swift */; };
+		1458BC2A21476249005A93AD /* GetContactNicknameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458BC2921476249005A93AD /* GetContactNicknameRequest.swift */; };
+		1458BC2C21476257005A93AD /* GetConversationLabelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458BC2B21476257005A93AD /* GetConversationLabelRequest.swift */; };
 		146153FC213F68450032EE95 /* AddContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FB213F68450032EE95 /* AddContactViewModel.swift */; };
 		146153FE213F68570032EE95 /* AddContactUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FD213F68570032EE95 /* AddContactUseCase.swift */; };
 		14615400213F68650032EE95 /* SearchContactUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FF213F68650032EE95 /* SearchContactUseCase.swift */; };
@@ -177,6 +181,10 @@
 		1451585621350BB70038CE74 /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
 		1458BC212147596E005A93AD /* SendMessageToUserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageToUserRequest.swift; sourceTree = "<group>"; };
 		1458BC232147597F005A93AD /* SendMessageToUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageToUserUseCase.swift; sourceTree = "<group>"; };
+		1458BC2521475FB9005A93AD /* GetConversationLabelUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetConversationLabelUseCase.swift; sourceTree = "<group>"; };
+		1458BC2721475FC9005A93AD /* GetContactNicknameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContactNicknameUseCase.swift; sourceTree = "<group>"; };
+		1458BC2921476249005A93AD /* GetContactNicknameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContactNicknameRequest.swift; sourceTree = "<group>"; };
+		1458BC2B21476257005A93AD /* GetConversationLabelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetConversationLabelRequest.swift; sourceTree = "<group>"; };
 		146153FB213F68450032EE95 /* AddContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewModel.swift; sourceTree = "<group>"; };
 		146153FD213F68570032EE95 /* AddContactUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactUseCase.swift; sourceTree = "<group>"; };
 		146153FF213F68650032EE95 /* SearchContactUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactUseCase.swift; sourceTree = "<group>"; };
@@ -430,6 +438,8 @@
 				142E515921421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift */,
 				1447A96D2146764C00F7E1CF /* SendMessageUseCase.swift */,
 				1458BC232147597F005A93AD /* SendMessageToUserUseCase.swift */,
+				1458BC2521475FB9005A93AD /* GetConversationLabelUseCase.swift */,
+				1458BC2721475FC9005A93AD /* GetContactNicknameUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -441,6 +451,8 @@
 				142E515521421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift */,
 				1447A96F2146765600F7E1CF /* SendMessageRequest.swift */,
 				1458BC212147596E005A93AD /* SendMessageToUserRequest.swift */,
+				1458BC2921476249005A93AD /* GetContactNicknameRequest.swift */,
+				1458BC2B21476257005A93AD /* GetConversationLabelRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -751,11 +763,13 @@
 				14843FF621413B9E00D5366B /* GroupConvoCell.swift in Sources */,
 				140C34082139240600DC3535 /* ChangePassVIewModel.swift in Sources */,
 				14461A662137A3C60062FAC6 /* Contact.swift in Sources */,
+				1458BC2C21476257005A93AD /* GetConversationLabelRequest.swift in Sources */,
 				1439D99B21369D230094C12C /* SignupRequest.swift in Sources */,
 				140C34062138F74F00DC3535 /* AutoLoginUseCase.swift in Sources */,
 				147945D5213E80050055CE79 /* UserRemoteSource.swift in Sources */,
 				14848AD92140C89D00DAA9F8 /* UnfriendRequest.swift in Sources */,
 				14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */,
+				1458BC2621475FB9005A93AD /* GetConversationLabelUseCase.swift in Sources */,
 				1447A96E2146764C00F7E1CF /* SendMessageUseCase.swift in Sources */,
 				1439D99221365C3D0094C12C /* LoginVC.swift in Sources */,
 				14848AD72140C89500DAA9F8 /* AddFriendRequest.swift in Sources */,
@@ -784,6 +798,8 @@
 				140C33F82138E1A400DC3535 /* Conversation.swift in Sources */,
 				147945D1213E78CD0055CE79 /* Utils.swift in Sources */,
 				140C34042138EC0700DC3535 /* SeeChatHistoryViewModel.swift in Sources */,
+				1458BC2A21476249005A93AD /* GetContactNicknameRequest.swift in Sources */,
+				1458BC2821475FC9005A93AD /* GetContactNicknameUseCase.swift in Sources */,
 				14843FEC214122B900D5366B /* SeeChatHistoryVC.swift in Sources */,
 				1461540D213F8AA20032EE95 /* AcceptedContactCell.swift in Sources */,
 				14848AD32140C88100DAA9F8 /* AcceptFriendRequest.swift in Sources */,
