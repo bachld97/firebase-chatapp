@@ -1,7 +1,7 @@
 import UIKit
 
-class TextMessageCell : UITableViewCell {
-  
+class TextMeMessageCell : UITableViewCell {
+    
     private var smallPadding: CGFloat = 4
     private var normalPadding: CGFloat = 16
     private var mainPadding: CGFloat = 96
@@ -17,7 +17,7 @@ class TextMessageCell : UITableViewCell {
         tv.sizeToFit()
         tv.font = UIFont.systemFont(ofSize: 15.0)
         // tv.contentInset = UIEdgeInsetsMake(8, 12, 8, 12)
-
+        
         tv.text = "Testing text view lalalala. And this is a long long text. I want to make it longer and longer. "
         return tv
     }()
@@ -25,11 +25,11 @@ class TextMessageCell : UITableViewCell {
     private let tvWrapper: UIView = {
         let v = UIView()
         v.translatesAutoresizingMaskIntoConstraints = false
-        v.backgroundColor = UIColor(red: 137 / 255.0, green: 229 / 255.0, blue: 163 / 255.0, alpha: 1)
+        v.backgroundColor = UIColor(red: 221.0 / 255.0, green: 234.0 / 255.0, blue: 1, alpha: 1)
         v.layer.cornerRadius = 16.0
         return v
     }()
-
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setUpViews()
@@ -48,8 +48,8 @@ class TextMessageCell : UITableViewCell {
     private func addConstraintsForTextContent() {
         let topC = NSLayoutConstraint(item: tvWrapper, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: smallPadding)
         let botC = NSLayoutConstraint(item: tvWrapper, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: smallPadding * -1)
-        let leftC = NSLayoutConstraint(item: tvWrapper, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: normalPadding)
-        let rightC = NSLayoutConstraint(item: tvWrapper, attribute: .trailing, relatedBy: .lessThanOrEqual, toItem: self, attribute: .trailing, multiplier: 1, constant: mainPadding * -1)
+        let leftC = NSLayoutConstraint(item: tvWrapper, attribute: .leading, relatedBy: .greaterThanOrEqual, toItem: self, attribute: .leading, multiplier: 1, constant: mainPadding)
+        let rightC = NSLayoutConstraint(item: tvWrapper, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: normalPadding * -1)
         
         addConstraints([topC, botC, leftC, rightC])
         
@@ -70,5 +70,6 @@ class TextMessageCell : UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("Not implemented")
     }
-
+    
 }
+

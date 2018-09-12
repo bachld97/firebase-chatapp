@@ -62,6 +62,7 @@ class SeeConversationVC: BaseVC, ViewFor {
         
 //        self.tableView.register(UINib(nibName: "<++>", bundle: nil), forCellReusableIdentifier: "<++>")
         self.tableView.register(TextMessageCell.self, forCellReuseIdentifier: "TextMessageCell")
+        self.tableView.register(TextMeMessageCell.self, forCellReuseIdentifier: "TextMeMessageCell")
         
         self.items = RxTableViewSectionedReloadDataSource
             <SectionModel<String, SeeConversationViewModel.Item>>(
@@ -70,6 +71,11 @@ class SeeConversationVC: BaseVC, ViewFor {
                     case .text(let message):
                         let cell = tv.dequeueReusableCell(withIdentifier: "TextMessageCell")
                             as! TextMessageCell
+                        cell.bind(message: message)
+                        return cell
+                    case .textMe(let message):
+                        let cell = tv.dequeueReusableCell(withIdentifier: "TextMeMessageCell")
+                            as! TextMeMessageCell
                         cell.bind(message: message)
                         return cell
                     }

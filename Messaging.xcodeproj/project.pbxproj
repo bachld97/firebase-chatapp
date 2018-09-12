@@ -34,6 +34,7 @@
 		143517A121352D3C0039874F /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143517A021352D3C0039874F /* BaseVC.swift */; };
 		143517A621352F200039874F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143517A521352F200039874F /* LoginViewModel.swift */; };
 		1436689D2148BB7D00B2766E /* GetUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436689C2148BB7D00B2766E /* GetUserUseCase.swift */; };
+		1436689F2148CD4700B2766E /* TextMeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436689E2148CD4700B2766E /* TextMeMessageCell.swift */; };
 		1439D99221365C3D0094C12C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99021365C3D0094C12C /* LoginVC.swift */; };
 		1439D99321365C3D0094C12C /* LoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1439D99121365C3D0094C12C /* LoginVC.xib */; };
 		1439D995213660270094C12C /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D994213660270094C12C /* ObservableType.swift */; };
@@ -154,6 +155,7 @@
 		143517A021352D3C0039874F /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		143517A521352F200039874F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1436689C2148BB7D00B2766E /* GetUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserUseCase.swift; sourceTree = "<group>"; };
+		1436689E2148CD4700B2766E /* TextMeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMeMessageCell.swift; sourceTree = "<group>"; };
 		1439D99021365C3D0094C12C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		1439D99121365C3D0094C12C /* LoginVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginVC.xib; sourceTree = "<group>"; };
 		1439D994213660270094C12C /* ObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservableType.swift; path = Messaging/Common/Utils/ObservableType.swift; sourceTree = SOURCE_ROOT; };
@@ -466,6 +468,7 @@
 			isa = PBXGroup;
 			children = (
 				1458BC2D2147A611005A93AD /* TextMessageCell.swift */,
+				1436689E2148CD4700B2766E /* TextMeMessageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -824,6 +827,7 @@
 				14615400213F68650032EE95 /* SearchContactUseCase.swift in Sources */,
 				140C34022138E95000DC3535 /* ConversationRepositoryImpl.swift in Sources */,
 				142E515A21421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift in Sources */,
+				1436689F2148CD4700B2766E /* TextMeMessageCell.swift in Sources */,
 				14615402213F686F0032EE95 /* AddContactRequest.swift in Sources */,
 				149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */,
 				14461A762137E8D80062FAC6 /* ContactLocalSource.swift in Sources */,

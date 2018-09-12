@@ -74,11 +74,16 @@ class SeeConversationViewModel : ViewModelDelegate {
         input.trigger
             .flatMap { [unowned self] (_) -> Driver<[Message]> in
                 let request = LoadConvoFromContactRequest(contact: contactItem.contact)
-                return self.loadConvoFromContactIdUseCase
-                    .execute(request: request)
-                    .do(onNext: { (messages) in
-                        self.handleMessages(messages: messages)
-                    })
+                
+                return self.getUserUseCase
+                    .execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<[Message]> in
+                        return self.loadConvoFromContactIdUseCase
+                            .execute(request: request)
+                            .do(onNext: { (messages) in
+                                self.handleMessages(messages: messages, user: user)
+                            })
+                    }
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             }
@@ -118,11 +123,17 @@ class SeeConversationViewModel : ViewModelDelegate {
         input.trigger
             .flatMap { [unowned self] (_) -> Driver<[Message]> in
                 let request = LoadConvoFromConvoIdRequest(convoId: conversationItem.conversation.id)
-                return self.loadConvoFromConvoIdUseCase
-                    .execute(request: request)
-                    .do(onNext: { [unowned self] (messages) in
-                        self.handleMessages(messages: messages)
-                    })
+                
+                return self.getUserUseCase
+                    .execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<[Message]> in
+                        
+                        return self.loadConvoFromConvoIdUseCase
+                            .execute(request: request)
+                            .do(onNext: { [unowned self] (messages) in
+                                self.handleMessages(messages: messages, user: user)
+                            })
+                    }
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             }
@@ -166,13 +177,17 @@ class SeeConversationViewModel : ViewModelDelegate {
             items: items.asDriverOnErrorJustComplete())
     }
     
-    private func handleMessages(messages: [Message]) {
+    private func handleMessages(messages: [Message], user: User) {
         self.cachedItems.removeAll()
         
         for m in messages {
             switch m.type {
             case .text:
-            cachedItems.append(Item.text(message: m))
+                if m.data["sent-by"]!.elementsEqual(user.userId) {
+                    cachedItems.append(Item.textMe(message: m))
+                } else {
+                    cachedItems.append(Item.text(message: m))
+                }
             }
         }
 
@@ -208,5 +223,6 @@ extension SeeConversationViewModel {
     
     enum Item {
         case text(message: Message)
+        case textMe(message: Message)
     }
 }

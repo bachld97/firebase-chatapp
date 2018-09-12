@@ -15,7 +15,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             let dbRequest = self.ref
                 .child("messages/\(conversationId)")
                 .queryOrderedByKey()
-                .queryLimited(toLast: 10)
+                // .queryLimited(toLast: 10)
                 .observe(.value, with: { [unowned self] (snapshot) in
                     
                     // Iterate over the messages
@@ -23,8 +23,6 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                         observer.onNext([])
                         return
                     }
-
-                    print(snapshot)
 
                     var messages: [Message] = []
                     let ite = snapshot.children
