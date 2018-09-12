@@ -85,8 +85,8 @@ class SeeContactVC: BaseVC, ViewFor {
 extension SeeContactVC : SeeContactDisplayLogic {
     func goConversation(_ item: ContactItem) {
         let vc = SeeConversationVC.instance(contactItem: item)
-        present(vc, animated: true, completion: nil)
-        // self.navigationController?.pushViewController(vc, animated: true)
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func showEmpty() {

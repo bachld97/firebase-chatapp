@@ -20,6 +20,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                     
                     // Iterate over the messages
                     guard snapshot.exists() else {
+                        print("Snapshot not exist")
                         observer.onNext([])
                         return
                     }
@@ -81,6 +82,9 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                         self.ref.child("conversations/\(uid)")
                             .setValue(convDict)
                     }
+                    
+                    obs.onNext(true)
+                    obs.onCompleted()
                 }, withCancel: { (error) in
                     // Ignore
                 })
@@ -94,7 +98,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             .joined(separator: " ")
         
         return createConversationIfNotExist(of: user, with: contact)
-            .flatMap { [unowned self] (_) in
+            .flatMap { [unowned self] (_) -> Observable<[Message]> in
+                print("Loading")
                 return self.loadMessages(of: uid)
         }
     }

@@ -131,7 +131,8 @@ extension AddContactVC : AddContactDisplayLogic {
     
     func goConversation(_ item: ContactItem) {
         let vc = SeeConversationVC.instance(contactItem: item)
-        present(vc, animated: true, completion: nil)
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
         // self.navigationController?.pushViewController(vc, animated: true)
     }
 }

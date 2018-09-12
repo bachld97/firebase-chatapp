@@ -20,9 +20,6 @@ class SingleConvoCell: UITableViewCell {
     }
 
     func bind(convoItem: ConversationItem) {
-//        let senderId = convoItem.conversation.lastMessDict["sent-by"] ?? "Unknown user"
-//        convoNameLabel.text = convoItem.conversation.nicknameDict[senderId] ?? senderId
-        timeLabel.text = "Hello world"
-//        lastMessContentLabel.text = convoItem.conversation.lastMessDict["content"] ?? "No content"
+        // convoItem.conversation.lastMess.
     }
 }

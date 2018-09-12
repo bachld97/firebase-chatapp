@@ -92,6 +92,9 @@ class SeeConversationViewModel : ViewModelDelegate {
                     .flatMap { [unowned self] (user) -> Observable<Bool> in
                         
                         let message = self.parseMessage(user)
+                        
+                        self.displayLogic?.clearText()
+                        
                         return self.sendMessageToUserUseCase
                             .execute(request: SendMessageToUserRequest(
                                 message: message,
