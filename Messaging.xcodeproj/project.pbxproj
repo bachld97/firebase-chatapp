@@ -67,6 +67,7 @@
 		1458BC2821475FC9005A93AD /* GetContactNicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458BC2721475FC9005A93AD /* GetContactNicknameUseCase.swift */; };
 		1458BC2A21476249005A93AD /* GetContactNicknameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458BC2921476249005A93AD /* GetContactNicknameRequest.swift */; };
 		1458BC2C21476257005A93AD /* GetConversationLabelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458BC2B21476257005A93AD /* GetConversationLabelRequest.swift */; };
+		1458BC2E2147A611005A93AD /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1458BC2D2147A611005A93AD /* TextMessageCell.swift */; };
 		146153FC213F68450032EE95 /* AddContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FB213F68450032EE95 /* AddContactViewModel.swift */; };
 		146153FE213F68570032EE95 /* AddContactUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FD213F68570032EE95 /* AddContactUseCase.swift */; };
 		14615400213F68650032EE95 /* SearchContactUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 146153FF213F68650032EE95 /* SearchContactUseCase.swift */; };
@@ -185,6 +186,7 @@
 		1458BC2721475FC9005A93AD /* GetContactNicknameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContactNicknameUseCase.swift; sourceTree = "<group>"; };
 		1458BC2921476249005A93AD /* GetContactNicknameRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContactNicknameRequest.swift; sourceTree = "<group>"; };
 		1458BC2B21476257005A93AD /* GetConversationLabelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetConversationLabelRequest.swift; sourceTree = "<group>"; };
+		1458BC2D2147A611005A93AD /* TextMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
 		146153FB213F68450032EE95 /* AddContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewModel.swift; sourceTree = "<group>"; };
 		146153FD213F68570032EE95 /* AddContactUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactUseCase.swift; sourceTree = "<group>"; };
 		146153FF213F68650032EE95 /* SearchContactUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactUseCase.swift; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 		142E515221421BF500FC0593 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				1458BC2D2147A611005A93AD /* TextMessageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -832,6 +835,7 @@
 				14CEE9802136584000A31FBB /* UserRepository.swift in Sources */,
 				14182371213507E500DC0E98 /* ViewFor.swift in Sources */,
 				14CEE97221363C2200A31FBB /* User.swift in Sources */,
+				1458BC2E2147A611005A93AD /* TextMessageCell.swift in Sources */,
 				141823542135025700DC0E98 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

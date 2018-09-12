@@ -13,6 +13,9 @@ class SeeConversationVC: BaseVC, ViewFor {
     @IBOutlet weak var conversationLabel: UILabel!
     @IBOutlet weak var sendMessageButton: UIButton!
     
+    private var items: RxTableViewSectionedReloadDataSource
+        <SectionModel<String, SeeConversationViewModel.Item>>!
+    
     class func instance(contactItem item: ContactItem) -> UIViewController {
         return SeeConversationVC(contactItem: item)
     }
@@ -29,6 +32,11 @@ class SeeConversationVC: BaseVC, ViewFor {
         super.init(coder: aDecoder)
         fatalError("Cannot instantiate like this")
     }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+        self.navigationController?.title = "Hello"
+    }
     
     private init(contactItem: ContactItem) {
         super.init(nibName: "SeeConversationVC", bundle: nil)
@@ -42,7 +50,32 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.viewModel = SeeConversationViewModel(displayLogic: self, conversationItem: conversationItem)
     }
     
-
+    override func prepareUI() {
+        self.tableView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        self.tableView.tableFooterView = UIView()
+        self.tableView.allowsSelection = false
+        self.tableView.separatorStyle = .none
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 90
+        
+//        self.tableView.register(UINib(nibName: "<++>", bundle: nil), forCellReusableIdentifier: "<++>")
+        self.tableView.register(TextMessageCell.self, forCellReuseIdentifier: "TextMessageCell")
+        
+        self.items = RxTableViewSectionedReloadDataSource
+            <SectionModel<String, SeeConversationViewModel.Item>>(
+                configureCell: { (_, tv, ip, item) -> UITableViewCell in
+                    let cell = tv.dequeueReusableCell(withIdentifier: "TextMessageCell")
+                        as! TextMessageCell
+                    cell.bind(item: ())
+                    return cell
+            })
+        
+//        self.tableView.rx.itemSelected.asDriver()
+//            .drive(onNext: { [unowned self] (ip) in
+//
+//            })
+    }
+    
     override func bindViewModel() {
         let viewWillAppear = self.rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
             .mapToVoid()
@@ -61,6 +94,11 @@ class SeeConversationVC: BaseVC, ViewFor {
                 self.handleError(e: error)
             })
         .disposed(by: self.disposeBag)
+        
+        output.items
+            .map { [SectionModel(model: "Items", items: $0)]}
+            .drive (self.tableView.rx.items(dataSource: self.items))
+            .disposed(by: self.disposeBag)
     }
 }
 

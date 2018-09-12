@@ -100,7 +100,11 @@ class SeeChatHistoryVC: BaseVC, ViewFor {
 extension SeeChatHistoryVC: SeeChatHistoryDisplayLogic {
     func goConversation(item: ConversationItem) {
         let vc = SeeConversationVC.instance(conversationItem: item)
-        present(vc, animated: true, completion: nil)
+        vc.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(vc, animated: true)
+        // let nc = UINavigationController(rootViewController: vc)
+        
+        // present(nc, animated: true, completion: nil)
     }
     
     func showEmpty() {

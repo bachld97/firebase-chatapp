@@ -46,8 +46,13 @@ class UserRepositoryImpl : UserRepository {
     }
     
     func autoLogin() -> Observable<Bool> {
-        return Observable.deferred {
-            return Observable.just(false)
+        return Observable.deferred { [unowned self] in
+            return self.localSource
+                .getUser()
+                .take(1)
+                .flatMap { (user) -> Observable<Bool> in
+                    return Observable.just(user != nil)
+            }
         }
     }
     

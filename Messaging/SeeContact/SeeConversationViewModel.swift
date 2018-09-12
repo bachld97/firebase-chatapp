@@ -11,7 +11,12 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     let contactItem: ContactItem?
     let conversationItem: ConversationItem?
-
+    
+    var cachedItems = [Item]()
+    // We only listen to new item after the initial load,
+    // additional data will be added to this list and publish to UI
+    let items = BehaviorRelay<[Item]>(value: [])
+    
     private let loadConvoFromContactIdUseCase = LoadConvoFromContactIdUseCase()
     private let loadConvoFromConvoIdUseCase = LoadConvoFromConvoIdUseCase()
     private let sendMessageUseCase = SendMessageUseCase()
@@ -63,8 +68,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                 return self.loadConvoFromContactIdUseCase
                     .execute(request: request)
                     .do(onNext: { (messages) in
-                        print(messages)
-                        // TODO: Inflate UI
+                        self.handleMessages(messages: messages)
                     })
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
@@ -97,8 +101,9 @@ class SeeConversationViewModel : ViewModelDelegate {
             .bind(to: input.conversationLabel)
             .disposed(by: self.disposeBag)
         
-        return Output(
-            error: errorTracker.asDriver())
+        return Output (
+            error: errorTracker.asDriver(),
+            items: items.asDriverOnErrorJustComplete())
     }
     
     func transfromWithConversationItem(input: Input, conversationItem: ConversationItem) -> Output {
@@ -108,6 +113,9 @@ class SeeConversationViewModel : ViewModelDelegate {
                 let request = LoadConvoFromConvoIdRequest(convoId: conversationItem.conversation.id)
                 return self.loadConvoFromConvoIdUseCase
                     .execute(request: request)
+                    .do(onNext: { [unowned self] (messages) in
+                        self.handleMessages(messages: messages)
+                    })
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             }
@@ -138,14 +146,21 @@ class SeeConversationViewModel : ViewModelDelegate {
         
         self.getConversationLabelUseCase
             .execute(request: request)
-            .do(onNext: { (s) in
-                print(s)
-            })
             .bind(to: input.conversationLabel)
             .disposed(by: self.disposeBag)
         
         return Output(
-            error: errorTracker.asDriver())
+            error: errorTracker.asDriver(),
+            items: items.asDriverOnErrorJustComplete())
+    }
+    
+    private func handleMessages(messages: [Message]) {
+        print(messages.count)
+        
+        self.cachedItems.append(Item.text())
+        self.cachedItems.append(Item.text())
+
+        self.items.accept(self.cachedItems)
     }
     
     private func parseMessage() -> Message {
@@ -163,5 +178,10 @@ extension SeeConversationViewModel {
     
     struct Output {
         let error: Driver<Error>
+        let items: Driver<[Item]>
+    }
+    
+    enum Item {
+        case text()
     }
 }

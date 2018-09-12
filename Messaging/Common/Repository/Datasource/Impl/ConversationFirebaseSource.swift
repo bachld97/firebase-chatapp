@@ -24,10 +24,9 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                     
                     var messages: [Message] = []
                     for (_, messValue) in bigDict {
-                        guard let messageDict = messValue as? [String : String] else {
+                        guard let messageDict = messValue as? [String : Any] else {
                             continue
                         }
-                        
                         
                         let mess = self.parseMessage(from: messageDict)
                         if mess != nil {
