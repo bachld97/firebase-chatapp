@@ -12,9 +12,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddContactViewController" customModule="Messaging" customModuleProvider="target">
             <connections>
-                <outlet property="backButton" destination="gQO-8h-1jP" id="boO-zW-oBZ"/>
-                <outlet property="searchButton" destination="YpZ-gm-bAB" id="F0D-gm-ZH2"/>
-                <outlet property="searchQueryTF" destination="W82-Dv-GMM" id="2dg-aa-nUQ"/>
                 <outlet property="tableView" destination="gII-OW-Zng" id="oov-fU-vjO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,66 +21,17 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FPK-oC-9OU">
-                    <rect key="frame" x="0.0" y="20" width="375" height="64"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gQO-8h-1jP">
-                            <rect key="frame" x="12" y="20" width="64" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="24" id="UIi-9O-YQY"/>
-                                <constraint firstAttribute="width" constant="64" id="lNR-cK-VI0"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                            <state key="normal" title="Back"/>
-                        </button>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search by username" textAlignment="natural" minimumFontSize="13" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="W82-Dv-GMM">
-                            <rect key="frame" x="76" y="16" width="235" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="32" id="VdG-PF-uRI"/>
-                            </constraints>
-                            <nil key="textColor"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
-                        </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YpZ-gm-bAB">
-                            <rect key="frame" x="303" y="20" width="64" height="24"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="24" id="1FX-Pl-Nis"/>
-                                <constraint firstAttribute="width" constant="64" id="U2A-57-QPD"/>
-                                <constraint firstAttribute="height" constant="24" id="pzX-ar-IS2"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                            <state key="normal" title="Search"/>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="W82-Dv-GMM" secondAttribute="trailing" constant="64" id="4TN-P6-Igb"/>
-                        <constraint firstAttribute="bottom" secondItem="W82-Dv-GMM" secondAttribute="bottom" constant="16" id="72t-fx-ad2"/>
-                        <constraint firstItem="W82-Dv-GMM" firstAttribute="leading" secondItem="gQO-8h-1jP" secondAttribute="trailing" id="BH3-hX-ntD"/>
-                        <constraint firstAttribute="height" constant="64" id="BJe-3x-ed9"/>
-                        <constraint firstAttribute="trailing" secondItem="YpZ-gm-bAB" secondAttribute="trailing" constant="8" id="ByP-RC-7Di"/>
-                        <constraint firstAttribute="bottom" secondItem="gQO-8h-1jP" secondAttribute="bottom" constant="20" id="MF6-7c-g4p"/>
-                        <constraint firstItem="gQO-8h-1jP" firstAttribute="top" secondItem="FPK-oC-9OU" secondAttribute="top" constant="20" id="P2e-Dt-bQx"/>
-                        <constraint firstItem="gQO-8h-1jP" firstAttribute="leading" secondItem="FPK-oC-9OU" secondAttribute="leading" constant="12" id="QAN-eb-7X5"/>
-                        <constraint firstItem="W82-Dv-GMM" firstAttribute="top" secondItem="FPK-oC-9OU" secondAttribute="top" constant="16" id="fnz-C5-6tb"/>
-                        <constraint firstItem="YpZ-gm-bAB" firstAttribute="top" secondItem="FPK-oC-9OU" secondAttribute="top" constant="20" id="s4b-Y3-8g3"/>
-                    </constraints>
-                </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gII-OW-Zng">
-                    <rect key="frame" x="0.0" y="84" width="375" height="583"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="FPK-oC-9OU" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="2RZ-Za-413"/>
                 <constraint firstItem="gII-OW-Zng" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="6nq-JQ-nE3"/>
                 <constraint firstItem="gII-OW-Zng" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="DeI-TF-wNJ"/>
                 <constraint firstItem="gII-OW-Zng" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Gdw-Co-Wro"/>
-                <constraint firstItem="gII-OW-Zng" firstAttribute="top" secondItem="FPK-oC-9OU" secondAttribute="bottom" id="H2q-VI-gLN"/>
-                <constraint firstItem="FPK-oC-9OU" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="J72-un-osc"/>
-                <constraint firstItem="FPK-oC-9OU" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="fso-Pp-PLp"/>
+                <constraint firstItem="gII-OW-Zng" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="cpZ-pC-IkP"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="25.5" y="51.5"/>

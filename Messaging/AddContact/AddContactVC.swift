@@ -9,9 +9,6 @@ class AddContactVC: BaseVC, ViewFor {
     typealias ViewModelType = AddContactViewModel
     private let disposeBag: DisposeBag = DisposeBag()
     
-    @IBOutlet weak var searchButton: UIButton!
-    @IBOutlet weak var searchQueryTF: UITextField!
-    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
     private let addRequest = PublishSubject<ContactItem>()
@@ -38,20 +35,20 @@ class AddContactVC: BaseVC, ViewFor {
         self.viewModel = AddContactViewModel(displayLogic: self)
     }
     
+    let searchBar = UISearchBar()
     override func viewDidLoad() {
-        super.viewDidLoad()
-        let searchBar = UISearchBar()
         searchBar.sizeToFit()
         searchBar.placeholder = ""
         self.navigationItem.titleView = searchBar
         self.navigationItem.largeTitleDisplayMode = .never
         
-        let item = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        // self.navigationItem.backBarButtonItem = item
-        self.navigationItem.leftBarButtonItem = item
+//        let item = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+//         self.navigationItem.backBarButtonItem = item
+//        self.navigationItem.leftBarButtonItem = item
         
         let searchItem = UIBarButtonItem(title: "Search", style: .done, target: nil, action: nil)
         self.navigationItem.rightBarButtonItem = searchItem
+        super.viewDidLoad()
     }
     
     override func prepareUI() {
@@ -111,8 +108,8 @@ class AddContactVC: BaseVC, ViewFor {
         
         let input = AddContactViewModel.Input(
             trigger: viewWillAppear,
-            searchQuery: self.searchQueryTF.rx.text.orEmpty,
-            searchTrigger: self.searchButton.rx.tap.asDriver(),
+            searchQuery: self.searchBar.rx.text.orEmpty,
+            searchTrigger: self.navigationItem.rightBarButtonItem!.rx.tap.asDriver(),
             messageTrigger: self.messageRequest.asDriverOnErrorJustComplete(),
             unfriendTrigger: self.unfriendRequest.asDriverOnErrorJustComplete(),
             cancelTrigger: self.cancelRequest.asDriverOnErrorJustComplete(),
