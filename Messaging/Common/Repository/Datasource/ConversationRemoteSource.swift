@@ -6,6 +6,10 @@ protocol ConversationRemoteSource {
     func loadMessages(of conversationId: String) -> Observable<[Message]>
     func sendMessage(message: Message, to conversation: String) -> Observable<Bool>
     func sendMessage(message: Message, from user: User, to contact: Contact) -> Observable<Bool>
+    
+    
+//    func getConversationLabel(conversationId: String) -> Observable<String>
+//    func getContactNickname(contact: Contact) -> Observable<String>
 }
 
 class ConversationRemoteSourceFactory {

@@ -1,4 +1,4 @@
 struct GetConversationLabelRequest {
-    let conversationId: String
+    let conversation: Conversation
 }
 

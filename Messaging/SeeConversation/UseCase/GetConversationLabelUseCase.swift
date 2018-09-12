@@ -7,7 +7,7 @@ class GetConversationLabelUseCase: UseCase {
         = ConversationRepositoryFactory.sharedInstance
     
     func execute(request: GetConversationLabelRequest) -> Observable<String> {
-        return repository.getConversationLabel(conversationId: request.conversationId)
+        return repository.getConversationLabel(conversation: request.conversation)
     }
 }
 

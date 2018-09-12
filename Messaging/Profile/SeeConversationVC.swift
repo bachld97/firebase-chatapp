@@ -36,7 +36,7 @@ class SeeConversationVC: BaseVC, ViewFor {
         super.viewDidLoad()
         // self.navigationController?.navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.largeTitleDisplayMode = .never
-        self.navigationItem.title = "Helo"
+        // self.navigationItem.title = "Helo"
     }
     
 

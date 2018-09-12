@@ -62,10 +62,6 @@ class SeeConversationViewModel : ViewModelDelegate {
         
         fatalError("ContactItem or ConversationItem must be not nil, or it is impossible to load conversation")
         
-//        (Observable.just(contactItem)
-//            .map { "\($0!.contact.userName)" }
-//            .bind(to: input.conversationLabel)
-//            ).disposed(by: self.disposeBag)
     }
     
     func transformWithContactItem(input: Input, contactItem: ContactItem) -> Output {
@@ -165,7 +161,7 @@ class SeeConversationViewModel : ViewModelDelegate {
             .disposed(by: self.disposeBag)
 
         let request = GetConversationLabelRequest(
-            conversationId: conversationItem.conversation.id)
+            conversation: conversationItem.conversation)
         
         self.getConversationLabelUseCase
             .execute(request: request)

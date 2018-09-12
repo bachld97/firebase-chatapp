@@ -25,13 +25,32 @@ class ConversationRepositoryImpl : ConversationRepository {
         return Observable.just("Private")
     }
     
-    func getConversationLabel(conversationId: String) -> Observable<String> {
-        if conversationId.contains(" ") {
-            // Private
-            return Observable.just("Private")
+    func getConversationLabel(conversation: Conversation) -> Observable<String> {
+        return Observable.deferred { [unowned self] in
+            self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap {  (user) -> Observable<String> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    if conversation.id.contains(" ") {
+                        let tem = conversation.id.split(separator: " ")
+                        var myString: String!
+                        if tem[0].elementsEqual(user.userId) {
+                            myString = String(tem[1])
+                        } else {
+                            myString = String(tem[0])
+                        }
+                        
+                        return Observable.just(conversation.nickname[myString]!)
+                    } else {
+                        return Observable.just("Group chat")
+                        // return Observable.just(conversation.conversationLabel)
+                    }
+            }
         }
-        
-        return Observable.just("Group")
     }
     
     private let remoteSource: ConversationRemoteSource
