@@ -3,7 +3,6 @@ import RxCocoa
 import RxDataSources
 
 protocol AddContactDisplayLogic: class {
-    func goBack()
     func hideKeyboard()
     func goConversation(_ item: ContactItem)
 }
@@ -64,12 +63,6 @@ class AddContactViewModel: ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
 
-        input.goBackTrigger
-            .drive(onNext: { [unowned self] in
-                self.displayLogic?.goBack()
-            })
-            .disposed(by: self.disposeBag)
-        
         input.searchTrigger
             .flatMap { [unowned self] (_) -> Driver<[ContactRequest]> in
                 self.displayLogic?.hideKeyboard()
@@ -157,7 +150,6 @@ class AddContactViewModel: ViewModelDelegate {
 extension AddContactViewModel {
     struct Input {
         let trigger: Driver<Void>
-        let goBackTrigger: Driver<Void>
         let searchQuery: ControlProperty<String>
         let searchTrigger: Driver<Void>
         

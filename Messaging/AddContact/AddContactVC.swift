@@ -38,6 +38,22 @@ class AddContactVC: BaseVC, ViewFor {
         self.viewModel = AddContactViewModel(displayLogic: self)
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let searchBar = UISearchBar()
+        searchBar.sizeToFit()
+        searchBar.placeholder = ""
+        self.navigationItem.titleView = searchBar
+        self.navigationItem.largeTitleDisplayMode = .never
+        
+        let item = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        // self.navigationItem.backBarButtonItem = item
+        self.navigationItem.leftBarButtonItem = item
+        
+        let searchItem = UIBarButtonItem(title: "Search", style: .done, target: nil, action: nil)
+        self.navigationItem.rightBarButtonItem = searchItem
+    }
+    
     override func prepareUI() {
         self.tableView.tableFooterView = UIView()
         self.tableView.rowHeight = 90
@@ -95,7 +111,6 @@ class AddContactVC: BaseVC, ViewFor {
         
         let input = AddContactViewModel.Input(
             trigger: viewWillAppear,
-            goBackTrigger: self.backButton.rx.tap.asDriver(),
             searchQuery: self.searchQueryTF.rx.text.orEmpty,
             searchTrigger: self.searchButton.rx.tap.asDriver(),
             messageTrigger: self.messageRequest.asDriverOnErrorJustComplete(),
@@ -121,19 +136,13 @@ class AddContactVC: BaseVC, ViewFor {
 }
 
 extension AddContactVC : AddContactDisplayLogic {
-    func goBack() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
     func hideKeyboard() {
         self.view.resignFirstResponder()
     }
     
     func goConversation(_ item: ContactItem) {
         let vc = SeeConversationVC.instance(contactItem: item)
-        vc.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(vc, animated: true)
-        // self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
