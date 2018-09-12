@@ -22,7 +22,20 @@ class ConversationRepositoryImpl : ConversationRepository {
     }
     
     func getContactNickname(contact: Contact) -> Observable<String> {
-        return Observable.just("Private")
+        // return Observable.just("Private")
+        return Observable.deferred { [unowned self] in
+            self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap { (user) -> Observable<String> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    return self.remoteSource
+                        .getContactNickname(user: user, contact: contact)
+            }
+        }
     }
     
     func getConversationLabel(conversation: Conversation) -> Observable<String> {

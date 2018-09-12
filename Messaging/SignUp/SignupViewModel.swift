@@ -60,6 +60,10 @@ class SignupViewModel : ViewModelDelegate {
                             return Observable.error(SimpleError(message: "All fields are required"))
                     }
                     
+                    guard !self.username.value.contains(" ") else {
+                        return Observable.error(SimpleError(message: "No whitespace is allowed in username"))
+                    }
+                    
                     guard self.password.value
                         .trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual(self.confirmPassword.value.trimmingCharacters(in: .whitespacesAndNewlines)) else {
                             return Observable.error(SimpleError(message: "The passwords you entered do not match"))

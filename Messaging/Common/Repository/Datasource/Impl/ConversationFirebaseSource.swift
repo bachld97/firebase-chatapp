@@ -10,6 +10,22 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         ref = Database.database().reference()
     }
     
+    func getContactNickname(user: User, contact: Contact) -> Observable<String> {
+        let uid = [user.userId, contact.userId].sorted()
+            .joined(separator: " ")
+        
+        return Observable.create { [unowned self] (obs) in
+            self.ref.child("conversations/\(uid)/users/\(contact.userId)/nickname")
+                .observeSingleEvent(of: .value, with: { (snap) in
+                    obs.onNext(snap.value as! String)
+                }, withCancel: { (e) in
+                    obs.onError(e)
+                })
+            
+            return Disposables.create()
+        }
+    }
+    
     func loadMessages(of conversationId: String) -> Observable<[Message]> {
         return Observable.create { [unowned self] (observer) in
             let dbRequest = self.ref

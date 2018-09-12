@@ -9,7 +9,7 @@ protocol ConversationRemoteSource {
     
     
 //    func getConversationLabel(conversationId: String) -> Observable<String>
-//    func getContactNickname(contact: Contact) -> Observable<String>
+    func getContactNickname(user: User, contact: Contact) -> Observable<String>
 }
 
 class ConversationRemoteSourceFactory {
