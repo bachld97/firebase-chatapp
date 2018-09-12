@@ -140,7 +140,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                             continue
                         }
                         
-                        let item = self.parseConversation(from: dict)
+                        let item = self.parseConversation(from: dict, myId: user.userId)
                         
                         if item != nil {
                             items.append(item!)
@@ -160,7 +160,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         }
     }
     
-    private func parseConversation(from snapshot: DataSnapshot) -> Conversation? {
+    private func parseConversation(from snapshot: DataSnapshot, myId: String) -> Conversation? {
         
         guard let dict = snapshot.value as? [String: Any] else {
             return nil
@@ -189,12 +189,15 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         }
         
         let type: ConvoType = isPrivate ? .single : .group
+        let fromMe = message.data["sent-by"]!.elementsEqual(myId)
         let res = Conversation(
             id: convId,
             type: type,
             lastMess: message,
             nickname: nickname,
-            displayAva: displayAva)
+            displayAva: displayAva,
+            fromMe: fromMe,
+            myId: myId)
         return res
     }
     

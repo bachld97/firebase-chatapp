@@ -20,6 +20,24 @@ class SingleConvoCell: UITableViewCell {
     }
 
     func bind(convoItem: ConversationItem) {
-        // convoItem.conversation.lastMess.
+        let lastMess : String
+        let convo = convoItem.conversation
+        if (!convo.fromMe) {
+            lastMess = convoItem.conversation
+                .nickname[convo.lastMess.data["sent-by"]!]! + ": "
+        } else {
+            lastMess = "You: "
+        }
+        lastMessContentLabel.text = lastMess + convo.lastMess.data["content"]!
+        timeLabel.text = convo.lastMess.data["at-time"]
+        
+        let tem = convo.id.split(separator: " ")
+        var myString: String!
+        if tem[0].elementsEqual(convo.myId) {
+            myString = String(tem[1])
+        } else {
+            myString = String(tem[0])
+        }
+        convoNameLabel.text = convoItem.conversation.nickname[myString]
     }
 }
