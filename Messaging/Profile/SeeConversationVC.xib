@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="sendMessageButton" destination="H3Z-Mu-IjB" id="HQd-hl-7kg"/>
                 <outlet property="tableView" destination="fQN-26-m81" id="b6w-9d-4Kf"/>
+                <outlet property="textMessageContent" destination="9zX-AS-xxv" id="IU0-a2-4wn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

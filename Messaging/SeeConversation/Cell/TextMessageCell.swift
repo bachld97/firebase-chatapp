@@ -63,7 +63,8 @@ class TextMessageCell : UITableViewCell {
         tvWrapper.addConstraints([topC2, botC2, leftC2, rightC2])
     }
     
-    func bind(item: Any) {
+    func bind(message: Message) {
+        textContent.text = message.data["content"]
     }
     
     required init?(coder aDecoder: NSCoder) {

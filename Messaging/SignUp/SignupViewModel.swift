@@ -45,21 +45,29 @@ class SignupViewModel : ViewModelDelegate {
             .flatMap { [unowned self] (_) -> Driver<Bool> in
                 self.displayLogic?.hideKeyboard()
                 return Observable.deferred { [unowned self] in
-                    guard !self.username.value.isEmpty &&
-                        !self.password.value.isEmpty &&
-                        !self.confirmPassword.value.isEmpty &&
-                        !self.fullname.value.isEmpty else {
+                    guard !self.username.value
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                        .isEmpty &&
+                        !self.password.value
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                            .isEmpty &&
+                        !self.confirmPassword.value
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                            .isEmpty &&
+                        !self.fullname.value
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                            .isEmpty else {
                             return Observable.error(SimpleError(message: "All fields are required"))
                     }
                     
                     guard self.password.value
-                        .elementsEqual(self.confirmPassword.value) else {
+                        .trimmingCharacters(in: .whitespacesAndNewlines).elementsEqual(self.confirmPassword.value.trimmingCharacters(in: .whitespacesAndNewlines)) else {
                             return Observable.error(SimpleError(message: "The passwords you entered do not match"))
                     }
                     
-                    let request = SignupRequest(username: self.username.value,
-                                                password: self.password.value,
-                                                fullname: self.fullname.value)
+                    let request = SignupRequest(username: self.username.value.trimmingCharacters(in: .whitespacesAndNewlines),
+                                                password: self.password.value.trimmingCharacters(in: .whitespacesAndNewlines),
+                                                fullname: self.fullname.value.trimmingCharacters(in: .whitespacesAndNewlines))
                     return Observable.just(request)
                 }
                 .flatMap { [unowned self] (request) -> Observable<Bool> in

@@ -8,6 +8,8 @@ class SeeConversationVC: BaseVC, ViewFor {
     private let disposeBag = DisposeBag()
     typealias ViewModelType = SeeConversationViewModel
     
+    @IBOutlet weak var textMessageContent: UITextField!
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sendMessageButton: UIButton!
     
@@ -64,10 +66,13 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.items = RxTableViewSectionedReloadDataSource
             <SectionModel<String, SeeConversationViewModel.Item>>(
                 configureCell: { (_, tv, ip, item) -> UITableViewCell in
-                    let cell = tv.dequeueReusableCell(withIdentifier: "TextMessageCell")
-                        as! TextMessageCell
-                    cell.bind(item: ())
-                    return cell
+                    switch item {
+                    case .text(let message):
+                        let cell = tv.dequeueReusableCell(withIdentifier: "TextMessageCell")
+                            as! TextMessageCell
+                        cell.bind(message: message)
+                        return cell
+                    }
             })
         
 //        self.tableView.rx.itemSelected.asDriver()
@@ -83,8 +88,9 @@ class SeeConversationVC: BaseVC, ViewFor {
         
         let input = SeeConversationViewModel.Input(
             trigger: viewWillAppear,
-            sendMessTrigger: sendMessageButton.rx.tap.asDriver(),
-            conversationLabel: self.navigationItem.rx.title)
+            sendMessTrigger: self.sendMessageButton.rx.tap.asDriver(),
+            conversationLabel: self.navigationItem.rx.title,
+            textMessage: self.textMessageContent.rx.text.orEmpty)
         
         let output = self.viewModel.transform(input: input)
         
@@ -104,5 +110,9 @@ class SeeConversationVC: BaseVC, ViewFor {
 extension SeeConversationVC : SeeConversationDisplayLogic {
     func goBack() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func clearText() {
+        self.textMessageContent.text = ""
     }
 }

@@ -3,6 +3,7 @@ import RxCocoa
 
 protocol SeeConversationDisplayLogic : class {
     func goBack()
+    func clearText()
 }
 
 class SeeConversationViewModel : ViewModelDelegate {
@@ -11,6 +12,8 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     let contactItem: ContactItem?
     let conversationItem: ConversationItem?
+    
+    let textMessageContent = BehaviorRelay<String>(value: "")
     
     var cachedItems = [Item]()
     // We only listen to new item after the initial load,
@@ -22,6 +25,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let sendMessageUseCase = SendMessageUseCase()
     private let sendMessageToUserUseCase = SendMessageToUserUseCase()
     private let getConversationLabelUseCase = GetConversationLabelUseCase()
+    private let getUserUseCase = GetUserUseCase()
     private let getContactNicknameUseCase = GetContactNicknameUseCase()
 
     init(displayLogic: SeeConversationDisplayLogic, contactItem: ContactItem) {
@@ -41,6 +45,11 @@ class SeeConversationViewModel : ViewModelDelegate {
     // init(displayLogic: SeeConversationDisplayLogic, chatHistoryItem: ChatHistoryItem) { }
     
     func transform(input: Input) -> Output {
+        
+        (input.textMessage <-> self.textMessageContent)
+            .disposed(by: self.disposeBag)
+        
+        
         if contactItem != nil {
             return transformWithContactItem(
                 input: input, contactItem: contactItem!)
@@ -78,17 +87,21 @@ class SeeConversationViewModel : ViewModelDelegate {
 
         input.sendMessTrigger
             .flatMap { [unowned self] (_) -> Driver<Bool> in
-                let message = self.parseMessage()
-                return self.sendMessageToUserUseCase
-                    .execute(request: SendMessageToUserRequest(
-                        message: message,
-                        toUser: contactItem.contact))
+                return self.getUserUseCase.execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        
+                        let message = self.parseMessage(user)
+                        return self.sendMessageToUserUseCase
+                            .execute(request: SendMessageToUserRequest(
+                                message: message,
+                                toUser: contactItem.contact))
+                    }
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             }
             .drive()
             .disposed(by: self.disposeBag)
-
+        
         
         self.getContactNicknameUseCase
             .execute(request: GetContactNickNameRequest(contact: contactItem.contact))
@@ -118,13 +131,24 @@ class SeeConversationViewModel : ViewModelDelegate {
         
         input.sendMessTrigger
             .flatMap { [unowned self] (_) -> Driver<Bool> in
-                let message = self.parseMessage()
-                return self.sendMessageUseCase
-                    .execute(request: SendMessageRequest(
-                        message: message,
-                        conversationId: conversationItem.conversation.id))
+                return self.getUserUseCase.execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        guard !self.textMessageContent.value
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                            .isEmpty else {
+                            return Observable.just(false)
+                        }
+                        
+                        let message = self.parseMessage(user)
+                        self.displayLogic?.clearText()
+                        return self.sendMessageUseCase
+                            .execute(request: SendMessageRequest(
+                                message: message,
+                                conversationId: conversationItem.conversation.id))
+                    }
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
+                
             }
             .drive()
             .disposed(by: self.disposeBag)
@@ -143,16 +167,29 @@ class SeeConversationViewModel : ViewModelDelegate {
     }
     
     private func handleMessages(messages: [Message]) {
-        print(messages.count)
+        self.cachedItems.removeAll()
         
-        self.cachedItems.append(Item.text())
-        self.cachedItems.append(Item.text())
+        for m in messages {
+            switch m.type {
+            case .text:
+            cachedItems.append(Item.text(message: m))
+            }
+        }
 
         self.items.accept(self.cachedItems)
     }
     
-    private func parseMessage() -> Message {
-        return Message()
+    private func parseMessage(_ user: User) -> Message {
+        var data = [String : String]()
+        data["content"] =
+            self.textMessageContent.value
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+        data["type"] = "text"
+        data["sent-by"] = user.userId
+        data["at-time"] = "12345"
+        
+        
+        return Message(type: .text, data: data)
     }
 }
 
@@ -161,6 +198,7 @@ extension SeeConversationViewModel {
         let trigger: Driver<Void>
         let sendMessTrigger: Driver<Void>
         let conversationLabel: Binder<String?>
+        let textMessage: ControlProperty<String>
     }
     
     struct Output {
@@ -169,6 +207,6 @@ extension SeeConversationViewModel {
     }
     
     enum Item {
-        case text()
+        case text(message: Message)
     }
 }

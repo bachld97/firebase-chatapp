@@ -33,6 +33,7 @@
 		142E515A21421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E515921421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift */; };
 		143517A121352D3C0039874F /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143517A021352D3C0039874F /* BaseVC.swift */; };
 		143517A621352F200039874F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143517A521352F200039874F /* LoginViewModel.swift */; };
+		1436689D2148BB7D00B2766E /* GetUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436689C2148BB7D00B2766E /* GetUserUseCase.swift */; };
 		1439D99221365C3D0094C12C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D99021365C3D0094C12C /* LoginVC.swift */; };
 		1439D99321365C3D0094C12C /* LoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1439D99121365C3D0094C12C /* LoginVC.xib */; };
 		1439D995213660270094C12C /* ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1439D994213660270094C12C /* ObservableType.swift */; };
@@ -152,6 +153,7 @@
 		142E515921421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadConvoFromConvoIdUseCase.swift; sourceTree = "<group>"; };
 		143517A021352D3C0039874F /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		143517A521352F200039874F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		1436689C2148BB7D00B2766E /* GetUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserUseCase.swift; sourceTree = "<group>"; };
 		1439D99021365C3D0094C12C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		1439D99121365C3D0094C12C /* LoginVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginVC.xib; sourceTree = "<group>"; };
 		1439D994213660270094C12C /* ObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObservableType.swift; path = Messaging/Common/Utils/ObservableType.swift; sourceTree = SOURCE_ROOT; };
@@ -442,6 +444,7 @@
 				1458BC232147597F005A93AD /* SendMessageToUserUseCase.swift */,
 				1458BC2521475FB9005A93AD /* GetConversationLabelUseCase.swift */,
 				1458BC2721475FC9005A93AD /* GetContactNicknameUseCase.swift */,
+				1436689C2148BB7D00B2766E /* GetUserUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -749,6 +752,7 @@
 				14843FEF214136B500D5366B /* ConversationItem.swift in Sources */,
 				1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */,
 				14461A5B21379DFF0062FAC6 /* SeeConversationVC.swift in Sources */,
+				1436689D2148BB7D00B2766E /* GetUserUseCase.swift in Sources */,
 				14615407213F68910032EE95 /* AddContactVC.swift in Sources */,
 				1447A9702146765600F7E1CF /* SendMessageRequest.swift in Sources */,
 				1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */,

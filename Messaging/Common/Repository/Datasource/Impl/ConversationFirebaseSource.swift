@@ -14,26 +14,31 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         return Observable.create { [unowned self] (observer) in
             let dbRequest = self.ref
                 .child("messages/\(conversationId)")
+                .queryOrderedByKey()
+                .queryLimited(toLast: 10)
                 .observe(.value, with: { [unowned self] (snapshot) in
                     
                     // Iterate over the messages
-                    guard let bigDict = snapshot.value as? [String: Any] else {
+                    guard snapshot.exists() else {
                         observer.onNext([])
                         return
                     }
-                    
+
+                    print(snapshot)
+
                     var messages: [Message] = []
-                    for (_, messValue) in bigDict {
-                        guard let messageDict = messValue as? [String : Any] else {
+                    let ite = snapshot.children
+                    while let snap = ite.nextObject() as? DataSnapshot {
+                        guard let messageDict = snap.value as? [String: Any] else {
                             continue
                         }
                         
-                        let mess = self.parseMessage(from: messageDict)
-                        if mess != nil {
-                            messages.append(mess!)
+                        let message = self.parseMessage(from: messageDict)
+                        if message != nil {
+                            messages.insert(message!, at: 0)
                         }
                     }
-                    
+
                     observer.onNext(messages)
                 }, withCancel: { (error) in
                     observer.onError(error)
@@ -183,7 +188,16 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     }
     
     private func parseMessage(from messageDict: [String : Any]) -> Message? {
-        return Message()
+        let type = (messageDict["type"] as! String).map { (it) -> MessageType in
+            return .text
+        }[0]
+        
+        var data = [String : String]()
+        data["content"] = messageDict["content"] as? String
+        data["at-time"] = messageDict["at-time"] as? String
+        data["sent-by"] = messageDict["sent-by"] as? String
+        
+        return Message(type: type, data: data)
     }
 
     func sendMessage(message: Message, from user: User, to contact: Contact) -> Observable<Bool> {
@@ -203,15 +217,11 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     }
     
     private func mapToJson(message: Message) -> [String : Any] {
-        var res = [String : Any]()
-        res["at-time"] = "123456"
-        res["sent-by"] = "bachld10832"
-        
-        var data = [String: String]()
-        data["type"] = "text"
-        data["content"] = "Hello world"
-        
-        res["data"] = data
+        var res = [String : String]()
+        res["at-time"] = message.data["at-time"]
+        res["sent-by"] = message.data["sent-by"]
+        res["type"] = message.data["type"]
+        res["content"] = message.data["content"]
         return res
     }
 }
