@@ -76,12 +76,6 @@ class SeeConversationViewModel : ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
 
-        input.goBackTrigger
-            .drive(onNext: { [unowned self] in
-                self.displayLogic?.goBack()
-            })
-            .disposed(by: self.disposeBag)
-        
         input.sendMessTrigger
             .flatMap { [unowned self] (_) -> Driver<Bool> in
                 let message = self.parseMessage()
@@ -135,12 +129,6 @@ class SeeConversationViewModel : ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
 
-        input.goBackTrigger
-            .drive(onNext: { [unowned self] in
-                self.displayLogic?.goBack()
-            })
-            .disposed(by: self.disposeBag)
-        
         let request = GetConversationLabelRequest(
             conversationId: conversationItem.conversation.id)
         
@@ -171,7 +159,6 @@ class SeeConversationViewModel : ViewModelDelegate {
 extension SeeConversationViewModel {
     struct Input {
         let trigger: Driver<Void>
-        let goBackTrigger: Driver<Void>
         let sendMessTrigger: Driver<Void>
         let conversationLabel: Binder<String?>
     }

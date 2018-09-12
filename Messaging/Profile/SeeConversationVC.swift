@@ -8,9 +8,7 @@ class SeeConversationVC: BaseVC, ViewFor {
     private let disposeBag = DisposeBag()
     typealias ViewModelType = SeeConversationViewModel
     
-    @IBOutlet weak var goBackButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var conversationLabel: UILabel!
     @IBOutlet weak var sendMessageButton: UIButton!
     
     private var items: RxTableViewSectionedReloadDataSource
@@ -34,10 +32,12 @@ class SeeConversationVC: BaseVC, ViewFor {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.prefersLargeTitles = false
-        self.navigationController?.title = "Hello"
+        // self.navigationController?.navigationItem.largeTitleDisplayMode = .never
+        self.navigationItem.largeTitleDisplayMode = .never
+        self.navigationItem.title = "Helo"
     }
     
+
     private init(contactItem: ContactItem) {
         super.init(nibName: "SeeConversationVC", bundle: nil)
         self.viewModel = SeeConversationViewModel(
@@ -83,9 +83,8 @@ class SeeConversationVC: BaseVC, ViewFor {
         
         let input = SeeConversationViewModel.Input(
             trigger: viewWillAppear,
-            goBackTrigger: goBackButton.rx.tap.asDriver(),
             sendMessTrigger: sendMessageButton.rx.tap.asDriver(),
-            conversationLabel: conversationLabel.rx.text)
+            conversationLabel: self.navigationItem.rx.title)
         
         let output = self.viewModel.transform(input: input)
         
