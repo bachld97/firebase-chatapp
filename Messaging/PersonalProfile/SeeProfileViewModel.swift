@@ -5,6 +5,7 @@ protocol SeeProfileDisplayLogic : class {
     func goChangePass()
     func display(user: User)
     func logout()
+    func showPicker()
 }
 
 class SeeProfileViewModel : ViewModelDelegate {
@@ -64,6 +65,12 @@ class SeeProfileViewModel : ViewModelDelegate {
             })
             .disposed(by: self.disposeBag)
         
+        input.showPickerTrigger
+            .drive(onNext: { [unowned self] (_)in
+                self.displayLogic?.showPicker()
+            })
+            .disposed(by: self.disposeBag)
+        
         return Output(
             error: errorTracker.asDriver())
     }
@@ -75,6 +82,7 @@ extension SeeProfileViewModel {
         // let reloadTrigger: Driver<Void>
         let logoutTrigger: Driver<Void>
         let changePassTrigger: Driver<Void>
+        let showPickerTrigger: Driver<UITapGestureRecognizer>
     }
     
     struct Output {

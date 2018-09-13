@@ -16,6 +16,7 @@ class SeeProfileVC : BaseVC , ViewFor {
     
     @IBOutlet weak var goChangePassButton: UIButton!
     typealias ViewModelType = SeeProfileViewModel
+    let tapGesture = UITapGestureRecognizer()
     
     
     class func instance() -> UIViewController {
@@ -39,11 +40,15 @@ class SeeProfileVC : BaseVC , ViewFor {
         
         
         let logOutImg = UIImage(named: "ic_logout")?.withRenderingMode(.alwaysOriginal)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: logOutImg,
-                                                                 style: .plain,
-                                                                 target: nil,
-                                                                 action: nil)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: logOutImg,
+            style: .plain,
+            target: nil,
+            action: nil)
+        
         super.viewDidLoad()
+        avaImageView.isUserInteractionEnabled = true
+        avaImageView.addGestureRecognizer(tapGesture)
     }
     
     override func bindViewModel() {
@@ -55,8 +60,9 @@ class SeeProfileVC : BaseVC , ViewFor {
             trigger: viewWillAppear,
             // reloadTrigger:,
             logoutTrigger: self.navigationItem.rightBarButtonItem!.rx.tap.asDriver(),
-            changePassTrigger: goChangePassButton.rx.tap.asDriver())
-        
+            changePassTrigger: goChangePassButton.rx.tap.asDriver(),
+            showPickerTrigger: tapGesture.rx.event.asDriver())
+
         let output = viewModel.transform(input: input)
         
         output.error
@@ -91,5 +97,16 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
     
     func logout() {
         logoutNormally()
+    }
+    
+    func showPicker() {
+        let alert = UIAlertController(
+            title: "Update profile picture",
+            message: "Choose picture from gallery or capture with camera",
+            preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: nil))
+        self.present(alert, animated: true)
     }
 }
