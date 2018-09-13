@@ -159,7 +159,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             }
         }
     }
-    
+
     private func parseConversation(from snapshot: DataSnapshot, myId: String) -> Conversation? {
         
         guard let dict = snapshot.value as? [String: Any] else {

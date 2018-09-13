@@ -15,6 +15,8 @@ class SingleConvoCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var avaImageView: UIImageView!
     
+    private var imageTask: URLSessionTask?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -38,6 +40,14 @@ class SingleConvoCell: UITableViewCell {
         } else {
             myString = String(tem[0])
         }
+        
+        loadAva(ofUserId: myString)
         convoNameLabel.text = convoItem.conversation.nickname[myString]
+    }
+    
+    private func loadAva(ofUserId: String) {
+        imageTask?.cancel()
+        let urlString = ImageLoader.buildUrl(forUserId: ofUserId)
+        imageTask = ImageLoader.load(urlString: urlString, into: self.avaImageView)
     }
 }

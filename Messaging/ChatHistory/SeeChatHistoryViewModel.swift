@@ -48,7 +48,6 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
         .drive()
         .disposed(by: self.disposeBag)
         
-        
         //        TODO: Use publishSubject to establish reload (pull to refresh)
 //        input.reloadTrigger
 //            .flatMap { [unowned self] (_) -> Driver<[Conversation]> in
