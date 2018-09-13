@@ -11,8 +11,6 @@ class ImageLoader {
         if let url = URL(string: urlString!) {
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
-//                print("response: \(String(describing: response))")
-//                print("error: \(String(describing: error))")
                 if let imageData = data as Data? {
                     if let img = UIImage(data: imageData) {
                         DispatchQueue.main.async {
@@ -30,7 +28,6 @@ class ImageLoader {
     }
     
     public static func buildUrl(forUserId id: String) -> String {
-        // return "https://firebasestorage.googleapis.com/v0/fir-chat-47b52.appspot.com/o/users%2F\(forUserId)?alt=media"
         return "https://firebasestorage.googleapis.com/v0/b/fir-chat-47b52.appspot.com/o/users%2F\(id)?alt=media"
     }
 }

@@ -4,7 +4,9 @@
 import RxSwift
 import UIKit
 
-class SeeProfileVC : BaseVC , ViewFor {
+class SeeProfileVC : BaseVC , ViewFor,
+                UIImagePickerControllerDelegate,
+                UINavigationControllerDelegate {
     private var imageTask: URLSessionTask?
     
     var viewModel: SeeProfileViewModel!
@@ -72,6 +74,42 @@ class SeeProfileVC : BaseVC , ViewFor {
             .drive()
             .disposed(by: self.disposeBag)
     }
+    
+    @objc func startLibrary() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage else {
+            handleError(e: SimpleError(message: "The image is corrupted"))
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        avaImageView.image = selectedImage
+        print("Hello")
+        // TODO: PublishSubject<Image> --> Send to server
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func startCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.allowsEditing = true
+            picker.delegate = self
+            self.present(picker, animated: true)
+        } else {
+            handleError(e: SimpleError(message: "Camera not exists"))
+        }
+    }
 }
 
 
@@ -91,8 +129,11 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
             return
         }
         
-        imageTask?.cancel()
-        imageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
+        if imageTask == nil {
+            imageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
+        } else {
+            imageTask?.cancel()
+        }
     }
     
     func logout() {
@@ -105,8 +146,16 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
             message: "Choose picture from gallery or capture with camera",
             preferredStyle: .actionSheet)
         
-        alert.addAction(UIAlertAction(title: "Gallery", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: nil))
+        alert.addAction(
+            UIAlertAction(title: "Gallery", style: .default, handler: { [unowned self] (_) in
+                self.startLibrary()
+            }))
+        
+        alert.addAction(
+            UIAlertAction(title: "Camera", style: .default, handler: { [unowned self] (_) in
+                self.startCamera()
+            }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         self.present(alert, animated: true)
     }
 }
