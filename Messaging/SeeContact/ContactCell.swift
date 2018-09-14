@@ -26,8 +26,8 @@ class ContactCell: UITableViewCell {
         self.fullnameLabel.text = item.contact.userName
         self.usernameLabel.text = item.contact.userId
         
-        let avaUrl = item.contact.userAvatarUrl
-        
+        let avaUrl = ImageLoader.buildUrl(forUserId: item.contact.userId)
+
         imageTask?.cancel()
         imageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
     }
