@@ -18,8 +18,9 @@ class SeeProfileVC : BaseVC , ViewFor,
     
     @IBOutlet weak var goChangePassButton: UIButton!
     typealias ViewModelType = SeeProfileViewModel
-    let tapGesture = UITapGestureRecognizer()
+    private let tapGesture = UITapGestureRecognizer()
     
+    private let changeAvaPublish = PublishSubject<URL>()
     
     class func instance() -> UIViewController {
         return SeeProfileVC()
@@ -63,7 +64,8 @@ class SeeProfileVC : BaseVC , ViewFor,
             // reloadTrigger:,
             logoutTrigger: self.navigationItem.rightBarButtonItem!.rx.tap.asDriver(),
             changePassTrigger: goChangePassButton.rx.tap.asDriver(),
-            showPickerTrigger: tapGesture.rx.event.asDriver())
+            showPickerTrigger: tapGesture.rx.event.asDriver(),
+            uploadAvaTrigger: changeAvaPublish.asDriverOnErrorJustComplete())
 
         let output = viewModel.transform(input: input)
         
@@ -93,9 +95,15 @@ class SeeProfileVC : BaseVC , ViewFor,
             return
         }
         
+        guard let uploadImage = info[UIImagePickerControllerImageURL] as? URL else {
+            handleError(e: SimpleError(message: "The image is corrupted"))
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        changeAvaPublish.onNext(uploadImage)
         avaImageView.image = selectedImage
-        print("Hello")
-        // TODO: PublishSubject<Image> --> Send to server
+        // TODO: PublishSubject<Image> --> Send to servera
         dismiss(animated: true, completion: nil)
     }
     
@@ -125,10 +133,8 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
         self.usernameLabel.text = user.userName
         self.userIdLabel.text = user.userId
         
-        guard let avaUrl = user.userAvatarUrl else {
-            return
-        }
-        
+        let avaUrl = ImageLoader.buildUrl(forUserId: user.userId)
+
         if imageTask == nil {
             imageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
         } else {

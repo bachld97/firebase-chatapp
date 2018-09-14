@@ -1,5 +1,6 @@
 import RxSwift
 import FirebaseDatabase
+import  FirebaseStorage
 
 class UserFirebaseSource : UserRemoteSource {
     var ref: DatabaseReference!
@@ -33,6 +34,25 @@ class UserFirebaseSource : UserRemoteSource {
                 self.ref.child("user/\(user.userId)")
                     .removeObserver(withHandle: dbRequest)
             }
+        }
+    }
+    
+    private var uploadTask: StorageUploadTask?
+    func uploadAva(of user: User, with url: URL) -> Observable<Bool> {
+        return Observable.create { [unowned self] (obs) in
+            
+            let ref = Storage.storage().reference()
+                .child("users/\(user.userId)")
+            self.uploadTask?.cancel()
+            
+            self.uploadTask = ref.putFile(from: url, metadata: nil) { metadata, error in
+                if error != nil {
+                    obs.onError(error!)
+                } else {
+                    obs.onNext(true)
+                }
+            }
+            return Disposables.create()
         }
     }
 

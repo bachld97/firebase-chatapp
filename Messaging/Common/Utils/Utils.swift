@@ -2,12 +2,9 @@ import UIKit
 
 class ImageLoader {
     public static func load(urlString: String?, into iv: UIImageView) -> URLSessionTask? {
-        if urlString == nil {
-            iv.image = nil
-            iv.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-            return nil
-        }
-        
+        iv.image = nil
+        iv.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+
         if let url = URL(string: urlString!) {
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request) {(data, response, error) in

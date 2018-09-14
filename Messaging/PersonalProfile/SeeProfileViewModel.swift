@@ -13,6 +13,7 @@ class SeeProfileViewModel : ViewModelDelegate {
     private weak var displayLogic: SeeProfileDisplayLogic?
     private let disposeBag: DisposeBag
     private let seeProfileUseCase = SeeProfileUseCase()
+    private let uploadAvatarUsecas = UploadAvatarUseCase()
     
     init(displayLogic: SeeProfileDisplayLogic) {
         self.displayLogic = displayLogic
@@ -70,6 +71,17 @@ class SeeProfileViewModel : ViewModelDelegate {
                 self.displayLogic?.showPicker()
             })
             .disposed(by: self.disposeBag)
+
+        input.uploadAvaTrigger
+            .flatMap { [unowned self] (url) in
+                return self.uploadAvatarUsecas
+                    .execute(request: UploadAvatarRequest(url: url))
+                    .do()
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
         
         return Output(
             error: errorTracker.asDriver())
@@ -83,6 +95,7 @@ extension SeeProfileViewModel {
         let logoutTrigger: Driver<Void>
         let changePassTrigger: Driver<Void>
         let showPickerTrigger: Driver<UITapGestureRecognizer>
+        let uploadAvaTrigger: Driver<URL>
     }
     
     struct Output {

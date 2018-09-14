@@ -116,6 +116,8 @@
 		14848ADD2141140E00DAA9F8 /* ConversationRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADC2141140E00DAA9F8 /* ConversationRemoteSource.swift */; };
 		14848ADF2141149D00DAA9F8 /* ConversationFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */; };
 		149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */; };
+		14A239CF214B4EA00027743D /* UploadAvatarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239CE214B4EA00027743D /* UploadAvatarUseCase.swift */; };
+		14A239D1214B4EBF0027743D /* UploadAvatarRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239D0214B4EBF0027743D /* UploadAvatarRequest.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
 		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
 		14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9782136561E00A31FBB /* LoginUseCase.swift */; };
@@ -237,6 +239,8 @@
 		14848ADC2141140E00DAA9F8 /* ConversationRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRemoteSource.swift; sourceTree = "<group>"; };
 		14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFirebaseSource.swift; sourceTree = "<group>"; };
 		149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFirebaseSource.swift; sourceTree = "<group>"; };
+		14A239CE214B4EA00027743D /* UploadAvatarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAvatarUseCase.swift; sourceTree = "<group>"; };
+		14A239D0214B4EBF0027743D /* UploadAvatarRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAvatarRequest.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
 		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		14CEE9782136561E00A31FBB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -411,6 +415,8 @@
 				14461A5521379CEB0062FAC6 /* SeeProfileVC.xib */,
 				140C33F12138D37900DC3535 /* SeeProfileViewModel.swift */,
 				140C33F32138D69E00DC3535 /* SeeProfileUseCase.swift */,
+				14A239CE214B4EA00027743D /* UploadAvatarUseCase.swift */,
+				14A239D0214B4EBF0027743D /* UploadAvatarRequest.swift */,
 			);
 			name = SeeProfile;
 			path = PersonalProfile;
@@ -759,6 +765,7 @@
 				14615407213F68910032EE95 /* AddContactVC.swift in Sources */,
 				1447A9702146765600F7E1CF /* SendMessageRequest.swift in Sources */,
 				1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */,
+				14A239CF214B4EA00027743D /* UploadAvatarUseCase.swift in Sources */,
 				142E515621421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift in Sources */,
 				140C340C2139242000DC3535 /* ChangePassUseCase.swift in Sources */,
 				14461A5421379CDD0062FAC6 /* MainVC.swift in Sources */,
@@ -769,6 +776,7 @@
 				140C340A2139241600DC3535 /* ChangePassRequest.swift in Sources */,
 				146153FC213F68450032EE95 /* AddContactViewModel.swift in Sources */,
 				143517A121352D3C0039874F /* BaseVC.swift in Sources */,
+				14A239D1214B4EBF0027743D /* UploadAvatarRequest.swift in Sources */,
 				14848ACB2140C7FC00DAA9F8 /* AcceptRequestUseCase.swift in Sources */,
 				14843FF621413B9E00D5366B /* GroupConvoCell.swift in Sources */,
 				140C34082139240600DC3535 /* ChangePassVIewModel.swift in Sources */,

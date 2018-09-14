@@ -56,6 +56,21 @@ class UserRepositoryImpl : UserRepository {
         }
     }
     
+    func uploadAvatar(request: UploadAvatarRequest) -> Observable<Bool> {
+        return Observable.deferred { [unowned self] in
+            return self.localSource
+                .getUser()
+                .take(1)
+                .flatMap { (user) -> Observable<Bool> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
+                    }
+                    
+                    return self.remoteSource.uploadAva(of: user, with: request.url)
+            }
+        }
+    }
+    
     func changePassword(request: ChangePassRequest) -> Observable<Bool> {
         return Observable.deferred { [unowned self] in
             return self.localSource

@@ -27,7 +27,7 @@ class AcceptedContactCell: UITableViewCell {
         self.contactItem = item
         nameLabel.text = item.contact.userName
         idLabel.text = item.contact.userId
-        let avaUrl = item.contact.userAvatarUrl
+        let avaUrl = ImageLoader.buildUrl(forUserId: item.contact.userId)
         
         loadingImageTask?.cancel()
         loadingImageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
