@@ -65,20 +65,32 @@ class SeeConversationVC: BaseVC, ViewFor {
         
 //        self.tableView.register(UINib(nibName: "<++>", bundle: nil), forCellReusableIdentifier: "<++>")
         self.tableView.register(TextMessageCell.self, forCellReuseIdentifier: "TextMessageCell")
+        self.tableView.register(ImageMessageCell.self, forCellReuseIdentifier: "ImageMessageCell")
         self.tableView.register(TextMeMessageCell.self, forCellReuseIdentifier: "TextMeMessageCell")
+        self.tableView.register(ImageMeMessageCell.self, forCellReuseIdentifier: "ImageMeMessageCell")
         
         self.items = RxTableViewSectionedReloadDataSource
             <SectionModel<String, SeeConversationViewModel.Item>>(
                 configureCell: { (_, tv, ip, item) -> UITableViewCell in
                     switch item {
                     case .image(let message):
-                        return UITableViewCell()
+                        let cell = tv.dequeueReusableCell(withIdentifier: "ImageMessageCell")
+                            as! ImageMessageCell
+                        cell.bind(message: message)
+                        return cell
+                        
+                    case .imageMe(let message):
+                        let cell = tv.dequeueReusableCell(withIdentifier: "ImageMeMessageCell")
+                            as! ImageMeMessageCell
+                        cell.bind(message: message)
+                        return cell
                         
                     case .text(let message):
                         let cell = tv.dequeueReusableCell(withIdentifier: "TextMessageCell")
                             as! TextMessageCell
                         cell.bind(message: message)
                         return cell
+                        
                     case .textMe(let message):
                         let cell = tv.dequeueReusableCell(withIdentifier: "TextMeMessageCell")
                             as! TextMeMessageCell

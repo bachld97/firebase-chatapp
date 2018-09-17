@@ -223,9 +223,9 @@ class SeeConversationViewModel : ViewModelDelegate {
             switch m.type {
             case .image:
                 if m.data["sent-by"]!.elementsEqual(user.userId) {
-                    
+                    cachedItems.append(Item.imageMe(message: m))
                 } else {
-                    
+                    cachedItems.append(Item.image(message: m))
                 }
                 
             case .text:
@@ -275,5 +275,6 @@ extension SeeConversationViewModel {
         case text(message: Message)
         case textMe(message: Message)
         case image(message: Message)
+        case imageMe(message: Message)
     }
 }

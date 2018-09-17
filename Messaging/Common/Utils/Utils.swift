@@ -4,7 +4,7 @@ class ImageLoader {
     public static func load(urlString: String?, into iv: UIImageView) -> URLSessionTask? {
         
         iv.image = nil
-        iv.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
+//        iv.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
 
         if let url = URL(string: urlString!) {
             let request = URLRequest(url: url)
@@ -13,7 +13,7 @@ class ImageLoader {
                     if let img = UIImage(data: imageData) {
                         DispatchQueue.main.async {
                             iv.image = img
-                            iv.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+//                            iv.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
                         }
                     }
                 }

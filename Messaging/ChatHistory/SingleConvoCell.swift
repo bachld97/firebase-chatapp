@@ -26,11 +26,16 @@ class SingleConvoCell: UITableViewCell {
         let convo = convoItem.conversation
         if (!convo.fromMe) {
             lastMess = convoItem.conversation
-                .nickname[convo.lastMess.data["sent-by"]!]! + ": "
+                .nickname[convo.lastMess.data["sent-by"]!]!
         } else {
-            lastMess = "You: "
+            lastMess = "You"
         }
-        lastMessContentLabel.text = lastMess + convo.lastMess.data["content"]!
+        
+        if convo.lastMess.type == .text {
+            lastMessContentLabel.text = lastMess + ": " + convo.lastMess.data["content"]!
+        } else {
+            lastMessContentLabel.text = lastMess + " sent an Image"
+        }
         timeLabel.text = convo.lastMess.data["at-time"]
         
         let tem = convo.id.split(separator: " ")
