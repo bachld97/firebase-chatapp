@@ -28,5 +28,9 @@ class ImageLoader {
     public static func buildUrl(forUserId id: String) -> String {
         return "https://firebasestorage.googleapis.com/v0/b/fir-chat-47b52.appspot.com/o/users%2F\(id)?alt=media"
     }
+    
+    public static func buildUrl(forMessageId id: String) -> String {
+        return "https://firebasestorage.googleapis.com/v0/b/fir-chat-47b52.appspot.com/o/messages%2F\(id)?alt=media"
+    }
 }
 
