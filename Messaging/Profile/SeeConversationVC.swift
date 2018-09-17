@@ -10,8 +10,11 @@ class SeeConversationVC: BaseVC, ViewFor {
     
     @IBOutlet weak var textMessageContent: UITextField!
     
+    @IBOutlet weak var sendImageButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sendMessageButton: UIButton!
+    
+    private let sendImagePublish = PublishSubject<URL>()
     
     private var items: RxTableViewSectionedReloadDataSource
         <SectionModel<String, SeeConversationViewModel.Item>>!
@@ -68,6 +71,9 @@ class SeeConversationVC: BaseVC, ViewFor {
             <SectionModel<String, SeeConversationViewModel.Item>>(
                 configureCell: { (_, tv, ip, item) -> UITableViewCell in
                     switch item {
+                    case .image(let message):
+                        return UITableViewCell()
+                        
                     case .text(let message):
                         let cell = tv.dequeueReusableCell(withIdentifier: "TextMessageCell")
                             as! TextMessageCell
@@ -96,7 +102,9 @@ class SeeConversationVC: BaseVC, ViewFor {
             trigger: viewWillAppear,
             sendMessTrigger: self.sendMessageButton.rx.tap.asDriver(),
             conversationLabel: self.navigationItem.rx.title,
-            textMessage: self.textMessageContent.rx.text.orEmpty)
+            textMessage: self.textMessageContent.rx.text.orEmpty,
+            sendImageTrigger: self.sendImageButton.rx.tap.asDriver(),
+            sendImagePublish: self.sendImagePublish.asDriverOnErrorJustComplete())
         
         let output = self.viewModel.transform(input: input)
         
@@ -113,12 +121,26 @@ class SeeConversationVC: BaseVC, ViewFor {
     }
 }
 
-extension SeeConversationVC : SeeConversationDisplayLogic {
+extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
+    func onMediaItemPicked(mediaItemUrl: URL) {
+        self.sendImagePublish.onNext(mediaItemUrl)
+    }
+    
+    func onMediaItemPickFail() {
+        print("Failed")
+    }
+    
     func goBack() {
         self.dismiss(animated: true, completion: nil)
     }
     
     func clearText() {
         self.textMessageContent.text = ""
+    }
+    
+    func goPickMedia() {
+        let vc = PickMediaVC.instance(delegate: self)
+//        self.present(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

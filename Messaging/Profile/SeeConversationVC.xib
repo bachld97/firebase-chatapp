@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConversationViewController" customModule="Messaging" customModuleProvider="target">
             <connections>
+                <outlet property="sendImageButton" destination="IwT-lZ-Wes" id="sXu-nF-yxx"/>
                 <outlet property="sendMessageButton" destination="H3Z-Mu-IjB" id="HQd-hl-7kg"/>
                 <outlet property="tableView" destination="fQN-26-m81" id="b6w-9d-4Kf"/>
                 <outlet property="textMessageContent" destination="9zX-AS-xxv" id="IU0-a2-4wn"/>
@@ -24,7 +25,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fQN-26-m81">
-                    <rect key="frame" x="0.0" y="20" width="375" height="599"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="567"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H3Z-Mu-IjB">
@@ -36,19 +37,26 @@
                     <state key="normal" title="Send"/>
                 </button>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9zX-AS-xxv">
-                    <rect key="frame" x="8" y="627" width="313" height="32"/>
+                    <rect key="frame" x="8" y="629" width="313" height="30"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IwT-lZ-Wes">
+                    <rect key="frame" x="120" y="591" width="135" height="30"/>
+                    <color key="backgroundColor" red="0.9607197642326355" green="0.88240200281143188" blue="0.85872286558151245" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <state key="normal" title="Send image"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fQN-26-m81" firstAttribute="bottom" secondItem="H3Z-Mu-IjB" secondAttribute="top" constant="-8" id="6Hu-mS-750"/>
                 <constraint firstItem="fQN-26-m81" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="HHf-es-5UF"/>
-                <constraint firstItem="9zX-AS-xxv" firstAttribute="top" secondItem="fQN-26-m81" secondAttribute="bottom" constant="8" id="I1Q-XC-MpJ"/>
+                <constraint firstItem="IwT-lZ-Wes" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="120" id="LNi-j0-bfU"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="IwT-lZ-Wes" secondAttribute="trailing" constant="120" id="PUV-qX-xDA"/>
+                <constraint firstItem="9zX-AS-xxv" firstAttribute="top" secondItem="IwT-lZ-Wes" secondAttribute="bottom" constant="8" symbolic="YES" id="PxR-2V-LRI"/>
                 <constraint firstItem="9zX-AS-xxv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="8" id="QJL-UL-9zm"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="9zX-AS-xxv" secondAttribute="bottom" constant="8" id="ZAT-pa-DI7"/>
+                <constraint firstItem="IwT-lZ-Wes" firstAttribute="top" secondItem="fQN-26-m81" secondAttribute="bottom" constant="4" id="bxZ-jF-o6w"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="H3Z-Mu-IjB" secondAttribute="bottom" constant="8" id="ckD-kJ-Gvx"/>
                 <constraint firstItem="fQN-26-m81" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="dOO-ey-rP1"/>
                 <constraint firstItem="H3Z-Mu-IjB" firstAttribute="leading" secondItem="9zX-AS-xxv" secondAttribute="trailing" constant="4" id="f6O-yV-GuM"/>

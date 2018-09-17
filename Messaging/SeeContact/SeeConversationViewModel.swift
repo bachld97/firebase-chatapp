@@ -4,6 +4,7 @@ import RxCocoa
 protocol SeeConversationDisplayLogic : class {
     func goBack()
     func clearText()
+    func goPickMedia()
 }
 
 class SeeConversationViewModel : ViewModelDelegate {
@@ -91,7 +92,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                 return self.getUserUseCase.execute(request: ())
                     .flatMap { [unowned self] (user) -> Observable<Bool> in
                         
-                        let message = self.parseMessage(user)
+                        let message = self.parseTextMessage(user)
                         
                         self.displayLogic?.clearText()
                         
@@ -110,6 +111,12 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.getContactNicknameUseCase
             .execute(request: GetContactNickNameRequest(contact: contactItem.contact))
             .bind(to: input.conversationLabel)
+            .disposed(by: self.disposeBag)
+        
+        input.sendImageTrigger
+            .drive(onNext: { [unowned self] (_) in
+                self.displayLogic?.goPickMedia()
+            })
             .disposed(by: self.disposeBag)
         
         return Output (
@@ -149,7 +156,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                             return Observable.just(false)
                         }
                         
-                        let message = self.parseMessage(user)
+                        let message = self.parseTextMessage(user)
                         self.displayLogic?.clearText()
                         return self.sendMessageUseCase
                             .execute(request: SendMessageRequest(
@@ -171,9 +178,42 @@ class SeeConversationViewModel : ViewModelDelegate {
             .bind(to: input.conversationLabel)
             .disposed(by: self.disposeBag)
         
+        input.sendImageTrigger
+            .drive(onNext: { [unowned self] (_) in
+                self.displayLogic?.goPickMedia()
+            })
+            .disposed(by: self.disposeBag)
+
+        
+        input.sendImagePublish
+            .flatMap { [unowned self] (url) -> Driver<Bool> in
+                return self.getUserUseCase.execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        let message = self.parseImageMessage(user, url)
+                        self.displayLogic?.clearText()
+                        return self.sendMessageUseCase
+                            .execute(request: SendMessageRequest(
+                                message: message,
+                                conversationId: conversationItem.conversation.id))
+                    }
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+        }
+        .drive()
+        .disposed(by: self.disposeBag)
+
         return Output(
             error: errorTracker.asDriver(),
             items: items.asDriverOnErrorJustComplete())
+    }
+    
+    private func parseImageMessage(_ user: User, _ url: URL) -> Message {
+        var data = [String : String]()
+        data["content"] = url.path
+        data["type"] = "image"
+        data["sent-by"] = user.userId
+        data["at-time"] = getTime()
+        return Message(type: .image, data: data)
     }
     
     private func handleMessages(messages: [Message], user: User) {
@@ -181,6 +221,13 @@ class SeeConversationViewModel : ViewModelDelegate {
         
         for m in messages {
             switch m.type {
+            case .image:
+                if m.data["sent-by"]!.elementsEqual(user.userId) {
+                    
+                } else {
+                    
+                }
+                
             case .text:
                 if m.data["sent-by"]!.elementsEqual(user.userId) {
                     cachedItems.append(Item.textMe(message: m))
@@ -193,17 +240,19 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.items.accept(self.cachedItems)
     }
     
-    private func parseMessage(_ user: User) -> Message {
+    private func parseTextMessage(_ user: User) -> Message {
         var data = [String : String]()
         data["content"] =
             self.textMessageContent.value
                 .trimmingCharacters(in: .whitespacesAndNewlines)
         data["type"] = "text"
         data["sent-by"] = user.userId
-        data["at-time"] = "12345"
-        
-        
+        data["at-time"] = getTime()
         return Message(type: .text, data: data)
+    }
+    
+    private func getTime() -> String {
+        return "123456"
     }
 }
 
@@ -213,6 +262,8 @@ extension SeeConversationViewModel {
         let sendMessTrigger: Driver<Void>
         let conversationLabel: Binder<String?>
         let textMessage: ControlProperty<String>
+        let sendImageTrigger: Driver<Void>
+        let sendImagePublish: Driver<URL>
     }
     
     struct Output {
@@ -223,5 +274,6 @@ extension SeeConversationViewModel {
     enum Item {
         case text(message: Message)
         case textMe(message: Message)
+        case image(message: Message)
     }
 }

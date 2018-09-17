@@ -5,5 +5,6 @@ struct Message {
 
 enum MessageType {
     case text
+    case image
 }
 

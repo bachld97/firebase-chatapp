@@ -67,6 +67,9 @@ PODS:
     - Differentiator (~> 3.0)
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
+  - RxGesture (1.2.1):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
   - Toast (4.0.0)
 
@@ -77,6 +80,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - RxCocoa (~> 4.0)
   - RxDataSources
+  - RxGesture
   - RxSwift (~> 4.0)
   - Toast
 
@@ -97,6 +101,7 @@ SPEC REPOS:
     - nanopb
     - RxCocoa
     - RxDataSources
+    - RxGesture
     - RxSwift
     - Toast
 
@@ -116,9 +121,10 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
+  RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: 370d00e5c3f7756e8e4ba7fc0634acf0b19024b6
+PODFILE CHECKSUM: 95a6433819236a7f55b2d07da32aea312add1dce
 
 COCOAPODS: 1.5.3

@@ -1,5 +1,6 @@
 import RxSwift
 import FirebaseDatabase
+import FirebaseStorage
 
 class ConversationFirebaseSource: ConversationRemoteSource {
 
@@ -48,7 +49,9 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                             continue
                         }
                         
-                        let message = self.parseMessage(from: messageDict)
+                        let message = self.parseMessage(
+                            from: messageDict,
+                            withMessId: snap.key)
                         if message != nil {
                             messages.insert(message!, at: 0)
                         }
@@ -115,7 +118,6 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         
         return createConversationIfNotExist(of: user, with: contact)
             .flatMap { [unowned self] (_) -> Observable<[Message]> in
-                print("Loading")
                 return self.loadMessages(of: uid)
         }
     }
@@ -209,15 +211,26 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         return res
     }
     
-    private func parseMessage(from messageDict: [String : Any]) -> Message? {
-        let type = (messageDict["type"] as! String).map { (it) -> MessageType in
-            return .text
-        }[0]
+    private func parseMessage(from messageDict: [String : Any], withMessId: String? = nil) -> Message? {
+        let type: MessageType
+        guard let typeString = messageDict["type"] as? String else {
+            return nil
+        }
+        if typeString.elementsEqual("text") {
+            type = .text
+        } else {
+            type = .image
+        }
         
+
         var data = [String : String]()
         data["content"] = messageDict["content"] as? String
         data["at-time"] = messageDict["at-time"] as? String
         data["sent-by"] = messageDict["sent-by"] as? String
+        
+        if withMessId != nil {
+            data["mess-id"] = withMessId!
+        }
         
         return Message(type: type, data: data)
     }
@@ -229,6 +242,10 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     }
     
     func sendMessage(message: Message, to conversation: String) -> Observable<Bool> {
+        if message.data["type"]!.elementsEqual("image") {
+            return sendImageMessage(message: message, to: conversation)
+        }
+        
         let jsonMessage = self.mapToJson(message: message)
         self.ref.child("conversations/\(conversation)/last-message")
             .setValue(jsonMessage)
@@ -236,6 +253,39 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             .childByAutoId()
             .setValue(jsonMessage)
         return Observable.just(true)
+    }
+    
+    private func sendImageMessage(message: Message, to conversation: String) -> Observable<Bool> {
+        return Observable.create { [unowned self] obs in
+            // Generate message id
+            let messId = self.ref.child("messages/\(conversation)")
+                .childByAutoId()
+                .key
+           
+            let urlString = message.data["content"]!
+            let url = URL(fileURLWithPath: urlString)
+            // Upload to Firebase Storage
+            let ref = Storage.storage().reference()
+                .child("messages/\(messId)")
+
+            _ = ref.putFile(from: url, metadata: nil) { metadata, error in
+                if error != nil {
+                    obs.onError(error!)
+                } else {
+                    obs.onNext(true)
+                    
+                    // Update Firebase database
+                    let jsonMessage = self.mapToJson(message: message)
+                    self.ref.child("conversations/\(conversation)/last-message")
+                        .setValue(jsonMessage)
+                    self.ref.child("messages/\(conversation)")
+                        .childByAutoId()
+                        .setValue(jsonMessage)
+                }
+            }
+
+            return Disposables.create()
+        }
     }
     
     private func mapToJson(message: Message) -> [String : Any] {

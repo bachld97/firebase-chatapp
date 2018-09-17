@@ -1,9 +1,10 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 import RxDataSources
 
-class SeeContactVC: BaseVC, ViewFor {
+class SeeContactVC: BaseVC, ViewFor, UITableViewDelegate {
     class func instance() -> UIViewController {
         return SeeContactVC()
     }
@@ -14,7 +15,7 @@ class SeeContactVC: BaseVC, ViewFor {
     private var items : RxTableViewSectionedReloadDataSource<SectionModel<String, ContactItem>>!
     
     private let disposeBag = DisposeBag()
-    
+
     init() {
         super.init(nibName: "SeeContactVC", bundle: nil)
         self.viewModel = SeeContactViewModel(displayLogic: self)
@@ -60,6 +61,10 @@ class SeeContactVC: BaseVC, ViewFor {
             .disposed(by: self.disposeBag)
     }
     
+    var editting = false
+    @objc func toggleSelection() {
+    }
+
     override func prepareUI() {
         self.contactTableView.tableFooterView = UIView()
         self.contactTableView.rowHeight = UITableViewAutomaticDimension
@@ -71,9 +76,24 @@ class SeeContactVC: BaseVC, ViewFor {
             return cell
         })
         
+        self.contactTableView
+            .rx
+            .longPressGesture()
+            .when(.began)
+            .subscribe({[unowned self] _ in
+                self.toggleSelection()
+            })
+            .disposed(by: self.disposeBag)
+
+        self.contactTableView.rx.setDelegate(self)
+            .disposed(by: self.disposeBag)
+        
         // Set up click
         self.contactTableView.rx.itemSelected.asDriver()
             .drive(onNext: { [unowned self] (ip) in
+//                if (self.contactTableView.isEditing) {
+//                    self.contactTableView.cellForRow(at: ip)?.accessoryType = .checkmark
+//                } 
                 self.contactTableView.deselectRow(at: ip, animated: false)
                 let item = self.items.sectionModels[0].items[ip.row]
                 self.goConversation(item)

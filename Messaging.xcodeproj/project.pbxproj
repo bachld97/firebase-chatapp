@@ -115,9 +115,15 @@
 		14848ADB214113C300DAA9F8 /* ConversationLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADA214113C300DAA9F8 /* ConversationLocalSource.swift */; };
 		14848ADD2141140E00DAA9F8 /* ConversationRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADC2141140E00DAA9F8 /* ConversationRemoteSource.swift */; };
 		14848ADF2141149D00DAA9F8 /* ConversationFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */; };
+		1485C318214F4542003568B9 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485C317214F4542003568B9 /* PhotoCell.swift */; };
+		1485C31A214F4BC1003568B9 /* CameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485C319214F4BC1003568B9 /* CameraCell.swift */; };
 		149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */; };
 		14A239CF214B4EA00027743D /* UploadAvatarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239CE214B4EA00027743D /* UploadAvatarUseCase.swift */; };
 		14A239D1214B4EBF0027743D /* UploadAvatarRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239D0214B4EBF0027743D /* UploadAvatarRequest.swift */; };
+		14A239D9214BC6A20027743D /* PickMediaVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239D7214BC6A20027743D /* PickMediaVC.swift */; };
+		14A239DA214BC6A20027743D /* PickMediaVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14A239D8214BC6A20027743D /* PickMediaVC.xib */; };
+		14A239DC214BC6EF0027743D /* PickMediaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239DB214BC6EF0027743D /* PickMediaViewModel.swift */; };
+		14A239DE214BC78F0027743D /* PickMediaDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239DD214BC78F0027743D /* PickMediaDelegate.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
 		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
 		14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9782136561E00A31FBB /* LoginUseCase.swift */; };
@@ -238,9 +244,15 @@
 		14848ADA214113C300DAA9F8 /* ConversationLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationLocalSource.swift; sourceTree = "<group>"; };
 		14848ADC2141140E00DAA9F8 /* ConversationRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRemoteSource.swift; sourceTree = "<group>"; };
 		14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFirebaseSource.swift; sourceTree = "<group>"; };
+		1485C317214F4542003568B9 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		1485C319214F4BC1003568B9 /* CameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCell.swift; sourceTree = "<group>"; };
 		149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactFirebaseSource.swift; sourceTree = "<group>"; };
 		14A239CE214B4EA00027743D /* UploadAvatarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAvatarUseCase.swift; sourceTree = "<group>"; };
 		14A239D0214B4EBF0027743D /* UploadAvatarRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAvatarRequest.swift; sourceTree = "<group>"; };
+		14A239D7214BC6A20027743D /* PickMediaVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMediaVC.swift; sourceTree = "<group>"; };
+		14A239D8214BC6A20027743D /* PickMediaVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickMediaVC.xib; sourceTree = "<group>"; };
+		14A239DB214BC6EF0027743D /* PickMediaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMediaViewModel.swift; sourceTree = "<group>"; };
+		14A239DD214BC78F0027743D /* PickMediaDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMediaDelegate.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
 		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		14CEE9782136561E00A31FBB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -285,6 +297,7 @@
 		141823522135025700DC0E98 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
+				14A239D4214BC2EC0027743D /* PickMedia */,
 				146153FA213F68350032EE95 /* AddContact */,
 				1418236C2135072000DC0E98 /* Login */,
 				143517A421352E6B0039874F /* SignUp */,
@@ -576,6 +589,19 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		14A239D4214BC2EC0027743D /* PickMedia */ = {
+			isa = PBXGroup;
+			children = (
+				14A239D7214BC6A20027743D /* PickMediaVC.swift */,
+				14A239D8214BC6A20027743D /* PickMediaVC.xib */,
+				14A239DB214BC6EF0027743D /* PickMediaViewModel.swift */,
+				14A239DD214BC78F0027743D /* PickMediaDelegate.swift */,
+				1485C317214F4542003568B9 /* PhotoCell.swift */,
+				1485C319214F4BC1003568B9 /* CameraCell.swift */,
+			);
+			path = PickMedia;
+			sourceTree = "<group>";
+		};
 		14CEE975213655E600A31FBB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -683,6 +709,7 @@
 				14843FED214122B900D5366B /* SeeChatHistoryVC.xib in Resources */,
 				1418235E2135025800DC0E98 /* LaunchScreen.storyboard in Resources */,
 				1418235B2135025800DC0E98 /* Assets.xcassets in Resources */,
+				14A239DA214BC6A20027743D /* PickMediaVC.xib in Resources */,
 				141823592135025700DC0E98 /* Main.storyboard in Resources */,
 				14843FF721413B9E00D5366B /* GroupConvoCell.xib in Resources */,
 				14615408213F68910032EE95 /* AddContactVC.xib in Resources */,
@@ -725,6 +752,7 @@
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
+				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Toast/Toast.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
@@ -738,6 +766,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toast.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
@@ -762,6 +791,7 @@
 				1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */,
 				14461A5B21379DFF0062FAC6 /* SeeConversationVC.swift in Sources */,
 				1436689D2148BB7D00B2766E /* GetUserUseCase.swift in Sources */,
+				1485C31A214F4BC1003568B9 /* CameraCell.swift in Sources */,
 				14615407213F68910032EE95 /* AddContactVC.swift in Sources */,
 				1447A9702146765600F7E1CF /* SendMessageRequest.swift in Sources */,
 				1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */,
@@ -777,6 +807,7 @@
 				146153FC213F68450032EE95 /* AddContactViewModel.swift in Sources */,
 				143517A121352D3C0039874F /* BaseVC.swift in Sources */,
 				14A239D1214B4EBF0027743D /* UploadAvatarRequest.swift in Sources */,
+				14A239DC214BC6EF0027743D /* PickMediaViewModel.swift in Sources */,
 				14848ACB2140C7FC00DAA9F8 /* AcceptRequestUseCase.swift in Sources */,
 				14843FF621413B9E00D5366B /* GroupConvoCell.swift in Sources */,
 				140C34082139240600DC3535 /* ChangePassVIewModel.swift in Sources */,
@@ -794,6 +825,7 @@
 				14CEE97B2136562500A31FBB /* LoginRequest.swift in Sources */,
 				14461A742137E8CC0062FAC6 /* ContactRemoteSource.swift in Sources */,
 				140C33F42138D69E00DC3535 /* SeeProfileUseCase.swift in Sources */,
+				14A239D9214BC6A20027743D /* PickMediaVC.swift in Sources */,
 				14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */,
 				14CEE9822136584900A31FBB /* UserRepositoryImpl.swift in Sources */,
 				147945D3213E7FB70055CE79 /* UserLocalSource.swift in Sources */,
@@ -816,6 +848,7 @@
 				140C33F82138E1A400DC3535 /* Conversation.swift in Sources */,
 				147945D1213E78CD0055CE79 /* Utils.swift in Sources */,
 				140C34042138EC0700DC3535 /* SeeChatHistoryViewModel.swift in Sources */,
+				14A239DE214BC78F0027743D /* PickMediaDelegate.swift in Sources */,
 				1458BC2A21476249005A93AD /* GetContactNicknameRequest.swift in Sources */,
 				1458BC2821475FC9005A93AD /* GetContactNicknameUseCase.swift in Sources */,
 				14843FEC214122B900D5366B /* SeeChatHistoryVC.swift in Sources */,
@@ -839,6 +872,7 @@
 				14615402213F686F0032EE95 /* AddContactRequest.swift in Sources */,
 				149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */,
 				14461A762137E8D80062FAC6 /* ContactLocalSource.swift in Sources */,
+				1485C318214F4542003568B9 /* PhotoCell.swift in Sources */,
 				147945C9213E31010055CE79 /* ContactItem.swift in Sources */,
 				14848ADD2141140E00DAA9F8 /* ConversationRemoteSource.swift in Sources */,
 				141823732135081E00DC0E98 /* ViewModelDelegate.swift in Sources */,

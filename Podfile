@@ -7,6 +7,7 @@ target 'Messaging' do
 	pod 'RxSwift',	'~> 4.0'
 	pod 'RxDataSources'
 	pod 'RxCocoa', 	'~> 4.0'
+	pod 'RxGesture'
 	pod 'Toast'
 	pod 'Firebase/Core'
 	pod 'Firebase/Database'
