@@ -13,7 +13,7 @@ final class MessageItem : Hashable {
     let messageType: _MessageType
     let messageId: String
     let messageData: [String: String]
-    
+
     init(messageType: _MessageType, messageId: String, messageData: [String: String]) {
         self.messageType = messageType
         self.messageId = messageId
