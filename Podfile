@@ -10,6 +10,8 @@ target 'Messaging' do
 	pod 'RxGesture'
 	pod 'Toast'
 	pod 'Firebase/Core'
+	pod 'Kingfisher'
+	pod 'DeepDiff'
 	pod 'Firebase/Database'
 	pod 'Firebase/Storage'
 end

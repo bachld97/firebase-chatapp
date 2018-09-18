@@ -5,6 +5,7 @@ protocol SeeConversationDisplayLogic : class {
     func goBack()
     func clearText()
     func goPickMedia()
+    func onNewData(items: [MessageItem])
 }
 
 class SeeConversationViewModel : ViewModelDelegate {
@@ -77,8 +78,10 @@ class SeeConversationViewModel : ViewModelDelegate {
                     .flatMap { [unowned self] (user) -> Observable<[Message]> in
                         return self.loadConvoFromContactIdUseCase
                             .execute(request: request)
-                            .do(onNext: { (messages) in
-                                self.handleMessages(messages: messages, user: user)
+                            .do(onNext: { [unowned self] (messages) in
+                                let messageItems = self.convert(messages: messages, user: user)
+                                self.displayLogic?.onNewData(items: messageItems)
+                                // self.handleMessages(messages: messages, user: user)
                             })
                     }
                     .trackError(errorTracker)
@@ -137,7 +140,9 @@ class SeeConversationViewModel : ViewModelDelegate {
                         return self.loadConvoFromConvoIdUseCase
                             .execute(request: request)
                             .do(onNext: { [unowned self] (messages) in
-                                self.handleMessages(messages: messages, user: user)
+                                let messageItems = self.convert(messages: messages, user: user)
+                                self.displayLogic?.onNewData(items: messageItems)
+                                // self.handleMessages(messages: messages, user: user)
                             })
                     }
                     .trackError(errorTracker)
@@ -214,6 +219,32 @@ class SeeConversationViewModel : ViewModelDelegate {
         data["sent-by"] = user.userId
         data["at-time"] = getTime()
         return Message(type: .image, data: data)
+    }
+    
+    private func convert(messages: [Message], user: User) -> [MessageItem] {
+        var res: [MessageItem] = []
+        
+        for m in messages {
+            let messid = m.data["mess-id"]!
+            switch m.type {
+            case .image:
+                if m.data["sent-by"]!.elementsEqual(user.userId) {
+                    // TODO: ImageMe
+                    res.append(MessageItem(messageType: .imageMe, messageId: messid, messageData: m.data))
+                } else {
+                    res.append(MessageItem(messageType: .image, messageId: messid, messageData: m.data))
+                }
+                
+            case .text:
+                if m.data["sent-by"]!.elementsEqual(user.userId) {
+                    res.append(MessageItem(messageType: .textMe, messageId: messid, messageData: m.data))
+                } else {
+                    res.append(MessageItem(messageType: .text, messageId: messid, messageData: m.data))
+                }
+            }
+        }
+
+        return res
     }
     
     private func handleMessages(messages: [Message], user: User) {

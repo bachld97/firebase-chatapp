@@ -1,4 +1,5 @@
 PODS:
+  - DeepDiff (1.2.0)
   - Differentiator (3.0.2)
   - Firebase/Core (5.6.0):
     - Firebase/CoreOnly
@@ -55,6 +56,7 @@ PODS:
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.0)
   - IQKeyboardManagerSwift (6.1.1)
+  - Kingfisher (4.8.1)
   - leveldb-library (1.20)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
@@ -74,10 +76,12 @@ PODS:
   - Toast (4.0.0)
 
 DEPENDENCIES:
+  - DeepDiff
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
   - IQKeyboardManagerSwift
+  - Kingfisher
   - RxCocoa (~> 4.0)
   - RxDataSources
   - RxGesture
@@ -86,6 +90,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - DeepDiff
     - Differentiator
     - Firebase
     - FirebaseAnalytics
@@ -97,6 +102,7 @@ SPEC REPOS:
     - GoogleUtilities
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
+    - Kingfisher
     - leveldb-library
     - nanopb
     - RxCocoa
@@ -106,6 +112,7 @@ SPEC REPOS:
     - Toast
 
 SPEC CHECKSUMS:
+  DeepDiff: 0ee83ac6942d441f677c22e981548c6e0937f2b6
   Differentiator: a87be69eba49ec4ab460c7671143ee3a9eececfd
   Firebase: 75ea9e232eefa158c1049028030b8f661a2ccb62
   FirebaseAnalytics: 993577e91157feb40945abedd6ab346d8a4b6ac8
@@ -117,6 +124,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 06b66f9567769a7958db20a92f0128b2843e49d5
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   IQKeyboardManagerSwift: 977affaeb4d6e971975c7790a6850f31d38f1207
+  Kingfisher: 868c1149679a7ab6869be118faa9b5aed154aaf0
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
@@ -125,6 +133,6 @@ SPEC CHECKSUMS:
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: 95a6433819236a7f55b2d07da32aea312add1dce
+PODFILE CHECKSUM: b7e3ad8edd8ac304d24c5790332b3523e5ea80d7
 
 COCOAPODS: 1.5.3

@@ -14,6 +14,8 @@ class SeeConversationVC: BaseVC, ViewFor {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sendMessageButton: UIButton!
     
+    private var configurator: MessageCellConfigurator?
+    
     private let sendImagePublish = PublishSubject<URL>()
     
     private var items: RxTableViewSectionedReloadDataSource
@@ -63,41 +65,46 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 90
         
+        // TEST NEW IMPLEMENTATION
+        self.configurator = MessageCellConfigurator(tableView: self.tableView)
+        // TEST NEW IMPLEMENTATION
+
 //        self.tableView.register(UINib(nibName: "<++>", bundle: nil), forCellReusableIdentifier: "<++>")
-        self.tableView.register(TextMessageCell.self, forCellReuseIdentifier: "TextMessageCell")
-        self.tableView.register(ImageMessageCell.self, forCellReuseIdentifier: "ImageMessageCell")
-        self.tableView.register(TextMeMessageCell.self, forCellReuseIdentifier: "TextMeMessageCell")
-        self.tableView.register(ImageMeMessageCell.self, forCellReuseIdentifier: "ImageMeMessageCell")
         
-        self.items = RxTableViewSectionedReloadDataSource
-            <SectionModel<String, SeeConversationViewModel.Item>>(
-                configureCell: { (_, tv, ip, item) -> UITableViewCell in
-                    switch item {
-                    case .image(let message):
-                        let cell = tv.dequeueReusableCell(withIdentifier: "ImageMessageCell")
-                            as! ImageMessageCell
-                        cell.bind(message: message)
-                        return cell
-                        
-                    case .imageMe(let message):
-                        let cell = tv.dequeueReusableCell(withIdentifier: "ImageMeMessageCell")
-                            as! ImageMeMessageCell
-                        cell.bind(message: message)
-                        return cell
-                        
-                    case .text(let message):
-                        let cell = tv.dequeueReusableCell(withIdentifier: "TextMessageCell")
-                            as! TextMessageCell
-                        cell.bind(message: message)
-                        return cell
-                        
-                    case .textMe(let message):
-                        let cell = tv.dequeueReusableCell(withIdentifier: "TextMeMessageCell")
-                            as! TextMeMessageCell
-                        cell.bind(message: message)
-                        return cell
-                    }
-            })
+//        self.tableView.register(TextMessageCell.self, forCellReuseIdentifier: "TextMessageCell")
+//        self.tableView.register(ImageMessageCell.self, forCellReuseIdentifier: "ImageMessageCell")
+//        self.tableView.register(TextMeMessageCell.self, forCellReuseIdentifier: "TextMeMessageCell")
+//        self.tableView.register(ImageMeMessageCell.self, forCellReuseIdentifier: "ImageMeMessageCell")
+//
+//        self.items = RxTableViewSectionedReloadDataSource
+//            <SectionModel<String, SeeConversationViewModel.Item>>(
+//                configureCell: { (_, tv, ip, item) -> UITableViewCell in
+//                    switch item {
+//                    case .image(let message):
+//                        let cell = tv.dequeueReusableCell(withIdentifier: "ImageMessageCell")
+//                            as! ImageMessageCell
+//                        cell.bind(message: message)
+//                        return cell
+//
+//                    case .imageMe(let message):
+//                        let cell = tv.dequeueReusableCell(withIdentifier: "ImageMeMessageCell")
+//                            as! ImageMeMessageCell
+//                        cell.bind(message: message)
+//                        return cell
+//
+//                    case .text(let message):
+//                        let cell = tv.dequeueReusableCell(withIdentifier: "TextMessageCell")
+//                            as! TextMessageCell
+//                        cell.bind(message: message)
+//                        return cell
+//
+//                    case .textMe(let message):
+//                        let cell = tv.dequeueReusableCell(withIdentifier: "TextMeMessageCell")
+//                            as! TextMeMessageCell
+//                        cell.bind(message: message)
+//                        return cell
+//                    }
+//            })
         
 //        self.tableView.rx.itemSelected.asDriver()
 //            .drive(onNext: { [unowned self] (ip) in
@@ -126,16 +133,20 @@ class SeeConversationVC: BaseVC, ViewFor {
             })
         .disposed(by: self.disposeBag)
         
-        output.items
-            .map { [SectionModel(model: "Items", items: $0)]}
-            .drive (self.tableView.rx.items(dataSource: self.items))
-            .disposed(by: self.disposeBag)
+//        output.items
+//            .map { [SectionModel(model: "Items", items: $0)]}
+//            .drive (self.tableView.rx.items(dataSource: self.items))
+//            .disposed(by: self.disposeBag)
     }
 }
 
 extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
     func onMediaItemPicked(mediaItemUrl: URL) {
         self.sendImagePublish.onNext(mediaItemUrl)
+    }
+    
+    func onNewData(items: [MessageItem]) {
+        self.configurator?.setItems(items)
     }
     
     func onMediaItemPickFail() {

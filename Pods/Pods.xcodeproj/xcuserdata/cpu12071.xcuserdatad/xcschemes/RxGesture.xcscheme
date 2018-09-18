@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E64E74BE6ED0CA5BB10C0E5D6D44D2C0"
+               BlueprintIdentifier = "5AC1C024BEB093B0BACBD4F31A1883D9"
                BuildableName = "RxGesture.framework"
                BlueprintName = "RxGesture"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E64E74BE6ED0CA5BB10C0E5D6D44D2C0"
+            BlueprintIdentifier = "5AC1C024BEB093B0BACBD4F31A1883D9"
             BuildableName = "RxGesture.framework"
             BlueprintName = "RxGesture"
             ReferencedContainer = "container:Pods.xcodeproj">
