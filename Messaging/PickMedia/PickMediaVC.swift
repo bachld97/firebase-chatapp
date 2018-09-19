@@ -154,7 +154,8 @@ extension PickMediaVC {
         }
         
         let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let url = URL(fileURLWithPath: path).appendingPathComponent("name.png")
+        let filename = String(describing: UUID()) + ".png"
+        let url = URL(fileURLWithPath: path).appendingPathComponent(filename)
         do {
             try data.write(to: url)
             self.delegate?.onMediaItemPicked(mediaItemUrl: url)

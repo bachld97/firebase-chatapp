@@ -25,6 +25,35 @@ class MessageCellConfigurator {
     
     var items: [MessageItem] = []
     
+    func onNewSingleItem(_ item: MessageItem) {
+        // Assume we do not erase it
+        let localId = item.messageData["local-id"] ?? ""
+        
+        let index = items.lastIndex(where: { (other) in
+            let otherId = other.messageData["local-id"]
+            
+            guard otherId != nil else {
+                return false
+            }
+            
+            return otherId!.elementsEqual(localId)
+        })
+        
+        if index != nil {
+            // updates
+            items[index!].isSending = false
+            strongDataSource?.updateItem(at: index!, with: items[index!])
+            let indexPath = NSIndexPath(row: index!, section: 0)
+            self.tableView?.reloadItemsAtIndexPaths([indexPath as IndexPath], animationStyle: .automatic)
+            return
+        }
+        
+        items.insert(item, at: 0)
+        strongDataSource?.insertItemAtFront(item)
+        let indexPath = NSIndexPath(row: 0, section: 0)
+        self.tableView?.insertItemsAtIndexPaths([indexPath as IndexPath], animationStyle: .automatic)
+    }
+    
     func setItems(_ items: [MessageItem]) {
         let changes = diff(old: self.items, new: items)
         self.items = items
@@ -45,19 +74,5 @@ class MessageCellConfigurator {
         self.tableView?.register(_TextMeMessageCell.self)
         self.tableView?.register(_ImageMessageCell.self)
         self.tableView?.register(_ImageMeMessageCell.self)
-    }
-}
-
-class ExampleVC : UIViewController {
-    @IBOutlet weak var tableView: UITableView!
-    private var configurator: MessageCellConfigurator?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.configurator = MessageCellConfigurator(tableView: self.tableView)
-    }
-    
-    func onNewData(items: [MessageItem]) {
-        self.configurator?.setItems(items)
     }
 }

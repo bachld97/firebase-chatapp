@@ -13,7 +13,7 @@ final class MessageItem : Hashable {
     let messageType: _MessageType
     let messageId: String
     let messageData: [String: String]
-    let isSending: Bool
+    var isSending: Bool = false
     
     init(messageType: _MessageType, messageId: String,
          messageData: [String: String], isSending: Bool = false) {

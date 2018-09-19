@@ -18,6 +18,8 @@ class SeeConversationVC: BaseVC, ViewFor {
     
     private let sendImagePublish = PublishSubject<URL>()
     
+    private let onCreatePublish = PublishSubject<Void>()
+    
     private var items: RxTableViewSectionedReloadDataSource
         <SectionModel<String, SeeConversationViewModel.Item>>!
     
@@ -37,6 +39,7 @@ class SeeConversationVC: BaseVC, ViewFor {
         super.init(coder: aDecoder)
         fatalError("Cannot instantiate like this")
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // self.navigationController?.navigationItem.largeTitleDisplayMode = .never
@@ -65,60 +68,16 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 90
         
-        // TEST NEW IMPLEMENTATION
-        self.configurator = MessageCellConfigurator(tableView: self.tableView)
-        // TEST NEW IMPLEMENTATION
 
-//        self.tableView.register(UINib(nibName: "<++>", bundle: nil), forCellReusableIdentifier: "<++>")
-        
-//        self.tableView.register(TextMessageCell.self, forCellReuseIdentifier: "TextMessageCell")
-//        self.tableView.register(ImageMessageCell.self, forCellReuseIdentifier: "ImageMessageCell")
-//        self.tableView.register(TextMeMessageCell.self, forCellReuseIdentifier: "TextMeMessageCell")
-//        self.tableView.register(ImageMeMessageCell.self, forCellReuseIdentifier: "ImageMeMessageCell")
-//
-//        self.items = RxTableViewSectionedReloadDataSource
-//            <SectionModel<String, SeeConversationViewModel.Item>>(
-//                configureCell: { (_, tv, ip, item) -> UITableViewCell in
-//                    switch item {
-//                    case .image(let message):
-//                        let cell = tv.dequeueReusableCell(withIdentifier: "ImageMessageCell")
-//                            as! ImageMessageCell
-//                        cell.bind(message: message)
-//                        return cell
-//
-//                    case .imageMe(let message):
-//                        let cell = tv.dequeueReusableCell(withIdentifier: "ImageMeMessageCell")
-//                            as! ImageMeMessageCell
-//                        cell.bind(message: message)
-//                        return cell
-//
-//                    case .text(let message):
-//                        let cell = tv.dequeueReusableCell(withIdentifier: "TextMessageCell")
-//                            as! TextMessageCell
-//                        cell.bind(message: message)
-//                        return cell
-//
-//                    case .textMe(let message):
-//                        let cell = tv.dequeueReusableCell(withIdentifier: "TextMeMessageCell")
-//                            as! TextMeMessageCell
-//                        cell.bind(message: message)
-//                        return cell
-//                    }
-//            })
-        
-//        self.tableView.rx.itemSelected.asDriver()
-//            .drive(onNext: { [unowned self] (ip) in
-//
-//            })
+        self.configurator = MessageCellConfigurator(tableView: self.tableView)
     }
-    
     override func bindViewModel() {
-        let viewWillAppear = self.rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
-            .mapToVoid()
-            .asDriverOnErrorJustComplete()
+//        let viewWillAppear = self.rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
+//            .mapToVoid()
+//            .asDriverOnErrorJustComplete()
         
         let input = SeeConversationViewModel.Input(
-            trigger: viewWillAppear,
+            trigger: onCreatePublish.asDriverOnErrorJustComplete(),
             sendMessTrigger: self.sendMessageButton.rx.tap.asDriver(),
             conversationLabel: self.navigationItem.rx.title,
             textMessage: self.textMessageContent.rx.text.orEmpty,
@@ -133,10 +92,7 @@ class SeeConversationVC: BaseVC, ViewFor {
             })
         .disposed(by: self.disposeBag)
         
-//        output.items
-//            .map { [SectionModel(model: "Items", items: $0)]}
-//            .drive (self.tableView.rx.items(dataSource: self.items))
-//            .disposed(by: self.disposeBag)
+        onCreatePublish.onNext(())
     }
 }
 
@@ -151,7 +107,7 @@ extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
 
     func onNewSingleData(item: MessageItem) {
         // Find and replace, or added if not exist
-        print(item)
+        self.configurator?.onNewSingleItem(item)
     }
     
     func onMediaItemPickFail() {
@@ -167,8 +123,8 @@ extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
     }
     
     func goPickMedia() {
+        self.resignFirstResponder()
         let vc = PickMediaVC.instance(delegate: self)
-//        self.present(vc, animated: true)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

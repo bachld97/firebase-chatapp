@@ -6,11 +6,12 @@ class _ImageMeMessageCell : BaseMessageCell {
             // TODO: Compare item first?
             let url = item.messageData["content"]!
             imageLoader.loadImage(url: url, into: self.contentImage)
-            
+
+
             if item.isSending {
-                self.alpha = 0.6
+                contentImage.alpha = 0.3
             } else {
-                self.alpha = 1.0
+                contentImage.alpha = 1.0
             }
         }
     }
@@ -22,6 +23,7 @@ class _ImageMeMessageCell : BaseMessageCell {
         v.translatesAutoresizingMaskIntoConstraints = false
         v.heightAnchor.constraint(equalToConstant: 96.0).isActive = true
         v.widthAnchor.constraint(equalToConstant: 96.0).isActive = true
+        
         v.backgroundColor = UIColor(red: 221.0 / 255.0, green: 234.0 / 255.0, blue: 1, alpha: 1)
         v.layer.cornerRadius = 16.0
         v.clipsToBounds = true
@@ -48,6 +50,8 @@ class _ImageMeMessageCell : BaseMessageCell {
         let leftC = NSLayoutConstraint(item: contentImage, attribute: .leading, relatedBy: .greaterThanOrEqual, toItem: self, attribute: .leading, multiplier: 1, constant: mainPadding)
         let rightC = NSLayoutConstraint(item: contentImage, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: normalPadding * -1)
         
+
+        botC.priority = UILayoutPriority(rawValue: 999)
         addConstraints([topC, botC, leftC, rightC])
     }
 }

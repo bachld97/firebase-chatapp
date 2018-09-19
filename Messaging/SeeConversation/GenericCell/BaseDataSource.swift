@@ -23,6 +23,22 @@ final class BaseDatasource<V, M> : NSObject, UITableViewDataSource where V: Base
         self.items = items
     }
     
+    func updateItem(at index: Int, with item: M) {
+        if index < 0 || index >= items.count {
+            return
+        }
+        
+        items[index] = item
+    }
+    
+    func insertItemAtFront(_ item: M) {
+        items.insert(item, at: 0)
+    }
+    
+    func appendItem(_ item: M) {
+        items.append(item)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let reuseId = getIdentifier(forItemAt: indexPath)
         let cell: V = tableView.dequeueCell(withIdentifier: reuseId, forIndexPath: indexPath)

@@ -48,7 +48,6 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                 .observe(.childAdded, with: { (snap) in
                     // obs.onNext
                     guard snap.exists() else {
-                        print("Snapshot not exist?")
                         return
                     }
                     
@@ -276,6 +275,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         data["content"] = messageDict["content"] as? String
         data["at-time"] = "\(messageDict["at-time"]!)"
         data["sent-by"] = messageDict["sent-by"] as? String
+        data["local-id"] = messageDict["local-id"] as? String
         
         if withMessId != nil {
             data["mess-id"] = withMessId!
@@ -322,7 +322,6 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                     obs.onError(error!)
                 } else {
                     obs.onNext(true)
-                    
                     // Update Firebase database
                     var jsonMessage = self.mapToJson(message: message)
                     jsonMessage["content"] = ImageLoader.buildUrl(forMessageId: messId)
@@ -340,6 +339,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     
     private func mapToJson(message: Message) -> [String : Any] {
         var res = [String : Any]()
+        res["local-id"] = message.data["local-id"]
         res["at-time"] = ServerValue.timestamp()
         res["sent-by"] = message.data["sent-by"]
         res["type"] = message.data["type"]
