@@ -4,6 +4,12 @@ class _TextMeMessageCell: BaseMessageCell {
     override var item: MessageItem! {
         didSet {
             self.textContent.text = item.messageData["content"]
+            
+            if item.isSending {
+                self.alpha = 0.5
+            } else {
+                self.alpha = 1.0
+            }
         }
     }
     

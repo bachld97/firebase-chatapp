@@ -130,7 +130,7 @@ class PickMediaVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource,
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        self.collectionView.collectionViewLayout.invalidateLayout()
+        self.collectionView?.collectionViewLayout.invalidateLayout()
     }
  
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

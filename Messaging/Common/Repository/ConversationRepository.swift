@@ -7,7 +7,7 @@ protocol ConversationRepository {
     func sendMessage(request: SendMessageRequest) -> Observable<Bool>
     func sendMessageToUser(request: SendMessageToUserRequest) -> Observable<Bool>
     
-    
+    func observeNextMessage(fromLastId lastId: String?) -> Observable<Message>
     func getConversationLabel(conversation: Conversation) -> Observable<String>
     func getContactNickname(contact: Contact) -> Observable<String>
 }

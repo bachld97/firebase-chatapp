@@ -13,11 +13,14 @@ final class MessageItem : Hashable {
     let messageType: _MessageType
     let messageId: String
     let messageData: [String: String]
-
-    init(messageType: _MessageType, messageId: String, messageData: [String: String]) {
+    let isSending: Bool
+    
+    init(messageType: _MessageType, messageId: String,
+         messageData: [String: String], isSending: Bool = false) {
         self.messageType = messageType
         self.messageId = messageId
         self.messageData = messageData
+        self.isSending = isSending
     }
 }
 

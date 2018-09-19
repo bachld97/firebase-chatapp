@@ -6,6 +6,12 @@ class _ImageMeMessageCell : BaseMessageCell {
             // TODO: Compare item first?
             let url = item.messageData["content"]!
             imageLoader.loadImage(url: url, into: self.contentImage)
+            
+            if item.isSending {
+                self.alpha = 0.6
+            } else {
+                self.alpha = 1.0
+            }
         }
     }
     

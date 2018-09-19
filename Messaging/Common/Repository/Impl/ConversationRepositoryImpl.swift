@@ -110,6 +110,13 @@ class ConversationRepositoryImpl : ConversationRepository {
         }
     }
     
+    func observeNextMessage(fromLastId lastId: String?) -> Observable<Message> {
+        return Observable.deferred { [unowned self] in
+            return self.remoteSource
+                .observeNextMessage(fromLastId: lastId)
+        }
+    }
+    
     func loadMessages(of conversationId: String) -> Observable<[Message]> { 
         return Observable.deferred {
             

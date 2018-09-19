@@ -6,6 +6,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
 
     
     var ref: DatabaseReference!
+    private var currentConversationId: String?
     
     init() {
         ref = Database.database().reference()
@@ -18,7 +19,13 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         return Observable.create { [unowned self] (obs) in
             self.ref.child("conversations/\(uid)/users/\(contact.userId)/nickname")
                 .observeSingleEvent(of: .value, with: { (snap) in
-                    obs.onNext(snap.value as! String)
+                    guard snap.exists() else {
+                        obs.onNext(contact.userName)
+                        return
+                    }
+                    
+                    let nickname = snap.value as! String
+                    obs.onNext(nickname)
                 }, withCancel: { (e) in
                     obs.onError(e)
                 })
@@ -27,7 +34,49 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         }
     }
     
+    func observeNextMessage(fromLastId lastId: String?) -> Observable<Message> {
+        return Observable.create { [unowned self] (obs) in
+            guard let conversationId = self.currentConversationId else {
+                // Break
+                return Disposables.create()
+            }
+            
+            let dbRequest = self.ref.child("messages/\(conversationId)")
+                .queryOrderedByKey()
+                .queryStarting(atValue: lastId)
+                .queryLimited(toLast: 1)
+                .observe(.childAdded, with: { (snap) in
+                    // obs.onNext
+                    guard snap.exists() else {
+                        print("Snapshot not exist?")
+                        return
+                    }
+                    
+                    guard let messageDict = snap.value as? [String: Any] else {
+                        return
+                    }
+                    
+                    let message = self.parseMessage(
+                        from: messageDict,
+                        withMessId: snap.key)
+                    if message != nil {
+                        obs.onNext(message!)
+                    }
+                    
+                }, withCancel: { (error) in
+                    // obs.onError
+                    obs.onError(error)
+                })
+            
+            return Disposables.create { [unowned self] in
+                self.ref.child("messages/\(conversationId)")
+                    .removeObserver(withHandle: dbRequest)
+            }
+        }
+    }
+    
     func loadMessages(of conversationId: String) -> Observable<[Message]> {
+        self.currentConversationId = conversationId
         return Observable.create { [unowned self] (observer) in
             let dbRequest = self.ref
                 .child("messages/\(conversationId)")
@@ -37,8 +86,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                     
                     // Iterate over the messages
                     guard snapshot.exists() else {
-                        print("Snapshot not exist")
                         observer.onNext([])
+                        observer.onCompleted()
                         return
                     }
 
@@ -58,12 +107,14 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                     }
 
                     observer.onNext(messages)
+                    observer.onCompleted()
                 }, withCancel: { (error) in
                     observer.onError(error)
                 })
             
             
             return Disposables.create {
+                self.currentConversationId = nil
                 self.ref.child("conversations/\(conversationId)/messages")
                     .removeObserver(withHandle: dbRequest)
             }
@@ -148,8 +199,6 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                             items.append(item!)
                         }
                     }
-                    
-                    print(items.count)
                     obs.onNext(items)
                 }, withCancel: { (error) in
                     obs.onError(error)
@@ -225,7 +274,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
 
         var data = [String : String]()
         data["content"] = messageDict["content"] as? String
-        data["at-time"] = messageDict["at-time"] as? String
+        data["at-time"] = "\(messageDict["at-time"]!)"
         data["sent-by"] = messageDict["sent-by"] as? String
         
         if withMessId != nil {
@@ -290,8 +339,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     }
     
     private func mapToJson(message: Message) -> [String : Any] {
-        var res = [String : String]()
-        res["at-time"] = message.data["at-time"]
+        var res = [String : Any]()
+        res["at-time"] = ServerValue.timestamp()
         res["sent-by"] = message.data["sent-by"]
         res["type"] = message.data["type"]
         res["content"] = message.data["content"]

@@ -138,6 +138,8 @@
 		14A239DA214BC6A20027743D /* PickMediaVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14A239D8214BC6A20027743D /* PickMediaVC.xib */; };
 		14A239DC214BC6EF0027743D /* PickMediaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239DB214BC6EF0027743D /* PickMediaViewModel.swift */; };
 		14A239DE214BC78F0027743D /* PickMediaDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239DD214BC78F0027743D /* PickMediaDelegate.swift */; };
+		14B7BFEC2151EBFA00236C3D /* ObserveNextMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B7BFEB2151EBFA00236C3D /* ObserveNextMessageUseCase.swift */; };
+		14B7BFEE215201A500236C3D /* ObserveNextMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
 		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
 		14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9782136561E00A31FBB /* LoginUseCase.swift */; };
@@ -281,6 +283,8 @@
 		14A239D8214BC6A20027743D /* PickMediaVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickMediaVC.xib; sourceTree = "<group>"; };
 		14A239DB214BC6EF0027743D /* PickMediaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMediaViewModel.swift; sourceTree = "<group>"; };
 		14A239DD214BC78F0027743D /* PickMediaDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMediaDelegate.swift; sourceTree = "<group>"; };
+		14B7BFEB2151EBFA00236C3D /* ObserveNextMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveNextMessageUseCase.swift; sourceTree = "<group>"; };
+		14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveNextMessageRequest.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
 		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		14CEE9782136561E00A31FBB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -495,6 +499,7 @@
 				1458BC2521475FB9005A93AD /* GetConversationLabelUseCase.swift */,
 				1458BC2721475FC9005A93AD /* GetContactNicknameUseCase.swift */,
 				1436689C2148BB7D00B2766E /* GetUserUseCase.swift */,
+				14B7BFEB2151EBFA00236C3D /* ObserveNextMessageUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -508,6 +513,7 @@
 				1458BC212147596E005A93AD /* SendMessageToUserRequest.swift */,
 				1458BC2921476249005A93AD /* GetContactNicknameRequest.swift */,
 				1458BC2B21476257005A93AD /* GetConversationLabelRequest.swift */,
+				14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -887,6 +893,7 @@
 				14461A742137E8CC0062FAC6 /* ContactRemoteSource.swift in Sources */,
 				140C33F42138D69E00DC3535 /* SeeProfileUseCase.swift in Sources */,
 				14A239D9214BC6A20027743D /* PickMediaVC.swift in Sources */,
+				14B7BFEC2151EBFA00236C3D /* ObserveNextMessageUseCase.swift in Sources */,
 				1496B9462150998200ED61CD /* _TextMessageCell.swift in Sources */,
 				14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */,
 				14CEE9822136584900A31FBB /* UserRepositoryImpl.swift in Sources */,
@@ -894,6 +901,7 @@
 				147945D3213E7FB70055CE79 /* UserLocalSource.swift in Sources */,
 				146153FE213F68570032EE95 /* AddContactUseCase.swift in Sources */,
 				142E515421421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift in Sources */,
+				14B7BFEE215201A500236C3D /* ObserveNextMessageRequest.swift in Sources */,
 				14848AD12140C84500DAA9F8 /* UnfriendUseCase.swift in Sources */,
 				14461A5821379CEC0062FAC6 /* SeeProfileVC.swift in Sources */,
 				14461A722137AD5B0062FAC6 /* ErrorTracker.swift in Sources */,

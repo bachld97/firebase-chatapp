@@ -6,6 +6,7 @@ protocol SeeConversationDisplayLogic : class {
     func clearText()
     func goPickMedia()
     func onNewData(items: [MessageItem])
+    func onNewSingleData(item: MessageItem)
 }
 
 class SeeConversationViewModel : ViewModelDelegate {
@@ -29,6 +30,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let getConversationLabelUseCase = GetConversationLabelUseCase()
     private let getUserUseCase = GetUserUseCase()
     private let getContactNicknameUseCase = GetContactNicknameUseCase()
+    private let observeNextMessageUseCase = ObserveNextMessageUseCase()
 
     init(displayLogic: SeeConversationDisplayLogic, contactItem: ContactItem) {
         self.displayLogic = displayLogic
@@ -81,7 +83,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                             .do(onNext: { [unowned self] (messages) in
                                 let messageItems = self.convert(messages: messages, user: user)
                                 self.displayLogic?.onNewData(items: messageItems)
-                                // self.handleMessages(messages: messages, user: user)
+                                self.observeNextMessage(fromLastId: messageItems.first?.messageId)
                             })
                     }
                     .trackError(errorTracker)
@@ -94,10 +96,18 @@ class SeeConversationViewModel : ViewModelDelegate {
             .flatMap { [unowned self] (_) -> Driver<Bool> in
                 return self.getUserUseCase.execute(request: ())
                     .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        guard !self.textMessageContent.value
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                            .isEmpty else {
+                                return Observable.just(false)
+                        }
                         
                         let message = self.parseTextMessage(user)
                         
                         self.displayLogic?.clearText()
+                        self.textMessageContent.accept("")
+                        
+                        self.displayLogic?.onNewSingleData(item: self.convert(localMessage: message))
                         
                         return self.sendMessageToUserUseCase
                             .execute(request: SendMessageToUserRequest(
@@ -142,7 +152,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                             .do(onNext: { [unowned self] (messages) in
                                 let messageItems = self.convert(messages: messages, user: user)
                                 self.displayLogic?.onNewData(items: messageItems)
-                                // self.handleMessages(messages: messages, user: user)
+                                self.observeNextMessage(fromLastId: messageItems.first?.messageId)
                             })
                     }
                     .trackError(errorTracker)
@@ -163,6 +173,10 @@ class SeeConversationViewModel : ViewModelDelegate {
                         
                         let message = self.parseTextMessage(user)
                         self.displayLogic?.clearText()
+                        self.textMessageContent.accept("")
+                        
+                        self.displayLogic?.onNewSingleData(item: self.convert(localMessage: message))
+                        
                         return self.sendMessageUseCase
                             .execute(request: SendMessageRequest(
                                 message: message,
@@ -212,13 +226,45 @@ class SeeConversationViewModel : ViewModelDelegate {
             items: items.asDriverOnErrorJustComplete())
     }
     
+    private func observeNextMessage(fromLastId lastId: String?) {
+        self.getUserUseCase
+            .execute(request: ())
+            .flatMap { [unowned self] (user) in
+                return self.observeNextMessageUseCase
+                    .execute(request: ObserveNextMessageRequest(fromLastId: lastId))
+                    .map { (message) -> (Message, User) in
+                        return (message, user)
+                    }
+                    .do(onNext: { [unowned self] (mess, user) in
+                        let item = self.convert(messages: [mess], user: user).first
+                        if item != nil {
+                            self.displayLogic?.onNewSingleData(item: item!)
+                        }
+                    })
+                    // TODO: trackError
+                    .asDriverOnErrorJustComplete()
+            }
+            .asDriverOnErrorJustComplete()
+            .drive()
+            .disposed(by: self.disposeBag)
+    }
+    
     private func parseImageMessage(_ user: User, _ url: URL) -> Message {
         var data = [String : String]()
         data["content"] = url.path
         data["type"] = "image"
         data["sent-by"] = user.userId
-        data["at-time"] = getTime()
         return Message(type: .image, data: data)
+    }
+    
+    private func convert(localMessage: Message) -> MessageItem {
+        // TODO: How to handle id in this case?
+        switch localMessage.type {
+        case .image:
+            return MessageItem(messageType: .imageMe, messageId: "", messageData: localMessage.data, isSending: true)
+        case .text:
+            return MessageItem(messageType: .textMe, messageId: "", messageData: localMessage.data, isSending: true)
+        }
     }
     
     private func convert(messages: [Message], user: User) -> [MessageItem] {
@@ -278,12 +324,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                 .trimmingCharacters(in: .whitespacesAndNewlines)
         data["type"] = "text"
         data["sent-by"] = user.userId
-        data["at-time"] = getTime()
         return Message(type: .text, data: data)
-    }
-    
-    private func getTime() -> String {
-        return "123456"
     }
 }
 
