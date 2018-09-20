@@ -1,6 +1,7 @@
 import RxSwift
 
 protocol ConversationRepository {
+    
     func loadChatHistory() -> Observable<[Conversation]>
     func loadMessages(with contact: Contact) -> Observable<[Message]>
     func loadMessages(of conversationId: String) -> Observable<[Message]>
@@ -10,6 +11,8 @@ protocol ConversationRepository {
     func observeNextMessage(fromLastId lastId: String?) -> Observable<Message>
     func getConversationLabel(conversation: Conversation) -> Observable<String>
     func getContactNickname(contact: Contact) -> Observable<String>
+
+    func persistSendingMessage(message: Message) -> Observable<Message>
 }
 
 class ConversationRepositoryFactory {

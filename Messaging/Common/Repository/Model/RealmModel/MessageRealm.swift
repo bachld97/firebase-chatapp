@@ -13,7 +13,7 @@ class MessageRealm: Object {
         return "messageId"
     }
     
-    static func from(message: Message, conversationId: String) -> MessageRealm {
+    static func from(_ message: Message, with conversationId: String) -> MessageRealm {
         let messageRealm = MessageRealm()
         messageRealm.messageId = message.data["mess-id"]!
         messageRealm.sentBy = message.data["sent-by"]!

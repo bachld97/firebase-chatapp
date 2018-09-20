@@ -51,10 +51,11 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                         return
                     }
                     
-                    guard let messageDict = snap.value as? [String: Any] else {
+                    guard var messageDict = snap.value as? [String: Any] else {
                         return
                     }
                     
+                    messageDict["conversation-id"] = conversationId
                     let message = self.parseMessage(
                         from: messageDict,
                         withMessId: snap.key)
@@ -68,6 +69,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                 })
             
             return Disposables.create { [unowned self] in
+                self.currentConversationId = nil
                 self.ref.child("messages/\(conversationId)")
                     .removeObserver(withHandle: dbRequest)
             }
@@ -113,7 +115,6 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             
             
             return Disposables.create {
-                self.currentConversationId = nil
                 self.ref.child("conversations/\(conversationId)/messages")
                     .removeObserver(withHandle: dbRequest)
             }
@@ -272,6 +273,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         
 
         var data = [String : String]()
+        data["conversation-id"] = messageDict["conversation-id"] as? String
         data["content"] = messageDict["content"] as? String
         data["at-time"] = "\(messageDict["at-time"]!)"
         data["sent-by"] = messageDict["sent-by"] as? String

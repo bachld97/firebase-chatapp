@@ -7,4 +7,3 @@ enum MessageType {
     case text
     case image
 }
-

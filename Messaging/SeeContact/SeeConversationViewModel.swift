@@ -26,7 +26,8 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let getUserUseCase = GetUserUseCase()
     private let getContactNicknameUseCase = GetContactNicknameUseCase()
     private let observeNextMessageUseCase = ObserveNextMessageUseCase()
-
+    private let persistSendingMessageUseCase = PersistSendingMessageUseCase()
+    
     init(displayLogic: SeeConversationDisplayLogic, contactItem: ContactItem) {
         self.displayLogic = displayLogic
         self.contactItem = contactItem
@@ -102,7 +103,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                         self.displayLogic?.clearText()
                         self.textMessageContent.accept("")
                         
-                        self.displayLogic?.onNewSingleData(item: self.convert(localMessage: message))
+                        self.handleSend(localMessage: message, withTracker: errorTracker)
                         
                         return self.sendMessageToUserUseCase
                             .execute(request: SendMessageToUserRequest(
@@ -169,7 +170,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                         self.displayLogic?.clearText()
                         self.textMessageContent.accept("")
                         
-                        self.displayLogic?.onNewSingleData(item: self.convert(localMessage: message))
+                        self.handleSend(localMessage: message, withTracker: errorTracker)
                         
                         return self.sendMessageUseCase
                             .execute(request: SendMessageRequest(
@@ -204,8 +205,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                     .flatMap { [unowned self] (user) -> Observable<Bool> in
                         
                         let message = self.parseImageMessage(user, url)
-                        
-                        self.displayLogic?.onNewSingleData(item: self.convert(localMessage: message))
+                        self.handleSend(localMessage: message, withTracker: errorTracker)
                         
                         return self.sendMessageUseCase
                             .execute(request: SendMessageRequest(
@@ -221,6 +221,19 @@ class SeeConversationViewModel : ViewModelDelegate {
 
         return Output(
             error: errorTracker.asDriver())
+    }
+    
+    private func handleSend(localMessage: Message, withTracker errorTracker: ErrorTracker) {
+        let request = PersistSendingMessageRequest(message: localMessage)
+        self.persistSendingMessageUseCase
+            .execute(request: request)
+            .do(onNext: { [unowned self] (message) in
+                self.displayLogic?.onNewSingleData(item: self.convert(localMessage: localMessage))
+            })
+            .trackError(errorTracker)
+            .asDriverOnErrorJustComplete()
+            .drive()
+            .disposed(by: self.disposeBag)
     }
     
     private func observeNextMessage(fromLastId lastId: String?, withTracker errorTracker: ErrorTracker) {

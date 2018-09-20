@@ -29,7 +29,7 @@ class MessageCellConfigurator {
         // Assume we do not erase it
         let localId = item.messageData["local-id"] ?? ""
         
-        let index = items.lastIndex(where: { (other) in
+        let index = items.index(where: { (other) in
             let otherId = other.messageData["local-id"]
             
             guard otherId != nil else {

@@ -1,6 +1,8 @@
 import RxSwift
 
 class ConversationRepositoryImpl : ConversationRepository {
+    private var conversationId: String?
+    
     func sendMessage(request: SendMessageRequest) -> Observable<Bool> {
         return remoteSource.sendMessage(message: request.message, to: request.conversationId)
     }
@@ -18,6 +20,17 @@ class ConversationRepositoryImpl : ConversationRepository {
                     return self.remoteSource
                         .sendMessage(message: request.message, from: user, to: request.toUser)
             }
+        }
+    }
+    
+    func persistSendingMessage(message: Message) -> Observable<Message> {
+        return Observable.deferred { [unowned self] in
+            guard let conversationId = self.conversationId else {
+                return Observable.just(message)
+            }
+            
+            return self.localSource
+                .persistMessage(message, with: conversationId)
         }
     }
     
@@ -60,7 +73,6 @@ class ConversationRepositoryImpl : ConversationRepository {
                         return Observable.just(conversation.nickname[myString]!)
                     } else {
                         return Observable.just("Group chat")
-                        // return Observable.just(conversation.conversationLabel)
                     }
             }
         }
@@ -104,8 +116,12 @@ class ConversationRepositoryImpl : ConversationRepository {
                         return Observable.error(SessionExpireError())
                     }
                     
+                    let uid = [user.userId, contact.userId].sorted()
+                        .joined(separator: " ")
+                   self.conversationId = uid
+                    
                     return self.remoteSource
-                        .loadMessages(of: user, with: contact)
+                        .loadMessages(of: uid)
             }
         }
     }
@@ -114,14 +130,25 @@ class ConversationRepositoryImpl : ConversationRepository {
         return Observable.deferred { [unowned self] in
             return self.remoteSource
                 .observeNextMessage(fromLastId: lastId)
+                .flatMap { [unowned self] (message) -> Observable<Message> in
+                    guard let convId = self.conversationId else {
+                            return Observable.just(message)
+                    }
+                    
+                    return self.localSource
+                        .persistMessage(message, with: convId)
+            }
         }
     }
     
     func loadMessages(of conversationId: String) -> Observable<[Message]> { 
         return Observable.deferred {
-            
+            self.conversationId = conversationId
             return self.remoteSource
                 .loadMessages(of: conversationId)
+                .flatMap { [unowned self] (messages) in
+                    self.localSource.persistMessages(messages, with: conversationId)
+            }
         }
     }
 }
