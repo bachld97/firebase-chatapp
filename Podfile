@@ -6,6 +6,7 @@ target 'Messaging' do
 	pod 'IQKeyboardManagerSwift'
 	pod 'RxSwift',	'~> 4.0'
 	pod 'RxDataSources'
+	pod 'RealmSwift'
 	pod 'RxCocoa', 	'~> 4.0'
 	pod 'RxGesture'
 	pod 'Toast'

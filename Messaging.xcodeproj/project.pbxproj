@@ -140,6 +140,8 @@
 		14A239DE214BC78F0027743D /* PickMediaDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239DD214BC78F0027743D /* PickMediaDelegate.swift */; };
 		14B7BFEC2151EBFA00236C3D /* ObserveNextMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B7BFEB2151EBFA00236C3D /* ObserveNextMessageUseCase.swift */; };
 		14B7BFEE215201A500236C3D /* ObserveNextMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */; };
+		14C0A8F0215345B50026D775 /* MessageRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0A8EF215345B50026D775 /* MessageRealm.swift */; };
+		14C0A8F2215347980026D775 /* UUIDGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0A8F1215347980026D775 /* UUIDGenerator.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
 		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
 		14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9782136561E00A31FBB /* LoginUseCase.swift */; };
@@ -285,6 +287,8 @@
 		14A239DD214BC78F0027743D /* PickMediaDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMediaDelegate.swift; sourceTree = "<group>"; };
 		14B7BFEB2151EBFA00236C3D /* ObserveNextMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveNextMessageUseCase.swift; sourceTree = "<group>"; };
 		14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveNextMessageRequest.swift; sourceTree = "<group>"; };
+		14C0A8EF215345B50026D775 /* MessageRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRealm.swift; sourceTree = "<group>"; };
+		14C0A8F1215347980026D775 /* UUIDGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDGenerator.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
 		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		14CEE9782136561E00A31FBB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -563,6 +567,7 @@
 		1451585821350C8F0038CE74 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				14C0A8EE215345A90026D775 /* RealmModel */,
 				14CEE97121363C2200A31FBB /* User.swift */,
 				14461A652137A3C60062FAC6 /* Contact.swift */,
 				140C33F72138E1A400DC3535 /* Conversation.swift */,
@@ -658,6 +663,14 @@
 			path = PickMedia;
 			sourceTree = "<group>";
 		};
+		14C0A8EE215345A90026D775 /* RealmModel */ = {
+			isa = PBXGroup;
+			children = (
+				14C0A8EF215345B50026D775 /* MessageRealm.swift */,
+			);
+			path = RealmModel;
+			sourceTree = "<group>";
+		};
 		14CEE975213655E600A31FBB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -670,6 +683,7 @@
 				1439D99621367FD30094C12C /* MyErrors.swift */,
 				14461A712137AD5B0062FAC6 /* ErrorTracker.swift */,
 				147945D0213E78CD0055CE79 /* Utils.swift */,
+				14C0A8F1215347980026D775 /* UUIDGenerator.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -808,6 +822,8 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
 				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
@@ -824,6 +840,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
@@ -858,6 +876,7 @@
 				14615407213F68910032EE95 /* AddContactVC.swift in Sources */,
 				1447A9702146765600F7E1CF /* SendMessageRequest.swift in Sources */,
 				1439D9A021369FAE0094C12C /* SignupVC.swift in Sources */,
+				14C0A8F2215347980026D775 /* UUIDGenerator.swift in Sources */,
 				14A239CF214B4EA00027743D /* UploadAvatarUseCase.swift in Sources */,
 				142E515621421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift in Sources */,
 				140C340C2139242000DC3535 /* ChangePassUseCase.swift in Sources */,
@@ -959,6 +978,7 @@
 				14CEE9802136584000A31FBB /* UserRepository.swift in Sources */,
 				1485C31E214FA30E003568B9 /* ImageMeMessageCell.swift in Sources */,
 				14182371213507E500DC0E98 /* ViewFor.swift in Sources */,
+				14C0A8F0215345B50026D775 /* MessageRealm.swift in Sources */,
 				1496B93C21508DA900ED61CD /* Reusable.swift in Sources */,
 				14CEE97221363C2200A31FBB /* User.swift in Sources */,
 				1458BC2E2147A611005A93AD /* TextMessageCell.swift in Sources */,

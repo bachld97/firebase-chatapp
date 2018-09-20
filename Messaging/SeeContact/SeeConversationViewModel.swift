@@ -291,7 +291,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     }
     
     private func parseTextMessage(_ user: User) -> Message {
-        let localIdentifier = String(describing: UUID.init())
+        let localIdentifier = UUIDGenerator.newUUID()
         var data = [String : String]()
         data["local-id"] = localIdentifier
         data["content"] =

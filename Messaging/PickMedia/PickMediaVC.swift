@@ -154,7 +154,7 @@ extension PickMediaVC {
         }
         
         let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let filename = String(describing: UUID()) + ".png"
+        let filename = UUIDGenerator.newUUID() + ".png"
         let url = URL(fileURLWithPath: path).appendingPathComponent(filename)
         do {
             try data.write(to: url)
