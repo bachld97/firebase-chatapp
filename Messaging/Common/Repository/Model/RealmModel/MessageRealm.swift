@@ -15,7 +15,7 @@ class MessageRealm: Object {
     
     static func from(_ message: Message, with conversationId: String) -> MessageRealm {
         let messageRealm = MessageRealm()
-        messageRealm.messageId = message.data["mess-id"]!
+        messageRealm.messageId = message.data["mess-id"] ?? message.data["local-id"]!
         messageRealm.sentBy = message.data["sent-by"]!
         messageRealm.content = message.data["content"]!
         messageRealm.atTime = Int64(message.data["at-time"]!)!

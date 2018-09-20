@@ -33,10 +33,29 @@ class ConversationRealmSource : ConversationLocalSource {
     func persistMessage(_ message: Message, with conversationId: String) -> Observable<Message> {
         return Observable.deferred {
             let realm = try Realm()
-            try realm.write {
-                realm.add(MessageRealm.from(message, with: conversationId), update: true)
-            }
+            let localMessage = realm.objects(MessageRealm.self)
+                .filter("conversationId == %@ and messageId == %@",
+                        conversationId, message.data["local-id"]!)
+                .first
             
+            try realm.write {
+                guard let mess = localMessage else {
+                    realm.add(MessageRealm.from(message, with: conversationId), update: true)
+                    return
+                }
+                
+                // Delete mess
+                let newMess = MessageRealm()
+                newMess.atTime = mess.atTime
+                newMess.content = mess.content
+                newMess.conversationId = mess.conversationId
+                newMess.sentBy = mess.sentBy
+                newMess.type = mess.type
+                newMess.messageId = message.data["mess-id"]!
+                
+                realm.delete(mess)
+                realm.add(newMess)
+            }
             return Observable.just(message)
         }
     }

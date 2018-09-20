@@ -263,6 +263,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         var data = [String : String]()
         data["local-id"] = url.lastPathComponent
         data["content"] = url.path
+        data["at-time"] = self.getTime()
         data["type"] = "image"
         data["sent-by"] = user.userId
         return Message(type: .image, data: data)
@@ -311,8 +312,13 @@ class SeeConversationViewModel : ViewModelDelegate {
             self.textMessageContent.value
                 .trimmingCharacters(in: .whitespacesAndNewlines)
         data["type"] = "text"
+        data["at-time"] = self.getTime()
         data["sent-by"] = user.userId
         return Message(type: .text, data: data)
+    }
+    
+    private func getTime() -> String {
+        return "123435546751"
     }
 }
 
