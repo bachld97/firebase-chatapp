@@ -40,11 +40,15 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                 // Break
                 return Disposables.create()
             }
-            
-            let dbRequest = self.ref.child("messages/\(conversationId)")
+
+            let dbQuery = self.ref.child("messages/\(conversationId)")
                 .queryOrderedByKey()
-                .queryStarting(atValue: lastId)
-                .queryLimited(toLast: 1)
+
+            if lastId != nil {
+                dbQuery.queryStarting(atValue: lastId)
+            }
+            
+            let dbRequest = dbQuery.queryLimited(toLast: 1)
                 .observe(.childAdded, with: { (snap) in
                     // obs.onNext
                     guard snap.exists() else {
@@ -78,6 +82,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     
     func loadMessages(of conversationId: String) -> Observable<[Message]> {
         self.currentConversationId = conversationId
+        print("Fetch")
         return Observable.create { [unowned self] (observer) in
             let dbRequest = self.ref
                 .child("messages/\(conversationId)")

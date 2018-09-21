@@ -22,8 +22,34 @@ class ConversationRealmSource : ConversationLocalSource {
         return Observable.deferred {
             let realm = try Realm()
             try realm.write {
-                messages.forEach { (mess) in
-                    realm.add(MessageRealm.from(mess, with: conversationId), update: true)
+                messages.forEach { (message) in
+                    guard let localId = message.data["local-id"] else {
+                        realm.add(MessageRealm.from(message, with: conversationId), update: true)
+                        return
+                    }
+                    
+                    let localMessage = realm.objects(MessageRealm.self)
+                        .filter("conversationId == %@ and messageId == %@",
+                                conversationId, localId)
+                        .first
+                    
+                    
+                    guard let mess = localMessage else {
+                        realm.add(MessageRealm.from(message, with: conversationId), update: true)
+                        return
+                    }
+                    
+                    // Delete mess
+                    let newMess = MessageRealm()
+                    newMess.atTime = mess.atTime
+                    newMess.content = mess.content
+                    newMess.conversationId = mess.conversationId
+                    newMess.sentBy = mess.sentBy
+                    newMess.type = mess.type
+                    newMess.messageId = message.data["mess-id"]!
+                    
+                    realm.delete(mess)
+                    realm.add(newMess)
                 }
             }
             return Observable.just(messages)
@@ -33,14 +59,24 @@ class ConversationRealmSource : ConversationLocalSource {
     func persistMessage(_ message: Message, with conversationId: String) -> Observable<Message> {
         return Observable.deferred {
             let realm = try Realm()
-            let localMessage = realm.objects(MessageRealm.self)
-                .filter("conversationId == %@ and messageId == %@",
-                        conversationId, message.data["local-id"]!)
-                .first
-            
             try realm.write {
+                let localMessage = realm.objects(MessageRealm.self)
+                    .filter("conversationId == %@ and messageId == %@",
+                            conversationId, message.data["local-id"]!)
+                    .first
+            
+            
                 guard let mess = localMessage else {
-                    realm.add(MessageRealm.from(message, with: conversationId), update: true)
+                    // Check ID now
+                    let localMessage2 = realm.objects(MessageRealm.self)
+                        .filter("conversationId == %@ and messageId == %@",
+                                conversationId, message.data["mess-id"]!)
+                        .first
+                    
+                    guard localMessage2 != nil else {
+                        realm.add(MessageRealm.from(message, with: conversationId), update: true)
+                        return
+                    }
                     return
                 }
                 
@@ -48,13 +84,16 @@ class ConversationRealmSource : ConversationLocalSource {
                 let newMess = MessageRealm()
                 newMess.atTime = mess.atTime
                 newMess.content = mess.content
+                
+                print("DEBUG_CONTENT:" +  mess.content)
+                
                 newMess.conversationId = mess.conversationId
                 newMess.sentBy = mess.sentBy
                 newMess.type = mess.type
                 newMess.messageId = message.data["mess-id"]!
                 
                 realm.delete(mess)
-                realm.add(newMess)
+                realm.add(newMess, update: true)
             }
             return Observable.just(message)
         }

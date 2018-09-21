@@ -141,14 +141,55 @@ class ConversationRepositoryImpl : ConversationRepository {
         }
     }
     
+    private func mergeMessages(_ localMessages: [Message], _ remoteMessages: [Message]) -> [Message] {
+        var res = localMessages
+        remoteMessages.forEach { (message) in
+            let index = res.firstIndex(where: { (m) in
+                return message.data["mess-id"]!
+                    .elementsEqual(m.data["mess-id"]!) ||
+                    message.data["local-id"]?
+                    .elementsEqual(m.data["mess-id"]!) ?? false
+            })
+            
+            if index != nil {
+                var newData = res[index!].data
+                newData["mess-id"] = message.data["mess-id"]
+                // newData["from-network"] = "1"
+                let type = res[index!].type
+                res[index!] = Message(type: type, data: newData)
+            } else {
+                res.append(message)
+            }
+        }
+        
+        return res.sorted(by: {
+            return $0.compareWith($1)
+        })
+    }
+    
     func loadMessages(of conversationId: String) -> Observable<[Message]> { 
         return Observable.deferred {
             self.conversationId = conversationId
-            return self.remoteSource
-                .loadMessages(of: conversationId)
-                .flatMap { [unowned self] (messages) in
-                    self.localSource.persistMessages(messages, with: conversationId)
+        
+            let localStream = Observable
+                .just([])
+                .concat(self.localSource.loadMessages(of: conversationId))
+
+            let remoteStream = Observable
+                .just([])
+                .concat(self.remoteSource.loadMessages(of: conversationId))
+            
+            let finalStream = Observable
+                .combineLatest(localStream, remoteStream) { [unowned self] in
+                return self.mergeMessages($0, $1)
+            }
+            
+            return finalStream
+                .flatMap { [unowned self]  (messages) in
+                    self.localSource
+                        .persistMessages(messages, with: conversationId)
             }
         }
     }
 }
+

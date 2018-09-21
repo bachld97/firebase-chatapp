@@ -135,25 +135,29 @@ class SeeConversationViewModel : ViewModelDelegate {
     func transfromWithConversationItem(input: Input, conversationItem: ConversationItem) -> Output {
         let errorTracker = ErrorTracker()
         input.trigger
-            .flatMap { [unowned self] (_) -> Driver<[Message]> in
+            .flatMap { [unowned self] (_) -> Driver<[MessageItem]> in
                 let request = LoadConvoFromConvoIdRequest(convoId: conversationItem.conversation.id)
                 
                 return self.getUserUseCase
                     .execute(request: ())
-                    .flatMap { [unowned self] (user) -> Observable<[Message]> in
+                    .flatMap { [unowned self] (user) -> Observable<[MessageItem]> in
                         
                         return self.loadConvoFromConvoIdUseCase
                             .execute(request: request)
-                            .do(onNext: { [unowned self] (messages) in
+                            .do()
+                            .flatMap { [unowned self] (messages) -> Observable<[MessageItem]> in
                                 let messageItems = self.convert(messages: messages, user: user)
-                                self.displayLogic?.onNewData(items: messageItems)
                                 self.observeNextMessage(fromLastId: messageItems.first?.messageId, withTracker: errorTracker)
-                            })
+                                return Observable.just(messageItems)
+                        }
                     }
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             }
-            .drive()
+            .drive(onNext: { [unowned self] (items) in
+                print("Update UI: \(Thread.isMainThread)")
+                self.displayLogic?.onNewData(items: items)
+            })
             .disposed(by: self.disposeBag)
         
         input.sendMessTrigger
@@ -261,6 +265,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     private func parseImageMessage(_ user: User, _ url: URL) -> Message {
         var data = [String : String]()
+        data["mess-id"] = url.lastPathComponent
         data["local-id"] = url.lastPathComponent
         data["content"] = url.path
         data["at-time"] = self.getTime()
@@ -271,7 +276,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     private func convert(localMessage: Message) -> MessageItem {
         let localData = localMessage.data
-        let messId = localData["local-id"]!
+        let messId = localData["mess-id"]!
         switch localMessage.type {
         case .image:
             return MessageItem(messageType: .imageMe, messageId: messId, messageData: localData, isSending: true)
@@ -307,6 +312,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     private func parseTextMessage(_ user: User) -> Message {
         let localIdentifier = UUIDGenerator.newUUID()
         var data = [String : String]()
+        data["mess-id"] = localIdentifier
         data["local-id"] = localIdentifier
         data["content"] =
             self.textMessageContent.value

@@ -27,16 +27,15 @@ class MessageCellConfigurator {
     
     func onNewSingleItem(_ item: MessageItem) {
         // Assume we do not erase it
-        let localId = item.messageData["local-id"] ?? ""
+        let localId = item.messageData["local-id"] ?? "0"
+        let id = item.messageData["mess-id"] ?? "0"
         
         let index = items.index(where: { (other) in
-            let otherId = other.messageData["local-id"]
+            let otherLocalId = other.messageData["local-id"] ?? "1"
+            let otherId = other.messageData["mess-id"] ?? "1"
             
-            guard otherId != nil else {
-                return false
-            }
-            
-            return otherId!.elementsEqual(localId)
+            return otherLocalId.elementsEqual(localId) ||
+                otherId.elementsEqual(id)
         })
         
         if index != nil {
@@ -55,10 +54,11 @@ class MessageCellConfigurator {
     }
     
     func setItems(_ items: [MessageItem]) {
-        let changes = diff(old: self.items, new: items)
+//        let changes = diff(old: self.items, new: items)
         self.items = items
         self.strongDataSource?.updateItem(self.items)
-        self.tableView?.reload(changes: changes, completion: {_ in })
+        self.tableView?.reloadData()
+        // self.tableView?.reload(changes: changes, completion: {_ in })
     }
     
     init(tableView: UITableView) {
