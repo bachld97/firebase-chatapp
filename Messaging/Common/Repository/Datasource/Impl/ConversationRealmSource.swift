@@ -88,6 +88,7 @@ class ConversationRealmSource : ConversationLocalSource {
                 newMess.sentBy = mess.sentBy
                 newMess.type = mess.type
                 newMess.messageId = message.data["mess-id"]!
+                newMess.isSending = message.isSending
                 
                 realm.delete(mess)
                 realm.add(newMess, update: true)

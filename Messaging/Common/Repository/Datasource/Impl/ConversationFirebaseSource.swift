@@ -4,9 +4,11 @@ import FirebaseStorage
 
 class ConversationFirebaseSource: ConversationRemoteSource {
 
-    
     var ref: DatabaseReference!
     private var currentConversationId: String?
+
+		private let disposeBag = DisposeBag()
+		private let messagePublish = PublishSubject<String>()
     
     init() {
         ref = Database.database().reference()
@@ -79,6 +81,52 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             }
         }
     }
+
+		func observeNextMessage(for user: User, fromLastId lastId: String?) -> Observable<Message> {
+        return Observable.create { [unowned self] (obs) in
+            guard let conversationId = self.currentConversationId else {
+                return Disposables.create()
+            }
+
+            let dbQuery = self.ref.child("messages/\(conversationId)")
+                .queryOrderedByKey()
+
+            if lastId != nil {
+                dbQuery.queryStarting(atValue: lastId)
+            }
+            
+            let dbRequest = dbQuery.queryLimited(toLast: 1)
+                .observe(.childAdded, with: { (snap) in
+                    // obs.onNext
+                    guard snap.exists() else {
+                        return
+                    }
+                    
+                    guard var messageDict = snap.value as? [String: Any] else {
+                        return
+                    }
+                    
+                    messageDict["conversation-id"] = conversationId
+                    let message = self.parseMessage(
+                        from: messageDict,
+                        withMessId: snap.key)
+                    if message != nil {
+                        obs.onNext(message!)
+                    }
+                    
+                }, withCancel: { (error) in
+                    obs.onError(error)
+                })
+            
+            return Disposables.create { [unowned self] in
+                self.currentConversationId = nil
+                self.ref.child("messages/\(conversationId)")
+                    .removeObserver(withHandle: dbRequest)
+            }
+        }
+    }
+
+
     
     func loadMessages(of conversationId: String) -> Observable<[Message]> {
         self.currentConversationId = conversationId
@@ -131,10 +179,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             
             self.ref.child("conversations/\(uid)")
                 .observeSingleEvent(of: .value, with: { [unowned self] (snapshot) in
-                    // if snapshot !exist, create that node
-                    // else just proceed
                     if !snapshot.exists() {
-                        // Create
                         var convDict = [String : Any]()
                         convDict["is-private"] = true
                         
@@ -159,7 +204,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                     obs.onNext(true)
                     obs.onCompleted()
                 }, withCancel: { (error) in
-                    // Ignore
+                    obs.onError(error)
                 })
             
             return Disposables.create()

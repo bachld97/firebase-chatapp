@@ -5,6 +5,7 @@ class MessageCellConfigurator {
     private var strongDataSource: BaseDatasource<BaseMessageCell, MessageItem>?
     private weak var tableView: UITableView?
     
+    
     private let configureCell = { (cell: BaseMessageCell, item: MessageItem) -> BaseMessageCell in
         cell.item = item
         return cell
@@ -39,11 +40,6 @@ class MessageCellConfigurator {
         })
         
         if index != nil {
-            // updates
-            items[index!].isSending = false
-            strongDataSource?.updateItem(at: index!, with: items[index!])
-            let indexPath = NSIndexPath(row: index!, section: 0)
-            self.tableView?.reloadItemsAtIndexPaths([indexPath as IndexPath], animationStyle: .automatic)
             return
         }
         

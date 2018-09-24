@@ -125,18 +125,34 @@ class ConversationRepositoryImpl : ConversationRepository {
             }
         }
     }
-    
+
     func observeNextMessage(fromLastId lastId: String?) -> Observable<Message> {
         return Observable.deferred { [unowned self] in
-            return self.remoteSource
-                .observeNextMessage(fromLastId: lastId)
-                .flatMap { [unowned self] (message) -> Observable<Message> in
-                    guard let convId = self.conversationId else {
-                            return Observable.just(message)
+            return self.userRepository
+                .getUser()
+                .take(1)
+                .flatMap { [unowned self] (user) -> Observable<Message> in
+                    guard let user = user else {
+                        return Observable.error(SessionExpireError())
                     }
                     
-                    return self.localSource
-                        .persistMessage(message, with: convId)
+                    return self.remoteSource
+                        .observeNextMessage(for: user, fromLastId: lastId)
+                        .flatMap { [unowned self] (message) -> Observable<Message> in
+                            let newMessage: Message = message
+                            // if message.data["sent-by"]!.elementsEqual(user.userId) {
+                            //     newMessage = Message(type: message.type, data: message.data, isSending: true)
+                            // } else {
+                            //     newMessage = message
+                            // }
+                            
+                            guard let convId = self.conversationId else {
+                                return Observable.just(newMessage)
+                            }
+                            
+                            return self.localSource
+                                .persistMessage(newMessage, with: convId)
+                    }
             }
         }
     }
@@ -154,7 +170,6 @@ class ConversationRepositoryImpl : ConversationRepository {
             if index != nil {
                 var newData = res[index!].data
                 newData["mess-id"] = message.data["mess-id"]
-                // newData["is-sending"] = "1"
                 let type = res[index!].type
                 res[index!] = Message(type: type, data: newData)
             } else {

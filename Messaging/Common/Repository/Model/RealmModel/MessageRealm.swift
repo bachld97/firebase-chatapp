@@ -23,7 +23,6 @@ class MessageRealm: Object {
         messageRealm.conversationId = conversationId
         messageRealm.type = typeToTextMap[message.type]!
         messageRealm.isSending = message.isSending
-        
         return messageRealm
     }
     

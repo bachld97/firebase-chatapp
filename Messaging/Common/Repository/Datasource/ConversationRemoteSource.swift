@@ -7,7 +7,7 @@ protocol ConversationRemoteSource {
     func sendMessage(message: Message, to conversation: String) -> Observable<Bool>
     func sendMessage(message: Message, from user: User, to contact: Contact) -> Observable<Bool>
     
-    func observeNextMessage(fromLastId lastId: String?) -> Observable<Message>
+    func observeNextMessage(for user: User, fromLastId lastId: String?) -> Observable<Message>
 //    func getConversationLabel(conversationId: String) -> Observable<String>
     func getContactNickname(user: User, contact: Contact) -> Observable<String>
 }
