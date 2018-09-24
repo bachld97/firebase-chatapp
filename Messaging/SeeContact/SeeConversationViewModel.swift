@@ -236,7 +236,6 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     private func notifyItems(with items: [MessageItem]) {
         lastMessTime = Int64(items.first?.messageData["at-time"] ?? "\(lastMessTime)") ?? lastMessTime
-        print("NotifyItems: \(items.count), \(String(describing: self.displayLogic))")
         self.displayLogic?.onNewData(items: items)
     }
     

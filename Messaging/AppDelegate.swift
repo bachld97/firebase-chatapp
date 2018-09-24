@@ -1,6 +1,7 @@
 import UIKit
 import IQKeyboardManagerSwift
 import Firebase
+import FirebaseDatabase
 import RealmSwift
 
 @UIApplicationMain
@@ -15,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         IQKeyboardManager.shared.enable = true
         FirebaseApp.configure()
+        Database.database().reference().keepSynced(false)
         
         // DEBUG: Write Database to easy-to-access location
         if TARGET_OS_SIMULATOR != 0 {

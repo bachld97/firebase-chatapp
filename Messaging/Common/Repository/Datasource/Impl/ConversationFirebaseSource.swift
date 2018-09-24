@@ -300,13 +300,26 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             return sendImageMessage(message: message, to: conversation)
         }
         
-        let jsonMessage = self.mapToJson(message: message)
-        self.ref.child("conversations/\(conversation)/last-message")
-            .setValue(jsonMessage)
-        self.ref.child("messages/\(conversation)")
-            .childByAutoId()
-            .setValue(jsonMessage)
-        return Observable.just(true)
+        return Observable.create { [unowned self] (obs) in
+            let jsonMessage = self.mapToJson(message: message)
+            
+            self.ref.child("conversations/\(conversation)/last-message")
+                .setValue(jsonMessage)
+            
+            self.ref.child("messages/\(conversation)")
+                .childByAutoId()
+                .setValue(jsonMessage, withCompletionBlock: { (error, dbRef) in
+                    print("Completion block")
+                    if error != nil {
+                        obs.onError(error!)
+                    } else {
+                        obs.onNext(true)
+                        obs.onCompleted()
+                    }
+                })
+            
+            return Disposables.create()
+        }
     }
     
     private func sendImageMessage(message: Message, to conversation: String) -> Observable<Bool> {
