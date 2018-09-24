@@ -84,9 +84,6 @@ class ConversationRealmSource : ConversationLocalSource {
                 let newMess = MessageRealm()
                 newMess.atTime = mess.atTime
                 newMess.content = mess.content
-                
-                print("DEBUG_CONTENT:" +  mess.content)
-                
                 newMess.conversationId = mess.conversationId
                 newMess.sentBy = mess.sentBy
                 newMess.type = mess.type

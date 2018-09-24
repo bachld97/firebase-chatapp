@@ -154,7 +154,7 @@ class ConversationRepositoryImpl : ConversationRepository {
             if index != nil {
                 var newData = res[index!].data
                 newData["mess-id"] = message.data["mess-id"]
-                // newData["from-network"] = "1"
+                // newData["is-sending"] = "1"
                 let type = res[index!].type
                 res[index!] = Message(type: type, data: newData)
             } else {

@@ -28,6 +28,14 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let observeNextMessageUseCase = ObserveNextMessageUseCase()
     private let persistSendingMessageUseCase = PersistSendingMessageUseCase()
     
+    /* We falsely use timestamp of last message
+     * and offset it by 1 to create timestamp
+     * of new message on local storage
+     * because we don't need time accuracy
+     * we just need to preserve order
+     */
+    private var lastMessTime: Int64 = 0
+    
     init(displayLogic: SeeConversationDisplayLogic, contactItem: ContactItem) {
         self.displayLogic = displayLogic
         self.contactItem = contactItem
@@ -61,9 +69,9 @@ class SeeConversationViewModel : ViewModelDelegate {
         }
         
         fatalError("ContactItem or ConversationItem must be not nil, or it is impossible to load conversation")
-        
     }
     
+    // TODO: Move all displayLogic interaction into drive() block.
     func transformWithContactItem(input: Input, contactItem: ContactItem) -> Output {
         let errorTracker = ErrorTracker()
         
@@ -155,8 +163,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                     .asDriverOnErrorJustComplete()
             }
             .drive(onNext: { [unowned self] (items) in
-                print("Update UI: \(Thread.isMainThread)")
-                self.displayLogic?.onNewData(items: items)
+                self.notifyItems(with: items)
             })
             .disposed(by: self.disposeBag)
         
@@ -227,6 +234,16 @@ class SeeConversationViewModel : ViewModelDelegate {
             error: errorTracker.asDriver())
     }
     
+    private func notifyItems(with items: [MessageItem]) {
+        lastMessTime = Int64(items.first?.messageData["at-time"] ?? "\(lastMessTime)") ?? lastMessTime
+        self.displayLogic?.onNewData(items: items)
+    }
+    
+    private func notifySingleItem(with item: MessageItem) {
+        self.lastMessTime = Int64(item.messageData["at-time"] ?? "\(self.lastMessTime)") ?? self.lastMessTime
+        self.displayLogic?.onNewSingleData(item: item)
+    }
+    
     private func handleSend(localMessage: Message, withTracker errorTracker: ErrorTracker) {
         let request = PersistSendingMessageRequest(message: localMessage)
         self.persistSendingMessageUseCase
@@ -252,7 +269,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                     .do(onNext: { [unowned self] (mess, user) in
                         let item = self.convert(messages: [mess], user: user).first
                         if item != nil {
-                            self.displayLogic?.onNewSingleData(item: item!)
+                            self.notifySingleItem(with: item!)
                         }
                     })
                     .trackError(errorTracker)
@@ -324,7 +341,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     }
     
     private func getTime() -> String {
-        return "123435546751"
+        return "\(lastMessTime + 1)"
     }
 }
 

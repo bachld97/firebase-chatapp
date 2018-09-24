@@ -54,11 +54,11 @@ class MessageCellConfigurator {
     }
     
     func setItems(_ items: [MessageItem]) {
-//        let changes = diff(old: self.items, new: items)
+        // let changes = diff(old: self.items, new: items)
         self.items = items
         self.strongDataSource?.updateItem(self.items)
         self.tableView?.reloadData()
-        // self.tableView?.reload(changes: changes, completion: {_ in })
+//        self.tableView?.reload(changes: changes, completion: {_ in })
     }
     
     init(tableView: UITableView) {
