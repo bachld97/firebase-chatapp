@@ -22,6 +22,8 @@ class BaseVC : UIViewController {
             self.view.makeToast(error.message, duration: 3.0, position: CSToastPositionCenter)
         } else if e is SessionExpireError {
             self.logoutWithSessionExpire()
+        } else {
+            print("Unknown error: \(e)")
         }
     }
     

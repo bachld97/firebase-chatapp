@@ -82,14 +82,12 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     
     func loadMessages(of conversationId: String) -> Observable<[Message]> {
         self.currentConversationId = conversationId
-        print("Fetch")
         return Observable.create { [unowned self] (observer) in
             let dbRequest = self.ref
                 .child("messages/\(conversationId)")
                 .queryOrderedByKey()
                 // .queryLimited(toLast: 10)
                 .observe(.value, with: { [unowned self] (snapshot) in
-                    
                     // Iterate over the messages
                     guard snapshot.exists() else {
                         observer.onNext([])

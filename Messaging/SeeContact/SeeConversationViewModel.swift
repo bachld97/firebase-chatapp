@@ -236,6 +236,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     private func notifyItems(with items: [MessageItem]) {
         lastMessTime = Int64(items.first?.messageData["at-time"] ?? "\(lastMessTime)") ?? lastMessTime
+        print("NotifyItems: \(items.count), \(String(describing: self.displayLogic))")
         self.displayLogic?.onNewData(items: items)
     }
     
@@ -288,7 +289,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         data["at-time"] = self.getTime()
         data["type"] = "image"
         data["sent-by"] = user.userId
-        return Message(type: .image, data: data)
+        return Message(type: .image, data: data, isSending: true)
     }
     
     private func convert(localMessage: Message) -> MessageItem {
@@ -306,19 +307,20 @@ class SeeConversationViewModel : ViewModelDelegate {
         var res: [MessageItem] = []
         for m in messages {
             let messid = m.data["mess-id"]!
+            let isSending = m.isSending
             switch m.type {
             case .image:
                 if m.data["sent-by"]!.elementsEqual(user.userId) {
-                    res.append(MessageItem(messageType: .imageMe, messageId: messid, messageData: m.data))
+                    res.append(MessageItem(messageType: .imageMe, messageId: messid, messageData: m.data, isSending: isSending))
                 } else {
-                    res.append(MessageItem(messageType: .image, messageId: messid, messageData: m.data))
+                    res.append(MessageItem(messageType: .image, messageId: messid, messageData: m.data, isSending: isSending))
                 }
                 
             case .text:
                 if m.data["sent-by"]!.elementsEqual(user.userId) {
-                    res.append(MessageItem(messageType: .textMe, messageId: messid, messageData: m.data))
+                    res.append(MessageItem(messageType: .textMe, messageId: messid, messageData: m.data, isSending: isSending))
                 } else {
-                    res.append(MessageItem(messageType: .text, messageId: messid, messageData: m.data))
+                    res.append(MessageItem(messageType: .text, messageId: messid, messageData: m.data, isSending: isSending))
                 }
             }
         }
@@ -337,7 +339,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         data["type"] = "text"
         data["at-time"] = self.getTime()
         data["sent-by"] = user.userId
-        return Message(type: .text, data: data)
+        return Message(type: .text, data: data, isSending: true)
     }
     
     private func getTime() -> String {

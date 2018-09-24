@@ -102,11 +102,12 @@ extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
     }
     
     func onNewData(items: [MessageItem]) {
+        print("New multiple items")
         self.configurator?.setItems(items)
     }
 
     func onNewSingleData(item: MessageItem) {
-        // Find and replace, or added if not exist
+        print("New single item")
         self.configurator?.onNewSingleItem(item)
     }
     

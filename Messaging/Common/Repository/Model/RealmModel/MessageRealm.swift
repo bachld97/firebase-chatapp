@@ -8,6 +8,7 @@ class MessageRealm: Object {
     @objc dynamic var conversationId: String = ""
     @objc dynamic var type: String = ""
     @objc dynamic var content: String = ""
+    @objc dynamic var isSending: Bool = false
     
     override static func primaryKey() -> String? {
         return "messageId"
@@ -21,6 +22,8 @@ class MessageRealm: Object {
         messageRealm.atTime = Int64(message.data["at-time"]!)!
         messageRealm.conversationId = conversationId
         messageRealm.type = typeToTextMap[message.type]!
+        messageRealm.isSending = message.isSending
+        
         return messageRealm
     }
     
@@ -30,8 +33,9 @@ class MessageRealm: Object {
         data["sent-by"] = self.sentBy
         data["content"] = self.content
         data["at-time"] = "\(self.atTime)"
+        let isSending = self.isSending
         let type: MessageType = MessageRealm.textToTypeMap[self.type]!
-        return Message(type: type, data: data)
+        return Message(type: type, data: data, isSending: isSending)
     }
     
     private static let typeToTextMap: [MessageType : String] = [
