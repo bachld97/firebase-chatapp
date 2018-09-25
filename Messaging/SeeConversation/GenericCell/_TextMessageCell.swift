@@ -3,7 +3,7 @@ import UIKit
 class _TextMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
-            self.textContent.text = item.messageData["content"]
+            self.textContent.text = item.message.getContent()
         }
     }
     

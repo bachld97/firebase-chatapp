@@ -3,28 +3,25 @@ import UIKit
 final class MessageItem : Hashable {
     
     var hashValue: Int {
-        return messageId.hashValue
+        return message.getMessageId().hashValue
     }
     
     static func == (lhs: MessageItem, rhs: MessageItem) -> Bool {
-        return lhs.messageId.elementsEqual(rhs.messageId)
+        return lhs.message.getMessageId()
+            .elementsEqual(rhs.message.getMessageId())
     }
     
-    let messageType: _MessageType
-    let messageId: String
-    let messageData: [String: String]
-    var isSending: Bool = false
+    let messageItemType: MessageItemType
+    let message: Message
     
-    init(messageType: _MessageType, messageId: String,
-         messageData: [String: String], isSending: Bool = false) {
-        self.messageType = messageType
-        self.messageId = messageId
-        self.messageData = messageData
-        self.isSending = isSending
+    
+    init(messageItemType: MessageItemType, message: Message) {
+        self.messageItemType = messageItemType
+        self.message = message
     }
 }
 
-enum _MessageType {
+enum MessageItemType {
     case text
     case textMe
     case image

@@ -27,13 +27,10 @@ class MessageRealm: Object {
     }
     
     func convert() -> Message {
-        var data = [String : String]()
-        data["mess-id"] = self.messageId
-        data["sent-by"] = self.sentBy
-        data["content"] = self.content
-        data["at-time"] = "\(self.atTime)"
-        let isSending = self.isSending
         let type: MessageType = Type.getMessageType(fromString: self.type)
-        return Message(type: type, data: data, isSending: isSending)
+        
+        return Message(type: type, convId: self.conversationId, content: self.content,
+                       atTime: "\(self.atTime)", sentBy: self.sentBy,
+                       messId: self.messageId, isSending: self.isSending)
     }
 }

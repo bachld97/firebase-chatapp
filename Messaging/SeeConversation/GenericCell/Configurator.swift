@@ -12,7 +12,7 @@ class MessageCellConfigurator {
     }
     
     private let getReuseIdentifier = { (item: MessageItem) -> String in
-        switch item.messageType {
+        switch item.messageItemType {
         case .text:
             return _TextMessageCell.reuseIdentifier
         case .textMe:
@@ -27,16 +27,8 @@ class MessageCellConfigurator {
     var items: [MessageItem] = []
     
     func onNewSingleItem(_ item: MessageItem) {
-        // Assume we do not erase it
-        let localId = item.messageData["local-id"] ?? "0"
-        let id = item.messageData["mess-id"] ?? "0"
-        
-        let index = items.index(where: { (other) in
-            let otherLocalId = other.messageData["local-id"] ?? "1"
-            let otherId = other.messageData["mess-id"] ?? "1"
-            
-            return otherLocalId.elementsEqual(localId) ||
-                otherId.elementsEqual(id)
+        let index = items.index(where: { 
+            return $0.message.getMessageId().elementsEqual(item.message.getMessageId())
         })
         
         if index != nil {

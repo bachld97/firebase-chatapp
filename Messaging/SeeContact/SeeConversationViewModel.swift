@@ -87,7 +87,8 @@ class SeeConversationViewModel : ViewModelDelegate {
                             .do(onNext: { [unowned self] (messages) in
                                 let messageItems = self.convert(messages: messages, user: user)
                                 self.displayLogic?.onNewData(items: messageItems)
-                                self.observeNextMessage(fromLastId: messageItems.first?.messageId, withTracker: errorTracker)
+                                self.observeNextMessage(fromLastId: messageItems.first?.message.getMessageId(),
+                                                        withTracker: errorTracker)
                             })
                     }
                     .trackError(errorTracker)
@@ -155,7 +156,8 @@ class SeeConversationViewModel : ViewModelDelegate {
                             .do()
                             .flatMap { [unowned self] (messages) -> Observable<[MessageItem]> in
                                 let messageItems = self.convert(messages: messages, user: user)
-                                self.observeNextMessage(fromLastId: messageItems.first?.messageId, withTracker: errorTracker)
+                                self.observeNextMessage(fromLastId: messageItems.first?.message.getMessageId(),
+                                                        withTracker: errorTracker)
                                 return Observable.just(messageItems)
                         }
                     }
@@ -235,26 +237,26 @@ class SeeConversationViewModel : ViewModelDelegate {
     }
     
     private func notifyItems(with items: [MessageItem]) {
-        lastMessTime = Int64(items.first?.messageData["at-time"] ?? "\(lastMessTime)") ?? lastMessTime
+        lastMessTime = Int64(items.first?.message.getAtTime() ?? "\(lastMessTime)") ?? lastMessTime
         self.displayLogic?.onNewData(items: items)
     }
     
     private func notifySingleItem(with item: MessageItem) {
-        self.lastMessTime = Int64(item.messageData["at-time"] ?? "\(self.lastMessTime)") ?? self.lastMessTime
+        self.lastMessTime = Int64(item.message.getAtTime() ) ?? self.lastMessTime
         self.displayLogic?.onNewSingleData(item: item)
     }
     
     private func handleSend(localMessage: Message, withTracker errorTracker: ErrorTracker) {
-        let request = PersistSendingMessageRequest(message: localMessage)
-        self.persistSendingMessageUseCase
-            .execute(request: request)
-            .do(onNext: { [unowned self] (message) in
-                self.displayLogic?.onNewSingleData(item: self.convert(localMessage: localMessage))
-            })
-            .trackError(errorTracker)
-            .asDriverOnErrorJustComplete()
-            .drive()
-            .disposed(by: self.disposeBag)
+//        let request = PersistSendingMessageRequest(message: localMessage)
+//        self.persistSendingMessageUseCase
+//            .execute(request: request)
+//            .do(onNext: { [unowned self] (message) in
+//                 self.displayLogic?.onNewSingleData(item: self.convert(localMessage: localMessage))
+//            })
+//            .trackError(errorTracker)
+//            .asDriverOnErrorJustComplete()
+//            .drive()
+//            .disposed(by: self.disposeBag)
     }
     
     private func observeNextMessage(fromLastId lastId: String?, withTracker errorTracker: ErrorTracker) {
@@ -281,45 +283,36 @@ class SeeConversationViewModel : ViewModelDelegate {
     }
     
     private func parseImageMessage(_ user: User, _ url: URL) -> Message {
-        var data = [String : String]()
-        data["mess-id"] = url.lastPathComponent
-        data["local-id"] = url.lastPathComponent
-        data["content"] = url.path
-        data["at-time"] = self.getTime()
-        data["type"] = "image"
-        data["sent-by"] = user.userId
-        return Message(type: .image, data: data, isSending: true)
+        return Message(type: .image, convId: nil, content: url.path,
+                       atTime: self.getTime(), sentBy: user.userId,
+                       messId: url.lastPathComponent, isSending: true)
     }
     
     private func convert(localMessage: Message) -> MessageItem {
-        let localData = localMessage.data
-        let messId = localData["mess-id"]!
         switch localMessage.type {
         case .image:
-            return MessageItem(messageType: .imageMe, messageId: messId, messageData: localData, isSending: true)
+            return MessageItem(messageItemType: .imageMe, message: localMessage)
         case .text:
-            return MessageItem(messageType: .textMe, messageId: messId, messageData: localData, isSending: true)
+            return MessageItem(messageItemType: .textMe, message: localMessage)
         }
     }
     
     private func convert(messages: [Message], user: User) -> [MessageItem] {
         var res: [MessageItem] = []
         for m in messages {
-            let messid = m.data["mess-id"]!
-            let isSending = m.isSending
             switch m.type {
             case .image:
-                if m.data["sent-by"]!.elementsEqual(user.userId) {
-                    res.append(MessageItem(messageType: .imageMe, messageId: messid, messageData: m.data, isSending: isSending))
+                if m.getSentBy().elementsEqual(user.userId) {
+                    res.append(MessageItem(messageItemType: .imageMe, message: m))
                 } else {
-                    res.append(MessageItem(messageType: .image, messageId: messid, messageData: m.data, isSending: isSending))
+                    res.append(MessageItem(messageItemType: .image, message: m))
                 }
                 
             case .text:
-                if m.data["sent-by"]!.elementsEqual(user.userId) {
-                    res.append(MessageItem(messageType: .textMe, messageId: messid, messageData: m.data, isSending: isSending))
+                if m.getSentBy().elementsEqual(user.userId) {
+                    res.append(MessageItem(messageItemType: .textMe, message: m))
                 } else {
-                    res.append(MessageItem(messageType: .text, messageId: messid, messageData: m.data, isSending: isSending))
+                    res.append(MessageItem(messageItemType: .text, message: m))
                 }
             }
         }

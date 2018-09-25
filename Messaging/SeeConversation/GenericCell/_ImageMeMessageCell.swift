@@ -4,11 +4,11 @@ class _ImageMeMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
             // TODO: Compare item first?
-            let url = item.messageData["content"]!
+            let url = item.message.getContent()
             imageLoader.loadImage(url: url, into: self.contentImage)
 
 
-            if item.isSending {
+            if item.message.isSending {
                 contentImage.alpha = 0.3
             } else {
                 contentImage.alpha = 1.0

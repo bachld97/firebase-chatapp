@@ -3,9 +3,9 @@ import UIKit
 class _TextMeMessageCell: BaseMessageCell {
     override var item: MessageItem! {
         didSet {
-            self.textContent.text = item.messageData["content"]
+            self.textContent.text = item.message.getContent()
             
-            if item.isSending {
+            if item.message.isSending {
                 self.tvWrapper.backgroundColor = UIColor(red: 221.0 / 255.0, green: 190.0 / 255.0, blue: 200 / 255.0, alpha: 1)
             } else {
                 self.tvWrapper.backgroundColor = UIColor(red: 221.0 / 255.0, green: 234.0 / 255.0, blue: 1, alpha: 1)

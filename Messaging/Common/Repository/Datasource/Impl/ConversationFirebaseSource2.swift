@@ -327,7 +327,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         var res = [String : Any]()
         res["at-time"] = ServerValue.timestamp()
         res["sent-by"] = message.getSentBy()
-        res["type"] = message.getType()
+        res["type"] = message.getTypeAsString()
         res["content"] = message.getContent()
         return res
     }

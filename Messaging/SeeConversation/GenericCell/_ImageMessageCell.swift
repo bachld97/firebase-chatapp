@@ -3,7 +3,7 @@ import UIKit
 class _ImageMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
-            let url = item.messageData["content"]!
+            let url = item.message.getContent()
             imageLoader.loadImage(url: url, into: self.contentImage)
         }
     }

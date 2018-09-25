@@ -27,8 +27,8 @@ struct Message {
         return self.data["at-time"]!
     }
     
-    func getType() -> String {
-        return self.data["type"]!
+    func getTypeAsString() -> String {
+        return Type.getMessageTypeString(fromType: self.type)
     }
     
     func getContent() -> String {
