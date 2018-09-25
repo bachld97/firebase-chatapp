@@ -299,47 +299,32 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         }
         
         let type = Type.getMessageType(fromString: typeString)
-        var data = [String : String]()
-        data["conversation-id"] = messageDict["conversation-id"] as? String
-        data["content"] = messageDict["content"] as? String
-        data["at-time"] = "\(messageDict["at-time"]!)"
-        data["sent-by"] = messageDict["sent-by"] as? String
-        data["local-id"] = messageDict["local-id"] as? String
-        data["mess-id"] = withMessId
+      
+        let convId = messageDict["conversation-id"] as? String
         
-        
-        return Message(type: type, data: data)
-        
-//        guard let convId = messageDict["conversation-id"] as? String else {
-//            return nil
-//        }
-//        guard let content = messageDict["content"] as? String else {
-//            return nil
-//        }
-//
-//        let atTime = "\(messageDict["at-time"]!)"
-//
-//        guard let sentBy = messageDict["sent-by"] as? String else {
-//            return nil
-//        }
-//
-//        guard let localId = messageDict["local-id"] as? String else {
-//            return nil
-//        }
-//
-//        return Message(
-//            type: type,
-//            convId: convId,
-//            content: content,
-//            atTime: atTime,
-//            sentBy: sentBy,
-//            localId: localId,
-//            messId: withMessId)
+        guard let content = messageDict["content"] as? String else {
+            print("Content return")
+            return nil
+        }
+
+        let atTime = "\(messageDict["at-time"]!)"
+
+        guard let sentBy = messageDict["sent-by"] as? String else {
+            print("Sent by return")
+            return nil
+        }
+
+        return Message(
+            type: type,
+            convId: convId,
+            content: content,
+            atTime: atTime,
+            sentBy: sentBy,
+            messId: withMessId)
     }
     
     private func mapToJson(message: Message) -> [String : Any] {
         var res = [String : Any]()
-        res["local-id"] = message.data["local-id"] // May not be needed anymore
         res["at-time"] = ServerValue.timestamp()
         res["sent-by"] = message.getSentBy()
         res["type"] = message.getType()

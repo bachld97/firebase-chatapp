@@ -328,8 +328,6 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         data["sent-by"] = messageDict["sent-by"] as? String
         data["local-id"] = messageDict["local-id"] as? String
         data["mess-id"] = withMessId
-        
-        
         return Message(type: type, data: data)
     }
 

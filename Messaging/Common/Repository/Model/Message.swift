@@ -9,14 +9,13 @@ struct Message {
         self.isSending = isSending
     }
     
-    init(type: MessageType, convId: String, content: String, atTime: String,
-         sentBy: String, localId: String, messId: String?, isSending: Bool = false) {
+    init(type: MessageType, convId: String?, content: String, atTime: String,
+         sentBy: String, messId: String?, isSending: Bool = false) {
         var data = [String : String]()
         data["conversation-id"] = convId
         data["content"] = content
         data["at-time"] = atTime
         data["sent-by"] = sentBy
-        data["local-id"] = localId
         data["mess-id"] = messId
         
         self.isSending = isSending
