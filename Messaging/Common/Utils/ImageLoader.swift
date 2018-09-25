@@ -13,4 +13,3 @@ class _ImageLoader {
         imgView.kf.setImage(with: url)
     }
 }
-

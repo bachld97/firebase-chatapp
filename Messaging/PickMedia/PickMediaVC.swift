@@ -148,13 +148,16 @@ extension PickMediaVC {
     
     func pickImageDone(image: UIImage) {
         // Save image to app's storage
-        guard let data = UIImagePNGRepresentation(image) else {
+        let mul = Compressor.estimatetMultiplier(forSize: image.size)
+        print("compress: \(mul)")
+        guard let data = UIImageJPEGRepresentation(image, mul) else {
             self.delegate?.onMediaItemPickFail()
             return
         }
         
         let path: String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-        let filename = UUIDGenerator.newUUID() + ".png"
+        let filename = UUIDGenerator.newUUID() + ".jpeg"
+        
         let url = URL(fileURLWithPath: path).appendingPathComponent(filename)
         do {
             try data.write(to: url)

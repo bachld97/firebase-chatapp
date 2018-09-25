@@ -14,13 +14,13 @@ class MessageCellConfigurator {
     private let getReuseIdentifier = { (item: MessageItem) -> String in
         switch item.messageItemType {
         case .text:
-            return _TextMessageCell.reuseIdentifier
+            return TextMessageCell.reuseIdentifier
         case .textMe:
-            return _TextMeMessageCell.reuseIdentifier
+            return TextMeMessageCell.reuseIdentifier
         case .image:
-            return _ImageMessageCell.reuseIdentifier
+            return ImageMessageCell.reuseIdentifier
         case .imageMe:
-            return _ImageMeMessageCell.reuseIdentifier
+            return ImageMeMessageCell.reuseIdentifier
         }
     }
     
@@ -46,11 +46,9 @@ class MessageCellConfigurator {
     }
     
     func setItems(_ items: [MessageItem]) {
-        // let changes = diff(old: self.items, new: items)
         self.items = items
         self.strongDataSource?.updateItem(self.items)
         self.tableView?.reloadData()
-//        self.tableView?.reload(changes: changes, completion: {_ in })
     }
     
     init(tableView: UITableView) {
@@ -62,9 +60,9 @@ class MessageCellConfigurator {
     }
     
     private func registerCells() {
-        self.tableView?.register(_TextMessageCell.self)
-        self.tableView?.register(_TextMeMessageCell.self)
-        self.tableView?.register(_ImageMessageCell.self)
-        self.tableView?.register(_ImageMeMessageCell.self)
+        self.tableView?.register(TextMessageCell.self)
+        self.tableView?.register(TextMeMessageCell.self)
+        self.tableView?.register(ImageMessageCell.self)
+        self.tableView?.register(ImageMeMessageCell.self)
     }
 }

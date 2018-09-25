@@ -53,6 +53,12 @@ struct Message {
         return Message(type: self.type, data: data, isSending: self.isSending)
     }
     
+    func changeContent(withNewContent newContent: String) -> Message {
+        var data = self.data
+        data["content"] = newContent
+        return Message(type: self.type, data: data, isSending: self.isSending)
+    }
+    
     func markAsSending() -> Message {
         return Message(type: self.type, data: self.data, isSending: true)
     }

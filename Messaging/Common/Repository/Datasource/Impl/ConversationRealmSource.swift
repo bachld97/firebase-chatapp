@@ -21,7 +21,7 @@ class ConversationRealmSource : ConversationLocalSource {
             let realm = try Realm()
 			try messages.forEach { (message) in 
 				try realm.write {
-                    realm.add(MessageRealm.from(message, with: conversationId), update: true)
+					realm.add(MessageRealm.from(message, with: conversationId), update: true)
 				}
 			}
 			return Observable.just(messages)

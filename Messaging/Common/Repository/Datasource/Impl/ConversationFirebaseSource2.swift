@@ -365,7 +365,6 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                 .childByAutoId()
                 .key
             
-            // TODO: publish this message to UI, using messId
             self.messagePublisher.onNext(message.changeId(withServerId: messId))
             
             let urlString = message.getContent()
@@ -381,13 +380,17 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                     var jsonMessage = self.mapToJson(message: message)
                     jsonMessage["content"] = ImageLoader.buildUrl(forMessageId: messId)
                     
-                    
                     self.ref.child("conversations/\(conversation)/last-message")
                         .setValue(jsonMessage)
                     
                     self.ref.child("messages/\(conversation)")
                         .child(messId)
                         .setValue(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
+                            do {
+                                // Delete old image, it is already copy to new location
+                                try FileManager().removeItem(at: url)
+                            } catch { }
+                            
                             if error == nil {
                                 self.handleSendSuccess(msgId: dbRef.key)
                             } else {

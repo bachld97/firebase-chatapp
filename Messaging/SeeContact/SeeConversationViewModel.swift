@@ -26,7 +26,6 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let getUserUseCase = GetUserUseCase()
     private let getContactNicknameUseCase = GetContactNicknameUseCase()
     private let observeNextMessageUseCase = ObserveNextMessageUseCase()
-    private let persistSendingMessageUseCase = PersistSendingMessageUseCase()
     
     /* We falsely use timestamp of last message
      * and offset it by 1 to create timestamp
@@ -111,9 +110,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                         
                         self.displayLogic?.clearText()
                         self.textMessageContent.accept("")
-                        
-                        self.handleSend(localMessage: message, withTracker: errorTracker)
-                        
+                      
                         return self.sendMessageToUserUseCase
                             .execute(request: SendMessageToUserRequest(
                                 message: message,
@@ -183,8 +180,6 @@ class SeeConversationViewModel : ViewModelDelegate {
                         self.displayLogic?.clearText()
                         self.textMessageContent.accept("")
                         
-                        self.handleSend(localMessage: message, withTracker: errorTracker)
-                        
                         return self.sendMessageUseCase
                             .execute(request: SendMessageRequest(
                                 message: message,
@@ -218,7 +213,6 @@ class SeeConversationViewModel : ViewModelDelegate {
                     .flatMap { [unowned self] (user) -> Observable<Bool> in
                         
                         let message = self.parseImageMessage(user, url)
-                        self.handleSend(localMessage: message, withTracker: errorTracker)
                         
                         return self.sendMessageUseCase
                             .execute(request: SendMessageRequest(
@@ -244,19 +238,6 @@ class SeeConversationViewModel : ViewModelDelegate {
     private func notifySingleItem(with item: MessageItem) {
         self.lastMessTime = Int64(item.message.getAtTime() ) ?? self.lastMessTime
         self.displayLogic?.onNewSingleData(item: item)
-    }
-    
-    private func handleSend(localMessage: Message, withTracker errorTracker: ErrorTracker) {
-//        let request = PersistSendingMessageRequest(message: localMessage)
-//        self.persistSendingMessageUseCase
-//            .execute(request: request)
-//            .do(onNext: { [unowned self] (message) in
-//                 self.displayLogic?.onNewSingleData(item: self.convert(localMessage: localMessage))
-//            })
-//            .trackError(errorTracker)
-//            .asDriverOnErrorJustComplete()
-//            .drive()
-//            .disposed(by: self.disposeBag)
     }
     
     private func observeNextMessage(fromLastId lastId: String?, withTracker errorTracker: ErrorTracker) {

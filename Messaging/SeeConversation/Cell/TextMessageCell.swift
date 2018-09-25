@@ -1,10 +1,22 @@
 import UIKit
 
-class TextMessageCell : UITableViewCell {
-  
-    private var smallPadding: CGFloat = 4
-    private var normalPadding: CGFloat = 16
-    private var mainPadding: CGFloat = 96
+class TextMessageCell : BaseMessageCell {
+    override var item: MessageItem! {
+        didSet {
+            self.textContent.text = item.message.getContent()
+        }
+    }
+    
+    override func prepareUI() {
+        // Do UI setup
+        self.addSubview(tvWrapper)
+        addConstraintsForTextContent()
+        self.transform = CGAffineTransform(scaleX: 1, y: -1)
+        layoutIfNeeded()
+        
+        layer.borderColor = UIColor.white.cgColor
+        layer.borderWidth = 2
+    }
     
     private let textContent: UITextView = {
         let tv = UITextView()
@@ -17,7 +29,7 @@ class TextMessageCell : UITableViewCell {
         tv.sizeToFit()
         tv.font = UIFont.systemFont(ofSize: 15.0)
         // tv.contentInset = UIEdgeInsetsMake(8, 12, 8, 12)
-
+        
         tv.text = "Testing text view lalalala. And this is a long long text. I want to make it longer and longer. "
         return tv
     }()
@@ -29,23 +41,12 @@ class TextMessageCell : UITableViewCell {
         v.layer.cornerRadius = 16.0
         return v
     }()
-
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setUpViews()
-    }
-    
-    private func setUpViews() {
-        self.addSubview(tvWrapper)
-        addConstraintsForTextContent()
-        self.transform = CGAffineTransform(scaleX: 1, y: -1)
-        layoutIfNeeded()
-        
-        layer.borderColor = UIColor.white.cgColor
-        layer.borderWidth = 2
-    }
     
     private func addConstraintsForTextContent() {
+        let smallPadding = MessageCellConstant.smallPadding
+        let normalPadding = MessageCellConstant.normalPadding
+        let mainPadding = MessageCellConstant.mainPadding
+        
         let topC = NSLayoutConstraint(item: tvWrapper, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: smallPadding)
         let botC = NSLayoutConstraint(item: tvWrapper, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: smallPadding * -1)
         let leftC = NSLayoutConstraint(item: tvWrapper, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: normalPadding)
@@ -62,13 +63,4 @@ class TextMessageCell : UITableViewCell {
         tvWrapper.addSubview(textContent)
         tvWrapper.addConstraints([topC2, botC2, leftC2, rightC2])
     }
-    
-    func bind(message: Message) {
-        textContent.text = message.data["content"]
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Not implemented")
-    }
-
 }

@@ -23,16 +23,16 @@ class ConversationRepositoryImpl : ConversationRepository {
         }
     }
     
-    func persistSendingMessage(message: Message) -> Observable<Message> {
-        return Observable.deferred { [unowned self] in
-            guard let conversationId = self.conversationId else {
-                return Observable.just(message)
-            }
-            
-            return self.localSource
-                .persistMessage(message, with: conversationId)
-        }
-    }
+    //    func persistSendingMessage(message: Message) -> Observable<Message> {
+    //        return Observable.deferred { [unowned self] in
+    //            guard let conversationId = self.conversationId else {
+    //                return Observable.just(message)
+    //            }
+    //
+    //            return self.localSource
+    //                .persistMessage(message, with: conversationId)
+    //        }
+    //    }
     
     func getContactNickname(contact: Contact) -> Observable<String> {
         // return Observable.just("Private")
@@ -121,7 +121,7 @@ class ConversationRepositoryImpl : ConversationRepository {
             }
         }
     }
-
+    
     func observeNextMessage(fromLastId lastId: String?) -> Observable<Message> {
         return Observable.deferred { [unowned self] in
             return self.userRepository
@@ -139,11 +139,39 @@ class ConversationRepositoryImpl : ConversationRepository {
                                 return Observable.just(message)
                             }
                             
-                            return self.localSource
-                                .persistMessage(message, with: convId)
+                            if message.getSentBy().elementsEqual(user.userId) && message.type == .image {
+                                return self.handleImageSentByMe(message, with: convId)
+                                } else {
+                                return self.localSource
+                                    .persistMessage(message, with: convId)
+                            }
                     }
             }
         }
+    }
+    
+    private func handleImageSentByMe(_ message: Message, with convId: String) -> Observable<Message> {
+        if message.isSending {
+            let oldPath = message.getContent()
+            guard let lastSegIndex = oldPath.lastIndex(of: "/") else {
+                return self.localSource.persistMessage(message, with: convId)
+            }
+            
+            let index = oldPath.distance(from: oldPath.startIndex, to: lastSegIndex) + 1
+            let newPath = "\(oldPath[0..<index])\(message.getMessageId())"
+            let fm = FileManager()
+            do {
+                try fm.copyItem(atPath: oldPath, toPath: newPath)
+            } catch { }
+            
+            if fm.fileExists(atPath: newPath) {
+                return self.localSource
+                    .persistMessage(message.changeContent(withNewContent: newPath),
+                                    with: convId)
+            }
+        }
+        
+        return self.localSource.persistMessage(message, with: convId)
     }
     
     private func mergeMessages(_ localMessages: [Message], _ remoteMessages: [Message]) -> [Message] {
@@ -168,18 +196,18 @@ class ConversationRepositoryImpl : ConversationRepository {
     func loadMessages(of conversationId: String) -> Observable<[Message]> { 
         return Observable.deferred {
             self.conversationId = conversationId
-        
+            
             let localStream = Observable
                 .just([])
                 .concat(self.localSource.loadMessages(of: conversationId))
-
+            
             let remoteStream = Observable
                 .just([])
                 .concat(self.remoteSource.loadMessages(of: conversationId))
             
             let finalStream = Observable
                 .combineLatest(localStream, remoteStream) { [unowned self] in
-                return self.mergeMessages($0, $1)
+                    return self.mergeMessages($0, $1)
             }
             
             return finalStream

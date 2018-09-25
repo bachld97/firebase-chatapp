@@ -58,3 +58,17 @@ class Type {
 		}
     }
 }
+
+class Compressor {
+    public static func estimatetMultiplier(forSize originalSize: CGSize) -> CGFloat {
+        return 0.1 // Dummy value, ease out the up/download time and bandwidth while testing
+    }
+}
+
+extension String {
+    subscript(_ range: CountableRange<Int>) -> String {
+        let idx1 = index(startIndex, offsetBy: max(0, range.lowerBound))
+        let idx2 = index(startIndex, offsetBy: min(self.count, range.upperBound))
+        return String(self[idx1..<idx2])
+    }
+}       

@@ -12,7 +12,7 @@ protocol ConversationRepository {
     func getConversationLabel(conversation: Conversation) -> Observable<String>
     func getContactNickname(contact: Contact) -> Observable<String>
 
-    func persistSendingMessage(message: Message) -> Observable<Message>
+//    func persistSendingMessage(message: Message) -> Observable<Message>
 }
 
 class ConversationRepositoryFactory {

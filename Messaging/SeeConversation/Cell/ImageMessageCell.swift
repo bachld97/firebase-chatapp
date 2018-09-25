@@ -1,11 +1,15 @@
 import UIKit
 
-class ImageMessageCell: UITableViewCell {
+class ImageMessageCell : BaseMessageCell {
+    override var item: MessageItem! {
+        didSet {
+            let url = item.message.getContent()
+            imageLoader.loadImage(url: url, into: self.contentImage)
+        }
+    }
     
-    private var smallPadding: CGFloat = 4
-    private var normalPadding: CGFloat = 16
-    private var mainPadding: CGFloat = 96
-
+    private let imageLoader = _ImageLoader()
+    
     private let contentImage: UIImageView = {
         let v = UIImageView()
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -18,15 +22,9 @@ class ImageMessageCell: UITableViewCell {
     }()
     
     private var imageTask: URLSessionTask?
-    
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setUpViews()
-    }
-    
-    private func setUpViews() {
+    override func prepareUI() {
         self.addSubview(contentImage)
-        addConstraintsForTextContent()
+        addConstraintsForImage()
         self.transform = CGAffineTransform(scaleX: 1, y: -1)
         layoutIfNeeded()
         
@@ -34,21 +32,16 @@ class ImageMessageCell: UITableViewCell {
         layer.borderWidth = 2
     }
     
-    private func addConstraintsForTextContent() {
+    private func addConstraintsForImage() {
+        let mainPadding = MessageCellConstant.mainPadding
+        let normalPadding = MessageCellConstant.normalPadding
+        let smallPadding = MessageCellConstant.smallPadding
+
         let topC = NSLayoutConstraint(item: contentImage, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: smallPadding)
         let botC = NSLayoutConstraint(item: contentImage, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: smallPadding * -1)
         let leftC = NSLayoutConstraint(item: contentImage, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: normalPadding)
         let rightC = NSLayoutConstraint(item: contentImage, attribute: .trailing, relatedBy: .lessThanOrEqual, toItem: self, attribute: .trailing, multiplier: 1, constant: mainPadding * -1)
         
         addConstraints([topC, botC, leftC, rightC])
-    }
-    
-    func bind(message: Message) {
-        imageTask?.cancel()
-        imageTask = ImageLoader.load(urlString: message.data["content"]!, into: contentImage)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Not implemented")
     }
 }
