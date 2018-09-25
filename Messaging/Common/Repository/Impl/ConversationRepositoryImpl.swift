@@ -106,6 +106,7 @@ class ConversationRepositoryImpl : ConversationRepository {
         }
     }
     
+    
     func loadMessages(with contact: Contact) -> Observable<[Message]> {
         return Observable.deferred {
             return self.userRepository
@@ -116,12 +117,7 @@ class ConversationRepositoryImpl : ConversationRepository {
                         return Observable.error(SessionExpireError())
                     }
                     
-                    let uid = [user.userId, contact.userId].sorted()
-                        .joined(separator: " ")
-                   self.conversationId = uid
-                    
-                    return self.remoteSource
-                        .loadMessages(of: uid)
+                    return self.loadMessages(of: ConvId.get(for: user, with: contact))
             }
         }
     }
@@ -139,19 +135,12 @@ class ConversationRepositoryImpl : ConversationRepository {
                     return self.remoteSource
                         .observeNextMessage(for: user, fromLastId: lastId)
                         .flatMap { [unowned self] (message) -> Observable<Message> in
-                            let newMessage: Message = message
-                            // if message.data["sent-by"]!.elementsEqual(user.userId) {
-                            //     newMessage = Message(type: message.type, data: message.data, isSending: true)
-                            // } else {
-                            //     newMessage = message
-                            // }
-                            
                             guard let convId = self.conversationId else {
-                                return Observable.just(newMessage)
+                                return Observable.just(message)
                             }
                             
                             return self.localSource
-                                .persistMessage(newMessage, with: convId)
+                                .persistMessage(message, with: convId)
                     }
             }
         }
@@ -160,18 +149,12 @@ class ConversationRepositoryImpl : ConversationRepository {
     private func mergeMessages(_ localMessages: [Message], _ remoteMessages: [Message]) -> [Message] {
         var res = localMessages
         remoteMessages.forEach { (message) in
-            let index = res.firstIndex(where: { (m) in
-                return message.data["mess-id"]!
-                    .elementsEqual(m.data["mess-id"]!) ||
-                    message.data["local-id"]?
-                    .elementsEqual(m.data["mess-id"]!) ?? false
+            let index = res.firstIndex(where: { 
+                return message.getMessageId().elementsEqual($0.getMessageId())
             })
             
             if index != nil {
-                var newData = res[index!].data
-                newData["mess-id"] = message.data["mess-id"]
-                let type = res[index!].type
-                res[index!] = Message(type: type, data: newData)
+                res[index!] = message
             } else {
                 res.append(message)
             }

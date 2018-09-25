@@ -16,12 +16,12 @@ class MessageRealm: Object {
     
     static func from(_ message: Message, with conversationId: String) -> MessageRealm {
         let messageRealm = MessageRealm()
-        messageRealm.messageId = message.data["mess-id"] ?? message.data["local-id"]!
-        messageRealm.sentBy = message.data["sent-by"]!
-        messageRealm.content = message.data["content"]!
-        messageRealm.atTime = Int64(message.data["at-time"]!)!
+        messageRealm.messageId = message.getMessageId()
+        messageRealm.sentBy = message.getSentBy()
+        messageRealm.content = message.getContent()
+        messageRealm.atTime = Int64(message.getAtTime())!
         messageRealm.conversationId = conversationId
-        messageRealm.type = typeToTextMap[message.type]!
+        messageRealm.type = Type.getMessageTypeString(fromType: message.type)
         messageRealm.isSending = message.isSending
         return messageRealm
     }
@@ -33,17 +33,7 @@ class MessageRealm: Object {
         data["content"] = self.content
         data["at-time"] = "\(self.atTime)"
         let isSending = self.isSending
-        let type: MessageType = MessageRealm.textToTypeMap[self.type]!
+        let type: MessageType = Type.getMessageType(fromString: self.type)
         return Message(type: type, data: data, isSending: isSending)
     }
-    
-    private static let typeToTextMap: [MessageType : String] = [
-        MessageType.image : "image",
-        MessageType.text : "text"
-    ]
-    
-    private static let textToTypeMap: [String : MessageType] = [
-        "image" : MessageType.image,
-        "text" : MessageType.text
-    ]
 }

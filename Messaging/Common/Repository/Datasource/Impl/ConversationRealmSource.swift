@@ -2,10 +2,8 @@ import RealmSwift
 import RxSwift
 
 class ConversationRealmSource : ConversationLocalSource {
-    func loadMessages(of user: User, with contact: Contact) -> Observable<[Message]> {
-        let uid  = [user.userId, contact.userId].sorted()
-            .joined(separator: " ")
-        return self.loadMessages(of: uid)
+    func loadMessages(of user: User, with contact: Contact) -> Observable<[Message]> { 
+        return self.loadMessages(of: ConvId.get(for: user, with: contact))
     }
     
     func loadMessages(of conversationId: String) -> Observable<[Message]> {

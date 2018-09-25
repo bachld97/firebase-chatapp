@@ -50,4 +50,11 @@ class Type {
             return .text
         }
     }
+
+    public static func getMessageTypeString(fromType type: MessageType) -> String {
+		switch type {
+		case .image: return "image"
+		case .text: return "text"
+		}
+    }
 }

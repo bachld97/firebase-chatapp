@@ -23,6 +23,10 @@ struct Message {
         self.data = data
     }
     
+    func getAtTime() -> String {
+        return self.data["at-time"]!
+    }
+    
     func getType() -> String {
         return self.data["type"]!
     }
