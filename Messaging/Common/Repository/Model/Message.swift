@@ -53,6 +53,10 @@ struct Message {
     func markAsSending() -> Message {
         return Message(type: self.type, data: self.data, isSending: true)
     }
+    
+    func markAsSent() -> Message {
+        return Message(type: self.type, data: self.data, isSending: false)
+    }
 }
 
 enum MessageType {

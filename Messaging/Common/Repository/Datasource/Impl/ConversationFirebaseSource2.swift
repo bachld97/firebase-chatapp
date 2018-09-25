@@ -400,10 +400,10 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                     self.ref.child("conversations/\(conversation)/last-message")
                         .setValue(jsonMessage)
                     
-                    self.ref.child("conversations/\(conversation)/last-message")
+                    self.ref.child("messages/\(conversation)")
                         .child(messId)
                         .setValue(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
-                            if error != nil {
+                            if error == nil {
                                 self.handleSendSuccess(msgId: dbRef.key)
                             } else {
                                 self.errorPublisher.onNext(error!)
@@ -468,7 +468,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         })
         
         if index != nil {
-            let msg = pendingMessages[index!]
+            let msg = pendingMessages[index!].markAsSent()
             pendingMessages.remove(at: index!)
             return msg
         }
