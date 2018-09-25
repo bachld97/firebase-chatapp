@@ -133,10 +133,10 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
         self.usernameLabel.text = user.userName
         self.userIdLabel.text = user.userId
         
-        let avaUrl = ImageLoader.buildUrl(forUserId: user.userId)
+        let avaUrl = UrlBuilder.buildUrl(forUserId: user.userId)
 
         if imageTask == nil {
-            imageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
+            imageTask = UrlBuilder.load(urlString: avaUrl, into: self.avaImageView)
         } else {
             imageTask?.cancel()
         }

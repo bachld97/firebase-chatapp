@@ -3,10 +3,10 @@ import UIKit
 class ImageMeMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
-            // TODO: Compare item first?
             let url = item.message.getContent()
-            imageLoader.loadImage(url: url, into: self.contentImage)
-
+            let messageId = item.message.getMessageId()
+            imageLoader.loadMessageImage(url: url, id: messageId, into: self.contentImage)
+//            imageLoader.loadImage(url: url, into: self.contentImage)
 
             if item.message.isSending {
                 contentImage.alpha = 0.3

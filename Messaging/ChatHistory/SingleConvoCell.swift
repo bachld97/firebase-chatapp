@@ -52,7 +52,7 @@ class SingleConvoCell: UITableViewCell {
     
     private func loadAva(ofUserId: String) {
         imageTask?.cancel()
-        let urlString = ImageLoader.buildUrl(forUserId: ofUserId)
-        imageTask = ImageLoader.load(urlString: urlString, into: self.avaImageView)
+        let urlString = UrlBuilder.buildUrl(forUserId: ofUserId)
+        imageTask = UrlBuilder.load(urlString: urlString, into: self.avaImageView)
     }
 }

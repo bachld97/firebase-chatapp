@@ -378,7 +378,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                     obs.onError(error!)
                 } else {
                     var jsonMessage = self.mapToJson(message: message)
-                    jsonMessage["content"] = ImageLoader.buildUrl(forMessageId: messId)
+                    jsonMessage["content"] = UrlBuilder.buildUrl(forMessageId: messId)
                     
                     self.ref.child("conversations/\(conversation)/last-message")
                         .setValue(jsonMessage)

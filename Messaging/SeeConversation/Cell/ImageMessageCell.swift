@@ -4,6 +4,7 @@ class ImageMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
             let url = item.message.getContent()
+//            let messageId = item.message.getMessageId()
             imageLoader.loadImage(url: url, into: self.contentImage)
         }
     }

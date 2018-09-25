@@ -28,10 +28,10 @@ class RequestedContactCell: UITableViewCell {
         
         nameLabel.text = item.contact.userName
         idLabel.text = item.contact.userId
-        let avaUrl = ImageLoader.buildUrl(forUserId: item.contact.userId)
+        let avaUrl = UrlBuilder.buildUrl(forUserId: item.contact.userId)
 
         imageTask?.cancel()
-        imageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
+        imageTask = UrlBuilder.load(urlString: avaUrl, into: self.avaImageView)
 
         acceptButton.rx.tap.asDriver()
             .drive(onNext: { [unowned self] in

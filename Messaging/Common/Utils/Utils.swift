@@ -1,6 +1,6 @@
 import UIKit
 
-class ImageLoader {
+class UrlBuilder {
     public static func load(urlString: String?, into iv: UIImageView) -> URLSessionTask? {
         
         iv.image = nil

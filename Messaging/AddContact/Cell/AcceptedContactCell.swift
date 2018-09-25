@@ -27,10 +27,10 @@ class AcceptedContactCell: UITableViewCell {
         self.contactItem = item
         nameLabel.text = item.contact.userName
         idLabel.text = item.contact.userId
-        let avaUrl = ImageLoader.buildUrl(forUserId: item.contact.userId)
+        let avaUrl = UrlBuilder.buildUrl(forUserId: item.contact.userId)
         
         loadingImageTask?.cancel()
-        loadingImageTask = ImageLoader.load(urlString: avaUrl, into: self.avaImageView)
+        loadingImageTask = UrlBuilder.load(urlString: avaUrl, into: self.avaImageView)
 
         messageButton.rx.tap.asDriver()
             .drive(onNext: { [unowned self] in
