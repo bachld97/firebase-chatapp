@@ -40,6 +40,10 @@ class MessageCellConfigurator {
         })
         
         if index != nil {
+            items[index!] = item
+            strongDataSource?.updateItem(at: index!, with: item)
+            let indexPath = NSIndexPath(row: index!, section: 0)
+            self.tableView?.reloadRows(at: [indexPath as IndexPath], with: .automatic)
             return
         }
         

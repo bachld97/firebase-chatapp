@@ -72,7 +72,11 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             
             let obsHandle = query.queryLimited(toLast: 1)
                 .observe(.childAdded, with: { (snap) in
-                    self.handleSnapshot(snap, user, conversationId)
+                    if lastId == nil {
+                        self.handleSnapshot(snap, user, conversationId)
+                    } else {
+                        self.handleSnapshot(snap, user, conversationId, excluding: lastId!)
+                    }
                 }, withCancel: { (error) in
                     obs.onError(error)
                 })
@@ -110,7 +114,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             self.ref.child("messages/\(conversation)")
                 .childByAutoId()
                 .setValue(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
-                    if error != nil {
+                    if error == nil {
                         self.handleSendSuccess(msgId: dbRef.key)
                     } else {
                         self.errorPublisher.onNext(error!)
@@ -295,32 +299,42 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         }
         
         let type = Type.getMessageType(fromString: typeString)
+        var data = [String : String]()
+        data["conversation-id"] = messageDict["conversation-id"] as? String
+        data["content"] = messageDict["content"] as? String
+        data["at-time"] = "\(messageDict["at-time"]!)"
+        data["sent-by"] = messageDict["sent-by"] as? String
+        data["local-id"] = messageDict["local-id"] as? String
+        data["mess-id"] = withMessId
         
-        guard let convId = messageDict["conversation-id"] as? String else {
-            return nil
-        }
-        guard let content = messageDict["content"] as? String else {
-            return nil
-        }
         
-        let atTime = "\(messageDict["at-time"]!)"
+        return Message(type: type, data: data)
         
-        guard let sentBy = messageDict["sent-by"] as? String else {
-            return nil
-        }
-        
-        guard let localId = messageDict["local-id"] as? String else {
-            return nil
-        }
-        
-        return Message(
-            type: type,
-            convId: convId,
-            content: content,
-            atTime: atTime,
-            sentBy: sentBy,
-            localId: localId,
-            messId: withMessId)
+//        guard let convId = messageDict["conversation-id"] as? String else {
+//            return nil
+//        }
+//        guard let content = messageDict["content"] as? String else {
+//            return nil
+//        }
+//
+//        let atTime = "\(messageDict["at-time"]!)"
+//
+//        guard let sentBy = messageDict["sent-by"] as? String else {
+//            return nil
+//        }
+//
+//        guard let localId = messageDict["local-id"] as? String else {
+//            return nil
+//        }
+//
+//        return Message(
+//            type: type,
+//            convId: convId,
+//            content: content,
+//            atTime: atTime,
+//            sentBy: sentBy,
+//            localId: localId,
+//            messId: withMessId)
     }
     
     private func mapToJson(message: Message) -> [String : Any] {
@@ -328,16 +342,22 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         res["local-id"] = message.data["local-id"] // May not be needed anymore
         res["at-time"] = ServerValue.timestamp()
         res["sent-by"] = message.getSentBy()
+        res["type"] = message.getType()
         res["content"] = message.getContent()
         return res
     }
     
-    private func handleSnapshot(_ snap: DataSnapshot, _ user: User, _ conversationId: String) {
+    private func handleSnapshot(_ snap: DataSnapshot, _ user: User,
+                                _ conversationId: String, excluding ignoreMessageWithId: String = "") {
         guard snap.exists() else {
             return
         }
         
         let messId = snap.key
+        guard !messId.elementsEqual(ignoreMessageWithId) else {
+            return
+        }
+        
         guard var messageDict = snap.value as? [String : Any] else {
             return
         }
@@ -361,7 +381,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                 .key
             
             // TODO: publish this message to UI, using messId
-            
+            self.messagePublisher.onNext(message.changeId(withServerId: messId))
             
             let urlString = message.getContent()
             let url = URL(fileURLWithPath: urlString)
@@ -400,16 +420,67 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     }
     
     private func handleMessage(_ message: Message, fromThis: Bool) {
-        // FromThis = true: If pending not have -> add + notifyNew
-        // ---- else update
-        // else notifyNew
+        if fromThis {
+            handleMessageFromUser(message)
+        } else {
+            handleMessageFromOther(message)
+        }
+    }
+    
+    private func handleMessageFromUser(_ message: Message) {
+        if !self.pendingContains(message) {
+            self.pendingMessages.append(message)
+            self.messagePublisher.onNext(message.markAsSending())
+        } else {
+            self.updatePending(message)
+        }
+    }
+    
+    private func handleMessageFromOther(_ message: Message) {
+        self.messagePublisher.onNext(message)
+    }
+    
+    private func pendingContains(_ message: Message) -> Bool {
+        let index = self.pendingMessages.firstIndex(where: {
+            $0.getMessageId().elementsEqual(message.getMessageId())
+        })
+        
+        return index != nil
+    }
+    
+    private func updatePending(_ message: Message) {
+        let index = self.pendingMessages.firstIndex(where: {
+            $0.getMessageId().elementsEqual(message.getMessageId())
+        })
+        
+        if index != nil {
+            self.pendingMessages[index!] = message
+        }
     }
     
     private func emptyPending() {
-        self.pendingMessages = []
+        self.pendingMessages.removeAll()
+    }
+    
+    private func getAndRemovePending(msgId: String) -> Message? {
+        let index = self.pendingMessages.firstIndex(where: {
+            $0.getMessageId().elementsEqual(msgId)
+        })
+        
+        if index != nil {
+            let msg = pendingMessages[index!]
+            pendingMessages.remove(at: index!)
+            return msg
+        }
+        
+        return nil
     }
     
     private func handleSendSuccess(msgId: String) {
+        let msg = self.getAndRemovePending(msgId: msgId)
         
+        if msg != nil {
+            self.messagePublisher.onNext(msg!)
+        }
     }
 }

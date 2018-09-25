@@ -13,5 +13,5 @@ protocol ConversationRemoteSource {
 }
 
 class ConversationRemoteSourceFactory {
-    public static let sharedInstance: ConversationRemoteSource = ConversationFirebaseSource()
+    public static let sharedInstance: ConversationRemoteSource = ConversationFirebaseSource2()
 }

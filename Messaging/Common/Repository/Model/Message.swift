@@ -9,14 +9,6 @@ struct Message {
         self.isSending = isSending
     }
     
-//    Message(
-//    convId: convId,
-//    content: content,
-//    atTime: atTime,
-//    sentBy: sentBy,
-//    localId: localId,
-//    messId: withMessId)
-
     init(type: MessageType, convId: String, content: String, atTime: String,
          sentBy: String, localId: String, messId: String?, isSending: Bool = false) {
         var data = [String : String]()
@@ -32,20 +24,34 @@ struct Message {
         self.data = data
     }
     
+    func getType() -> String {
+        return self.data["type"]!
+    }
+    
     func getContent() -> String {
-        return ""
+        return self.data["content"]!
     }
     
     func getSentBy() -> String {
-        return ""
+        return self.data["sent-by"]!
     }
     
     func getMessageId() -> String {
-        return ""
+        return self.data["mess-id"]!
     }
     
     func compareWith(_ m2: Message) -> Bool {
         return Int64(data["at-time"]!)! > Int64(m2.data["at-time"]!)!
+    }
+    
+    func changeId(withServerId newId: String) -> Message {
+        var data = self.data
+        data["mess-id"] = newId
+        return Message(type: self.type, data: data, isSending: self.isSending)
+    }
+    
+    func markAsSending() -> Message {
+        return Message(type: self.type, data: self.data, isSending: true)
     }
 }
 

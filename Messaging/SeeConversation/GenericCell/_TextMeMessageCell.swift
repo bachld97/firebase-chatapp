@@ -6,9 +6,9 @@ class _TextMeMessageCell: BaseMessageCell {
             self.textContent.text = item.messageData["content"]
             
             if item.isSending {
-                self.alpha = 0.5
+                self.tvWrapper.backgroundColor = UIColor(red: 221.0 / 255.0, green: 190.0 / 255.0, blue: 200 / 255.0, alpha: 1)
             } else {
-                self.alpha = 1.0
+                self.tvWrapper.backgroundColor = UIColor(red: 221.0 / 255.0, green: 234.0 / 255.0, blue: 1, alpha: 1)
             }
         }
     }
