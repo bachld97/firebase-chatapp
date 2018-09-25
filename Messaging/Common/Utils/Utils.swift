@@ -34,3 +34,20 @@ class ImageLoader {
     }
 }
 
+class ConvId {
+    public static func get(for user: User, with contact: Contact) -> String {
+        return [user.userId, contact.userId].sorted()
+            .joined(separator: " ")
+    }
+    
+}
+
+class Type {
+    public static func getMessageType(fromString typeString: String) -> MessageType {
+        if typeString.elementsEqual("image") {
+            return .image
+        } else {
+            return .text
+        }
+    }
+}

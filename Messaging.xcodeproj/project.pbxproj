@@ -20,6 +20,7 @@
 		140C340C2139242000DC3535 /* ChangePassUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C340B2139242000DC3535 /* ChangePassUseCase.swift */; };
 		140C340F2139243100DC3535 /* ChangePassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 140C340D2139243100DC3535 /* ChangePassVC.swift */; };
 		140C34102139243100DC3535 /* ChangePassVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 140C340E2139243100DC3535 /* ChangePassVC.xib */; };
+		1412CA452159DAB60071FA44 /* ConversationFirebaseSource2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1412CA442159DAB60071FA44 /* ConversationFirebaseSource2.swift */; };
 		141823542135025700DC0E98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823532135025700DC0E98 /* AppDelegate.swift */; };
 		141823562135025700DC0E98 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823552135025700DC0E98 /* ViewController.swift */; };
 		141823592135025700DC0E98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141823572135025700DC0E98 /* Main.storyboard */; };
@@ -168,6 +169,7 @@
 		140C340B2139242000DC3535 /* ChangePassUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassUseCase.swift; path = Messaging/Login/ChangePassUseCase.swift; sourceTree = SOURCE_ROOT; };
 		140C340D2139243100DC3535 /* ChangePassVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassVC.swift; path = Messaging/Login/ChangePassVC.swift; sourceTree = SOURCE_ROOT; };
 		140C340E2139243100DC3535 /* ChangePassVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ChangePassVC.xib; path = Messaging/Login/ChangePassVC.xib; sourceTree = SOURCE_ROOT; };
+		1412CA442159DAB60071FA44 /* ConversationFirebaseSource2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationFirebaseSource2.swift; sourceTree = "<group>"; };
 		141823502135025700DC0E98 /* Messaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141823532135025700DC0E98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		141823552135025700DC0E98 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 		14461A772137EA890062FAC6 /* Impl */ = {
 			isa = PBXGroup;
 			children = (
+				1412CA442159DAB60071FA44 /* ConversationFirebaseSource2.swift */,
 				14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */,
 				147945D6213E80340055CE79 /* UserFirebaseSource.swift */,
 				147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */,
@@ -972,6 +975,7 @@
 				14615400213F68650032EE95 /* SearchContactUseCase.swift in Sources */,
 				140C34022138E95000DC3535 /* ConversationRepositoryImpl.swift in Sources */,
 				142E515A21421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift in Sources */,
+				1412CA452159DAB60071FA44 /* ConversationFirebaseSource2.swift in Sources */,
 				1436689F2148CD4700B2766E /* TextMeMessageCell.swift in Sources */,
 				14615402213F686F0032EE95 /* AddContactRequest.swift in Sources */,
 				149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */,

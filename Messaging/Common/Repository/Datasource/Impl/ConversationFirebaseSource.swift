@@ -313,6 +313,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         guard let typeString = messageDict["type"] as? String else {
             return nil
         }
+        
         if typeString.elementsEqual("text") {
             type = .text
         } else {
@@ -326,10 +327,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         data["at-time"] = "\(messageDict["at-time"]!)"
         data["sent-by"] = messageDict["sent-by"] as? String
         data["local-id"] = messageDict["local-id"] as? String
+        data["mess-id"] = withMessId
         
-        if withMessId != nil {
-            data["mess-id"] = withMessId!
-        }
         
         return Message(type: type, data: data)
     }
