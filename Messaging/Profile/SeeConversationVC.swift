@@ -97,9 +97,14 @@ class SeeConversationVC: BaseVC, ViewFor {
     }
     
     private func registerCells() {
+        self.tableView?.register(TextTimeMessageCell.self)
         self.tableView?.register(TextMessageCell.self)
+        self.tableView?.register(TextMeTimeMessageCell.self)
         self.tableView?.register(TextMeMessageCell.self)
+        
+        self.tableView?.register(ImageTimeMessageCell.self)
         self.tableView?.register(ImageMessageCell.self)
+        self.tableView?.register(ImageMeTimeMessageCell.self)
         self.tableView?.register(ImageMeMessageCell.self)
     }
 }
@@ -116,16 +121,16 @@ extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
             self.tableView?.reloadRows(at: [indexPath], with: .automatic)
             
         } else {
-            self.tableView?.beginUpdates()
+//            self.tableView?.beginUpdates()
             let indexPath = NSIndexPath(row: 0, section: 0)
-            self.tableView?.insertItemsAtIndexPaths([indexPath as IndexPath], animationStyle: .automatic)
+            self.tableView?.insertItemsAtIndexPaths([indexPath as IndexPath], animationStyle: .bottom)
             if addRespond.1 == 1 {
                 // There is change in the current first item
                 let indexPath = NSIndexPath(row: 1, section: 0) as IndexPath
                 //self.tableView?.reloadRows(at: [indexPath], with: .automatic)
-                self.tableView?.reloadItemsAtIndexPaths([indexPath], animationStyle: .automatic)
+                self.tableView?.reloadItemsAtIndexPaths([indexPath], animationStyle: .bottom)
             }
-            self.tableView?.endUpdates()
+//            self.tableView?.endUpdates()
         }
     }
     

@@ -18,11 +18,22 @@ final class MessageItem : Hashable {
     
     let displayTime: String
     
-    init(messageItemType: MessageItemType, message: Message, showTime: Bool = false) {
+    init(messageItemType: MessageItemType, message: Message, showTime: Bool = false, displayTime: String? = nil) {
         self.messageItemType = messageItemType
         self.message = message
-        self.displayTime = Converter.convertToLocalTime(timestamp: message.getAtTimeAsNum())
+        if displayTime != nil {
+            self.displayTime = displayTime!
+        } else {
+            self.displayTime = Converter.convertToLocalTime(timestamp: message.getAtTimeAsNum())
+        }
         self.showTime = showTime
+    }
+    
+    func showNoTime() -> MessageItem {
+        return MessageItem(messageItemType: self.messageItemType,
+                           message: self.message,
+                           showTime: false,
+                           displayTime: self.displayTime)
     }
 }
 

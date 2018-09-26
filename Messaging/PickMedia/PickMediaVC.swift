@@ -149,7 +149,6 @@ extension PickMediaVC {
     func pickImageDone(image: UIImage) {
         // Save image to app's storage
         let mul = Compressor.estimatetMultiplier(forSize: image.size)
-        print("compress: \(mul)")
         guard let data = UIImageJPEGRepresentation(image, mul) else {
             self.delegate?.onMediaItemPickFail()
             return

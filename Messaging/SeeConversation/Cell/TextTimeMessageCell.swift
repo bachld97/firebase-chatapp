@@ -1,11 +1,26 @@
 import UIKit
 
-class TextMessageCell : BaseMessageCell {
+class TextTimeMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
             self.textContent.text = item.message.getContent()
+            self.timeContent.text = item.displayTime
         }
     }
+    
+    private let timeContent: UITextView = {
+        let tv = UITextView()
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        tv.isUserInteractionEnabled = false
+        tv.textColor = UIColor.black
+        tv.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0)
+        tv.clipsToBounds = false
+        tv.isScrollEnabled = false
+        tv.sizeToFit()
+        tv.font = UIFont.systemFont(ofSize: 10.0)
+        tv.textContainerInset = .zero
+        return tv
+    }()
     
     override func prepareUI() {
         // Do UI setup
@@ -57,11 +72,18 @@ class TextMessageCell : BaseMessageCell {
         
         
         let topC2 = NSLayoutConstraint(item: textContent, attribute: .top, relatedBy: .equal, toItem: tvWrapper, attribute: .top, multiplier: 1, constant: 8)
-        let botC2 = NSLayoutConstraint(item: textContent, attribute: .bottom, relatedBy: .equal, toItem: tvWrapper, attribute: .bottom, multiplier: 1, constant: 8 * -1)
+        // let botC2 = NSLayoutConstraint(item: textContent, attribute: .bottom, relatedBy: .equal, toItem: tvWrapper, attribute: .bottom, multiplier: 1, constant: 8 * -1)
         let leftC2 = NSLayoutConstraint(item: textContent, attribute: .leading, relatedBy: .equal, toItem: tvWrapper, attribute: .leading, multiplier: 1, constant: 12)
         let rightC2 = NSLayoutConstraint(item: textContent, attribute: .trailing, relatedBy: .lessThanOrEqual, toItem: tvWrapper, attribute: .trailing, multiplier: 1, constant: 12 * -1)
         
+        let topC3 = NSLayoutConstraint(item: timeContent, attribute: .top, relatedBy: .equal, toItem: textContent, attribute: .bottom, multiplier: 1, constant: 4)
+        let leftC3 = NSLayoutConstraint(item: timeContent, attribute: .leading, relatedBy: .equal, toItem: tvWrapper, attribute: .leading, multiplier: 1, constant: 12)
+        let rightC3 = NSLayoutConstraint(item: timeContent, attribute: .trailing, relatedBy: .lessThanOrEqual, toItem: tvWrapper, attribute: .trailing, multiplier: 1, constant: 12 * -1)
+        
+        let botC2 = NSLayoutConstraint(item: timeContent, attribute: .bottom, relatedBy: .equal, toItem: tvWrapper, attribute: .bottom, multiplier: 1, constant: 8 * -1)
+        
         tvWrapper.addSubview(textContent)
-        tvWrapper.addConstraints([topC2, botC2, leftC2, rightC2])
+        tvWrapper.addSubview(timeContent)
+        tvWrapper.addConstraints([topC2, botC2, leftC2, rightC2, topC3, leftC3, rightC3])
     }
 }

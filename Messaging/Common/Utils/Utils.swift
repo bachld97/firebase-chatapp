@@ -66,7 +66,7 @@ class Converter {
         
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone.local
-        dateFormatter.dateFormat = "hh:mm a"
+        dateFormatter.dateFormat = "HH:mm"// "hh:mm a"
         let time = dateFormatter.string(from: converted as Date)
         return time
     }

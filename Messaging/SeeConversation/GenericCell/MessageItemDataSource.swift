@@ -8,13 +8,13 @@ class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
     private let getReuseIdentifier = { (item: MessageItem) -> String in
         switch item.messageItemType {
         case .text:
-            return TextMessageCell.reuseIdentifier
+            return item.showTime ? TextTimeMessageCell.reuseIdentifier : TextMessageCell.reuseIdentifier
         case .textMe:
-            return TextMeMessageCell.reuseIdentifier
+            return item.showTime ? TextMeTimeMessageCell.reuseIdentifier : TextMeMessageCell.reuseIdentifier
         case .image:
-            return ImageMessageCell.reuseIdentifier
+            return item.showTime ? ImageTimeMessageCell.reuseIdentifier : ImageMessageCell.reuseIdentifier
         case .imageMe:
-            return ImageMeMessageCell.reuseIdentifier
+            return item.showTime ? ImageMeTimeMessageCell.reuseIdentifier : ImageMeMessageCell.reuseIdentifier
         }
     }
     
@@ -34,6 +34,9 @@ class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
             super.insertItemAtFront(item)
             let change = items.count > 1 &&
                 items[1].message.getSentBy().elementsEqual(item.message.getSentBy())
+            if change {
+                items[1] = items[1].showNoTime()
+            }
             return (true, change ? 1 : 0)
         }
     }
