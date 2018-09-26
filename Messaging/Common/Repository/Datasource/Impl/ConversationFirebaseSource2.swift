@@ -64,6 +64,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             }
             
             let messageRef = self.ref.child("messages/\(conversationId)")
+            messageRef.removeAllObservers()
             let query = messageRef.queryOrderedByKey()
             
             if lastId != nil {
@@ -117,6 +118,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                     if error == nil {
                         self.handleSendSuccess(msgId: dbRef.key)
                     } else {
+                        print("Send fail")
                         self.errorPublisher.onNext(error!)
                     }
                 })
@@ -207,12 +209,14 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     
     // MARK: Private
     private func createConversation(of user: User, with contact: Contact) -> Observable<String> {
+        print("Begin create conversation")
         return Observable.create { (obs) in
             let convId = ConvId.get(for: user, with: contact)
             
             let convRef = self.ref.child("conversations/\(convId)")
             let handle = convRef.observe(.value, with: {snapshot in
                 if !snapshot.exists() {
+                    print("Really have to create conversation")
                     var convDict = [String : Any]()
                     convDict["is-private"] = true
                     
@@ -354,7 +358,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             return
         }
         
-        let fromThis = message!.getMessageId().elementsEqual(user.userId)
+        let fromThis = message!.getSentBy().elementsEqual(user.userId)
         
         self.handleMessage(message!, fromThis: fromThis)
     }
@@ -373,7 +377,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             let ref = Storage.storage().reference()
                 .child("messages/\(messId)")
             
-            _ = ref.putFile(from: url, metadata: nil) { metadata, error in
+            let task = ref.putFile(from: url, metadata: nil) { metadata, error in
                 if error != nil {
                     obs.onError(error!)
                 } else {
@@ -403,13 +407,22 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                 }
             }
             
+            // TODO: These are not called :(
+            task.observe(StorageTaskStatus.success, handler: { (_) in
+                print("Upload successfully")
+            })
+            
+            task.observe(StorageTaskStatus.failure, handler: { (_) in
+                print("Upload fail")
+            })
+            
             return Disposables.create()
         }
     }
     
     private func handleMessage(_ message: Message, fromThis: Bool) {
         if fromThis {
-            handleMessageFromUser(message)
+            handleMessageFromUser(message.markAsSending())
         } else {
             handleMessageFromOther(message)
         }
@@ -418,7 +431,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     private func handleMessageFromUser(_ message: Message) {
         if !self.pendingContains(message) {
             self.pendingMessages.append(message)
-            self.messagePublisher.onNext(message.markAsSending())
+            self.messagePublisher.onNext(message)
         } else {
             self.updatePending(message)
         }

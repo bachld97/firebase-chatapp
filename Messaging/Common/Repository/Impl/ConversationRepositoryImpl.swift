@@ -116,8 +116,26 @@ class ConversationRepositoryImpl : ConversationRepository {
                     guard let user = user else {
                         return Observable.error(SessionExpireError())
                     }
+                    let conversationId = ConvId.get(for: user, with: contact)
+                    self.conversationId = conversationId
+                    let localStream = Observable
+                        .just([])
+                        .concat(self.localSource.loadMessages(of: conversationId))
                     
-                    return self.loadMessages(of: ConvId.get(for: user, with: contact))
+                    let remoteStream = Observable
+                        .just([])
+                        .concat(self.remoteSource.loadMessages(of: user, with: contact))
+                    
+                    let finalStream = Observable
+                        .combineLatest(localStream, remoteStream) { [unowned self] in
+                            return self.mergeMessages($0, $1)
+                    }
+                    
+                    return finalStream
+                        .flatMap { [unowned self]  (messages) in
+                            self.localSource
+                                .persistMessages(messages, with: conversationId)
+                    }
             }
         }
     }
@@ -149,6 +167,7 @@ class ConversationRepositoryImpl : ConversationRepository {
             }
         }
     }
+    
     
     private func handleImageSentByMe(_ message: Message, with convId: String) -> Observable<Message> {
         if message.isSending {

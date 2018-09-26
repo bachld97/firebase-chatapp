@@ -134,8 +134,25 @@ class SeeConversationViewModel : ViewModelDelegate {
             })
             .disposed(by: self.disposeBag)
         
-        return Output (
-            error: errorTracker.asDriver())
+        input.sendImagePublish
+            .flatMap { [unowned self] (url) -> Driver<Bool> in
+                return self.getUserUseCase.execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        
+                        let message = self.parseImageMessage(user, url)
+                        
+                        let request = SendMessageToUserRequest(message: message, toUser: contactItem.contact)
+                        return self.sendMessageToUserUseCase
+                            .execute(request: request)
+                            .do()
+                    }
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
+        return Output (error: errorTracker.asDriver())
     }
     
     func transfromWithConversationItem(input: Input, conversationItem: ConversationItem) -> Output {

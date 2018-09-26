@@ -61,10 +61,6 @@ class SeeContactVC: BaseVC, ViewFor, UITableViewDelegate {
             .disposed(by: self.disposeBag)
     }
     
-    var editting = false
-    @objc func toggleSelection() {
-    }
-
     override func prepareUI() {
         self.contactTableView.tableFooterView = UIView()
         self.contactTableView.rowHeight = UITableViewAutomaticDimension
@@ -76,14 +72,6 @@ class SeeContactVC: BaseVC, ViewFor, UITableViewDelegate {
             return cell
         })
         
-        self.contactTableView
-            .rx
-            .longPressGesture()
-            .when(.began)
-            .subscribe({[unowned self] _ in
-                self.toggleSelection()
-            })
-            .disposed(by: self.disposeBag)
 
         self.contactTableView.rx.setDelegate(self)
             .disposed(by: self.disposeBag)
