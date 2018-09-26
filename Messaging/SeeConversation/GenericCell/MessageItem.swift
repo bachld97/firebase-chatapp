@@ -14,10 +14,15 @@ final class MessageItem : Hashable {
     let messageItemType: MessageItemType
     let message: Message
     
+    let showTime: Bool
     
-    init(messageItemType: MessageItemType, message: Message) {
+    let displayTime: String
+    
+    init(messageItemType: MessageItemType, message: Message, showTime: Bool = false) {
         self.messageItemType = messageItemType
         self.message = message
+        self.displayTime = Converter.convertToLocalTime(timestamp: message.getAtTimeAsNum())
+        self.showTime = showTime
     }
 }
 

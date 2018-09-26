@@ -14,7 +14,7 @@ class SeeConversationVC: BaseVC, ViewFor {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sendMessageButton: UIButton!
     
-    private var configurator: MessageCellConfigurator?
+    // private var configurator: MessageCellConfigurator?
     
     private let sendImagePublish = PublishSubject<URL>()
     
@@ -67,9 +67,9 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.tableView.separatorStyle = .none
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 90
-        
+        registerCells()
 
-        self.configurator = MessageCellConfigurator(tableView: self.tableView)
+//        self.configurator = MessageCellConfigurator(tableView: self.tableView)
     }
     override func bindViewModel() {
 //        let viewWillAppear = self.rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
@@ -92,21 +92,53 @@ class SeeConversationVC: BaseVC, ViewFor {
             })
         .disposed(by: self.disposeBag)
         
+        self.tableView?.dataSource = output.dataSource
         onCreatePublish.onNext(())
+    }
+    
+    private func registerCells() {
+        self.tableView?.register(TextMessageCell.self)
+        self.tableView?.register(TextMeMessageCell.self)
+        self.tableView?.register(ImageMessageCell.self)
+        self.tableView?.register(ImageMeMessageCell.self)
     }
 }
 
 extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
+    func notifyItems() {
+        self.tableView?.reloadData()
+    }
+    
+    func notifyItem(with addRespond: (Bool, Int)) {
+        if !addRespond.0 {
+            let index = addRespond.1
+            let indexPath = NSIndexPath(row: index, section: 0) as IndexPath
+            self.tableView?.reloadRows(at: [indexPath], with: .automatic)
+            
+        } else {
+            self.tableView?.beginUpdates()
+            let indexPath = NSIndexPath(row: 0, section: 0)
+            self.tableView?.insertItemsAtIndexPaths([indexPath as IndexPath], animationStyle: .automatic)
+            if addRespond.1 == 1 {
+                // There is change in the current first item
+                let indexPath = NSIndexPath(row: 1, section: 0) as IndexPath
+                //self.tableView?.reloadRows(at: [indexPath], with: .automatic)
+                self.tableView?.reloadItemsAtIndexPaths([indexPath], animationStyle: .automatic)
+            }
+            self.tableView?.endUpdates()
+        }
+    }
+    
     func onMediaItemPicked(mediaItemUrl: URL) {
         self.sendImagePublish.onNext(mediaItemUrl)
     }
     
     func onNewData(items: [MessageItem]) {
-        self.configurator?.setItems(items)
+        // self.configurator?.setItems(items)
     }
 
     func onNewSingleData(item: MessageItem) {
-        self.configurator?.onNewSingleItem(item)
+        // self.configurator?.onNewSingleItem(item)
     }
     
     func onMediaItemPickFail() {

@@ -59,6 +59,19 @@ class Type {
     }
 }
 
+class Converter {
+    public static func convertToLocalTime(timestamp: Int64) -> String {
+        let converted = NSDate(timeIntervalSince1970: TimeInterval(timestamp / 1000))
+        
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = NSTimeZone.local
+        dateFormatter.dateFormat = "hh:mm a"
+        let time = dateFormatter.string(from: converted as Date)
+        return time
+    }
+}
+
 class Compressor {
     public static func estimatetMultiplier(forSize originalSize: CGSize) -> CGFloat {
         return 0.1 // Dummy value, ease out the up/download time and bandwidth while testing

@@ -1,7 +1,7 @@
 import UIKit
 
-final class BaseDatasource<V, M> : NSObject, UITableViewDataSource where V: BaseCell<M> {
-    private var items: [M]
+class BaseDatasource<V, M> : NSObject, UITableViewDataSource where V: BaseCell<M> {
+    open var items: [M]
     
     typealias CellConfiguration = (V, M) -> V
     private let configureCell: CellConfiguration
@@ -17,6 +17,14 @@ final class BaseDatasource<V, M> : NSObject, UITableViewDataSource where V: Base
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
+    }
+    
+    func setItems(items: [M]) {
+        if items.count == 0 && self.items.count == 0 {
+            return
+        }
+        
+        self.items = items
     }
     
     func updateItem(_ items: [M]) {

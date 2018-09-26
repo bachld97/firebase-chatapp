@@ -32,10 +32,11 @@ class MessageCellConfigurator {
         })
         
         if index != nil {
+            // Re-evaluate a few things
             items[index!] = item
             strongDataSource?.updateItem(at: index!, with: item)
-            let indexPath = NSIndexPath(row: index!, section: 0)
-            self.tableView?.reloadRows(at: [indexPath as IndexPath], with: .automatic)
+            let indexPath = NSIndexPath(row: index!, section: 0) as IndexPath
+            self.tableView?.reloadRows(at: [indexPath], with: .automatic)
             return
         }
         
@@ -46,6 +47,10 @@ class MessageCellConfigurator {
     }
     
     func setItems(_ items: [MessageItem]) {
+        if self.items.isEmpty && items.isEmpty {
+            return
+        }
+        
         self.items = items
         self.strongDataSource?.updateItem(self.items)
         self.tableView?.reloadData()
@@ -54,7 +59,6 @@ class MessageCellConfigurator {
     init(tableView: UITableView) {
         self.tableView = tableView
         registerCells()
-        
         self.strongDataSource = BaseDatasource(items: self.items, configureCell: self.configureCell, getReuseIdentifier: self.getReuseIdentifier)
         self.tableView?.dataSource = strongDataSource
     }

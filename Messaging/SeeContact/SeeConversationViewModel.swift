@@ -7,6 +7,9 @@ protocol SeeConversationDisplayLogic : class {
     func goPickMedia()
     func onNewData(items: [MessageItem])
     func onNewSingleData(item: MessageItem)
+    
+    func notifyItems()
+    func notifyItem(with addRespond: (Bool, Int))
 }
 
 class SeeConversationViewModel : ViewModelDelegate {
@@ -17,6 +20,8 @@ class SeeConversationViewModel : ViewModelDelegate {
     let conversationItem: ConversationItem?
     
     let textMessageContent = BehaviorRelay<String>(value: "")
+    
+    private let dataSource: MessasgeItemDataSource = MessasgeItemDataSource()
     
     private let loadConvoFromContactIdUseCase = LoadConvoFromContactIdUseCase()
     private let loadConvoFromConvoIdUseCase = LoadConvoFromConvoIdUseCase()
@@ -152,7 +157,7 @@ class SeeConversationViewModel : ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
         
-        return Output (error: errorTracker.asDriver())
+        return Output (error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
     
     func transfromWithConversationItem(input: Input, conversationItem: ConversationItem) -> Output {
@@ -244,17 +249,21 @@ class SeeConversationViewModel : ViewModelDelegate {
         .disposed(by: self.disposeBag)
 
         return Output(
-            error: errorTracker.asDriver())
+            error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
     
     private func notifyItems(with items: [MessageItem]) {
         lastMessTime = Int64(items.first?.message.getAtTime() ?? "\(lastMessTime)") ?? lastMessTime
-        self.displayLogic?.onNewData(items: items)
+        // self.displayLogic?.onNewData(items: items)
+        self.dataSource.setItems(items: items)
+        self.displayLogic?.notifyItems()
     }
     
     private func notifySingleItem(with item: MessageItem) {
         self.lastMessTime = Int64(item.message.getAtTime() ) ?? self.lastMessTime
-        self.displayLogic?.onNewSingleData(item: item)
+        // self.displayLogic?.onNewSingleData(item: item)
+        let addRespond = self.dataSource.addOrUpdateSingleItem(item: item)
+        self.displayLogic?.notifyItem(with: addRespond)
     }
     
     private func observeNextMessage(fromLastId lastId: String?, withTracker errorTracker: ErrorTracker) {
@@ -297,20 +306,23 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     private func convert(messages: [Message], user: User) -> [MessageItem] {
         var res: [MessageItem] = []
-        for m in messages {
+        for (index, m) in messages.enumerated() {
+            let showTime = index == 0
+                || !m.getSentBy().elementsEqual(messages[index - 1].getSentBy())
+            
             switch m.type {
             case .image:
                 if m.getSentBy().elementsEqual(user.userId) {
-                    res.append(MessageItem(messageItemType: .imageMe, message: m))
+                    res.append(MessageItem(messageItemType: .imageMe, message: m, showTime: showTime))
                 } else {
-                    res.append(MessageItem(messageItemType: .image, message: m))
+                    res.append(MessageItem(messageItemType: .image, message: m, showTime: showTime))
                 }
                 
             case .text:
                 if m.getSentBy().elementsEqual(user.userId) {
-                    res.append(MessageItem(messageItemType: .textMe, message: m))
+                    res.append(MessageItem(messageItemType: .textMe, message: m, showTime: showTime))
                 } else {
-                    res.append(MessageItem(messageItemType: .text, message: m))
+                    res.append(MessageItem(messageItemType: .text, message: m, showTime: showTime))
                 }
             }
         }
@@ -349,6 +361,7 @@ extension SeeConversationViewModel {
     
     struct Output {
         let error: Driver<Error>
+        let dataSource: UITableViewDataSource
     }
     
     enum Item {

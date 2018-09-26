@@ -27,6 +27,10 @@ struct Message {
         return self.data["at-time"]!
     }
     
+    func getAtTimeAsNum() -> Int64 {
+        return Int64(self.data["at-time"]!)!
+    }
+    
     func getTypeAsString() -> String {
         return Type.getMessageTypeString(fromType: self.type)
     }
