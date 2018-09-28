@@ -87,6 +87,9 @@
 		14615419213F8AD00032EE95 /* StrangerContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14615417213F8AD00032EE95 /* StrangerContactCell.swift */; };
 		1461541A213F8AD00032EE95 /* StrangerContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14615418213F8AD00032EE95 /* StrangerContactCell.xib */; };
 		1462D17121535A8F00722B6C /* ConversationRealmSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1462D17021535A8F00722B6C /* ConversationRealmSource.swift */; };
+		14719A47215DCE33006B4D54 /* ConversationItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14719A46215DCE33006B4D54 /* ConversationItemDataSource.swift */; };
+		14719A49215DCF1D006B4D54 /* BaseConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14719A48215DCF1D006B4D54 /* BaseConversationCell.swift */; };
+		14719A4B215DD4DB006B4D54 /* PrivateConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14719A4A215DD4DB006B4D54 /* PrivateConversationCell.swift */; };
 		147231D5215B444B00D54C57 /* MessageItemDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147231D4215B444B00D54C57 /* MessageItemDataSource.swift */; };
 		147231D7215B818900D54C57 /* TextMeTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147231D6215B818900D54C57 /* TextMeTimeMessageCell.swift */; };
 		147231D9215B8DF700D54C57 /* ImageMeTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147231D8215B8DF700D54C57 /* ImageMeTimeMessageCell.swift */; };
@@ -240,6 +243,9 @@
 		14615417213F8AD00032EE95 /* StrangerContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrangerContactCell.swift; sourceTree = "<group>"; };
 		14615418213F8AD00032EE95 /* StrangerContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StrangerContactCell.xib; sourceTree = "<group>"; };
 		1462D17021535A8F00722B6C /* ConversationRealmSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRealmSource.swift; sourceTree = "<group>"; };
+		14719A46215DCE33006B4D54 /* ConversationItemDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationItemDataSource.swift; sourceTree = "<group>"; };
+		14719A48215DCF1D006B4D54 /* BaseConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseConversationCell.swift; sourceTree = "<group>"; };
+		14719A4A215DD4DB006B4D54 /* PrivateConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateConversationCell.swift; sourceTree = "<group>"; };
 		147231D4215B444B00D54C57 /* MessageItemDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageItemDataSource.swift; sourceTree = "<group>"; };
 		147231D6215B818900D54C57 /* TextMeTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMeTimeMessageCell.swift; sourceTree = "<group>"; };
 		147231D8215B8DF700D54C57 /* ImageMeTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMeTimeMessageCell.swift; sourceTree = "<group>"; };
@@ -425,6 +431,9 @@
 				14843FF421413B9E00D5366B /* GroupConvoCell.swift */,
 				14843FF521413B9E00D5366B /* GroupConvoCell.xib */,
 				14843FF121413B7800D5366B /* SingleConvoCell.xib */,
+				14719A46215DCE33006B4D54 /* ConversationItemDataSource.swift */,
+				14719A48215DCF1D006B4D54 /* BaseConversationCell.swift */,
+				14719A4A215DD4DB006B4D54 /* PrivateConversationCell.swift */,
 			);
 			path = ChatHistory;
 			sourceTree = "<group>";
@@ -432,7 +441,6 @@
 		1418236A2135071300DC0E98 /* SeeConversation */ = {
 			isa = PBXGroup;
 			children = (
-				1496B93A21508D8500ED61CD /* GenericCell */,
 				142E515221421BF500FC0593 /* Cell */,
 				142E515121421BE800FC0593 /* Request */,
 				142E515021421BDD00FC0593 /* UseCase */,
@@ -499,6 +507,7 @@
 		1418236F213507D900DC0E98 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				1496B93A21508D8500ED61CD /* GenericCell */,
 				14CEE975213655E600A31FBB /* Utils */,
 				141823662135056E00DC0E98 /* Repository */,
 			);
@@ -508,6 +517,10 @@
 		142E515021421BDD00FC0593 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				1496B9432150981B00ED61CD /* MessageItem.swift */,
+				1496B94721509AB600ED61CD /* MessageCellConfigurator.swift */,
+				1496B94F2150AE7B00ED61CD /* MessageCellConstants.swift */,
+				147231D4215B444B00D54C57 /* MessageItemDataSource.swift */,
 				142E515721421CE500FC0593 /* LoadConvoFromContactIdUseCase.swift */,
 				142E515921421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift */,
 				1447A96D2146764C00F7E1CF /* SendMessageUseCase.swift */,
@@ -538,6 +551,7 @@
 		142E515221421BF500FC0593 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				1496B9412150977400ED61CD /* BaseMessageCell.swift */,
 				1412CA46215A2B0E0071FA44 /* ImageMessageCell.swift */,
 				1496B9452150998200ED61CD /* TextMessageCell.swift */,
 				1496B9492150AB3900ED61CD /* TextMeMessageCell.swift */,
@@ -656,11 +670,6 @@
 				1496B93B21508DA900ED61CD /* Reusable.swift */,
 				1496B93D21508F0A00ED61CD /* BaseCell.swift */,
 				1496B93F21508F8400ED61CD /* BaseDataSource.swift */,
-				1496B9412150977400ED61CD /* BaseMessageCell.swift */,
-				1496B9432150981B00ED61CD /* MessageItem.swift */,
-				1496B94721509AB600ED61CD /* MessageCellConfigurator.swift */,
-				1496B94F2150AE7B00ED61CD /* MessageCellConstants.swift */,
-				147231D4215B444B00D54C57 /* MessageItemDataSource.swift */,
 			);
 			path = GenericCell;
 			sourceTree = "<group>";
@@ -910,6 +919,7 @@
 				14A239D1214B4EBF0027743D /* UploadAvatarRequest.swift in Sources */,
 				14A239DC214BC6EF0027743D /* PickMediaViewModel.swift in Sources */,
 				14848ACB2140C7FC00DAA9F8 /* AcceptRequestUseCase.swift in Sources */,
+				14719A47215DCE33006B4D54 /* ConversationItemDataSource.swift in Sources */,
 				14843FF621413B9E00D5366B /* GroupConvoCell.swift in Sources */,
 				140C34082139240600DC3535 /* ChangePassVIewModel.swift in Sources */,
 				1412CA47215A2B0E0071FA44 /* ImageMessageCell.swift in Sources */,
@@ -955,6 +965,7 @@
 				147231DD215B971600D54C57 /* ImageTimeMessageCell.swift in Sources */,
 				147945D7213E80340055CE79 /* UserFirebaseSource.swift in Sources */,
 				140C33F22138D37900DC3535 /* SeeProfileViewModel.swift in Sources */,
+				14719A4B215DD4DB006B4D54 /* PrivateConversationCell.swift in Sources */,
 				1439D99921369D1B0094C12C /* SignupUseCase.swift in Sources */,
 				14461A5221379CC40062FAC6 /* SeeContactVC.swift in Sources */,
 				14848ADB214113C300DAA9F8 /* ConversationLocalSource.swift in Sources */,
@@ -987,6 +998,7 @@
 				1412CA452159DAB60071FA44 /* ConversationFirebaseSource2.swift in Sources */,
 				14615402213F686F0032EE95 /* AddContactRequest.swift in Sources */,
 				149CC71E213FAA6900B376E9 /* ContactFirebaseSource.swift in Sources */,
+				14719A49215DCF1D006B4D54 /* BaseConversationCell.swift in Sources */,
 				14461A762137E8D80062FAC6 /* ContactLocalSource.swift in Sources */,
 				1485C318214F4542003568B9 /* PhotoCell.swift in Sources */,
 				147945C9213E31010055CE79 /* ContactItem.swift in Sources */,

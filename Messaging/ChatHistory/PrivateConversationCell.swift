@@ -1,0 +1,3 @@
+class PrivateConversationCell : BaseConversationCell {
+    
+}

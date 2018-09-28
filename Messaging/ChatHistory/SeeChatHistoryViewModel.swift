@@ -1,9 +1,12 @@
 import RxSwift
 import RxCocoa
+import DeepDiff
 
 protocol SeeChatHistoryDisplayLogic: class {
     func goConversation(item: ConversationItem)
     func showEmpty()
+    
+    func notifyItems(with changes: [Change<ConversationItem>]?)
 }
 class SeeChatHistoryViewModel: ViewModelDelegate {
     
@@ -12,86 +15,61 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
         self.disposeBag = DisposeBag()
     }
     
+    private let dataSource = ConversationItemDataSource()
     private let disposeBag: DisposeBag
     private weak var displayLogic : SeeChatHistoryDisplayLogic?
     private let seeChatHistoryUseCase = SeeChatHistoryUseCase()
     
-    public let items = BehaviorRelay<[Item]>(value: [])
+    // public let items = BehaviorRelay<[Item]>(value: [])
     
     func transform(input: SeeChatHistoryViewModel.Input) -> SeeChatHistoryViewModel.Output {
         let errorTracker = ErrorTracker()
         
         input.trigger
-            .flatMap { [unowned self] (_) -> Driver<[Conversation]> in
+            .flatMap { [unowned self] (_) -> Driver<[ConversationItem]> in
                 return Observable.deferred { [unowned self] in
                     return self.seeChatHistoryUseCase
                         .execute(request: ())
-                        .do(onNext: { [unowned self] in
-                            var items: [Item] = []
+                        .do()
+                        .flatMap { (conversations) -> Observable<[ConversationItem]> in
+                            var items: [ConversationItem] = []
                             
-                            items.append(contentsOf: $0.map { (conversation) in
-                                let convoItem = ConversationItem(conversation: conversation)
-                                switch conversation.type {
-                                case .group:
-                                    return Item(convoItem: convoItem, convoType: .group)
-                                case .single:
-                                    return Item(convoItem: convoItem, convoType: .single)
-                                }
+                            items.append(contentsOf: conversations.map {
+                                ConversationItem(conversation: $0)
                             })
                             
-                            self.items.accept(items)
-                        }) 
-                }
-                .trackError(errorTracker)
-                .asDriverOnErrorJustComplete()
-        }
-        .drive()
-        .disposed(by: self.disposeBag)
+                            return Observable.just(items)
+                    }
+                    }
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive(onNext: { (convItems) in
+                let changes = self.dataSource.setItems(items: convItems)
+                self.displayLogic?.notifyItems(with: changes)
+            })
+            .disposed(by: self.disposeBag)
         
-        //        TODO: Use publishSubject to establish reload (pull to refresh)
-//        input.reloadTrigger
-//            .flatMap { [unowned self] (_) -> Driver<[Conversation]> in
-//                return Observable.deferred { [unowned self] in
-//                    return self.seeChatHistoryUseCase
-//                        .execute(request: ())
-//                        .do(onNext: { [unowned self] (conversations) in
-//                            // TODO: Inflate the table
-//                        })
-//                    }
-//                    .trackError(errorTracker)
-//                    .asDriverOnErrorJustComplete()
-//            }
-//            .drive()
-//            .disposed(by: self.disposeBag)
+        input.conversationTrigger
+            .drive(onNext: { (index) in
+                self.displayLogic?.goConversation(item: self.dataSource.getItem(atIndex: index))
+            })
+            .disposed(by: self.disposeBag)
         
         return Output(
             error: errorTracker.asDriver(),
-            items: self.items.asDriver())
+            dataSource: self.dataSource)
     }
 }
 
 extension SeeChatHistoryViewModel {
     struct Input {
         let trigger: Driver<Void>
+        let conversationTrigger: Driver<Int>
     }
     
     struct Output {
         let error: Driver<Error>
-        let items: Driver<[Item]>
-    }
-    
-    class Item {
-        let convoItem: ConversationItem
-        let convoType: ItemType
-        
-        init(convoItem: ConversationItem, convoType: ItemType) {
-            self.convoItem = convoItem
-            self.convoType = convoType
-        }
-    }
-    
-    enum ItemType {
-        case single
-        case group
+        let dataSource: UITableViewDataSource
     }
 }

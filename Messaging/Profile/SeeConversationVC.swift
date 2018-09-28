@@ -43,9 +43,7 @@ class SeeConversationVC: BaseVC, ViewFor {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // self.navigationController?.navigationItem.largeTitleDisplayMode = .never
         self.navigationItem.largeTitleDisplayMode = .never
-        // self.navigationItem.title = "Helo"
     }
     
 
@@ -70,12 +68,8 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.tableView.estimatedRowHeight = 90
         registerCells()
 
-//        self.configurator = MessageCellConfigurator(tableView: self.tableView)
     }
     override func bindViewModel() {
-//        let viewWillAppear = self.rx.sentMessage(#selector(UIViewController.viewWillAppear(_:)))
-//            .mapToVoid()
-//            .asDriverOnErrorJustComplete()
         
         let input = SeeConversationViewModel.Input(
             trigger: onCreatePublish.asDriverOnErrorJustComplete(),

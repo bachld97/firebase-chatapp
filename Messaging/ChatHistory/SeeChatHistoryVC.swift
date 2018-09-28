@@ -2,11 +2,13 @@ import UIKit
 import RxSwift
 import RxDataSources
 import RxCocoa
+import DeepDiff
 
 class SeeChatHistoryVC: BaseVC, ViewFor {
     var viewModel: SeeChatHistoryViewModel!
     private var disposeBag = DisposeBag()
-    private var items: RxTableViewSectionedReloadDataSource<SectionModel<String, SeeChatHistoryViewModel.Item>>!
+    
+    private let conversationPublisher = PublishSubject<Int>()
     
     @IBOutlet weak var tableView: UITableView!
     typealias ViewModelType = SeeChatHistoryViewModel
@@ -41,37 +43,18 @@ class SeeChatHistoryVC: BaseVC, ViewFor {
     override func prepareUI() {
         self.tableView.tableFooterView = UIView()
         self.tableView.rowHeight = 72
-        self.tableView.register(
-            UINib(nibName: "SingleConvoCell", bundle: nil),
-            forCellReuseIdentifier: "SingleConvoCell")
-        
-        self.tableView.register(
-        UINib(nibName: "GroupConvoCell", bundle: nil),
-        forCellReuseIdentifier: "GroupConvoCell")
-        
-        self.items = RxTableViewSectionedReloadDataSource<SectionModel<String, SeeChatHistoryViewModel.Item>>(configureCell: { (_, tv, ip, item) -> UITableViewCell in
-            let convoItem = item.convoItem
-            switch item.convoType {
-            case .single:
-                let cell = tv.dequeueReusableCell(withIdentifier: "SingleConvoCell")
-                    as! SingleConvoCell
-                cell.bind(convoItem: convoItem)
-                return cell
-            case .group:
-                let cell = tv.dequeueReusableCell(withIdentifier: "GroupConvoCell")
-                    as! GroupConvoCell
-                cell.bind(convoItem: convoItem)
-                return cell
-            }
-        })
+        registerCells()
         
         self.tableView.rx.itemSelected.asDriver()
             .drive(onNext: { [unowned self] (ip) in
                 self.tableView.deselectRow(at: ip, animated: false)
-                let item = self.items.sectionModels[0].items[ip.row]
-                self.goConversation(item: item.convoItem)
+                self.conversationPublisher.onNext(ip.item)
             })
             .disposed(by: self.disposeBag)
+    }
+    
+    private func registerCells() {
+        self.tableView?.register(PrivateConversationCell.self)
     }
     
     override func bindViewModel() {
@@ -80,7 +63,8 @@ class SeeChatHistoryVC: BaseVC, ViewFor {
             .asDriverOnErrorJustComplete()
         
         let input = SeeChatHistoryViewModel.Input(
-            trigger: viewWillAppear)
+            trigger: viewWillAppear,
+            conversationTrigger: conversationPublisher.asDriverOnErrorJustComplete())
 
         let output = self.viewModel.transform(input: input)
         
@@ -90,21 +74,24 @@ class SeeChatHistoryVC: BaseVC, ViewFor {
             })
             .disposed(by: self.disposeBag)
         
-        output.items
-            .map { [SectionModel(model: "Items", items: $0)]}
-            .drive (self.tableView.rx.items(dataSource: self.items))
-            .disposed(by: self.disposeBag)
+         self.tableView.dataSource = output.dataSource
     }
 }
 
 extension SeeChatHistoryVC: SeeChatHistoryDisplayLogic {
+    func notifyItems(with changes: [Change<ConversationItem>]?) {
+        guard changes != nil else {
+            self.tableView?.reloadData()
+            return
+        }
+        
+        self.tableView?.reload(changes: changes!, completion: { (_) in })
+    }
+    
     func goConversation(item: ConversationItem) {
         let vc = SeeConversationVC.instance(conversationItem: item)
         vc.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(vc, animated: true)
-        // let nc = UINavigationController(rootViewController: vc)
-        
-        // present(nc, animated: true, completion: nil)
     }
     
     func showEmpty() {
