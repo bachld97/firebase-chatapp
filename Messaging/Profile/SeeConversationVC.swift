@@ -2,6 +2,7 @@ import UIKit
 import RxCocoa
 import RxSwift 
 import RxDataSources
+import DeepDiff
 
 class SeeConversationVC: BaseVC, ViewFor {
     var viewModel: SeeConversationViewModel!
@@ -110,8 +111,13 @@ class SeeConversationVC: BaseVC, ViewFor {
 }
 
 extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
-    func notifyItems() {
-        self.tableView?.reloadData()
+    func notifyItems(with changes: [Change<MessageItem>]?) {
+        guard changes != nil else {
+            self.tableView?.reloadData()
+            return
+        }
+        
+        self.tableView?.reload(changes: changes!, completion: { (_) in })
     }
     
     func notifyItem(with addRespond: (Bool, Int)) {

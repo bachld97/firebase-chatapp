@@ -21,6 +21,7 @@ class PickMediaVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource,
         super.viewDidLoad()
         self.title = "Photos"
         
+        hasCamera = UIImagePickerController.isSourceTypeAvailable(.camera)
         askPermission()
     }
     
@@ -39,6 +40,7 @@ class PickMediaVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource,
         collectionView.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
     }
     
+    var hasCamera: Bool = false
     weak var delegate: PickMediaDelegate?
     var collectionView: UICollectionView!
     var imageArray = [UIImage]()
@@ -79,17 +81,16 @@ class PickMediaVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource,
                 for i in 0..<fetchResult.count {
                     imgManager.requestImage(
                         for: fetchResult.object(at: i) as PHAsset,
-                        targetSize: CGSize(width: 480, height: 480),
+                        targetSize: CGSize(width: 240, height: 240),
                         contentMode: .aspectFill,
                         options: requestOptions,
                         resultHandler: { [unowned self] (image, error) in
                             self.imageArray.append(image!)
+                            DispatchQueue.main.async {
+                                self.collectionView.reloadData()
+                            }
                     })
                 }
-            }
-            
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
             }
         }
     }
@@ -100,26 +101,41 @@ class PickMediaVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageArray.count + 1
+        if hasCamera {
+            return imageArray.count + 1
+        }
+        return imageArray.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let index = indexPath.item
-        if index == 0 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "CameraCell", for: indexPath)
+        if hasCamera {
+            if index == 0 {
+                return collectionView.dequeueReusableCell(withReuseIdentifier: "CameraCell", for: indexPath)
+            } else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
+                cell.bind(imageToBind: imageArray[index - 1])
+                return cell
+            }
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
-            cell.bind(imageToBind: imageArray[index - 1])
+            cell.bind(imageToBind: imageArray[index])
             return cell
         }
+            
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let index = indexPath.item
-        if index == 0 {
-            // Camera Cell
+        if hasCamera {
+            if index == 0 {
+                // Camera Cell
+            } else {
+                self.pickImageDone(image: imageArray[index - 1])
+            }
         } else {
-            self.pickImageDone(image: imageArray[index - 1])
+            self.pickImageDone(image: imageArray[index])
         }
     }
     
@@ -141,6 +157,7 @@ class PickMediaVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource,
         return 1.0
     }
 }
+
 extension PickMediaVC {
     func pickImageDone(url: URL) {
         self.delegate?.onMediaItemPicked(mediaItemUrl: url)

@@ -1,3 +1,5 @@
+import DeepDiff
+
 class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
     
     private let configureCell = { (cell: BaseMessageCell, item: MessageItem) -> BaseMessageCell in
@@ -21,6 +23,16 @@ class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
     init() {
         super.init(items: [], configureCell: self.configureCell,
                    getReuseIdentifier: self.getReuseIdentifier)
+    }
+    
+    func setItems(items: [MessageItem]) -> [Change<MessageItem>]? {
+        if items.count == 0 && self.items.count == 0 {
+            return nil
+        }
+        
+        let changes = diff(old: self.items, new: items)
+        self.items = items
+        return changes
     }
     
     

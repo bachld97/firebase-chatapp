@@ -1,5 +1,6 @@
 import RxSwift
 import RxCocoa
+import DeepDiff
 
 protocol SeeConversationDisplayLogic : class {
     func goBack()
@@ -8,7 +9,7 @@ protocol SeeConversationDisplayLogic : class {
     func onNewData(items: [MessageItem])
     func onNewSingleData(item: MessageItem)
     
-    func notifyItems()
+    func notifyItems(with changes: [Change<MessageItem>]?)
     func notifyItem(with addRespond: (Bool, Int))
 }
 
@@ -53,7 +54,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.disposeBag = DisposeBag()
         self.contactItem = nil
     }
-
+    
     // init(displayLogic: SeeConversationDisplayLogic, chatHistoryItem: ChatHistoryItem) { }
     
     func transform(input: Input) -> Output {
@@ -75,32 +76,35 @@ class SeeConversationViewModel : ViewModelDelegate {
         fatalError("ContactItem or ConversationItem must be not nil, or it is impossible to load conversation")
     }
     
-    // TODO: Move all displayLogic interaction into drive() block.
     func transformWithContactItem(input: Input, contactItem: ContactItem) -> Output {
         let errorTracker = ErrorTracker()
         
         input.trigger
-            .flatMap { [unowned self] (_) -> Driver<[Message]> in
+            .flatMap { [unowned self] (_) -> Driver<[MessageItem]> in
                 let request = LoadConvoFromContactRequest(contact: contactItem.contact)
                 
                 return self.getUserUseCase
                     .execute(request: ())
-                    .flatMap { [unowned self] (user) -> Observable<[Message]> in
+                    .flatMap { [unowned self] (user) -> Observable<[MessageItem]> in
                         return self.loadConvoFromContactIdUseCase
                             .execute(request: request)
-                            .do(onNext: { [unowned self] (messages) in
+                            .do()
+                            .flatMap {[unowned self] (messages) -> Observable<[MessageItem]> in
                                 let messageItems = self.convert(messages: messages, user: user)
-                                self.displayLogic?.onNewData(items: messageItems)
                                 self.observeNextMessage(fromLastId: messageItems.first?.message.getMessageId(),
                                                         withTracker: errorTracker)
-                            })
+                                return Observable.just(messageItems)
+                        }
                     }
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             }
-            .drive()
+            .drive(onNext: { [unowned self] (items) in
+                self.notifyItems(with: items)
+            })
             .disposed(by: self.disposeBag)
-
+        
+        
         input.sendMessTrigger
             .flatMap { [unowned self] (_) -> Driver<Bool> in
                 return self.getUserUseCase.execute(request: ())
@@ -115,7 +119,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                         
                         self.displayLogic?.clearText()
                         self.textMessageContent.accept("")
-                      
+                        
                         return self.sendMessageToUserUseCase
                             .execute(request: SendMessageToUserRequest(
                                 message: message,
@@ -188,6 +192,7 @@ class SeeConversationViewModel : ViewModelDelegate {
             })
             .disposed(by: self.disposeBag)
         
+        
         input.sendMessTrigger
             .flatMap { [unowned self] (_) -> Driver<Bool> in
                 return self.getUserUseCase.execute(request: ())
@@ -195,7 +200,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                         guard !self.textMessageContent.value
                             .trimmingCharacters(in: .whitespacesAndNewlines)
                             .isEmpty else {
-                            return Observable.just(false)
+                                return Observable.just(false)
                         }
                         
                         let message = self.parseTextMessage(user)
@@ -213,7 +218,7 @@ class SeeConversationViewModel : ViewModelDelegate {
             }
             .drive()
             .disposed(by: self.disposeBag)
-
+        
         let request = GetConversationLabelRequest(
             conversation: conversationItem.conversation)
         
@@ -227,7 +232,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                 self.displayLogic?.goPickMedia()
             })
             .disposed(by: self.disposeBag)
-
+        
         
         input.sendImagePublish
             .flatMap { [unowned self] (url) -> Driver<Bool> in
@@ -244,10 +249,10 @@ class SeeConversationViewModel : ViewModelDelegate {
                     }
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
-        }
-        .drive()
-        .disposed(by: self.disposeBag)
-
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
         return Output(
             error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
@@ -255,8 +260,10 @@ class SeeConversationViewModel : ViewModelDelegate {
     private func notifyItems(with items: [MessageItem]) {
         lastMessTime = Int64(items.first?.message.getAtTime() ?? "\(lastMessTime)") ?? lastMessTime
         // self.displayLogic?.onNewData(items: items)
-        self.dataSource.setItems(items: items)
-        self.displayLogic?.notifyItems()
+        
+        // TODO: Return the changes here
+        let changes = self.dataSource.setItems(items: items)
+        self.displayLogic?.notifyItems(with: changes)
     }
     
     private func notifySingleItem(with item: MessageItem) {
@@ -326,7 +333,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                 }
             }
         }
-
+        
         return res
     }
     

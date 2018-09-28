@@ -141,6 +141,8 @@
 		14A239DA214BC6A20027743D /* PickMediaVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14A239D8214BC6A20027743D /* PickMediaVC.xib */; };
 		14A239DC214BC6EF0027743D /* PickMediaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239DB214BC6EF0027743D /* PickMediaViewModel.swift */; };
 		14A239DE214BC78F0027743D /* PickMediaDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A239DD214BC78F0027743D /* PickMediaDelegate.swift */; };
+		14B4DA7D215C95AF002CF340 /* PickMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B4DA7B215C95AF002CF340 /* PickMediaViewController.swift */; };
+		14B4DA7E215C95AF002CF340 /* PickMediaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14B4DA7C215C95AF002CF340 /* PickMediaViewController.xib */; };
 		14B7BFEC2151EBFA00236C3D /* ObserveNextMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B7BFEB2151EBFA00236C3D /* ObserveNextMessageUseCase.swift */; };
 		14B7BFEE215201A500236C3D /* ObserveNextMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */; };
 		14BB32A72153A0160076A991 /* PersistSendingMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB32A62153A0160076A991 /* PersistSendingMessageRequest.swift */; };
@@ -292,6 +294,8 @@
 		14A239D8214BC6A20027743D /* PickMediaVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickMediaVC.xib; sourceTree = "<group>"; };
 		14A239DB214BC6EF0027743D /* PickMediaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMediaViewModel.swift; sourceTree = "<group>"; };
 		14A239DD214BC78F0027743D /* PickMediaDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMediaDelegate.swift; sourceTree = "<group>"; };
+		14B4DA7B215C95AF002CF340 /* PickMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickMediaViewController.swift; sourceTree = "<group>"; };
+		14B4DA7C215C95AF002CF340 /* PickMediaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickMediaViewController.xib; sourceTree = "<group>"; };
 		14B7BFEB2151EBFA00236C3D /* ObserveNextMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveNextMessageUseCase.swift; sourceTree = "<group>"; };
 		14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveNextMessageRequest.swift; sourceTree = "<group>"; };
 		14BB32A62153A0160076A991 /* PersistSendingMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistSendingMessageRequest.swift; sourceTree = "<group>"; };
@@ -670,6 +674,8 @@
 				14A239DD214BC78F0027743D /* PickMediaDelegate.swift */,
 				1485C317214F4542003568B9 /* PhotoCell.swift */,
 				1485C319214F4BC1003568B9 /* CameraCell.swift */,
+				14B4DA7B215C95AF002CF340 /* PickMediaViewController.swift */,
+				14B4DA7C215C95AF002CF340 /* PickMediaViewController.xib */,
 			);
 			path = PickMedia;
 			sourceTree = "<group>";
@@ -781,6 +787,7 @@
 				14461A5721379CEC0062FAC6 /* SeeProfileVC.xib in Resources */,
 				140C34102139243100DC3535 /* ChangePassVC.xib in Resources */,
 				14461A5121379CC40062FAC6 /* SeeContactVC.xib in Resources */,
+				14B4DA7E215C95AF002CF340 /* PickMediaViewController.xib in Resources */,
 				1439D99321365C3D0094C12C /* LoginVC.xib in Resources */,
 				14461A5C21379DFF0062FAC6 /* SeeConversationVC.xib in Resources */,
 				147945DB213E85860055CE79 /* GoogleService-Info.plist in Resources */,
@@ -994,6 +1001,7 @@
 				14848ACF2140C83600DAA9F8 /* SendRequestUseCase.swift in Sources */,
 				14461A682137A65D0062FAC6 /* ContactRepository.swift in Sources */,
 				14CEE9802136584000A31FBB /* UserRepository.swift in Sources */,
+				14B4DA7D215C95AF002CF340 /* PickMediaViewController.swift in Sources */,
 				14182371213507E500DC0E98 /* ViewFor.swift in Sources */,
 				14C0A8F0215345B50026D775 /* MessageRealm.swift in Sources */,
 				1496B93C21508DA900ED61CD /* Reusable.swift in Sources */,

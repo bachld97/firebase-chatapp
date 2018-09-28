@@ -19,14 +19,6 @@ class BaseDatasource<V, M> : NSObject, UITableViewDataSource where V: BaseCell<M
         return items.count
     }
     
-    func setItems(items: [M]) {
-        if items.count == 0 && self.items.count == 0 {
-            return
-        }
-        
-        self.items = items
-    }
-    
     func updateItem(_ items: [M]) {
         self.items = items
     }

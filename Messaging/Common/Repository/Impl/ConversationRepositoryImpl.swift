@@ -129,7 +129,7 @@ class ConversationRepositoryImpl : ConversationRepository {
                     let finalStream = Observable
                         .combineLatest(localStream, remoteStream) { [unowned self] in
                             return self.mergeMessages($0, $1)
-                    }
+                    }.skip(1)
                     
                     return finalStream
                         .flatMap { [unowned self]  (messages) in
@@ -227,7 +227,7 @@ class ConversationRepositoryImpl : ConversationRepository {
             let finalStream = Observable
                 .combineLatest(localStream, remoteStream) { [unowned self] in
                     return self.mergeMessages($0, $1)
-            }
+            }.skip(1)
             
             return finalStream
                 .flatMap { [unowned self]  (messages) in
