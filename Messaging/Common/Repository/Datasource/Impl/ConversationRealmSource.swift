@@ -13,8 +13,19 @@ class ConversationRealmSource : ConversationLocalSource {
                                                       userId: user.userId)
                 })
             
-            
             return Observable.just(Array(conversations))
+        }
+    }
+    
+    func persistConversations(_ conversations: [Conversation], of user: User) -> Observable<[Conversation]> {
+        return Observable.deferred {
+            let realm = try Realm()
+            try conversations.forEach { (conv) in
+                try realm.write {
+                    realm.add(ConversationRealm.from(conv), update: true)
+                }
+            }
+            return Observable.just(conversations)
         }
     }
     

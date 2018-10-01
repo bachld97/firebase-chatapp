@@ -23,19 +23,7 @@ class ConversationRepositoryImpl : ConversationRepository {
         }
     }
     
-    //    func persistSendingMessage(message: Message) -> Observable<Message> {
-    //        return Observable.deferred { [unowned self] in
-    //            guard let conversationId = self.conversationId else {
-    //                return Observable.just(message)
-    //            }
-    //
-    //            return self.localSource
-    //                .persistMessage(message, with: conversationId)
-    //        }
-    //    }
-    
     func getContactNickname(contact: Contact) -> Observable<String> {
-        // return Observable.just("Private")
         return Observable.deferred { [unowned self] in
             self.userRepository
                 .getUser()
@@ -100,11 +88,34 @@ class ConversationRepositoryImpl : ConversationRepository {
                         return Observable.error(SessionExpireError())
                     }
                     
-                    return self.remoteSource
-                        .loadChatHistory(of: user)
+                    let remoteStream = Observable.just([])
+                        .concat(self.remoteSource
+                            .loadChatHistory(of: user))
+                    
+                    let localStream = Observable.just([])
+                        .concat(self.localSource
+                            .loadChatHistory(of: user))
+                    
+                    let finalStream = Observable
+                        .combineLatest(localStream, remoteStream) { [unowned self] in
+                            return self.mergeConversations($0, $1)
+                        }.skip(1)
+                    
+                    return finalStream
+                        .flatMap { [unowned self] (conversations) in
+                            return self.localSource
+                                .persistConversations(conversations, of: user)
+                    }
             }
         }
     }
+    
+    private func mergeConversations(_ localConversations: [Conversation],
+                                   _ remoteConversations: [Conversation]) -> [Conversation] {
+        
+        return []
+    }
+    
     
     
     func loadMessages(with contact: Contact) -> Observable<[Message]> {
@@ -129,7 +140,7 @@ class ConversationRepositoryImpl : ConversationRepository {
                     let finalStream = Observable
                         .combineLatest(localStream, remoteStream) { [unowned self] in
                             return self.mergeMessages($0, $1)
-                    }.skip(1)
+                        }.skip(1)
                     
                     return finalStream
                         .flatMap { [unowned self]  (messages) in
@@ -159,7 +170,7 @@ class ConversationRepositoryImpl : ConversationRepository {
                             
                             if message.getSentBy().elementsEqual(user.userId) && message.type == .image {
                                 return self.handleImageSentByMe(message, with: convId)
-                                } else {
+                            } else {
                                 return self.localSource
                                     .persistMessage(message, with: convId)
                             }
@@ -227,7 +238,7 @@ class ConversationRepositoryImpl : ConversationRepository {
             let finalStream = Observable
                 .combineLatest(localStream, remoteStream) { [unowned self] in
                     return self.mergeMessages($0, $1)
-            }.skip(1)
+                }.skip(1)
             
             return finalStream
                 .flatMap { [unowned self]  (messages) in
