@@ -7,6 +7,7 @@ class BaseMessageCell: BaseCell<MessageItem> {
         prepareUI()
     }
     
+    
     func prepareUI() {}
 
     required init?(coder aDecoder: NSCoder) {

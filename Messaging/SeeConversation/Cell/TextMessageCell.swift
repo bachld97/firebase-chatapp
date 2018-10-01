@@ -23,7 +23,7 @@ class TextMessageCell : BaseMessageCell {
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.isUserInteractionEnabled = false
         tv.textColor = UIColor.black
-        tv.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        tv.backgroundColor = UIColor.clear
         tv.clipsToBounds = false
         tv.isScrollEnabled = false
         tv.sizeToFit()

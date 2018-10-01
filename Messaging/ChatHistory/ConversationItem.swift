@@ -10,8 +10,34 @@ class ConversationItem : Hashable {
     
     let conversation: Conversation
     let convoType: ConvoType
+    let displayTime: String
+    let displayTitle: String
+    let displayContent: String
+    let displayAva: String
+    
     init(conversation: Conversation) {
         self.conversation = conversation
         self.convoType = conversation.type
+        self.displayTime = Converter.convertToHistoryTime(timestamp: conversation.lastMess.getAtTimeAsNum())
+        
+        let tem = conversation.id.split(separator: " ")
+        var userToDisplay: String!
+        if tem[0].elementsEqual(conversation.myId) {
+            userToDisplay = String(tem[1])
+        } else {
+            userToDisplay = String(tem[0])
+        }
+        self.displayAva = UrlBuilder.buildUrl(forUserId: userToDisplay)
+        
+        self.displayTitle = conversation.nickname[userToDisplay] ?? userToDisplay
+        
+        let content: String
+        switch conversation.lastMess.type {
+        case .text:
+            content = conversation.lastMess.getContent()
+        case.image:
+            content = "[Image]"
+        }
+        self.displayContent = content
     }
 }

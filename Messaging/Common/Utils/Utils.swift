@@ -63,6 +63,15 @@ class Converter {
     public static func convertToLocalTime(timestamp: Int64) -> String {
         let converted = NSDate(timeIntervalSince1970: TimeInterval(timestamp / 1000))
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = NSTimeZone.local
+        dateFormatter.dateFormat = "HH:mm"// "hh:mm a"
+        let time = dateFormatter.string(from: converted as Date)
+        return time
+    }
+    
+    public static func convertToHistoryTime(timestamp: Int64) -> String {
+        let converted = NSDate(timeIntervalSince1970: TimeInterval(timestamp / 1000))
         
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone.local

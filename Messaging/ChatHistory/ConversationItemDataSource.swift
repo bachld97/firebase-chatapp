@@ -3,7 +3,7 @@ import DeepDiff
 class ConversationItemDataSource : BaseDatasource<BaseConversationCell, ConversationItem> {
     
     private let configureCell = { (cell: BaseConversationCell, item: ConversationItem) -> BaseConversationCell in
-//        cell.bind(item)
+        cell.item = item
         return cell
     }
     
