@@ -87,10 +87,34 @@ class Compressor {
     }
 }
 
+class DictionaryConverter {
+    public static func convert(from dict: [String : String]) -> String {
+        var res = ""
+        
+        for (key, value) in dict {
+            res.append("\(key):\(value)|")
+        }
+        
+        return res
+    }
+    
+    public static func convert(from formattedString: String) -> [String : String] {
+        var res = [String : String]()
+        let arr = formattedString.split(separator: "|")
+        arr.forEach { (s) in
+                if !s.isEmpty {
+                let sub = s.split(separator: ":")
+                res[String(sub.first!)] = String(sub.last!)
+            }
+        }
+        return res
+    }
+}
+
 extension String {
     subscript(_ range: CountableRange<Int>) -> String {
         let idx1 = index(startIndex, offsetBy: max(0, range.lowerBound))
         let idx2 = index(startIndex, offsetBy: min(self.count, range.upperBound))
         return String(self[idx1..<idx2])
     }
-}       
+}

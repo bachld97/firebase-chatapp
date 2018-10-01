@@ -95,6 +95,7 @@
 		147231D9215B8DF700D54C57 /* ImageMeTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147231D8215B8DF700D54C57 /* ImageMeTimeMessageCell.swift */; };
 		147231DB215B950500D54C57 /* TextTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147231DA215B950500D54C57 /* TextTimeMessageCell.swift */; };
 		147231DD215B971600D54C57 /* ImageTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147231DC215B971600D54C57 /* ImageTimeMessageCell.swift */; };
+		14759A2E2161C88100D25530 /* ConversationRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14759A2D2161C88100D25530 /* ConversationRealm.swift */; };
 		147945C9213E31010055CE79 /* ContactItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945C8213E31010055CE79 /* ContactItem.swift */; };
 		147945CC213E31830055CE79 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945CA213E31830055CE79 /* ContactCell.swift */; };
 		147945CD213E31830055CE79 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 147945CB213E31830055CE79 /* ContactCell.xib */; };
@@ -251,6 +252,7 @@
 		147231D8215B8DF700D54C57 /* ImageMeTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMeTimeMessageCell.swift; sourceTree = "<group>"; };
 		147231DA215B950500D54C57 /* TextTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextTimeMessageCell.swift; sourceTree = "<group>"; };
 		147231DC215B971600D54C57 /* ImageTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTimeMessageCell.swift; sourceTree = "<group>"; };
+		14759A2D2161C88100D25530 /* ConversationRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRealm.swift; sourceTree = "<group>"; };
 		147945C8213E31010055CE79 /* ContactItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactItem.swift; sourceTree = "<group>"; };
 		147945CA213E31830055CE79 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
 		147945CB213E31830055CE79 /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
@@ -693,6 +695,7 @@
 			isa = PBXGroup;
 			children = (
 				14C0A8EF215345B50026D775 /* MessageRealm.swift */,
+				14759A2D2161C88100D25530 /* ConversationRealm.swift */,
 			);
 			path = RealmModel;
 			sourceTree = "<group>";
@@ -980,6 +983,7 @@
 				14843FEC214122B900D5366B /* SeeChatHistoryVC.swift in Sources */,
 				1461540D213F8AA20032EE95 /* AcceptedContactCell.swift in Sources */,
 				14848AD32140C88100DAA9F8 /* AcceptFriendRequest.swift in Sources */,
+				14759A2E2161C88100D25530 /* ConversationRealm.swift in Sources */,
 				14461A5E21379E620062FAC6 /* SeeContactViewModel.swift in Sources */,
 				142E515821421CE500FC0593 /* LoadConvoFromContactIdUseCase.swift in Sources */,
 				1496B9442150981B00ED61CD /* MessageItem.swift in Sources */,

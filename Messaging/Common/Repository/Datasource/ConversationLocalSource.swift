@@ -1,6 +1,8 @@
 import RxSwift
 
 protocol ConversationLocalSource {
+    func loadChatHistory(of user: User) -> Observable<[Conversation]>
+    
     func loadMessages(of user: User, with contact: Contact) -> Observable<[Message]>
     func loadMessages(of conversationId: String) -> Observable<[Message]>
     
