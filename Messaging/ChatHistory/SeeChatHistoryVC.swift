@@ -75,17 +75,19 @@ class SeeChatHistoryVC: BaseVC, ViewFor {
             })
             .disposed(by: self.disposeBag)
         
-         self.tableView.dataSource = output.dataSource
+        self.tableView.dataSource = output.dataSource
     }
 }
 
 extension SeeChatHistoryVC: SeeChatHistoryDisplayLogic {
     func notifyItems(with changes: [Change<ConversationItem>]?) {
-        guard changes != nil else {
+       guard changes != nil else {
             self.tableView?.reloadData()
             return
         }
         
+        print("-----")
+        print(changes)
         self.tableView?.reload(changes: changes!, completion: { (_) in })
     }
     

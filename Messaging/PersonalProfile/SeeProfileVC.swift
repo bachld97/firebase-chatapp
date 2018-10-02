@@ -22,6 +22,8 @@ class SeeProfileVC : BaseVC , ViewFor,
     
     private let changeAvaPublish = PublishSubject<URL>()
     
+    private var imageLoader: _ImageLoader?
+    
     class func instance() -> UIViewController {
         return SeeProfileVC()
     }
@@ -136,9 +138,10 @@ extension SeeProfileVC : SeeProfileDisplayLogic {
         let avaUrl = UrlBuilder.buildUrl(forUserId: user.userId)
 
         if imageTask == nil {
-            imageTask = UrlBuilder.load(urlString: avaUrl, into: self.avaImageView)
+            imageLoader = _ImageLoader()
+            imageLoader?.loadImage(url: avaUrl, into: self.avaImageView)
         } else {
-            imageTask?.cancel()
+            // Ignore
         }
     }
     

@@ -13,7 +13,8 @@ class SeeProfileViewModel : ViewModelDelegate {
     private weak var displayLogic: SeeProfileDisplayLogic?
     private let disposeBag: DisposeBag
     private let seeProfileUseCase = SeeProfileUseCase()
-    private let uploadAvatarUsecas = UploadAvatarUseCase()
+    private let uploadAvatarUsecase = UploadAvatarUseCase()
+    private let logoutUseCase = LogoutUseCase()
     
     init(displayLogic: SeeProfileDisplayLogic) {
         self.displayLogic = displayLogic
@@ -61,7 +62,14 @@ class SeeProfileViewModel : ViewModelDelegate {
         
         // Should evoke logoutUseCase as well
         input.logoutTrigger
-            .drive(onNext: { [unowned self] in
+            .flatMap { [unowned self] (_) in
+                return self.logoutUseCase
+                    .execute(request: ())
+                    .do()
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive(onNext: { [unowned self] (_) in
                 self.displayLogic?.logout()
             })
             .disposed(by: self.disposeBag)
@@ -74,7 +82,7 @@ class SeeProfileViewModel : ViewModelDelegate {
 
         input.uploadAvaTrigger
             .flatMap { [unowned self] (url) in
-                return self.uploadAvatarUsecas
+                return self.uploadAvatarUsecase
                     .execute(request: UploadAvatarRequest(url: url))
                     .do()
                     .trackError(errorTracker)

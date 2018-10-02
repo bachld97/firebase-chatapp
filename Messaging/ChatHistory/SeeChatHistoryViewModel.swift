@@ -20,8 +20,6 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
     private weak var displayLogic : SeeChatHistoryDisplayLogic?
     private let seeChatHistoryUseCase = SeeChatHistoryUseCase()
     
-    // public let items = BehaviorRelay<[Item]>(value: [])
-    
     func transform(input: SeeChatHistoryViewModel.Input) -> SeeChatHistoryViewModel.Output {
         let errorTracker = ErrorTracker()
         
@@ -44,14 +42,16 @@ class SeeChatHistoryViewModel: ViewModelDelegate {
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             }
-            .drive(onNext: { (convItems) in
-                let changes = self.dataSource.setItems(items: convItems)
-                self.displayLogic?.notifyItems(with: changes)
+            .drive(onNext: { [unowned self] (convItems) in
+                DispatchQueue.main.async {
+                    let changes = self.dataSource.setItems(items: convItems)
+                    self.displayLogic?.notifyItems(with: changes)
+                }
             })
             .disposed(by: self.disposeBag)
         
         input.conversationTrigger
-            .drive(onNext: { (index) in
+            .drive(onNext: { [unowned self] (index) in
                 self.displayLogic?.goConversation(item: self.dataSource.getItem(atIndex: index))
             })
             .disposed(by: self.disposeBag)

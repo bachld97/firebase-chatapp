@@ -20,13 +20,13 @@ class UserRealmSource : UserLocalSource {
             return Observable.just(user!)
         }
         
-        return Observable.deferred {
+        return Observable.deferred { [unowned self] in
             let realm = try Realm()
             let result = realm.objects(UserRealm.self)
                 .filter("isLoggedIn == %@", true)
                 .first
-            
-            return Observable.just(result?.convert())
+            self.user = result?.convert()
+            return Observable.just(self.user)
         }
     }
     

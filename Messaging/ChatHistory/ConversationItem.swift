@@ -4,8 +4,12 @@ class ConversationItem : Hashable {
     }
     
     static func == (lhs: ConversationItem, rhs: ConversationItem) -> Bool {
-        return lhs.conversation.lastMess.getAtTimeAsNum() ==
-            rhs.conversation.lastMess.getAtTimeAsNum() && lhs.conversation.id.elementsEqual(rhs.conversation.id)
+        let t1 = lhs.conversation.lastMess.getAtTimeAsNum()
+        let t2 = rhs.conversation.lastMess.getAtTimeAsNum()
+        let change = abs(t1 - t2) > 200
+        
+        return !change &&
+            lhs.conversation.id.elementsEqual(rhs.conversation.id)
     }
     
     let conversation: Conversation

@@ -35,7 +35,7 @@ class ConversationRealmSource : ConversationLocalSource {
             let mess = realm.objects(MessageRealm.self)
                 .filter("conversationId == %@", realmConversation.convId)
                 .sorted(byKeyPath: "atTime")
-                .first
+                .last
             
             guard let unwrappedMess = mess?.convert() else {
                 return nil

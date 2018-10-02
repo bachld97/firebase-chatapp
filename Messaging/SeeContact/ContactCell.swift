@@ -25,9 +25,7 @@ class ContactCell: UITableViewCell {
     func bind(item: ContactItem) {
         self.fullnameLabel.text = item.contact.userName
         self.usernameLabel.text = item.contact.userId
-        
         let avaUrl = UrlBuilder.buildUrl(forUserId: item.contact.userId)
-
         imageLoader.loadImage(url: avaUrl, into: self.avaImageView)
     }
 }

@@ -152,6 +152,7 @@
 		14BB32A72153A0160076A991 /* PersistSendingMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB32A62153A0160076A991 /* PersistSendingMessageRequest.swift */; };
 		14BCAE8D21634FBC00C3BA4A /* UserRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BCAE8C21634FBC00C3BA4A /* UserRealm.swift */; };
 		14BCAE8F21635A4600C3BA4A /* ContactRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BCAE8E21635A4600C3BA4A /* ContactRealm.swift */; };
+		14BCAE912163682500C3BA4A /* LogoutUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BCAE902163682500C3BA4A /* LogoutUsecase.swift */; };
 		14C0A8F0215345B50026D775 /* MessageRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0A8EF215345B50026D775 /* MessageRealm.swift */; };
 		14C0A8F2215347980026D775 /* UUIDGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0A8F1215347980026D775 /* UUIDGenerator.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
@@ -311,6 +312,7 @@
 		14BB32A62153A0160076A991 /* PersistSendingMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistSendingMessageRequest.swift; sourceTree = "<group>"; };
 		14BCAE8C21634FBC00C3BA4A /* UserRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRealm.swift; sourceTree = "<group>"; };
 		14BCAE8E21635A4600C3BA4A /* ContactRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRealm.swift; sourceTree = "<group>"; };
+		14BCAE902163682500C3BA4A /* LogoutUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUsecase.swift; sourceTree = "<group>"; };
 		14C0A8EF215345B50026D775 /* MessageRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRealm.swift; sourceTree = "<group>"; };
 		14C0A8F1215347980026D775 /* UUIDGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDGenerator.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
@@ -493,6 +495,7 @@
 				140C33F32138D69E00DC3535 /* SeeProfileUseCase.swift */,
 				14A239CE214B4EA00027743D /* UploadAvatarUseCase.swift */,
 				14A239D0214B4EBF0027743D /* UploadAvatarRequest.swift */,
+				14BCAE902163682500C3BA4A /* LogoutUsecase.swift */,
 			);
 			name = SeeProfile;
 			path = PersonalProfile;
@@ -961,6 +964,7 @@
 				147945D3213E7FB70055CE79 /* UserLocalSource.swift in Sources */,
 				146153FE213F68570032EE95 /* AddContactUseCase.swift in Sources */,
 				142E515421421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift in Sources */,
+				14BCAE912163682500C3BA4A /* LogoutUsecase.swift in Sources */,
 				14B7BFEE215201A500236C3D /* ObserveNextMessageRequest.swift in Sources */,
 				14848AD12140C84500DAA9F8 /* UnfriendUseCase.swift in Sources */,
 				147231D9215B8DF700D54C57 /* ImageMeTimeMessageCell.swift in Sources */,

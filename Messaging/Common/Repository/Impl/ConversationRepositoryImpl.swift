@@ -99,10 +99,16 @@ class ConversationRepositoryImpl : ConversationRepository {
                     let finalStream = Observable
                         .combineLatest(localStream, remoteStream) { [unowned self] in
                             return self.mergeConversations($0, $1)
-                        }.skip(1)
+                        }
+                    
+//                    let finalStream = Observable
+//                        .combineLatest(localStream, remoteStream) { [unowned self] in
+//                            return self.mergeConversations($0, $1)
+//                        }.skip(1)
+                    
                     
                     return finalStream
-                        .flatMap { [unowned self] (conversations) in
+                        .flatMap { [unowned self] (conversations) -> Observable<[Conversation]> in
                             return self.localSource
                                 .persistConversations(conversations, of: user)
                     }
