@@ -112,8 +112,10 @@ class ConversationRepositoryImpl : ConversationRepository {
     
     private func mergeConversations(_ localConversations: [Conversation],
                                    _ remoteConversations: [Conversation]) -> [Conversation] {
-        
-        return []
+        if remoteConversations.count == 0 {
+            return localConversations.sorted(by: { $0.compareWith($1) })
+        }
+        return remoteConversations.sorted(by: { $0.compareWith($1) })
     }
     
     

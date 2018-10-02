@@ -22,6 +22,10 @@ final class Conversation {
         self.fromMe = fromMe
         self.myId = myId
     }
+    
+    func compareWith(_ c2: Conversation) -> Bool {
+        return self.lastMess.compareWith(c2.lastMess)
+    }
 }
 
 enum ConvoType {

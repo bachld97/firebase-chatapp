@@ -23,6 +23,10 @@ struct Message {
         self.data = data
     }
     
+    func compareWith(_ m2: Message) -> Bool {
+        return Int64(data["at-time"]!)! > Int64(m2.data["at-time"]!)!
+    }
+    
     func getAtTime() -> String {
         return self.data["at-time"]!
     }
@@ -45,10 +49,6 @@ struct Message {
     
     func getMessageId() -> String {
         return self.data["mess-id"]!
-    }
-    
-    func compareWith(_ m2: Message) -> Bool {
-        return Int64(data["at-time"]!)! > Int64(m2.data["at-time"]!)!
     }
     
     func changeId(withServerId newId: String) -> Message {
