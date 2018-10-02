@@ -86,8 +86,6 @@ extension SeeChatHistoryVC: SeeChatHistoryDisplayLogic {
             return
         }
         
-        print("-----")
-        print(changes)
         self.tableView?.reload(changes: changes!, completion: { (_) in })
     }
     

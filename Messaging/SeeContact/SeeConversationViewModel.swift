@@ -259,11 +259,11 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     private func notifyItems(with items: [MessageItem]) {
         lastMessTime = Int64(items.first?.message.getAtTime() ?? "\(lastMessTime)") ?? lastMessTime
-        // self.displayLogic?.onNewData(items: items)
         
-        // TODO: Return the changes here
-        let changes = self.dataSource.setItems(items: items)
-        self.displayLogic?.notifyItems(with: changes)
+        DispatchQueue.main.async {
+            let changes = self.dataSource.setItems(items: items)
+            self.displayLogic?.notifyItems(with: changes)
+        }
     }
     
     private func notifySingleItem(with item: MessageItem) {

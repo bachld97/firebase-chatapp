@@ -30,7 +30,7 @@ class ContactRepositoryImpl : ContactRepository {
                     let finalStream = Observable
                         .combineLatest(localStream, remoteStream) { [unowned self] in
                             return self.mergeContacts($0, $1)
-                        }.skip(1)
+                        }
                     
                     return finalStream
                         .flatMap { [unowned self]  (contacts) -> Observable<[Contact]> in
@@ -43,9 +43,9 @@ class ContactRepositoryImpl : ContactRepository {
     
     private func mergeContacts(_ localContacts: [Contact], _ remoteContacts: [Contact]) -> [Contact] {
         if remoteContacts.count != 0 {
-            return remoteContacts
+            return remoteContacts.sorted(by: { $0.compareWith($1) })
         }
-        return localContacts
+        return localContacts.sorted(by: { $0.compareWith($1) })
     }
     
     func searchContact(request: SearchContactRequest) -> Observable<[ContactRequest]> {

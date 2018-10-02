@@ -8,4 +8,8 @@ final class Contact {
         self.userName = userName
         self.userAvatarUrl = userAvatarUrl
     }
+    
+    func compareWith(_ contact: Contact) -> Bool {
+        return self.userName.uppercased() < contact.userName.uppercased()
+    }
 }
