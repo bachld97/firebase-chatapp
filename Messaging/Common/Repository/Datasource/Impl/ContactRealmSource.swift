@@ -1,6 +1,6 @@
 import RxSwift
 
-class ContactLocalSourceImpl : ContactLocalSource {
+class ContactRealmSource : ContactLocalSource {
     func persistContacts(contacts: [Contact]) -> Observable<Bool> {
         return Observable.just(true)
     }

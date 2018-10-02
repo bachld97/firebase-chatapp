@@ -6,7 +6,6 @@ class AutoLoginUseCase : UseCase {
     typealias TRespond = Bool
     
     func execute(request: Void) -> Observable<Bool> {
-        return Observable.just(false)
-        // return repository.autoLogin()
+        return repository.autoLogin()
     }
 }

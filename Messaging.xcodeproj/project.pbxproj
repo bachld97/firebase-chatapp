@@ -60,7 +60,7 @@
 		14461A722137AD5B0062FAC6 /* ErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A712137AD5B0062FAC6 /* ErrorTracker.swift */; };
 		14461A742137E8CC0062FAC6 /* ContactRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A732137E8CC0062FAC6 /* ContactRemoteSource.swift */; };
 		14461A762137E8D80062FAC6 /* ContactLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A752137E8D80062FAC6 /* ContactLocalSource.swift */; };
-		14461A792137EA970062FAC6 /* ContactLocalSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */; };
+		14461A792137EA970062FAC6 /* ContactRealmSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14461A782137EA970062FAC6 /* ContactRealmSource.swift */; };
 		1447A96E2146764C00F7E1CF /* SendMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1447A96D2146764C00F7E1CF /* SendMessageUseCase.swift */; };
 		1447A9702146765600F7E1CF /* SendMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1447A96F2146765600F7E1CF /* SendMessageRequest.swift */; };
 		1451585721350BB70038CE74 /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1451585621350BB70038CE74 /* UseCase.swift */; };
@@ -104,7 +104,7 @@
 		147945D3213E7FB70055CE79 /* UserLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D2213E7FB70055CE79 /* UserLocalSource.swift */; };
 		147945D5213E80050055CE79 /* UserRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D4213E80050055CE79 /* UserRemoteSource.swift */; };
 		147945D7213E80340055CE79 /* UserFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D6213E80340055CE79 /* UserFirebaseSource.swift */; };
-		147945D9213E80590055CE79 /* UserLocalSourceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */; };
+		147945D9213E80590055CE79 /* UserRealmSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D8213E80590055CE79 /* UserRealmSource.swift */; };
 		147945DB213E85860055CE79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 147945DA213E85850055CE79 /* GoogleService-Info.plist */; };
 		14843FE5214116AC00D5366B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14843FE4214116AC00D5366B /* Message.swift */; };
 		14843FEC214122B900D5366B /* SeeChatHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14843FEA214122B900D5366B /* SeeChatHistoryVC.swift */; };
@@ -150,6 +150,7 @@
 		14B7BFEC2151EBFA00236C3D /* ObserveNextMessageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B7BFEB2151EBFA00236C3D /* ObserveNextMessageUseCase.swift */; };
 		14B7BFEE215201A500236C3D /* ObserveNextMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */; };
 		14BB32A72153A0160076A991 /* PersistSendingMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB32A62153A0160076A991 /* PersistSendingMessageRequest.swift */; };
+		14BCAE8D21634FBC00C3BA4A /* UserRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BCAE8C21634FBC00C3BA4A /* UserRealm.swift */; };
 		14C0A8F0215345B50026D775 /* MessageRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0A8EF215345B50026D775 /* MessageRealm.swift */; };
 		14C0A8F2215347980026D775 /* UUIDGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0A8F1215347980026D775 /* UUIDGenerator.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
@@ -217,7 +218,7 @@
 		14461A712137AD5B0062FAC6 /* ErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTracker.swift; sourceTree = "<group>"; };
 		14461A732137E8CC0062FAC6 /* ContactRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactRemoteSource.swift; path = Messaging/Common/Utils/ContactRemoteSource.swift; sourceTree = SOURCE_ROOT; };
 		14461A752137E8D80062FAC6 /* ContactLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactLocalSource.swift; path = Messaging/Common/Utils/ContactLocalSource.swift; sourceTree = SOURCE_ROOT; };
-		14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLocalSourceImpl.swift; sourceTree = "<group>"; };
+		14461A782137EA970062FAC6 /* ContactRealmSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRealmSource.swift; sourceTree = "<group>"; };
 		1447A96D2146764C00F7E1CF /* SendMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageUseCase.swift; sourceTree = "<group>"; };
 		1447A96F2146765600F7E1CF /* SendMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageRequest.swift; sourceTree = "<group>"; };
 		1451585621350BB70038CE74 /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
@@ -261,7 +262,7 @@
 		147945D2213E7FB70055CE79 /* UserLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalSource.swift; sourceTree = "<group>"; };
 		147945D4213E80050055CE79 /* UserRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRemoteSource.swift; sourceTree = "<group>"; };
 		147945D6213E80340055CE79 /* UserFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFirebaseSource.swift; sourceTree = "<group>"; };
-		147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalSourceImpl.swift; sourceTree = "<group>"; };
+		147945D8213E80590055CE79 /* UserRealmSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRealmSource.swift; sourceTree = "<group>"; };
 		147945DA213E85850055CE79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		14843FE4214116AC00D5366B /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		14843FEA214122B900D5366B /* SeeChatHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeChatHistoryVC.swift; sourceTree = "<group>"; };
@@ -307,6 +308,7 @@
 		14B7BFEB2151EBFA00236C3D /* ObserveNextMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveNextMessageUseCase.swift; sourceTree = "<group>"; };
 		14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveNextMessageRequest.swift; sourceTree = "<group>"; };
 		14BB32A62153A0160076A991 /* PersistSendingMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistSendingMessageRequest.swift; sourceTree = "<group>"; };
+		14BCAE8C21634FBC00C3BA4A /* UserRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRealm.swift; sourceTree = "<group>"; };
 		14C0A8EF215345B50026D775 /* MessageRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRealm.swift; sourceTree = "<group>"; };
 		14C0A8F1215347980026D775 /* UUIDGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDGenerator.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
@@ -589,9 +591,9 @@
 			isa = PBXGroup;
 			children = (
 				1412CA442159DAB60071FA44 /* ConversationFirebaseSource2.swift */,
-				14461A782137EA970062FAC6 /* ContactLocalSourceImpl.swift */,
+				14461A782137EA970062FAC6 /* ContactRealmSource.swift */,
 				147945D6213E80340055CE79 /* UserFirebaseSource.swift */,
-				147945D8213E80590055CE79 /* UserLocalSourceImpl.swift */,
+				147945D8213E80590055CE79 /* UserRealmSource.swift */,
 				149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */,
 				14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */,
 				1462D17021535A8F00722B6C /* ConversationRealmSource.swift */,
@@ -696,6 +698,7 @@
 			children = (
 				14C0A8EF215345B50026D775 /* MessageRealm.swift */,
 				14759A2D2161C88100D25530 /* ConversationRealm.swift */,
+				14BCAE8C21634FBC00C3BA4A /* UserRealm.swift */,
 			);
 			path = RealmModel;
 			sourceTree = "<group>";
@@ -895,7 +898,7 @@
 			files = (
 				1496B9522150B46D00ED61CD /* ImageLoader.swift in Sources */,
 				147945CC213E31830055CE79 /* ContactCell.swift in Sources */,
-				147945D9213E80590055CE79 /* UserLocalSourceImpl.swift in Sources */,
+				147945D9213E80590055CE79 /* UserRealmSource.swift in Sources */,
 				1439D99721367FD30094C12C /* MyErrors.swift in Sources */,
 				14843FEF214136B500D5366B /* ConversationItem.swift in Sources */,
 				1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */,
@@ -971,6 +974,7 @@
 				14719A4B215DD4DB006B4D54 /* PrivateConversationCell.swift in Sources */,
 				1439D99921369D1B0094C12C /* SignupUseCase.swift in Sources */,
 				14461A5221379CC40062FAC6 /* SeeContactVC.swift in Sources */,
+				14BCAE8D21634FBC00C3BA4A /* UserRealm.swift in Sources */,
 				14848ADB214113C300DAA9F8 /* ConversationLocalSource.swift in Sources */,
 				14848ADF2141149D00DAA9F8 /* ConversationFirebaseSource.swift in Sources */,
 				140C33F82138E1A400DC3535 /* Conversation.swift in Sources */,
@@ -992,7 +996,7 @@
 				14615404213F68770032EE95 /* SearchContactRequest.swift in Sources */,
 				140C33FC2138E52100DC3535 /* SeeChatHistoryUseCase.swift in Sources */,
 				14615419213F8AD00032EE95 /* StrangerContactCell.swift in Sources */,
-				14461A792137EA970062FAC6 /* ContactLocalSourceImpl.swift in Sources */,
+				14461A792137EA970062FAC6 /* ContactRealmSource.swift in Sources */,
 				14615415213F8AC60032EE95 /* RequestingContactCell.swift in Sources */,
 				14848AD52140C88A00DAA9F8 /* CancelFriendRequest.swift in Sources */,
 				14848ACD2140C80F00DAA9F8 /* CancelRequestUseCase.swift in Sources */,

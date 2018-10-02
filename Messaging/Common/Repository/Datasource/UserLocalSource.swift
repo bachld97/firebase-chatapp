@@ -7,5 +7,5 @@ protocol UserLocalSource {
 }
 
 class UserLocalSourceFactory {
-    public static let sharedInstance: UserLocalSource = UserLocalSourceImpl()
+    public static let sharedInstance: UserLocalSource = UserRealmSource()
 }
