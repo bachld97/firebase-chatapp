@@ -1,7 +1,7 @@
 import RxSwift
 
 protocol ContactLocalSource {
-    func persistContacts(contacts: [Contact]) -> Observable<Bool>
+    func persistContacts(contacts: [Contact], of user: User) -> Observable<[Contact]>
     func loadContacts(of user: User) -> Observable<[Contact]>
 }
 

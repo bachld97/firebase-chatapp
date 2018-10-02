@@ -151,6 +151,7 @@
 		14B7BFEE215201A500236C3D /* ObserveNextMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */; };
 		14BB32A72153A0160076A991 /* PersistSendingMessageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB32A62153A0160076A991 /* PersistSendingMessageRequest.swift */; };
 		14BCAE8D21634FBC00C3BA4A /* UserRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BCAE8C21634FBC00C3BA4A /* UserRealm.swift */; };
+		14BCAE8F21635A4600C3BA4A /* ContactRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BCAE8E21635A4600C3BA4A /* ContactRealm.swift */; };
 		14C0A8F0215345B50026D775 /* MessageRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0A8EF215345B50026D775 /* MessageRealm.swift */; };
 		14C0A8F2215347980026D775 /* UUIDGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0A8F1215347980026D775 /* UUIDGenerator.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
@@ -309,6 +310,7 @@
 		14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserveNextMessageRequest.swift; sourceTree = "<group>"; };
 		14BB32A62153A0160076A991 /* PersistSendingMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistSendingMessageRequest.swift; sourceTree = "<group>"; };
 		14BCAE8C21634FBC00C3BA4A /* UserRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRealm.swift; sourceTree = "<group>"; };
+		14BCAE8E21635A4600C3BA4A /* ContactRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRealm.swift; sourceTree = "<group>"; };
 		14C0A8EF215345B50026D775 /* MessageRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRealm.swift; sourceTree = "<group>"; };
 		14C0A8F1215347980026D775 /* UUIDGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDGenerator.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
@@ -699,6 +701,7 @@
 				14C0A8EF215345B50026D775 /* MessageRealm.swift */,
 				14759A2D2161C88100D25530 /* ConversationRealm.swift */,
 				14BCAE8C21634FBC00C3BA4A /* UserRealm.swift */,
+				14BCAE8E21635A4600C3BA4A /* ContactRealm.swift */,
 			);
 			path = RealmModel;
 			sourceTree = "<group>";
@@ -934,6 +937,7 @@
 				1496B94A2150AB3900ED61CD /* TextMeMessageCell.swift in Sources */,
 				1458BC2C21476257005A93AD /* GetConversationLabelRequest.swift in Sources */,
 				1496B94821509AB600ED61CD /* MessageCellConfigurator.swift in Sources */,
+				14BCAE8F21635A4600C3BA4A /* ContactRealm.swift in Sources */,
 				1439D99B21369D230094C12C /* SignupRequest.swift in Sources */,
 				140C34062138F74F00DC3535 /* AutoLoginUseCase.swift in Sources */,
 				147945D5213E80050055CE79 /* UserRemoteSource.swift in Sources */,

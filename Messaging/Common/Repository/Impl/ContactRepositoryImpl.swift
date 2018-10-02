@@ -22,11 +22,30 @@ class ContactRepositoryImpl : ContactRepository {
                     guard let user = user else {
                         return Observable.error(SessionExpireError())
                     }
-                    // TODO: Merge streams from local and remote, diff them.
-                    return self.remoteSource.loadContacts(of: user)
-                    // return self.localSource.loadContacts(of: user)
+                    
+                    let localStream = Observable.just([])
+                        .concat(self.localSource.loadContacts(of: user))
+                    let remoteStream = Observable.just([])
+                        .concat(self.remoteSource.loadContacts(of: user))
+                    let finalStream = Observable
+                        .combineLatest(localStream, remoteStream) { [unowned self] in
+                            return self.mergeContacts($0, $1)
+                        }.skip(1)
+                    
+                    return finalStream
+                        .flatMap { [unowned self]  (contacts) -> Observable<[Contact]> in
+                            return self.localSource
+                                .persistContacts(contacts: contacts, of: user)
+                    }
             }
         }
+    }
+    
+    private func mergeContacts(_ localContacts: [Contact], _ remoteContacts: [Contact]) -> [Contact] {
+        if remoteContacts.count != 0 {
+            return remoteContacts
+        }
+        return localContacts
     }
     
     func searchContact(request: SearchContactRequest) -> Observable<[ContactRequest]> {
@@ -86,6 +105,7 @@ class ContactRepositoryImpl : ContactRepository {
                     guard let user = user else {
                         return Observable.error(SessionExpireError())
                     }
+                    
                     
                     return self.remoteSource.sendFriendRequest(from: user, to: request.contactToAdd)
             }

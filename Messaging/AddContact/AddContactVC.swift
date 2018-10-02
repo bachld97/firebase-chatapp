@@ -16,9 +16,7 @@ class AddContactVC: BaseVC, ViewFor {
     private let acceptRequest = PublishSubject<ContactItem>()
     private let unfriendRequest = PublishSubject<ContactItem>()
     private let messageRequest = PublishSubject<ContactItem>()
-    
-
-    
+        
     private var items: RxTableViewSectionedReloadDataSource<SectionModel<String, AddContactViewModel.Item>>!
     
     class func instance() -> UIViewController {

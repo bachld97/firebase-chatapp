@@ -15,7 +15,7 @@ class ContactCell: UITableViewCell {
     @IBOutlet weak var fullnameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var avaImageView: UIImageView!
-    private var imageTask: URLSessionTask?
+    private var imageLoader = _ImageLoader()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,7 +28,6 @@ class ContactCell: UITableViewCell {
         
         let avaUrl = UrlBuilder.buildUrl(forUserId: item.contact.userId)
 
-        imageTask?.cancel()
-        imageTask = UrlBuilder.load(urlString: avaUrl, into: self.avaImageView)
+        imageLoader.loadImage(url: avaUrl, into: self.avaImageView)
     }
 }
