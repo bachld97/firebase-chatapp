@@ -338,17 +338,16 @@ class SeeConversationViewModel : ViewModelDelegate {
     }
     
     private func parseTextMessage(_ user: User) -> Message {
-        let localIdentifier = UUIDGenerator.newUUID()
-        var data = [String : String]()
-        data["mess-id"] = localIdentifier
-        data["local-id"] = localIdentifier
-        data["content"] =
-            self.textMessageContent.value
+        let content = self.textMessageContent.value
                 .trimmingCharacters(in: .whitespacesAndNewlines)
-        data["type"] = "text"
-        data["at-time"] = self.getTime()
-        data["sent-by"] = user.userId
-        return Message(type: .text, data: data, isSending: true)
+        
+        return Message(type: .text,
+                       convId: nil,
+                       content: content,
+                       atTime: self.getTime(),
+                       sentBy: user.userId,
+                       messId: nil)
+        // return Message(type: .text, data: data, isSending: true)
     }
     
     private func getTime() -> String {

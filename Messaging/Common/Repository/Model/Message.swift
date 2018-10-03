@@ -1,38 +1,37 @@
 struct Message {
     let type: MessageType
-    let data: [String : String]
     let isSending: Bool
     
-    init(type: MessageType, data: [String: String], isSending: Bool = false) {
-        self.type = type
-        self.data = data
-        self.isSending = isSending
-    }
+    let conversationId: String?
+    let content: String
+    let atTime: String
+    let atTimeAsNum: Int64
+    let sentBy: String
+    let messId: String?
+
     
     init(type: MessageType, convId: String?, content: String, atTime: String,
          sentBy: String, messId: String?, isSending: Bool = false) {
-        var data = [String : String]()
-        data["conversation-id"] = convId
-        data["content"] = content
-        data["at-time"] = atTime
-        data["sent-by"] = sentBy
-        data["mess-id"] = messId
-        
         self.isSending = isSending
         self.type = type
-        self.data = data
+        self.conversationId = convId
+        self.content = content
+        self.atTime = atTime
+        self.atTimeAsNum = Int64(atTime)!
+        self.sentBy = sentBy
+        self.messId = messId
     }
     
     func compareWith(_ m2: Message) -> Bool {
-        return Int64(data["at-time"]!)! > Int64(m2.data["at-time"]!)!
+        return self.atTimeAsNum > m2.atTimeAsNum
     }
     
     func getAtTime() -> String {
-        return self.data["at-time"]!
+        return self.atTime
     }
     
     func getAtTimeAsNum() -> Int64 {
-        return Int64(self.data["at-time"]!)!
+        return self.atTimeAsNum
     }
     
     func getTypeAsString() -> String {
@@ -40,35 +39,59 @@ struct Message {
     }
     
     func getContent() -> String {
-        return self.data["content"]!
+        return self.content
     }
     
     func getSentBy() -> String {
-        return self.data["sent-by"]!
+        return sentBy
     }
     
     func getMessageId() -> String {
-        return self.data["mess-id"]!
+        return messId!
     }
     
-    func changeId(withServerId newId: String) -> Message {
-        var data = self.data
-        data["mess-id"] = newId
-        return Message(type: self.type, data: data, isSending: self.isSending)
+    func getConversationId() -> String? {
+        return self.conversationId!
+    }
+    
+    func changeId(withServerId newId: String, withConvId: String? = nil) -> Message {
+        return Message(type: self.type,
+                       convId: withConvId ?? self.getConversationId(),
+                       content: self.getContent(),
+                       atTime: self.getAtTime(),
+                       sentBy: self.getSentBy(),
+                       messId: newId,
+                       isSending: self.isSending)
     }
     
     func changeContent(withNewContent newContent: String) -> Message {
-        var data = self.data
-        data["content"] = newContent
-        return Message(type: self.type, data: data, isSending: self.isSending)
+        return Message(type: self.type,
+                       convId: self.getConversationId(),
+                       content: newContent,
+                       atTime: self.getAtTime(),
+                       sentBy: self.getSentBy(),
+                       messId: self.getMessageId(),
+                       isSending: self.isSending)
     }
     
     func markAsSending() -> Message {
-        return Message(type: self.type, data: self.data, isSending: true)
+        return Message(type: self.type,
+                       convId: self.getConversationId(),
+                       content: self.getContent(),
+                       atTime: self.getAtTime(),
+                       sentBy: self.getSentBy(),
+                       messId: self.getMessageId(),
+                       isSending: true)
     }
     
     func markAsSent() -> Message {
-        return Message(type: self.type, data: self.data, isSending: false)
+        return Message(type: self.type,
+                       convId: self.getConversationId(),
+                       content: self.getContent(),
+                       atTime: self.getAtTime(),
+                       sentBy: self.getSentBy(),
+                       messId: self.getMessageId(),
+                       isSending: false)
     }
 }
 

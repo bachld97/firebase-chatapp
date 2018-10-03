@@ -126,7 +126,6 @@ class AddContactVC: BaseVC, ViewFor {
                 self.handleError(e: error)
             })
             .disposed(by: self.disposeBag)
-        
     }
 }
 

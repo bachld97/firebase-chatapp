@@ -10,6 +10,7 @@ class _ImageLoader {
         } else {
             url = URL(fileURLWithPath: urlString)
         }
+        
         imgView.kf.setImage(with: url)
     }
     

@@ -3,12 +3,12 @@ import FirebaseDatabase
 import FirebaseStorage
 
 class ConversationFirebaseSource: ConversationRemoteSource {
-
+    
     var ref: DatabaseReference!
     private var currentConversationId: String?
-
-		private let disposeBag = DisposeBag()
-		private let messagePublish = PublishSubject<String>()
+    
+    private let disposeBag = DisposeBag()
+    private let messagePublish = PublishSubject<String>()
     
     init() {
         ref = Database.database().reference()
@@ -42,10 +42,10 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                 // Break
                 return Disposables.create()
             }
-
+            
             let dbQuery = self.ref.child("messages/\(conversationId)")
                 .queryOrderedByKey()
-
+            
             if lastId != nil {
                 dbQuery.queryStarting(atValue: lastId)
             }
@@ -81,16 +81,16 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             }
         }
     }
-
-		func observeNextMessage(for user: User, fromLastId lastId: String?) -> Observable<Message> {
+    
+    func observeNextMessage(for user: User, fromLastId lastId: String?) -> Observable<Message> {
         return Observable.create { [unowned self] (obs) in
             guard let conversationId = self.currentConversationId else {
                 return Disposables.create()
             }
-
+            
             let dbQuery = self.ref.child("messages/\(conversationId)")
                 .queryOrderedByKey()
-
+            
             if lastId != nil {
                 dbQuery.queryStarting(atValue: lastId)
             }
@@ -125,8 +125,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             }
         }
     }
-
-
+    
+    
     
     func loadMessages(of conversationId: String) -> Observable<[Message]> {
         self.currentConversationId = conversationId
@@ -142,7 +142,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                         observer.onCompleted()
                         return
                     }
-
+                    
                     var messages: [Message] = []
                     let ite = snapshot.children
                     while let snap = ite.nextObject() as? DataSnapshot {
@@ -157,11 +157,11 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                             messages.insert(message!, at: 0)
                         }
                     }
-
+                    
                     observer.onNext(messages)
                     observer.onCompleted()
-                }, withCancel: { (error) in
-                    observer.onError(error)
+                    }, withCancel: { (error) in
+                        observer.onError(error)
                 })
             
             
@@ -203,8 +203,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                     
                     obs.onNext(true)
                     obs.onCompleted()
-                }, withCancel: { (error) in
-                    obs.onError(error)
+                    }, withCancel: { (error) in
+                        obs.onError(error)
                 })
             
             return Disposables.create()
@@ -221,7 +221,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         }
     }
     
-
+    
     func loadChatHistory(of user: User) -> Observable<[Conversation]> {
         return Observable.create { [unowned self] (obs) in
             let dbRequest = self.ref.child("conversations")
@@ -258,7 +258,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             }
         }
     }
-
+    
     private func parseConversation(from snapshot: DataSnapshot, myId: String) -> Conversation? {
         
         guard let dict = snapshot.value as? [String: Any] else {
@@ -272,23 +272,23 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         guard let usersDict = dict["users"] as? [String: Any] else {
             return nil
         }
-
+        
         let convId = snapshot.key
-
+        
         guard let isPrivate = dict["is-private"] as? Bool else {
             return nil
         }
         
         let displayAva = dict["display-ava"] as? String
-
+        
         let nickname = parseNicknames(from: usersDict)
-
+        
         guard let message = parseMessage(from: lastMessage) else {
             return nil
         }
         
         let type: ConvoType = isPrivate ? .single : .group
-        let fromMe = message.data["sent-by"]!.elementsEqual(myId)
+        let fromMe = message.getSentBy().elementsEqual(myId)
         let res = Conversation(
             id: convId,
             type: type,
@@ -320,17 +320,16 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             type = .image
         }
         
-
-        var data = [String : String]()
-        data["conversation-id"] = messageDict["conversation-id"] as? String
-        data["content"] = messageDict["content"] as? String
-        data["at-time"] = "\(messageDict["at-time"]!)"
-        data["sent-by"] = messageDict["sent-by"] as? String
-        data["local-id"] = messageDict["local-id"] as? String
-        data["mess-id"] = withMessId
-        return Message(type: type, data: data)
+        // TODO: Unwrap in a better way
+        
+        return Message(type: type,
+            convId: messageDict["conversation-id"] as? String,
+            content: (messageDict["content"] as? String)!,
+            atTime: "\(messageDict["at-time"]!)",
+            sentBy: (messageDict["sent-by"] as? String)!,
+            messId: withMessId)
     }
-
+    
     func sendMessage(message: Message, from user: User, to contact: Contact) -> Observable<Bool> {
         let uid = [user.userId, contact.userId].sorted()
             .joined(separator: " ")
@@ -338,7 +337,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     }
     
     func sendMessage(message: Message, to conversation: String) -> Observable<Bool> {
-        if message.data["type"]!.elementsEqual("image") {
+        if message.type == .image {
             return sendImageMessage(message: message, to: conversation)
         }
         
@@ -370,13 +369,13 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             let messId = self.ref.child("messages/\(conversation)")
                 .childByAutoId()
                 .key
-           
-            let urlString = message.data["content"]!
+            
+            let urlString = message.getContent()
             let url = URL(fileURLWithPath: urlString)
             // Upload to Firebase Storage
             let ref = Storage.storage().reference()
                 .child("messages/\(messId)")
-
+            
             _ = ref.putFile(from: url, metadata: nil) { metadata, error in
                 if error != nil {
                     obs.onError(error!)
@@ -392,18 +391,17 @@ class ConversationFirebaseSource: ConversationRemoteSource {
                         .setValue(jsonMessage)
                 }
             }
-
+            
             return Disposables.create()
         }
     }
     
     private func mapToJson(message: Message) -> [String : Any] {
         var res = [String : Any]()
-        res["local-id"] = message.data["local-id"]
         res["at-time"] = ServerValue.timestamp()
-        res["sent-by"] = message.data["sent-by"]
-        res["type"] = message.data["type"]
-        res["content"] = message.data["content"]
+        res["sent-by"] = message.getSentBy()
+        res["type"] = message.getTypeAsString()
+        res["content"] = message.getContent()
         return res
     }
 }

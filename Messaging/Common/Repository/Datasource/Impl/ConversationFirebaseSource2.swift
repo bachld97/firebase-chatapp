@@ -369,7 +369,8 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                 .childByAutoId()
                 .key
             
-            self.messagePublisher.onNext(message.changeId(withServerId: messId))
+            self.messagePublisher.onNext(message.changeId(withServerId: messId,
+                                                          withConvId: conversation))
             
             let urlString = message.getContent()
             let url = URL(fileURLWithPath: urlString)
