@@ -336,7 +336,9 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             content: content,
             atTime: atTime,
             sentBy: sentBy,
-            messId: withMessId)
+            messId: withMessId,
+            isSending: false,
+            isFail: false)
     }
     
     private func mapToJson(message: Message) -> [String : Any] {
@@ -398,11 +400,11 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                     jsonMessage["content"] = UrlBuilder.buildUrl(forMessageId: messId)
                     
                     self.ref.child("conversations/\(conversation)/last-message")
-                        .setValue(jsonMessage)
+                        .updateChildValues(jsonMessage)
                     
                     self.ref.child("messages/\(conversation)")
                         .child(messId)
-                        .setValue(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
+                        .updateChildValues(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
                             do {
                                 // Delete old image, it is already copy to new location
                                 try FileManager().removeItem(at: url)
@@ -442,16 +444,16 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     }
     
     
-    private var timers = [Timer]()
+    private var timer: Timer?
     private func handleMessageFromUser(_ message: Message) {
         if !self.pendingContains(message) {
             
-            // Create a timer here?
-            let timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [unowned self] (timer) in
-                self.handleSendFail(msgId: message.messId!)
+            let timer = Timer.scheduledTimer(withTimeInterval: 20.0, repeats: false) { [unowned self] (timer) in
+                self.handleSendFail()
             }
             RunLoop.current.add(timer, forMode: .commonModes)
-            timers.append(timer)
+            self.timer?.invalidate()
+            self.timer = timer
             
             self.pendingMessages.append(message)
             self.messagePublisher.onNext(message)
@@ -483,11 +485,8 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     }
     
     private func emptyPending() {
+        self.timer?.invalidate()
         self.pendingMessages.removeAll()
-        self.timers.forEach { (it) in
-            it.invalidate()
-        }
-        self.timers.removeAll()
         self.ref.database.purgeOutstandingWrites()
     }
     
@@ -497,14 +496,18 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         })
         
         if index != nil {
-            let timer = timers.remove(at: index!)
-            timer.invalidate()
-            
             return pendingMessages.remove(at: index!)
         }
         
         return nil
     }
+    
+    private func getPending(msgId: String) -> Message? {
+        return pendingMessages.filter({ (it) -> Bool in
+            it.getMessageId().elementsEqual(msgId)
+        }).first
+    }
+
     
     private func handleSendSuccess(msgId: String) {
         let msg = self.getAndRemovePending(msgId: msgId)?.markAsSuccess()
@@ -514,11 +517,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         }
     }
     
-    private func handleSendFail(msgId: String) {
-        let msg = self.getAndRemovePending(msgId: msgId)?.markAsFail()
-        
-        if msg != nil {
-            self.messagePublisher.onNext(msg!)
-        }
+    private func handleSendFail() {
+        self.emptyPending()
     }
 }

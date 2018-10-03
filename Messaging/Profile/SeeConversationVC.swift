@@ -115,23 +115,22 @@ extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
     }
     
     func notifyItem(with addRespond: (Bool, Int)) {
-        if !addRespond.0 {
-            let index = addRespond.1
-            let indexPath = NSIndexPath(row: index, section: 0) as IndexPath
-            self.tableView?.reloadRows(at: [indexPath], with: .automatic)
-            
-        } else {
-//            self.tableView?.beginUpdates()
-            let indexPath = NSIndexPath(row: 0, section: 0)
-            self.tableView?.insertItemsAtIndexPaths([indexPath as IndexPath], animationStyle: .bottom)
-            if addRespond.1 == 1 {
-                // There is change in the current first item
-                let indexPath = NSIndexPath(row: 1, section: 0) as IndexPath
-                //self.tableView?.reloadRows(at: [indexPath], with: .automatic)
-                self.tableView?.reloadItemsAtIndexPaths([indexPath], animationStyle: .bottom)
-            }
-//            self.tableView?.endUpdates()
-        }
+        self.tableView?.reloadData()
+        
+//        if !addRespond.0 {
+//            let index = addRespond.1
+//            let indexPath = NSIndexPath(row: index, section: 0) as IndexPath
+//            self.tableView?.reloadRows(at: [indexPath], with: .automatic)
+//
+//        } else {
+//            let indexPath = NSIndexPath(row: 0, section: 0)
+//            self.tableView?.insertItemsAtIndexPaths([indexPath as IndexPath], animationStyle: .bottom)
+//            if addRespond.1 == 1 {
+//                // There is change in the current first item
+//                let indexPath = NSIndexPath(row: 1, section: 0) as IndexPath
+//                self.tableView?.reloadItemsAtIndexPaths([indexPath], animationStyle: .fade)
+//            }
+//        }
     }
     
     func onMediaItemPicked(mediaItemUrl: URL) {

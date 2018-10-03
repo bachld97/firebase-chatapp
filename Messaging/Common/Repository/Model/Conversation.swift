@@ -24,7 +24,7 @@ final class Conversation {
     }
     
     func compareWith(_ c2: Conversation) -> Bool {
-        return self.lastMess.compareWith(c2.lastMess)
+        return self.lastMess.atTimeAsNum > c2.lastMess.atTimeAsNum
     }
 }
 

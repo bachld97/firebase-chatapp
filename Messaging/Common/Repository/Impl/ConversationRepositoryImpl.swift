@@ -4,9 +4,7 @@ class ConversationRepositoryImpl : ConversationRepository {
     private var conversationId: String?
     
     func sendMessage(request: SendMessageRequest) -> Observable<Bool> {
-        return remoteSource.sendMessage(message: request.message,
-                                        to: request.conversationId,
-                                        genId: true)
+        return remoteSource.sendMessage(message: request.message, to: request.conversationId, genId: true)
     }
     
     func sendMessageToUser(request: SendMessageToUserRequest) -> Observable<Bool> {
@@ -266,7 +264,7 @@ class ConversationRepositoryImpl : ConversationRepository {
     private func retryUnsent(_ messages: [Message], with conversationId: String) -> Observable<[Message]> {
         return Observable.deferred {
             messages.filter({ (it) -> Bool in
-                it.isSending && !it.isFail
+                return it.isSending && !it.isFail
             }).forEach({ [unowned self] (it) in
                 self.remoteSource.sendMessage(message: it, to: conversationId, genId: false)
                     .subscribe()

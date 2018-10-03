@@ -9,6 +9,7 @@ class TextMeMessageCell: BaseMessageCell {
                 self.tvWrapper.backgroundColor = UIColor(red: 221.0 / 255.0, green: 190.0 / 255.0, blue: 200 / 255.0, alpha: 1)
             } else {
                 if item.message.isFail {
+                    // showResend()
                     self.tvWrapper.backgroundColor = UIColor(red: 80.0 / 255.0, green: 80.0 / 255.0, blue: 200 / 255.0, alpha: 1)
                 } else {
                     self.tvWrapper.backgroundColor = UIColor(red: 221.0 / 255.0, green: 234.0 / 255.0, blue: 1, alpha: 1)
