@@ -101,27 +101,39 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         return self.sendMessage(message: message, to: convId)
     }
     
-    func sendMessage(message: Message, to conversation: String) -> Observable<Bool> {
+    func sendMessage(message: Message, to conversation: String, genId: Bool = true) -> Observable<Bool> {
         if message.type == .image {
             return sendImageMessage(message: message, to: conversation)
         }
         
         return Observable.deferred { [unowned self] in
             let jsonMessage = self.mapToJson(message: message)
-            
             self.ref.child("conversations/\(conversation)/last-message")
                 .setValue(jsonMessage)
             
-            self.ref.child("messages/\(conversation)")
-                .childByAutoId()
-                .setValue(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
-                    if error == nil {
-                        self.handleSendSuccess(msgId: dbRef.key)
-                    } else {
-                        print("Send fail")
-                        self.errorPublisher.onNext(error!)
-                    }
-                })
+            if genId {
+                self.ref.child("messages/\(conversation)")
+                    .childByAutoId()
+                    .setValue(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
+                        if error == nil {
+                            self.handleSendSuccess(msgId: dbRef.key)
+                        } else {
+                            print("Send fail")
+                            self.errorPublisher.onNext(error!)
+                        }
+                    })
+            } else {
+                self.handleMessageFromUser(message.markAsSending())
+                self.ref.child("messages/\(conversation)/\(message.getMessageId())")
+                    .setValue(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
+                        if error == nil {
+                            self.handleSendSuccess(msgId: dbRef.key)
+                        } else {
+                            print("Send fail")
+                            self.errorPublisher.onNext(error!)
+                        }
+                    })
+            }
             
             return Observable.just(true)
         }
@@ -303,21 +315,21 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         }
         
         let type = Type.getMessageType(fromString: typeString)
-      
+        
         let convId = messageDict["conversation-id"] as? String
         
         guard let content = messageDict["content"] as? String else {
             print("Content return")
             return nil
         }
-
+        
         let atTime = "\(messageDict["at-time"]!)"
-
+        
         guard let sentBy = messageDict["sent-by"] as? String else {
             print("Sent by return")
             return nil
         }
-
+        
         return Message(
             type: type,
             convId: convId,
@@ -429,8 +441,18 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         }
     }
     
+    
+    private var timers = [Timer]()
     private func handleMessageFromUser(_ message: Message) {
         if !self.pendingContains(message) {
+            
+            // Create a timer here?
+            let timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [unowned self] (timer) in
+                self.handleSendFail(msgId: message.messId!)
+            }
+            RunLoop.current.add(timer, forMode: .commonModes)
+            timers.append(timer)
+            
             self.pendingMessages.append(message)
             self.messagePublisher.onNext(message)
         } else {
@@ -462,6 +484,11 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     
     private func emptyPending() {
         self.pendingMessages.removeAll()
+        self.timers.forEach { (it) in
+            it.invalidate()
+        }
+        self.timers.removeAll()
+        self.ref.database.purgeOutstandingWrites()
     }
     
     private func getAndRemovePending(msgId: String) -> Message? {
@@ -470,16 +497,25 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         })
         
         if index != nil {
-            let msg = pendingMessages[index!].markAsSent()
-            pendingMessages.remove(at: index!)
-            return msg
+            let timer = timers.remove(at: index!)
+            timer.invalidate()
+            
+            return pendingMessages.remove(at: index!)
         }
         
         return nil
     }
     
     private func handleSendSuccess(msgId: String) {
-        let msg = self.getAndRemovePending(msgId: msgId)
+        let msg = self.getAndRemovePending(msgId: msgId)?.markAsSuccess()
+        
+        if msg != nil {
+            self.messagePublisher.onNext(msg!)
+        }
+    }
+    
+    private func handleSendFail(msgId: String) {
+        let msg = self.getAndRemovePending(msgId: msgId)?.markAsFail()
         
         if msg != nil {
             self.messagePublisher.onNext(msg!)

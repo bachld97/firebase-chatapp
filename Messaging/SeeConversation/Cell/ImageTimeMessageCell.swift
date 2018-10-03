@@ -65,6 +65,7 @@ class ImageTimeMessageCell : BaseMessageCell {
         let rightC2 = NSLayoutConstraint(item: timeContent, attribute: .trailing, relatedBy: .lessThanOrEqual, toItem: self, attribute: .trailing, multiplier: 1, constant: mainPadding * -1)
         let botC2 = NSLayoutConstraint(item: timeContent, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: smallPadding * -1)
         
+        botC2.priority = UILayoutPriority(rawValue: 999)
         addConstraints([topC, leftC, rightC, topC2, leftC2, rightC2, botC2])
     }
 }

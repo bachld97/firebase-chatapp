@@ -9,6 +9,7 @@ class MessageRealm: Object {
     @objc dynamic var type: String = ""
     @objc dynamic var content: String = ""
     @objc dynamic var isSending: Bool = false
+    @objc dynamic var isFail: Bool = false
     
     override static func primaryKey() -> String? {
         return "messageId"
@@ -23,6 +24,7 @@ class MessageRealm: Object {
         messageRealm.conversationId = conversationId
         messageRealm.type = Type.getMessageTypeString(fromType: message.type)
         messageRealm.isSending = message.isSending
+        messageRealm.isFail = message.isFail
         return messageRealm
     }
     
@@ -31,6 +33,7 @@ class MessageRealm: Object {
         
         return Message(type: type, convId: self.conversationId, content: self.content,
                        atTime: "\(self.atTime)", sentBy: self.sentBy,
-                       messId: self.messageId, isSending: self.isSending)
+                       messId: self.messageId, isSending: self.isSending,
+                       isFail: self.isFail)
     }
 }

@@ -333,10 +333,10 @@ class ConversationFirebaseSource: ConversationRemoteSource {
     func sendMessage(message: Message, from user: User, to contact: Contact) -> Observable<Bool> {
         let uid = [user.userId, contact.userId].sorted()
             .joined(separator: " ")
-        return self.sendMessage(message: message, to: uid)
+        return self.sendMessage(message: message, to: uid, genId: true)
     }
     
-    func sendMessage(message: Message, to conversation: String) -> Observable<Bool> {
+    func sendMessage(message: Message, to conversation: String, genId: Bool) -> Observable<Bool> {
         if message.type == .image {
             return sendImageMessage(message: message, to: conversation)
         }

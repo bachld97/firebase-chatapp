@@ -1,6 +1,7 @@
 struct Message {
     let type: MessageType
     let isSending: Bool
+    let isFail: Bool
     
     let conversationId: String?
     let content: String
@@ -10,8 +11,9 @@ struct Message {
     let messId: String?
 
     
+    
     init(type: MessageType, convId: String?, content: String, atTime: String,
-         sentBy: String, messId: String?, isSending: Bool = false) {
+         sentBy: String, messId: String?, isSending: Bool = false, isFail: Bool = false) {
         self.isSending = isSending
         self.type = type
         self.conversationId = convId
@@ -20,6 +22,7 @@ struct Message {
         self.atTimeAsNum = Int64(atTime)!
         self.sentBy = sentBy
         self.messId = messId
+        self.isFail = isFail
     }
     
     func compareWith(_ m2: Message) -> Bool {
@@ -84,7 +87,17 @@ struct Message {
                        isSending: true)
     }
     
-    func markAsSent() -> Message {
+    func markAsFail() -> Message {
+        return Message(type: self.type,
+                       convId: self.getConversationId(),
+                       content: self.getContent(),
+                       atTime: self.getAtTime(),
+                       sentBy: self.getSentBy(),
+                       messId: self.getMessageId(),
+                       isSending: false, isFail: true)
+    }
+    
+    func markAsSuccess() -> Message {
         return Message(type: self.type,
                        convId: self.getConversationId(),
                        content: self.getContent(),

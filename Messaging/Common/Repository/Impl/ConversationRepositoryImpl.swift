@@ -4,7 +4,9 @@ class ConversationRepositoryImpl : ConversationRepository {
     private var conversationId: String?
     
     func sendMessage(request: SendMessageRequest) -> Observable<Bool> {
-        return remoteSource.sendMessage(message: request.message, to: request.conversationId)
+        return remoteSource.sendMessage(message: request.message,
+                                        to: request.conversationId,
+                                        genId: true)
     }
     
     func sendMessageToUser(request: SendMessageToUserRequest) -> Observable<Bool> {
@@ -70,6 +72,8 @@ class ConversationRepositoryImpl : ConversationRepository {
     private let localSource: ConversationLocalSource
     private let userRepository: UserRepository
     
+    private let disposeBag = DisposeBag()
+    
     init(userRepository: UserRepository,
          localSource: ConversationLocalSource,
          remoteSource: ConversationRemoteSource) {
@@ -99,12 +103,12 @@ class ConversationRepositoryImpl : ConversationRepository {
                     let finalStream = Observable
                         .combineLatest(localStream, remoteStream) { [unowned self] in
                             return self.mergeConversations($0, $1)
-                        }
+                    }
                     
-//                    let finalStream = Observable
-//                        .combineLatest(localStream, remoteStream) { [unowned self] in
-//                            return self.mergeConversations($0, $1)
-//                        }.skip(1)
+                    //                    let finalStream = Observable
+                    //                        .combineLatest(localStream, remoteStream) { [unowned self] in
+                    //                            return self.mergeConversations($0, $1)
+                    //                        }.skip(1)
                     
                     
                     return finalStream
@@ -117,7 +121,7 @@ class ConversationRepositoryImpl : ConversationRepository {
     }
     
     private func mergeConversations(_ localConversations: [Conversation],
-                                   _ remoteConversations: [Conversation]) -> [Conversation] {
+                                    _ remoteConversations: [Conversation]) -> [Conversation] {
         if remoteConversations.count == 0 {
             return localConversations.sorted(by: { $0.compareWith($1) })
         }
@@ -148,7 +152,7 @@ class ConversationRepositoryImpl : ConversationRepository {
                     let finalStream = Observable
                         .combineLatest(localStream, remoteStream) { [unowned self] in
                             return self.mergeMessages($0, $1)
-                        }
+                    }
                     
                     return finalStream
                         .flatMap { [unowned self]  (messages) in
@@ -246,16 +250,30 @@ class ConversationRepositoryImpl : ConversationRepository {
             let finalStream = Observable
                 .combineLatest(localStream, remoteStream) { [unowned self] in
                     return self.mergeMessages($0, $1)
-                }
+            }
             
             return finalStream
                 .flatMap { [unowned self]  (messages) in
-                    self.localSource
-                        .persistMessages(messages, with: conversationId)
+                    self.retryUnsent(messages, with: conversationId)
+                        .flatMap { [unowned self]  (messages) in
+                            self.localSource
+                                .persistMessages(messages, with: conversationId)
+                    }
             }
         }
     }
     
-    
+    private func retryUnsent(_ messages: [Message], with conversationId: String) -> Observable<[Message]> {
+        return Observable.deferred {
+            messages.filter({ (it) -> Bool in
+                it.isSending && !it.isFail
+            }).forEach({ [unowned self] (it) in
+                self.remoteSource.sendMessage(message: it, to: conversationId, genId: false)
+                    .subscribe()
+                    .disposed(by: self.disposeBag)
+            })
+            return Observable.just(messages)
+        }
+    }
 }
 

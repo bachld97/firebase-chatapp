@@ -43,6 +43,7 @@ class ImageMessageCell : BaseMessageCell {
         let leftC = NSLayoutConstraint(item: contentImage, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: normalPadding)
         let rightC = NSLayoutConstraint(item: contentImage, attribute: .trailing, relatedBy: .lessThanOrEqual, toItem: self, attribute: .trailing, multiplier: 1, constant: mainPadding * -1)
         
+        botC.priority = UILayoutPriority(rawValue: 999)
         addConstraints([topC, botC, leftC, rightC])
     }
 }

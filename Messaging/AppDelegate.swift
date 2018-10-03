@@ -19,28 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Database.database().isPersistenceEnabled = true
         Database.database().reference().keepSynced(false)
         
-        testFirebase()
-        
         // DEBUG: Write Database to easy-to-access location
         if TARGET_OS_SIMULATOR != 0 {
             Realm.Configuration.defaultConfiguration.fileURL = URL(fileURLWithPath: "/Users/cpu12071/Desktop/RealmDb/Messaging.realm")
         }
         
         return true
-    }
-    
-    private func testFirebase() {
-        let ref = Database.database().reference().child("test")
-        ref.runTransactionBlock( { (currentData) -> TransactionResult in
-            if !currentData.hasChildren() {
-                currentData.value = "test-value4"
-                return TransactionResult.success(withValue: currentData)
-            }
-            return TransactionResult.abort()
-            // return TransactionResult.success(withValue: currentData)
-        }, andCompletionBlock: { (error, whatBool, snapshot) in
-            print("Transaction returned: \(error), \(snapshot?.ref.parent), \(whatBool)")
-        }, withLocalEvents: false)
     }
 }
 
