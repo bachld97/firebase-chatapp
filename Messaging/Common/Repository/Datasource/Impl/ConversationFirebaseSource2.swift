@@ -108,14 +108,32 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         }
         
         return Observable.deferred { [unowned self] in
+           
             let jsonMessage = self.mapToJson(message: message)
             self.ref.child("conversations/\(conversation)/last-message")
                 .setValue(jsonMessage)
             
             if genId {
-                self.ref.child("messages/\(conversation)")
+                // Add message to sending queue
+                
+                let newRef = self.ref.child("messages/\(conversation)")
                     .childByAutoId()
-                    .updateChildValues(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
+                
+                // TODO: Extract this
+                let toSend = message.changeId(withServerId: newRef.key, withConvId: conversation)
+                    .markAsSending()
+                let timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [unowned self] (timer) in
+                    self.handleSendFail()
+                }
+                RunLoop.current.add(timer, forMode: .commonModes)
+                self.timer?.invalidate()
+                self.timer = timer
+                self.pendingMessages.append(toSend)
+                self.messagePublisher.onNext(toSend)
+                // TODO: Extract this
+                
+                
+                newRef.updateChildValues(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
                         if error == nil {
                             self.handleSendSuccess(msgId: dbRef.key)
                         } else {
@@ -446,6 +464,10 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     private var timer: Timer?
     private func handleMessageFromUser(_ message: Message) {
         guard message.isSending else {
+            return
+        }
+
+        guard pendingContains(message) else {
             return
         }
         
