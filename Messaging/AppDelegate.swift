@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Database.database().reference().keepSynced(false)
         
         // DEVELOP: Write Database to easy-to-access location
-        if TARGET_OS_SIMULATOR != 0 {
-            Realm.Configuration.defaultConfiguration.fileURL = URL(fileURLWithPath: "/Users/cpu12071/Desktop/RealmDb/Messaging.realm")
-        }
+//        if TARGET_OS_SIMULATOR != 0 {
+//            Realm.Configuration.defaultConfiguration.fileURL = URL(fileURLWithPath: "/Users/cpu12071/Desktop/RealmDb/Messaging.realm")
+//        }
         
         return true
     }
