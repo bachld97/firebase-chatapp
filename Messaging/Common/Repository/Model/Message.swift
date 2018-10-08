@@ -84,7 +84,7 @@ struct Message {
                        atTime: self.getAtTime(),
                        sentBy: self.getSentBy(),
                        messId: self.getMessageId(),
-                       isSending: true, isFail: self.isFail)
+                       isSending: true, isFail: false)
     }
     
     func markAsFail() -> Message {

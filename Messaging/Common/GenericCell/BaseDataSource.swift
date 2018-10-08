@@ -50,7 +50,7 @@ class BaseDatasource<V, M> : NSObject, UITableViewDataSource where V: BaseCell<M
         return 1
     }
     
-    private func getItem(at indexPath: IndexPath) -> M {
+    func getItem(at indexPath: IndexPath) -> M {
         return items[indexPath.item]
     }
     

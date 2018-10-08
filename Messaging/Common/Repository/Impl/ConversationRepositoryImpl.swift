@@ -2,6 +2,7 @@ import RxSwift
 
 class ConversationRepositoryImpl : ConversationRepository {
     private var conversationId: String?
+    private var lastId: String?
     
     func sendMessage(request: SendMessageRequest) -> Observable<Bool> {
         return remoteSource.sendMessage(message: request.message, to: request.conversationId, genId: true)
@@ -103,12 +104,6 @@ class ConversationRepositoryImpl : ConversationRepository {
                             return self.mergeConversations($0, $1)
                     }
                     
-                    //                    let finalStream = Observable
-                    //                        .combineLatest(localStream, remoteStream) { [unowned self] in
-                    //                            return self.mergeConversations($0, $1)
-                    //                        }.skip(1)
-                    
-                    
                     return finalStream
                         .flatMap { [unowned self] (conversations) -> Observable<[Conversation]> in
                             return self.localSource
@@ -161,7 +156,7 @@ class ConversationRepositoryImpl : ConversationRepository {
         }
     }
     
-    func observeNextMessage(fromLastId lastId: String?) -> Observable<Message> {
+    func observeNextMessage() -> Observable<Message> {
         return Observable.deferred { [unowned self] in
             return self.userRepository
                 .getUser()
@@ -172,7 +167,7 @@ class ConversationRepositoryImpl : ConversationRepository {
                     }
                     
                     return self.remoteSource
-                        .observeNextMessage(for: user, fromLastId: lastId)
+                        .observeNextMessage(for: user, fromLastId: self.lastId)
                         .flatMap { [unowned self] (message) -> Observable<Message> in
                             guard let convId = self.conversationId else {
                                 return Observable.just(message)
@@ -215,6 +210,8 @@ class ConversationRepositoryImpl : ConversationRepository {
     }
     
     private func mergeMessages(_ localMessages: [Message], _ remoteMessages: [Message]) -> [Message] {
+        self.lastId = remoteMessages.first?.getMessageId()
+        
         var res = localMessages
         remoteMessages.forEach { (message) in
             let index = res.firstIndex(where: { 
@@ -261,10 +258,24 @@ class ConversationRepositoryImpl : ConversationRepository {
         }
     }
     
+    func resendMessage(request: ResendRequest) -> Observable<Bool> {
+        let it = request.message
+        return Observable.deferred { [unowned self] in
+            guard let conversationId = self.conversationId else {
+                return Observable.just(true)
+            }
+            
+            self.remoteSource.sendMessage(message: it, to: conversationId, genId: false)
+                .subscribe()
+                .disposed(by: self.disposeBag)
+            return Observable.just(true)
+        }
+    }
+    
     private func retryUnsent(_ messages: [Message], with conversationId: String) -> Observable<[Message]> {
         return Observable.deferred {
             messages.filter({ (it) -> Bool in
-                return it.isSending && !it.isFail
+                return it.type == .text && it.isSending && !it.isFail
             }).forEach({ [unowned self] (it) in
                 self.remoteSource.sendMessage(message: it, to: conversationId, genId: false)
                     .subscribe()

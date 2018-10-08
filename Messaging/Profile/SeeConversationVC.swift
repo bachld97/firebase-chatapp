@@ -17,6 +17,8 @@ class SeeConversationVC: BaseVC, ViewFor {
     
     // private var configurator: MessageCellConfigurator?
     
+   
+    
     private let sendImagePublish = PublishSubject<URL>()
     
     private let onCreatePublish = PublishSubject<Void>()
@@ -67,10 +69,9 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 90
         registerCells()
-
     }
+    
     override func bindViewModel() {
-        
         let input = SeeConversationViewModel.Input(
             trigger: onCreatePublish.asDriverOnErrorJustComplete(),
             sendMessTrigger: self.sendMessageButton.rx.tap.asDriver(),

@@ -58,6 +58,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     }
     
     func observeNextMessage(for user: User, fromLastId lastId: String?) -> Observable<Message> {
+        self.emptyPending()
         return Observable.create { [unowned self] (obs) in
             guard let conversationId = self.currentConversationId else {
                 return Disposables.create()
@@ -114,18 +115,17 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             if genId {
                 self.ref.child("messages/\(conversation)")
                     .childByAutoId()
-                    .setValue(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
+                    .updateChildValues(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
                         if error == nil {
                             self.handleSendSuccess(msgId: dbRef.key)
                         } else {
-                            print("Send fail")
                             self.errorPublisher.onNext(error!)
                         }
                     })
             } else {
                 self.handleMessageFromUser(message.markAsSending())
                 self.ref.child("messages/\(conversation)/\(message.getMessageId())")
-                    .setValue(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
+                    .updateChildValues(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
                         if error == nil {
                             self.handleSendSuccess(msgId: dbRef.key)
                         } else {
@@ -422,7 +422,6 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                 }
             }
             
-            // TODO: These are not called :(
             task.observe(StorageTaskStatus.success, handler: { (_) in
                 print("Upload successfully")
             })
@@ -446,9 +445,12 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     
     private var timer: Timer?
     private func handleMessageFromUser(_ message: Message) {
+        guard message.isSending else {
+            return
+        }
+        
         if !self.pendingContains(message) {
-            
-            let timer = Timer.scheduledTimer(withTimeInterval: 20.0, repeats: false) { [unowned self] (timer) in
+            let timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [unowned self] (timer) in
                 self.handleSendFail()
             }
             RunLoop.current.add(timer, forMode: .commonModes)
@@ -486,6 +488,9 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     
     private func emptyPending() {
         self.timer?.invalidate()
+        self.pendingMessages.forEach { (it) in
+            messagePublisher.onNext(it.markAsFail())
+        }
         self.pendingMessages.removeAll()
         self.ref.database.purgeOutstandingWrites()
     }

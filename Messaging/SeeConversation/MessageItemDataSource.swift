@@ -1,11 +1,11 @@
 import DeepDiff
+import RxSwift
 
 class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
     
-    private let configureCell = { (cell: BaseMessageCell, item: MessageItem) -> BaseMessageCell in
-        cell.item = item
-        return cell
-    }
+    private let resendPublish: PublishSubject<MessageItem>
+    
+    private let configureCell: (BaseMessageCell, MessageItem) -> BaseMessageCell
     
     private let getReuseIdentifier = { (item: MessageItem) -> String in
         switch item.messageItemType {
@@ -20,7 +20,14 @@ class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
         }
     }
     
-    init() {
+    init(_ resendPublish: PublishSubject<MessageItem>) {
+        self.resendPublish = resendPublish
+        self.configureCell = { (cell: BaseMessageCell, item: MessageItem) -> BaseMessageCell in
+            cell.messagePublish = resendPublish
+            cell.item = item
+            return cell
+        }
+        
         super.init(items: [], configureCell: self.configureCell,
                    getReuseIdentifier: self.getReuseIdentifier)
     }
@@ -40,7 +47,13 @@ class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
     func addOrUpdateSingleItem(item: MessageItem) -> (Bool, Int) {
         let index = items.firstIndex(of: item)
         if index != nil {
-            super.updateItem(at: index!, with: item)
+            let showTime = index! == 0 ||
+                !items[index! - 1].message.getSentBy().elementsEqual(item.message.getSentBy())
+            if !showTime {
+                super.updateItem(at: index!, with: item.showNoTime())
+            } else {
+                super.updateItem(at: index!, with: item)
+            }
             return (false, index!)
         } else {
             super.insertItemAtFront(item)

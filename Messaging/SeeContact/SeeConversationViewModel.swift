@@ -22,7 +22,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     let textMessageContent = BehaviorRelay<String>(value: "")
     
-    private let dataSource: MessasgeItemDataSource = MessasgeItemDataSource()
+    private let dataSource: MessasgeItemDataSource
     
     private let loadConvoFromContactIdUseCase = LoadConvoFromContactIdUseCase()
     private let loadConvoFromConvoIdUseCase = LoadConvoFromConvoIdUseCase()
@@ -32,12 +32,15 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let getUserUseCase = GetUserUseCase()
     private let getContactNicknameUseCase = GetContactNicknameUseCase()
     private let observeNextMessageUseCase = ObserveNextMessageUseCase()
+    private let resendUseCase = ResendUseCase()
     
+     private let resendMessagePublish = PublishSubject<MessageItem>()
     /* We falsely use timestamp of last message
      * and offset it by 1 to create timestamp
      * of new message on local storage
      * because we don't need time accuracy
      * we just need to preserve order
+     * This value is overriden by server time anyway.
      */
     private var lastMessTime: Int64 = 0
     
@@ -46,6 +49,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.contactItem = contactItem
         self.disposeBag = DisposeBag()
         self.conversationItem = nil
+        self.dataSource = MessasgeItemDataSource(resendMessagePublish)
     }
     
     init(displayLogic: SeeConversationDisplayLogic, conversationItem: ConversationItem) {
@@ -53,9 +57,8 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.conversationItem = conversationItem
         self.disposeBag = DisposeBag()
         self.contactItem = nil
+        self.dataSource = MessasgeItemDataSource(resendMessagePublish)
     }
-    
-    // init(displayLogic: SeeConversationDisplayLogic, chatHistoryItem: ChatHistoryItem) { }
     
     func transform(input: Input) -> Output {
         
@@ -161,6 +164,19 @@ class SeeConversationViewModel : ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
         
+        self.resendMessagePublish
+            .asDriverOnErrorJustComplete()
+            .flatMap { [unowned self] (msgItem) -> Driver<Bool> in
+                let request = ResendRequest(message: msgItem.message)
+                return self.resendUseCase
+                    .execute(request: request)
+                    .do()
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
         return Output (error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
     
@@ -233,7 +249,6 @@ class SeeConversationViewModel : ViewModelDelegate {
             })
             .disposed(by: self.disposeBag)
         
-        
         input.sendImagePublish
             .flatMap { [unowned self] (url) -> Driver<Bool> in
                 return self.getUserUseCase.execute(request: ())
@@ -252,6 +267,21 @@ class SeeConversationViewModel : ViewModelDelegate {
             }
             .drive()
             .disposed(by: self.disposeBag)
+        
+        
+        self.resendMessagePublish
+            .asDriverOnErrorJustComplete()
+            .flatMap { [unowned self] (msgItem) -> Driver<Bool> in
+                let request = ResendRequest(message: msgItem.message)
+                return self.resendUseCase
+                    .execute(request: request)
+                    .do()
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
         
         return Output(
             error: errorTracker.asDriver(), dataSource: self.dataSource)
@@ -278,14 +308,14 @@ class SeeConversationViewModel : ViewModelDelegate {
             .execute(request: ())
             .flatMap { [unowned self] (user) in
                 return self.observeNextMessageUseCase
-                    .execute(request: ObserveNextMessageRequest(fromLastId: lastId))
+                    .execute(request: ())
                     .map { (message) -> (Message, User) in
                         return (message, user)
                     }
-                    .do(onNext: { [unowned self] (mess, user) in
-                        let item = self.convert(messages: [mess], user: user).first
+                    .do(onNext: { [weak self] (mess, user) in
+                        let item = self?.convert(messages: [mess], user: user).first
                         if item != nil {
-                            self.notifySingleItem(with: item!)
+                            self?.notifySingleItem(with: item!)
                         }
                     })
                     .trackError(errorTracker)

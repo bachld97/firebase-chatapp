@@ -1,3 +1,5 @@
+import RxSwift
+import RxCocoa
 import UIKit
 
 class TextMeMessageCell: BaseMessageCell {
@@ -5,29 +7,64 @@ class TextMeMessageCell: BaseMessageCell {
         didSet {
             self.textContent.text = item.message.getContent()
             
+            resendButton.rx.tap
+                .asDriver()
+                .drive(onNext: { [unowned self] in
+                    self.messagePublish?.onNext(self.item)
+                })
+                .disposed(by: self.disposeBag)
+            
             if item.message.isSending {
+                self.resendButton.isHidden = true
                 self.tvWrapper.backgroundColor = UIColor(red: 221.0 / 255.0, green: 190.0 / 255.0, blue: 200 / 255.0, alpha: 1)
             } else {
                 if item.message.isFail {
-                    // showResend()
+                    self.resendButton.isHidden = false
                     self.tvWrapper.backgroundColor = UIColor(red: 80.0 / 255.0, green: 80.0 / 255.0, blue: 200 / 255.0, alpha: 1)
                 } else {
+                    self.resendButton.isHidden = true
                     self.tvWrapper.backgroundColor = UIColor(red: 221.0 / 255.0, green: 234.0 / 255.0, blue: 1, alpha: 1)
                 }
             }
         }
     }
     
+    
+    private var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+         disposeBag = DisposeBag()
+    }
+    
     override func prepareUI() {
         // Do UI setup
         self.addSubview(tvWrapper)
+        self.addSubview(resendButton)
         addConstraintsForTextContent()
+        addConstraintsForResendButton()
         self.transform = CGAffineTransform(scaleX: 1, y: -1)
         layoutIfNeeded()
+    
         
         layer.borderColor = UIColor.white.cgColor
         layer.borderWidth = 2
     }
+    
+    private let resendButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.isUserInteractionEnabled = true
+
+        button.widthAnchor.constraint(equalToConstant: 16.0).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 16.0).isActive = true
+        
+        button.backgroundColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.3)
+        button.layer.cornerRadius = 8.0
+        button.clipsToBounds = true
+        button.setImage(#imageLiteral(resourceName: "ic_reload"), for: .normal)
+        return button
+    }()
     
     private let textContent: UITextView = {
         let tv = UITextView()
@@ -52,6 +89,16 @@ class TextMeMessageCell: BaseMessageCell {
         v.layer.cornerRadius = 16.0
         return v
     }()
+    
+    private func addConstraintsForResendButton() {
+        let smallPadding = MessageCellConstant.smallPadding
+
+        let topC = NSLayoutConstraint(item: resendButton, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
+//        let botC = NSLayoutConstraint(item: resendButton, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
+        let rightC = NSLayoutConstraint(item: resendButton, attribute: .trailing, relatedBy: .equal, toItem: tvWrapper, attribute: .leading, multiplier: 1, constant: smallPadding)
+        
+        addConstraints([topC, rightC])
+    }
     
     private func addConstraintsForTextContent() {
         let normalPadding = MessageCellConstant.normalPadding

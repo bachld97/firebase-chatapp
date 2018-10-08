@@ -7,8 +7,8 @@ protocol ConversationRepository {
     func loadMessages(of conversationId: String) -> Observable<[Message]>
     func sendMessage(request: SendMessageRequest) -> Observable<Bool>
     func sendMessageToUser(request: SendMessageToUserRequest) -> Observable<Bool>
-    
-    func observeNextMessage(fromLastId lastId: String?) -> Observable<Message>
+    func resendMessage(request: ResendRequest) -> Observable<Bool>
+    func observeNextMessage() -> Observable<Message>
     func getConversationLabel(conversation: Conversation) -> Observable<String>
     func getContactNickname(contact: Contact) -> Observable<String>
 
