@@ -12,6 +12,8 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     private var messagePublisher = PublishSubject<Message>()
     private var errorPublisher = PublishSubject<Error>()
     
+    private var pendingTasks = [StorageUploadTask]()
+    
     private let disposeBag = DisposeBag()
     
     init() {
@@ -98,13 +100,13 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     }
     
     func sendMessage(message: Message, from user: User, to contact: Contact) -> Observable<Bool> {
-        let convId = ConvId.get(for: user, with: contact)
+        let convId = ConvId.get (for: user, with: contact)
         return self.sendMessage(message: message, to: convId)
     }
     
     func sendMessage(message: Message, to conversation: String, genId: Bool = true) -> Observable<Bool> {
         if message.type == .image {
-            return sendImageMessage(message: message, to: conversation)
+            return sendImageMessage(message: message, to: conversation, genId: genId)
         }
         
         return Observable.deferred { [unowned self] in
@@ -135,7 +137,6 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                         if error == nil {
                             self.handleSendSuccess(msgId: dbRef.key)
                         } else {
-                            print("Send fail")
                             self.errorPublisher.onNext(error!)
                         }
                     })
@@ -383,18 +384,20 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         self.handleMessage(message!, fromThis: fromThis)
     }
     
-    private func sendImageMessage(message: Message, to conversation: String) -> Observable<Bool> {
+    private func sendImageMessage(message: Message, to conversation: String, genId: Bool) -> Observable<Bool> {
         return Observable.create { [unowned self] obs in
-            let messId = self.ref.child("messages/\(conversation)")
-                .childByAutoId()
-                .key
-            
-            
+            let messId: String
+            if genId {
+                messId = self.ref.child("messages/\(conversation)")
+                    .childByAutoId()
+                    .key
+            } else {
+                messId = message.getMessageId()
+            }
+           
             let toSend = message.changeId(withServerId: messId,
                                          withConvId: conversation)
             self.displayAsSending(toSend)
-//            self.messagePublisher.onNext(message.changeId(withServerId: messId,
-//                                                          withConvId: conversation))
             
             let urlString = message.getContent()
             let url = URL(fileURLWithPath: urlString)
@@ -432,14 +435,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                 }
             }
             
-            task.observe(StorageTaskStatus.success, handler: { (_) in
-                print("Upload successfully")
-            })
-            
-            task.observe(StorageTaskStatus.failure, handler: { (_) in
-                print("Upload fail")
-            })
-            
+            self.pendingTasks.append(task)
             return Disposables.create()
         }
     }
@@ -505,6 +501,10 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         self.pendingMessages.forEach { (it) in
             messagePublisher.onNext(it.markAsFail())
         }
+        self.pendingTasks.forEach { (it) in
+            it.cancel()
+        }
+        self.pendingTasks.removeAll()
         self.pendingMessages.removeAll()
         self.ref.database.purgeOutstandingWrites()
     }

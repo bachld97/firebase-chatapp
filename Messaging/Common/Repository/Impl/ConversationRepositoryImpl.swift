@@ -275,7 +275,7 @@ class ConversationRepositoryImpl : ConversationRepository {
     private func retryUnsent(_ messages: [Message], with conversationId: String) -> Observable<[Message]> {
         return Observable.deferred {
             messages.filter({ (it) -> Bool in
-                return it.type == .text && it.isSending && !it.isFail
+                return it.isSending && !it.isFail
             }).forEach({ [unowned self] (it) in
                 self.remoteSource.sendMessage(message: it, to: conversationId, genId: false)
                     .subscribe()
