@@ -115,23 +115,10 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             
             if genId {
                 // Add message to sending queue
-                
                 let newRef = self.ref.child("messages/\(conversation)")
                     .childByAutoId()
-                
-                // TODO: Extract this
                 let toSend = message.changeId(withServerId: newRef.key, withConvId: conversation)
-                    .markAsSending()
-                let timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [unowned self] (timer) in
-                    self.handleSendFail()
-                }
-                RunLoop.current.add(timer, forMode: .commonModes)
-                self.timer?.invalidate()
-                self.timer = timer
-                self.pendingMessages.append(toSend)
-                self.messagePublisher.onNext(toSend)
-                // TODO: Extract this
-                
+                self.displayAsSending(toSend)
                 
                 newRef.updateChildValues(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
                         if error == nil {
@@ -141,6 +128,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                         }
                     })
             } else {
+                self.displayAsSending(message)
                 self.handleMessageFromUser(message.markAsSending())
                 self.ref.child("messages/\(conversation)/\(message.getMessageId())")
                     .updateChildValues(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
@@ -401,8 +389,12 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                 .childByAutoId()
                 .key
             
-            self.messagePublisher.onNext(message.changeId(withServerId: messId,
-                                                          withConvId: conversation))
+            
+            let toSend = message.changeId(withServerId: messId,
+                                         withConvId: conversation)
+            self.displayAsSending(toSend)
+//            self.messagePublisher.onNext(message.changeId(withServerId: messId,
+//                                                          withConvId: conversation))
             
             let urlString = message.getContent()
             let url = URL(fileURLWithPath: urlString)
@@ -452,6 +444,18 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         }
     }
     
+    private func displayAsSending(_ message: Message) {
+        let toSend = message.markAsSending()
+        let timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [unowned self] (timer) in
+            self.handleSendFail()
+        }
+        RunLoop.current.add(timer, forMode: .commonModes)
+        self.timer?.invalidate()
+        self.timer = timer
+        self.pendingMessages.append(toSend)
+        self.messagePublisher.onNext(toSend)
+    }
+    
     private func handleMessage(_ message: Message, fromThis: Bool) {
         if fromThis {
             handleMessageFromUser(message.markAsSending())
@@ -470,20 +474,8 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         guard pendingContains(message) else {
             return
         }
-        
-        if !self.pendingContains(message) {
-            let timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [unowned self] (timer) in
-                self.handleSendFail()
-            }
-            RunLoop.current.add(timer, forMode: .commonModes)
-            self.timer?.invalidate()
-            self.timer = timer
-            
-            self.pendingMessages.append(message)
-            self.messagePublisher.onNext(message)
-        } else {
-            self.updatePending(message)
-        }
+      
+        self.updatePending(message)
     }
     
     private func handleMessageFromOther(_ message: Message) {
