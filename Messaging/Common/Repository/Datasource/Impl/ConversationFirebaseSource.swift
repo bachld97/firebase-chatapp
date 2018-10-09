@@ -282,6 +282,7 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         let displayAva = dict["display-ava"] as? String
         
         let nickname = parseNicknames(from: usersDict)
+        let lastSeen = parseLastSeen(from: usersDict)
         
         guard let message = parseMessage(from: lastMessage) else {
             return nil
@@ -296,7 +297,8 @@ class ConversationFirebaseSource: ConversationRemoteSource {
             nickname: nickname,
             displayAva: displayAva,
             fromMe: fromMe,
-            myId: myId)
+            myId: myId,
+            lastSeen: lastSeen)
         return res
     }
     
@@ -304,6 +306,14 @@ class ConversationFirebaseSource: ConversationRemoteSource {
         var res = [String: String]()
         for (key, value) in userDict {
             res[key] = (value as! [String : Any])["nickname"] as? String ?? key
+        }
+        return res
+    }
+    
+    private func parseLastSeen(from userDict: [String: Any]) -> [String: Int64] {
+        var res = [String: Int64]()
+        for (key, value) in userDict {
+            res[key] = (value as! [String : Any])["lastSeen"] as? Int64 ?? -1
         }
         return res
     }

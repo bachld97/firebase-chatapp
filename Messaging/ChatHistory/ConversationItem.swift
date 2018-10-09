@@ -6,8 +6,7 @@ class ConversationItem : Hashable {
     static func == (lhs: ConversationItem, rhs: ConversationItem) -> Bool {
         let t1 = lhs.conversation.lastMess.getAtTimeAsNum()
         let t2 = rhs.conversation.lastMess.getAtTimeAsNum()
-        let change = abs(t1 - t2) > 200
-        
+        let change = abs(t1 - t2) > 200 || lhs.isMessageSeen != rhs.isMessageSeen
         return !change &&
             lhs.conversation.id.elementsEqual(rhs.conversation.id)
     }
@@ -18,6 +17,7 @@ class ConversationItem : Hashable {
     let displayTitle: String
     let displayContent: String
     let displayAva: String
+    let isMessageSeen: Bool
     
     init(conversation: Conversation) {
         self.conversation = conversation
@@ -42,6 +42,9 @@ class ConversationItem : Hashable {
         case.image:
             content = "[Image]"
         }
+        
         self.displayContent = content
+        
+        self.isMessageSeen = conversation.lastSeen[conversation.myId] ?? -1 >= conversation.lastMess.atTimeAsNum
     }
 }

@@ -7,6 +7,16 @@ class PrivateConversationCell : BaseConversationCell {
             self.contentText.text = item.displayContent
             self.timeText.text = item.displayTime
             imageLoader.loadImage(url: item.displayAva, into: self.avaImage)
+            
+            if item.isMessageSeen {
+                self.contentText.textColor = UIColor.darkGray
+                self.contentText.font = UIFont.systemFont(ofSize: 13.0)
+                self.titleText.font = UIFont.systemFont(ofSize: 15.0)
+            } else {
+                self.contentText.textColor = UIColor.black
+                self.contentText.font = UIFont.boldSystemFont(ofSize: 13.0)
+                self.titleText.font = UIFont.boldSystemFont(ofSize: 15.0)
+            }
         }
     }
     
@@ -53,7 +63,6 @@ class PrivateConversationCell : BaseConversationCell {
         v.textColor = UIColor.darkGray
         v.backgroundColor = UIColor.clear
         v.clipsToBounds = true
-        v.font = UIFont.systemFont(ofSize: 13.0)
         v.text = "Let's jam together. This weekend, my place!"
         return v
     }()

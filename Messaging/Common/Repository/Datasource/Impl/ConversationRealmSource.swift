@@ -47,8 +47,9 @@ class ConversationRealmSource : ConversationLocalSource {
             let nicknames =
                 DictionaryConverter.convert(from: realmConversation.nicknames)
             let displayAva: String? = nil
+            let lastSeen = [String : Int64]()
             
-            return Conversation(id: realmConversation.convId, type: type, lastMess: unwrappedMess, nickname: nicknames, displayAva: displayAva, fromMe: fromMe, myId: userId)
+            return Conversation(id: realmConversation.convId, type: type, lastMess: unwrappedMess, nickname: nicknames, displayAva: displayAva, fromMe: fromMe, myId: userId, lastSeen: lastSeen)
         } catch {
             return nil
         }

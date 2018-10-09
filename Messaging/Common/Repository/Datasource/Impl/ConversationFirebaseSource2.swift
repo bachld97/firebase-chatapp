@@ -22,8 +22,6 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     
     // MARK: Public
     func loadChatHistory(of user: User) -> Observable<[Conversation]> {
-        // This function currently doing client-side filter, which is inefficient
-        
         return Observable.create { [unowned self] (obs) in
             let dbRequest = self.ref.child("conversations")
                 .queryOrdered(byChild: "users/\(user.userId)/avail")
@@ -65,6 +63,10 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             guard let conversationId = self.currentConversationId else {
                 return Disposables.create()
             }
+            
+            // Update last seen
+            self.ref.child("conversations/\(conversationId)/users/\(user.userId)/last-seen")
+                .setValue(ServerValue.timestamp())
             
             let messageRef = self.ref.child("messages/\(conversationId)")
             messageRef.removeAllObservers()
@@ -294,6 +296,8 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             return nil
         }
         
+        let lastSeen = parseLastSeen(from: userDict)
+
         let convId = snapshot.key
         
         let type: ConvoType = isPrivate ? .single : .group
@@ -305,7 +309,16 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             nickname: nickname,
             displayAva: displayAva,
             fromMe: fromMe,
-            myId: myId)
+            myId: myId,
+            lastSeen: lastSeen)
+    }
+    
+    private func parseLastSeen(from userDict: [String: Any]) -> [String: Int64] {
+        var res = [String: Int64]()
+        for (key, value) in userDict {
+            res[key] = (value as! [String : Any])["last-seen"] as? Int64 ?? -1
+        }
+        return res
     }
     
     private func parseNickname(from userDict: [String : Any]) -> [String : String] {

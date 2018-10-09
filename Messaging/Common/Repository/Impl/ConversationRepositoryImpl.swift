@@ -118,7 +118,22 @@ class ConversationRepositoryImpl : ConversationRepository {
         if remoteConversations.count == 0 {
             return localConversations.sorted(by: { $0.compareWith($1) })
         }
-        return remoteConversations.sorted(by: { $0.compareWith($1) })
+        
+        var res = remoteConversations
+        for (resIndx, it) in res.enumerated() {
+            let index = localConversations.firstIndex(where: { (conv) -> Bool in
+                it.id.elementsEqual(conv.id)
+            })
+            
+            if index != nil {
+                let localCon = localConversations[index!]
+                if localCon.lastMess.atTimeAsNum > it.lastMess.atTimeAsNum {
+                    res[resIndx] = it.replaceLastMessage(with: localCon.lastMess)
+                }
+            }
+        }
+        
+        return res.sorted(by: { $0.compareWith($1) })
     }
     
     
