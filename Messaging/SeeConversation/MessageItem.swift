@@ -24,7 +24,7 @@ final class MessageItem : Hashable {
         if displayTime != nil {
             self.displayTime = displayTime!
         } else {
-            self.displayTime = Converter.convertToLocalTime(timestamp: message.getAtTimeAsNum())
+            self.displayTime = Converter.convertToMessageTime(timestamp: message.getAtTimeAsNum())
         }
         self.showTime = showTime
     }

@@ -43,6 +43,9 @@ class SeeChatHistoryVC: BaseVC, ViewFor {
     override func prepareUI() {
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
         self.tableView.tableFooterView = UIView()
+        self.tableView.separatorStyle = .singleLine
+        self.tableView.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10)
+        
         self.tableView.rowHeight = 72
         registerCells()
         

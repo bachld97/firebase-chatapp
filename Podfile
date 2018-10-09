@@ -4,10 +4,25 @@ use_frameworks!
 
 target 'Messaging' do
 	pod 'IQKeyboardManagerSwift'
-	pod 'RxSwift',	'~> 4.0'
+	pod 'RxSwift'
 	pod 'RxDataSources'
 	pod 'RealmSwift'
-	pod 'RxCocoa', 	'~> 4.0'
+	pod 'RxCocoa'
+	pod 'RxGesture'
+	pod 'Toast'
+	pod 'Firebase/Core'
+	pod 'Kingfisher'
+	pod 'DeepDiff'
+	pod 'Firebase/Database'
+	pod 'Firebase/Storage'
+end
+
+target 'MessagingTests' do
+	pod 'IQKeyboardManagerSwift'
+	pod 'RxSwift'
+	pod 'RxDataSources'
+	pod 'RealmSwift'
+	pod 'RxCocoa'
 	pod 'RxGesture'
 	pod 'Toast'
 	pod 'Firebase/Core'

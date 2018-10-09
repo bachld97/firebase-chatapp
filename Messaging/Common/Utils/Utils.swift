@@ -60,7 +60,7 @@ class Type {
 }
 
 class Converter {
-    public static func convertToLocalTime(timestamp: Int64) -> String {
+    public static func convertToMessageTime(timestamp: Int64) -> String {
         let converted = NSDate(timeIntervalSince1970: TimeInterval(timestamp / 1000))
         
         let dateFormatter = DateFormatter()
@@ -72,12 +72,38 @@ class Converter {
     
     public static func convertToHistoryTime(timestamp: Int64) -> String {
         let converted = NSDate(timeIntervalSince1970: TimeInterval(timestamp / 1000))
+        let today = Date()
+        let dateFormatString = getHistoryFormatString(date1: converted as Date, date2: today)
         
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone.local
-        dateFormatter.dateFormat = "HH:mm"// "hh:mm a"
+        dateFormatter.dateFormat = dateFormatString
         let time = dateFormatter.string(from: converted as Date)
         return time
+    }
+    
+    public static func getHistoryFormatString(date1: Date, date2: Date) -> String {
+        let components1 = Calendar.current.dateComponents(in: NSTimeZone.local, from: date1)
+        let components2 = Calendar.current.dateComponents(in: NSTimeZone.local, from: date2)
+        
+        let dateFormatString: String
+        
+        if components1.day == components2.day &&
+            components1.weekOfYear == components2.weekOfYear {
+            dateFormatString = "HH:mm"
+        } else if components1.weekOfYear == components2.weekOfYear &&
+            components1.year == components2.year {
+            dateFormatString = "EEEE"
+        } else if components1.month == components2.month &&
+            components1.year == components2.year {
+            dateFormatString = "EE dd"
+        } else if components1.year == components2.year {
+            dateFormatString = "dd MMMM"
+        } else {
+            dateFormatString = "dd/MM/yyyy"
+        }
+        
+        return dateFormatString
     }
 }
 

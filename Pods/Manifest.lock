@@ -88,10 +88,10 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - Kingfisher
   - RealmSwift
-  - RxCocoa (~> 4.0)
+  - RxCocoa
   - RxDataSources
   - RxGesture
-  - RxSwift (~> 4.0)
+  - RxSwift
   - Toast
 
 SPEC REPOS:
@@ -143,6 +143,6 @@ SPEC CHECKSUMS:
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: 54dad4dc0d364e06c23dfe1c2cc44c216083376c
+PODFILE CHECKSUM: a78747951ec6ea0ffd619a2c1147e46b3121c0d8
 
 COCOAPODS: 1.5.3
