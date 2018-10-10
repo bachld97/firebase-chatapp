@@ -3,7 +3,12 @@ import UIKit
 class TextTimeMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
-            self.textContent.text = item.message.getContent()
+            let htmlData = NSString(string: item.message.getContent())
+                .data(using: String.Encoding.unicode.rawValue)
+            let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
+            let attrText = try! NSAttributedString(data: htmlData!, options: options, documentAttributes: nil)
+            
+            self.textContent.attributedText = attrText
             self.timeContent.text = item.displayTime
         }
     }

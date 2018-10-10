@@ -51,7 +51,7 @@ class PrivateConversationCell : BaseConversationCell {
         v.backgroundColor = UIColor.clear
         v.clipsToBounds = true
         v.font = UIFont.systemFont(ofSize: 11.0)
-        v.textAlignment = NSTextAlignment.right
+//        v.textAlignment = NSTextAlignment.right
         v.text = "12:00"
         return v
     }()
@@ -77,10 +77,11 @@ class PrivateConversationCell : BaseConversationCell {
     
     override func layoutSubviews() {
         let width = self.frame.width
+        let timeWidth: CGFloat = 64.0
         
         self.avaImage.frame = CGRect(x: 8, y: 16, width: 40, height: 40)
-        self.timeText.frame = CGRect(x: width - 48, y: 16, width: 40, height: 16)
-        self.titleText.frame = CGRect(x: 64, y: 16, width: width - (48 + 8 + 56), height: 20)
+        self.timeText.frame = CGRect(x: width - timeWidth + 8, y: 16, width: timeWidth, height: 16)
+        self.titleText.frame = CGRect(x: 64, y: 16, width: width - (timeWidth + 8 + 56), height: 20)
         self.contentText.frame = CGRect(x: 64, y: 36, width: width - (8 + 56 + 8), height: 20)
     }
 }

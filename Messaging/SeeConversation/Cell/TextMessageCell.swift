@@ -3,7 +3,13 @@ import UIKit
 class TextMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
-            self.textContent.text = item.message.getContent()
+            // TODO: May pre-compute attributedText and store in messageItem
+            let htmlData = NSString(string: item.message.getContent())
+                .data(using: String.Encoding.unicode.rawValue)
+            let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
+            let attrText = try! NSAttributedString(data: htmlData!, options: options, documentAttributes: nil)
+            
+            self.textContent.attributedText = attrText
         }
     }
     

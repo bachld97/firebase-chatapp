@@ -64,10 +64,6 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                 return Disposables.create()
             }
             
-            // Update last seen
-            self.ref.child("conversations/\(conversationId)/users/\(user.userId)/last-seen")
-                .setValue(ServerValue.timestamp())
-            
             let messageRef = self.ref.child("messages/\(conversationId)")
             messageRef.removeAllObservers()
             let query = messageRef.queryOrderedByKey()
@@ -83,6 +79,10 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                     } else {
                         self.handleSnapshot(snap, user, conversationId, excluding: lastId!)
                     }
+                    
+                    // Update last seen
+                    self.ref.child("conversations/\(conversationId)/users/\(user.userId)/last-seen")
+                        .setValue(ServerValue.timestamp())
                 }, withCancel: { (error) in
                     obs.onError(error)
                 })

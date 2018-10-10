@@ -74,7 +74,6 @@ class Converter {
         let converted = NSDate(timeIntervalSince1970: TimeInterval(timestamp / 1000))
         let today = Date()
         let dateFormatString = getHistoryFormatString(date1: converted as Date, date2: today)
-        
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = NSTimeZone.local
         dateFormatter.dateFormat = dateFormatString
@@ -90,21 +89,27 @@ class Converter {
         
         if components1.day == components2.day &&
             components1.weekOfYear == components2.weekOfYear {
-            dateFormatString = "HH:mm"
+            dateFormatString = SAME_DATE_FORMAT
         } else if components1.weekOfYear == components2.weekOfYear &&
             components1.year == components2.year {
-            dateFormatString = "EEEE"
+            dateFormatString = SAME_WEEK_FORMAT
         } else if components1.month == components2.month &&
             components1.year == components2.year {
-            dateFormatString = "EE dd"
+            dateFormatString = SAME_MONTH_FORMAT
         } else if components1.year == components2.year {
-            dateFormatString = "dd MMMM"
+            dateFormatString = SAME_YEAR_FORMAT
         } else {
-            dateFormatString = "dd/MM/yyyy"
+            dateFormatString = DEFAULT_FORMAT
         }
         
         return dateFormatString
     }
+    
+    public static let SAME_DATE_FORMAT = "HH:mm"
+    public static let SAME_WEEK_FORMAT = "EEEE"
+    public static let SAME_MONTH_FORMAT = "EE dd"
+    public static let SAME_YEAR_FORMAT = "dd MMMM"
+    public static let DEFAULT_FORMAT = "dd/MM/yyyy"
 }
 
 class Compressor {

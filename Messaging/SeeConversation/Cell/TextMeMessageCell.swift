@@ -5,7 +5,14 @@ import UIKit
 class TextMeMessageCell: BaseMessageCell {
     override var item: MessageItem! {
         didSet {
-            self.textContent.text = item.message.getContent()
+            // Compute attributed text
+            let htmlData = NSString(string: item.message.getContent())
+                .data(using: String.Encoding.unicode.rawValue)
+            let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
+            let attrText = try! NSAttributedString(data: htmlData!, options: options, documentAttributes: nil)
+            
+            // self.textContent.text = item.message.getContent()
+            self.textContent.attributedText = attrText
             
             resendButton.rx.tap
                 .asDriver()

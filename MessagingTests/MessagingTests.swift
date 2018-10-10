@@ -13,13 +13,20 @@ import XCTest
 class MessagingTests: XCTestCase {
     private var dateAsToday: Date = Date()
     
+    private let SAME_DATE_FORMAT = Converter.SAME_DATE_FORMAT
+    private let SAME_WEEK_FORMAT = Converter.SAME_WEEK_FORMAT
+    private let SAME_MONTH_FORMAT =  Converter.SAME_MONTH_FORMAT
+    private let SAME_YEAR_FORMAT = Converter.SAME_YEAR_FORMAT
+    private let DEFAULT_FORMAT = Converter.DEFAULT_FORMAT
+    private let BANGKOK_TIMEZONE = NSTimeZone(name: "Asia/Bangkok")! as TimeZone
+    
     override func setUp() {
         // 7:30 8/10/2018 in Local timezone
         var dateComponents = DateComponents()
         dateComponents.year = 2018
         dateComponents.month = 10
         dateComponents.day = 11
-        dateComponents.timeZone = NSTimeZone.local
+        dateComponents.timeZone = BANGKOK_TIMEZONE
         dateComponents.hour = 7
         dateComponents.minute = 30
         
@@ -36,7 +43,7 @@ class MessagingTests: XCTestCase {
         dateComponents.year = 2018
         dateComponents.month = 10
         dateComponents.day = 11
-        dateComponents.timeZone = NSTimeZone.local
+        dateComponents.timeZone = BANGKOK_TIMEZONE
         dateComponents.hour = 5
         dateComponents.minute = 30
         
@@ -45,7 +52,7 @@ class MessagingTests: XCTestCase {
         let testDate = userCalendar.date(from: dateComponents)!
         
         let formatString = Converter.getHistoryFormatString(date1: testDate, date2: dateAsToday)
-        XCTAssertEqual(formatString, "HH:mm")
+        XCTAssertEqual(formatString, SAME_DATE_FORMAT)
     }
     
     
@@ -54,7 +61,7 @@ class MessagingTests: XCTestCase {
         dateComponents.year = 2018
         dateComponents.month = 10
         dateComponents.day = 08
-        dateComponents.timeZone = NSTimeZone.local
+        dateComponents.timeZone = BANGKOK_TIMEZONE
         dateComponents.hour = 5
         dateComponents.minute = 30
         
@@ -63,7 +70,7 @@ class MessagingTests: XCTestCase {
         let testDate = userCalendar.date(from: dateComponents)!
         
         let formatString = Converter.getHistoryFormatString(date1: testDate, date2: dateAsToday)
-        XCTAssertEqual(formatString, "EEEE")
+        XCTAssertEqual(formatString, SAME_WEEK_FORMAT)
     }
     
     func testDateFormatStringSameWeekDifferentMonth() {
@@ -71,7 +78,7 @@ class MessagingTests: XCTestCase {
         dateComponents.year = 2018
         dateComponents.month = 7
         dateComponents.day = 30
-        dateComponents.timeZone = NSTimeZone.local
+        dateComponents.timeZone = BANGKOK_TIMEZONE
         dateComponents.hour = 5
         dateComponents.minute = 30
         
@@ -84,13 +91,13 @@ class MessagingTests: XCTestCase {
         dateComponents2.year = 2018
         dateComponents2.month = 8
         dateComponents2.day = 2
-        dateComponents2.timeZone = NSTimeZone.local
+        dateComponents2.timeZone = BANGKOK_TIMEZONE
         dateComponents2.hour = 5
         dateComponents2.minute = 30
         dateAsToday = userCalendar2.date(from: dateComponents2)!
         
         let formatString = Converter.getHistoryFormatString(date1: testDate, date2: dateAsToday)
-        XCTAssertEqual(formatString, "EEEE")
+        XCTAssertEqual(formatString, SAME_WEEK_FORMAT)
     }
     
     
@@ -99,7 +106,7 @@ class MessagingTests: XCTestCase {
         dateComponents.year = 2018
         dateComponents.month = 10
         dateComponents.day = 08
-        dateComponents.timeZone = NSTimeZone.local
+        dateComponents.timeZone = BANGKOK_TIMEZONE
         dateComponents.hour = 5
         dateComponents.minute = 30
         
@@ -108,7 +115,7 @@ class MessagingTests: XCTestCase {
         let testDate = userCalendar.date(from: dateComponents)!
         
         let formatString = Converter.getHistoryFormatString(date1: testDate, date2: dateAsToday)
-        XCTAssertEqual(formatString, "EEEE")
+        XCTAssertEqual(formatString, SAME_WEEK_FORMAT)
     }
     
     func testDateFormatStringSameWeekDifferentYear() {
@@ -116,7 +123,7 @@ class MessagingTests: XCTestCase {
         dateComponents.year = 2014
         dateComponents.month = 10
         dateComponents.day = 08
-        dateComponents.timeZone = NSTimeZone.local
+        dateComponents.timeZone = BANGKOK_TIMEZONE
         dateComponents.hour = 5
         dateComponents.minute = 30
         
@@ -125,7 +132,7 @@ class MessagingTests: XCTestCase {
         let testDate = userCalendar.date(from: dateComponents)!
         
         let formatString = Converter.getHistoryFormatString(date1: testDate, date2: dateAsToday)
-        XCTAssertEqual(formatString, "dd/MM/yyyy")
+        XCTAssertEqual(formatString, DEFAULT_FORMAT)
     }
     
     func testDateFormatStringSameMonthSameYear() {
@@ -133,7 +140,7 @@ class MessagingTests: XCTestCase {
         dateComponents.year = 2018
         dateComponents.month = 10
         dateComponents.day = 05
-        dateComponents.timeZone = NSTimeZone.local
+        dateComponents.timeZone = BANGKOK_TIMEZONE
         dateComponents.hour = 5
         dateComponents.minute = 30
         
@@ -142,7 +149,7 @@ class MessagingTests: XCTestCase {
         let testDate = userCalendar.date(from: dateComponents)!
         
         let formatString = Converter.getHistoryFormatString(date1: testDate, date2: dateAsToday)
-        XCTAssertEqual(formatString, "EE dd")
+        XCTAssertEqual(formatString, SAME_MONTH_FORMAT)
     }
     
     func testDateFormatStringDifferentMonthSameYear() {
@@ -150,7 +157,7 @@ class MessagingTests: XCTestCase {
         dateComponents.year = 2018
         dateComponents.month = 10
         dateComponents.day = 05
-        dateComponents.timeZone = NSTimeZone.local
+        dateComponents.timeZone = BANGKOK_TIMEZONE
         dateComponents.hour = 5
         dateComponents.minute = 30
         
@@ -159,7 +166,7 @@ class MessagingTests: XCTestCase {
         let testDate = userCalendar.date(from: dateComponents)!
         
         let formatString = Converter.getHistoryFormatString(date1: testDate, date2: dateAsToday)
-        XCTAssertEqual(formatString, "EE dd")
+        XCTAssertEqual(formatString, SAME_MONTH_FORMAT)
     }
     
     func testDateFormatStringSameMonthDifferentYear() {
@@ -167,7 +174,7 @@ class MessagingTests: XCTestCase {
         dateComponents.year = 2015
         dateComponents.month = 10
         dateComponents.day = 05
-        dateComponents.timeZone = NSTimeZone.local
+        dateComponents.timeZone = BANGKOK_TIMEZONE
         dateComponents.hour = 5
         dateComponents.minute = 30
         
@@ -176,7 +183,7 @@ class MessagingTests: XCTestCase {
         let testDate = userCalendar.date(from: dateComponents)!
         
         let formatString = Converter.getHistoryFormatString(date1: testDate, date2: dateAsToday)
-        XCTAssertEqual(formatString, "dd/MM/yyyy")
+        XCTAssertEqual(formatString, DEFAULT_FORMAT)
     }
     
     func testDateFormatStringDifferentMonthDifferentYear() {
@@ -184,7 +191,7 @@ class MessagingTests: XCTestCase {
         dateComponents.year = 2015
         dateComponents.month = 10
         dateComponents.day = 05
-        dateComponents.timeZone = NSTimeZone.local
+        dateComponents.timeZone = BANGKOK_TIMEZONE
         dateComponents.hour = 5
         dateComponents.minute = 30
         
@@ -193,20 +200,46 @@ class MessagingTests: XCTestCase {
         let testDate = userCalendar.date(from: dateComponents)!
         
         let formatString = Converter.getHistoryFormatString(date1: testDate, date2: dateAsToday)
-        XCTAssertEqual(formatString, "dd/MM/yyyy")
+        XCTAssertEqual(formatString, DEFAULT_FORMAT)
     }
     
-    
-//    func testExample() {
-//        // This is an example of a functional test case.
-//        // Use XCTAssert and related functions to verify your tests produce the correct results.
-//    }
-//
-//    func testPerformanceExample() {
-//        // This is an example of a performance test case.
-//        self.measure {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
+    func testSameDayFormat() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = BANGKOK_TIMEZONE
+        dateFormatter.dateFormat = SAME_DATE_FORMAT
+        let time = dateFormatter.string(from: dateAsToday)
+        XCTAssertEqual(time, "07:30")
+    }
 
+    func testSameWeekFormat() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = BANGKOK_TIMEZONE
+        dateFormatter.dateFormat = SAME_WEEK_FORMAT
+        let time = dateFormatter.string(from: dateAsToday)
+        XCTAssertEqual(time, "Thursday")
+    }
+    
+    func testSameMonthFormat() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = BANGKOK_TIMEZONE
+        dateFormatter.dateFormat = SAME_MONTH_FORMAT
+        let time = dateFormatter.string(from: dateAsToday)
+        XCTAssertEqual(time, "Thu 11")
+    }
+    
+    func testSameYearFormat() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = BANGKOK_TIMEZONE
+        dateFormatter.dateFormat = SAME_YEAR_FORMAT
+        let time = dateFormatter.string(from: dateAsToday)
+        XCTAssertEqual(time, "11 October")
+    }
+    
+    func testDifferentYearFormat() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = BANGKOK_TIMEZONE
+        dateFormatter.dateFormat = DEFAULT_FORMAT
+        let time = dateFormatter.string(from: dateAsToday)
+        XCTAssertEqual(time, "11/10/2018")
+    }
 }
