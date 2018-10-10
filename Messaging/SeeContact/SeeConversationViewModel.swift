@@ -34,7 +34,12 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let observeNextMessageUseCase = ObserveNextMessageUseCase()
     private let resendUseCase = ResendUseCase()
     
-     private let resendMessagePublish = PublishSubject<MessageItem>()
+    
+    // Click on the resend button
+    private let resendMessagePublish = PublishSubject<MessageItem>()
+    // click on the message themselves, for ex: text = copy, image = show, etc.
+    private let messageClickPublish = PublishSubject<MessageItem>()
+    
     /* We falsely use timestamp of last message
      * and offset it by 1 to create timestamp
      * of new message on local storage
@@ -49,7 +54,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.contactItem = contactItem
         self.disposeBag = DisposeBag()
         self.conversationItem = nil
-        self.dataSource = MessasgeItemDataSource(resendMessagePublish)
+        self.dataSource = MessasgeItemDataSource(resendMessagePublish, messageClickPublish)
     }
     
     init(displayLogic: SeeConversationDisplayLogic, conversationItem: ConversationItem) {
@@ -57,7 +62,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.conversationItem = conversationItem
         self.disposeBag = DisposeBag()
         self.contactItem = nil
-        self.dataSource = MessasgeItemDataSource(resendMessagePublish)
+        self.dataSource = MessasgeItemDataSource(resendMessagePublish, messageClickPublish)
     }
     
     func transform(input: Input) -> Output {

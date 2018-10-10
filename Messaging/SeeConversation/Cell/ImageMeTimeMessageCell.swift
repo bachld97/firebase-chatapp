@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import RxCocoa
 
 class ImageMeTimeMessageCell : BaseMessageCell {
     override var item: MessageItem! {
@@ -13,6 +14,14 @@ class ImageMeTimeMessageCell : BaseMessageCell {
                 .asDriver()
                 .drive(onNext: { [unowned self] in
                     self.messagePublish?.onNext(self.item)
+                })
+                .disposed(by: self.disposeBag)
+            
+            contentImage.rx.tapGesture()
+                .when(.ended)
+                .asDriverOnErrorJustComplete()
+                .drive(onNext: { [unowned self] _ in
+                    self.clickPublish?.onNext(self.item)
                 })
                 .disposed(by: self.disposeBag)
             

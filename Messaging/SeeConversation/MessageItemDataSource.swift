@@ -3,7 +3,7 @@ import RxSwift
 
 class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
     
-    private let resendPublish: PublishSubject<MessageItem>
+//    private let resendPublish: PublishSubject<MessageItem>
     
     private let configureCell: (BaseMessageCell, MessageItem) -> BaseMessageCell
     
@@ -20,10 +20,13 @@ class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
         }
     }
     
-    init(_ resendPublish: PublishSubject<MessageItem>) {
-        self.resendPublish = resendPublish
+    init(_ resendPublish: PublishSubject<MessageItem>,
+         _ clickPublish: PublishSubject<MessageItem>) {
+//        self.resendPublish = resendPublish
+//        self.
         self.configureCell = { (cell: BaseMessageCell, item: MessageItem) -> BaseMessageCell in
             cell.messagePublish = resendPublish
+            cell.clickPublish = clickPublish
             cell.item = item
             return cell
         }

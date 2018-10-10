@@ -1,10 +1,25 @@
 import UIKit
+import RxSwift
 
 class ImageMessageCell : BaseMessageCell {
+    private var disposeBag = DisposeBag()
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
+    
     override var item: MessageItem! {
         didSet {
             let url = item.message.getContent()
-//            let messageId = item.message.getMessageId()
+            
+            contentImage.rx.tapGesture()
+                .when(.ended)
+                .asDriverOnErrorJustComplete()
+                .drive(onNext: { [unowned self] _ in
+                    self.clickPublish?.onNext(self.item)
+                })
+                .disposed(by: self.disposeBag)
+            
             imageLoader.loadImage(url: url, into: self.contentImage)
         }
     }

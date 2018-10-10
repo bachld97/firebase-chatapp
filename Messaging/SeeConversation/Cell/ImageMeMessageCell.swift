@@ -15,6 +15,14 @@ class ImageMeMessageCell : BaseMessageCell {
                 })
                 .disposed(by: self.disposeBag)
             
+            contentImage.rx.tapGesture()
+                .when(.ended)
+                .asDriverOnErrorJustComplete()
+                .drive(onNext: { [unowned self] _ in
+                    self.clickPublish?.onNext(self.item)
+                })
+                .disposed(by: self.disposeBag)
+            
             if item.message.isSending {
                 self.resendButton.isHidden = true
                 contentImage.alpha = 0.5
