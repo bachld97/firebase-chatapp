@@ -15,10 +15,8 @@ class SeeConversationVC: BaseVC, ViewFor {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sendMessageButton: UIButton!
     
-    // private var configurator: MessageCellConfigurator?
     
-   
-    
+       
     private let sendImagePublish = PublishSubject<URL>()
     
     private let onCreatePublish = PublishSubject<Void>()
@@ -106,6 +104,12 @@ class SeeConversationVC: BaseVC, ViewFor {
 }
 
 extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
+    func goShowImage(_ imageUrl: String) {
+        self.resignFirstResponder()
+        let vc = ViewImageVC.instance(imageToShow: imageUrl)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func notifyItems(with changes: [Change<MessageItem>]?) {
         guard changes != nil else {
             self.tableView?.reloadData()

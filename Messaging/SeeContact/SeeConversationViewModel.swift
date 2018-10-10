@@ -11,6 +11,8 @@ protocol SeeConversationDisplayLogic : class {
     
     func notifyItems(with changes: [Change<MessageItem>]?)
     func notifyItem(with addRespond: (Bool, Int))
+    
+    func goShowImage(_ imageUrl: String)
 }
 
 class SeeConversationViewModel : ViewModelDelegate {
@@ -182,6 +184,15 @@ class SeeConversationViewModel : ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
         
+        self.messageClickPublish
+            .asDriverOnErrorJustComplete()
+            .drive(onNext: { [unowned self] (messageItem) in
+                if messageItem.message.type == .image {
+                    self.displayLogic?.goShowImage(messageItem.message.getContent())
+                }
+            })
+            .disposed(by: self.disposeBag)
+        
         return Output (error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
     
@@ -271,6 +282,15 @@ class SeeConversationViewModel : ViewModelDelegate {
                     .asDriverOnErrorJustComplete()
             }
             .drive()
+            .disposed(by: self.disposeBag)
+        
+        self.messageClickPublish
+            .asDriverOnErrorJustComplete()
+            .drive(onNext: { [unowned self] (messageItem) in
+                if messageItem.message.type == .image {
+                    self.displayLogic?.goShowImage(messageItem.message.getContent())
+                }
+            })
             .disposed(by: self.disposeBag)
         
         
