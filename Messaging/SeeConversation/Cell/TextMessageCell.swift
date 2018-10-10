@@ -8,7 +8,6 @@ class TextMessageCell : BaseMessageCell {
                 .data(using: String.Encoding.unicode.rawValue)
             let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
             let attrText = try! NSAttributedString(data: htmlData!, options: options, documentAttributes: nil)
-            
             self.textContent.attributedText = attrText
         }
     }

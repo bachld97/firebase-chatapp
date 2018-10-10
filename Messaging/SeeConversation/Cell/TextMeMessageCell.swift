@@ -11,7 +11,6 @@ class TextMeMessageCell: BaseMessageCell {
             let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
             let attrText = try! NSAttributedString(data: htmlData!, options: options, documentAttributes: nil)
             
-            // self.textContent.text = item.message.getContent()
             self.textContent.attributedText = attrText
             
             resendButton.rx.tap

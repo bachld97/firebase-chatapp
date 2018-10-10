@@ -1,3 +1,5 @@
+import Foundation
+
 class ConversationItem : Hashable {
     var hashValue: Int {
         return conversation.id.hashValue
@@ -38,7 +40,13 @@ class ConversationItem : Hashable {
         let content: String
         switch conversation.lastMess.type {
         case .text:
-            content = conversation.lastMess.getContent()
+            // Compute attributed text
+            let htmlData = NSString(string: conversation.lastMess.getContent())
+                .data(using: String.Encoding.unicode.rawValue)
+            let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
+            let attrText = try! NSAttributedString(data: htmlData!, options: options, documentAttributes: nil)
+            
+            content = attrText.string
         case.image:
             content = "[Image]"
         }
