@@ -12,6 +12,14 @@ class TextMeTimeMessageCell: BaseMessageCell {
             self.textContent.attributedText = attrText
             self.timeContent.text = item.displayTime
             
+            self.tvWrapper.rx.tapGesture()
+                .when(.ended)
+                .asDriverOnErrorJustComplete()
+                .drive(onNext: { [unowned self] _ in
+                    self.clickPublish?.onNext(self.item)
+                })
+                .disposed(by: self.disposeBag)
+            
             resendButton.rx.tap
                 .asDriver()
                 .drive(onNext: { [unowned self] in

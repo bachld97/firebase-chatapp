@@ -13,6 +13,7 @@ protocol SeeConversationDisplayLogic : class {
     func notifyItem(with addRespond: (Bool, Int))
     
     func goShowImage(_ imageUrl: String)
+    func notifyTextCopied(with text: String)
 }
 
 class SeeConversationViewModel : ViewModelDelegate {
@@ -187,9 +188,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.messageClickPublish
             .asDriverOnErrorJustComplete()
             .drive(onNext: { [unowned self] (messageItem) in
-                if messageItem.message.type == .image {
-                    self.displayLogic?.goShowImage(messageItem.message.getContent())
-                }
+                self.handleMessageClick(messageItem)
             })
             .disposed(by: self.disposeBag)
         
@@ -287,9 +286,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.messageClickPublish
             .asDriverOnErrorJustComplete()
             .drive(onNext: { [unowned self] (messageItem) in
-                if messageItem.message.type == .image {
-                    self.displayLogic?.goShowImage(messageItem.message.getContent())
-                }
+                    self.handleMessageClick(messageItem)
             })
             .disposed(by: self.disposeBag)
         
@@ -310,6 +307,18 @@ class SeeConversationViewModel : ViewModelDelegate {
         
         return Output(
             error: errorTracker.asDriver(), dataSource: self.dataSource)
+    }
+    
+    private func handleMessageClick(_ messageItem: MessageItem) {
+        
+        switch messageItem.message.type {
+        case .image:
+            self.displayLogic?.goShowImage(messageItem.message.getContent())
+        case .text:
+            self.displayLogic?.notifyTextCopied(with: messageItem.message.content)
+        case .contact:
+            print("Contact clicked: ID")
+        }
     }
     
     private func notifyItems(with items: [MessageItem]) {
@@ -363,6 +372,8 @@ class SeeConversationViewModel : ViewModelDelegate {
             return MessageItem(messageItemType: .imageMe, message: localMessage)
         case .text:
             return MessageItem(messageItemType: .textMe, message: localMessage)
+        case .contact:
+            return MessageItem(messageItemType: .contactMe, message: localMessage)
         }
     }
     
@@ -386,6 +397,12 @@ class SeeConversationViewModel : ViewModelDelegate {
                 } else {
                     res.append(MessageItem(messageItemType: .text, message: m, showTime: showTime))
                 }
+            case .contact:
+                if m.getSentBy().elementsEqual(user.userId) {
+                    res.append(MessageItem(messageItemType: .contactMe, message: m, showTime: showTime))
+                } else {
+                    res.append(MessageItem(messageItemType: .contact, message: m, showTime: showTime))
+                }
             }
         }
         
@@ -402,7 +419,6 @@ class SeeConversationViewModel : ViewModelDelegate {
                        atTime: self.getTime(),
                        sentBy: user.userId,
                        messId: nil)
-        // return Message(type: .text, data: data, isSending: true)
     }
     
     private func getTime() -> String {

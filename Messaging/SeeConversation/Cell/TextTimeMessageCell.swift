@@ -1,4 +1,5 @@
 import UIKit
+import RxSwift
 
 class TextTimeMessageCell : BaseMessageCell {
     override var item: MessageItem! {
@@ -10,7 +11,21 @@ class TextTimeMessageCell : BaseMessageCell {
             
             self.textContent.attributedText = attrText
             self.timeContent.text = item.displayTime
+
+            self.tvWrapper.rx.tapGesture()
+                .when(.ended)
+                .asDriverOnErrorJustComplete()
+                .drive(onNext: { [unowned self] _ in
+                    self.clickPublish?.onNext(self.item)
+                })
+                .disposed(by: self.disposeBag)
         }
+    }
+
+    private var disposeBag = DisposeBag()
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
     
     private let timeContent: UITextView = {

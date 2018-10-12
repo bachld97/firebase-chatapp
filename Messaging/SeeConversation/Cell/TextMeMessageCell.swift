@@ -13,6 +13,14 @@ class TextMeMessageCell: BaseMessageCell {
             
             self.textContent.attributedText = attrText
             
+            self.tvWrapper.rx.tapGesture()
+                .when(.ended)
+                .asDriverOnErrorJustComplete()
+                .drive(onNext: { [unowned self] _ in
+                    self.clickPublish?.onNext(self.item)
+                })
+                .disposed(by: self.disposeBag)
+            
             resendButton.rx.tap
                 .asDriver()
                 .drive(onNext: { [unowned self] in
@@ -34,6 +42,7 @@ class TextMeMessageCell: BaseMessageCell {
             }
         }
     }
+    
     
     
     private var disposeBag = DisposeBag()

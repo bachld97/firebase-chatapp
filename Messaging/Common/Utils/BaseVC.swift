@@ -77,4 +77,8 @@ class BaseVC : UIViewController {
         let vc = MainVC.instance()
         AppDelegate.sharedInstance.window?.rootViewController = vc
     }
+    
+    final func doToast(with text: String, duration: Double = 3.0) {
+        self.view.makeToast(text, duration: duration, position: CSToastPositionBottom)
+    }
 }

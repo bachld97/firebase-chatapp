@@ -49,6 +49,8 @@ class ConversationItem : Hashable {
             content = attrText.string
         case.image:
             content = "[Image]"
+        case .contact:
+            content = "[Contact]"
         }
         
         self.displayContent = content

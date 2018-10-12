@@ -111,4 +111,5 @@ struct Message {
 enum MessageType {
     case text
     case image
+    case contact
 }

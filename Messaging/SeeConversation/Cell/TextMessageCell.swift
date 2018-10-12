@@ -1,4 +1,5 @@
 import UIKit
+import RxSwift
 
 class TextMessageCell : BaseMessageCell {
     override var item: MessageItem! {
@@ -9,7 +10,21 @@ class TextMessageCell : BaseMessageCell {
             let options = [NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html]
             let attrText = try! NSAttributedString(data: htmlData!, options: options, documentAttributes: nil)
             self.textContent.attributedText = attrText
+            
+            self.tvWrapper.rx.tapGesture()
+                .when(.ended)
+                .asDriverOnErrorJustComplete()
+                .drive(onNext: { [unowned self] _ in
+                    self.clickPublish?.onNext(self.item)
+                })
+                .disposed(by: self.disposeBag)
         }
+    }
+    
+    private var disposeBag = DisposeBag()
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
     }
     
     override func prepareUI() {
@@ -34,7 +49,7 @@ class TextMessageCell : BaseMessageCell {
         tv.sizeToFit()
         tv.font = UIFont.systemFont(ofSize: 15.0)
         // tv.contentInset = UIEdgeInsetsMake(8, 12, 8, 12)
-        
+    
         tv.textContainerInset = .zero
         tv.text = "Testing text view lalalala. And this is a long long text. I want to make it longer and longer. "
         return tv

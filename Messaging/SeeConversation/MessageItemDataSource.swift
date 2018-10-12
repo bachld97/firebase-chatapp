@@ -9,6 +9,10 @@ class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
     
     private let getReuseIdentifier = { (item: MessageItem) -> String in
         switch item.messageItemType {
+        case .contact:
+            return item.showTime ? "" : ""
+        case .contactMe:
+            return item.showTime ? "" : ""
         case .text:
             return item.showTime ? TextTimeMessageCell.reuseIdentifier : TextMessageCell.reuseIdentifier
         case .textMe:

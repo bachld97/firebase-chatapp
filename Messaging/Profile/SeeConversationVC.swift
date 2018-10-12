@@ -167,4 +167,10 @@ extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
         let vc = PickMediaVC.instance(delegate: self)
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func notifyTextCopied(with text: String) {
+        super.doToast(with: "Message copied to clipboard",
+                      duration: 1.2)
+        UIPasteboard.general.string = text
+    }
 }
