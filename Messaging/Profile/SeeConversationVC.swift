@@ -11,12 +11,13 @@ class SeeConversationVC: BaseVC, ViewFor {
     
     @IBOutlet weak var textMessageContent: UITextField!
     
-    @IBOutlet weak var sendImageButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sendMessageButton: UIButton!
     
+    @IBOutlet weak var pickContactButton: UIButton!
+    @IBOutlet weak var pickImageButton: UIButton!
     
-       
+    private let sendContactPublish = PublishSubject<Contact>()
     private let sendImagePublish = PublishSubject<URL>()
     
     private let onCreatePublish = PublishSubject<Void>()
@@ -75,8 +76,10 @@ class SeeConversationVC: BaseVC, ViewFor {
             sendMessTrigger: self.sendMessageButton.rx.tap.asDriver(),
             conversationLabel: self.navigationItem.rx.title,
             textMessage: self.textMessageContent.rx.text.orEmpty,
-            sendImageTrigger: self.sendImageButton.rx.tap.asDriver(),
-            sendImagePublish: self.sendImagePublish.asDriverOnErrorJustComplete())
+            pickImageTrigger: self.pickImageButton.rx.tap.asDriver(),
+            pickContactTrigger: self.pickContactButton.rx.tap.asDriver(),
+            sendImagePublish: self.sendImagePublish.asDriverOnErrorJustComplete(),
+            sendContactPublish: self.sendContactPublish.asDriverOnErrorJustComplete())
         
         let output = self.viewModel.transform(input: input)
         
@@ -100,10 +103,15 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.tableView?.register(ImageMessageCell.self)
         self.tableView?.register(ImageMeTimeMessageCell.self)
         self.tableView?.register(ImageMeMessageCell.self)
+        
+        self.tableView?.register(ContactMessageCell.self)
+        self.tableView?.register(ContactTimeMessageCell.self)
+        self.tableView?.register(ContactMeMessageCell.self)
+        self.tableView?.register(ContactMeTimeMessageCell.self)
     }
 }
 
-extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
+extension SeeConversationVC : SeeConversationDisplayLogic {
     func goShowImage(_ imageUrl: String) {
         self.resignFirstResponder()
         let vc = ViewImageVC.instance(imageToShow: imageUrl)
@@ -138,22 +146,6 @@ extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
 //        }
     }
     
-    func onMediaItemPicked(mediaItemUrl: URL) {
-        self.sendImagePublish.onNext(mediaItemUrl)
-    }
-    
-    func onNewData(items: [MessageItem]) {
-        // self.configurator?.setItems(items)
-    }
-
-    func onNewSingleData(item: MessageItem) {
-        // self.configurator?.onNewSingleItem(item)
-    }
-    
-    func onMediaItemPickFail() {
-        print("Failed")
-    }
-    
     func goBack() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -168,9 +160,29 @@ extension SeeConversationVC : SeeConversationDisplayLogic, PickMediaDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    func goPickContact() {
+        self.resignFirstResponder()
+        let vc = PickContactVC.instance(delegate: self)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func notifyTextCopied(with text: String) {
         super.doToast(with: "Message copied to clipboard",
                       duration: 1.2)
         UIPasteboard.general.string = text
+    }
+}
+
+extension SeeConversationVC : PickMediaDelegate, PickContactDelegate {
+    func onMediaItemPicked(mediaItemUrl: URL) {
+        self.sendImagePublish.onNext(mediaItemUrl)
+    }
+    
+    func onMediaItemPickFail() {
+        print("Failed")
+    }
+    
+    func onContactChoosen(contact: Contact) {
+        self.sendContactPublish.onNext(contact)
     }
 }

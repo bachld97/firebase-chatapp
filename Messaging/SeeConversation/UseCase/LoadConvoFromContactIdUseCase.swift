@@ -7,6 +7,7 @@ final class LoadConvoFromContactIdUseCase : UseCase {
     private let repository: ConversationRepository = ConversationRepositoryFactory.sharedInstance
     
     func execute(request: LoadConvoFromContactRequest) -> Observable<[Message]> {
+        
         return repository.loadMessages(with: request.contact)
     }
 }

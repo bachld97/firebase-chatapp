@@ -1,4 +1,4 @@
-struct Message {
+class Message {
     let type: MessageType
     let isSending: Bool
     let isFail: Bool

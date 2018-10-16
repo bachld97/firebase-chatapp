@@ -46,6 +46,8 @@ class Type {
     public static func getMessageType(fromString typeString: String) -> MessageType {
         if typeString.elementsEqual("image") {
             return .image
+        } else if typeString.elementsEqual("contact") {
+            return .contact
         } else {
             return .text
         }

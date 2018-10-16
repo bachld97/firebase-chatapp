@@ -112,7 +112,6 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         }
         
         return Observable.deferred { [unowned self] in
-           
             let jsonMessage = self.mapToJson(message: message)
             self.ref.child("conversations/\(conversation)/last-message")
                 .setValue(jsonMessage)
@@ -122,6 +121,7 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                 let newRef = self.ref.child("messages/\(conversation)")
                     .childByAutoId()
                 let toSend = message.changeId(withServerId: newRef.key, withConvId: conversation)
+                
                 self.displayAsSending(toSend)
                 
                 newRef.updateChildValues(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in

@@ -260,7 +260,12 @@ class ConversationRepositoryImpl : ConversationRepository {
             let finalStream = Observable
                 .combineLatest(localStream, remoteStream) { [unowned self] in
                     return self.mergeMessages($0, $1)
-            }
+                }
+            
+//            let delayedStream = Observable.zip(finalStream, Observable<Int>.interval(RxTimeInterval(1), scheduler: MainScheduler.instance))
+//                .flatMap { (items, dur) in
+//                    return Observable.just(items)
+//            }
             
             return finalStream
                 .flatMap { [unowned self]  (messages) in

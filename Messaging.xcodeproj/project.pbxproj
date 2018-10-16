@@ -30,10 +30,18 @@
 		1418235E2135025800DC0E98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1418235C2135025800DC0E98 /* LaunchScreen.storyboard */; };
 		14182371213507E500DC0E98 /* ViewFor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14182370213507E500DC0E98 /* ViewFor.swift */; };
 		141823732135081E00DC0E98 /* ViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823722135081E00DC0E98 /* ViewModelDelegate.swift */; };
+		14238C6D2175B44B00EA90CA /* PickContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14238C6C2175B44B00EA90CA /* PickContactViewModel.swift */; };
+		14238C712175B66700EA90CA /* PickContactVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14238C6F2175B66700EA90CA /* PickContactVC.swift */; };
+		14238C722175B66700EA90CA /* PickContactVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14238C702175B66700EA90CA /* PickContactVC.xib */; };
+		14238C742175D8A500EA90CA /* ContactMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14238C732175D8A500EA90CA /* ContactMessage.swift */; };
 		142E515421421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E515321421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift */; };
 		142E515621421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E515521421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift */; };
 		142E515821421CE500FC0593 /* LoadConvoFromContactIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E515721421CE500FC0593 /* LoadConvoFromContactIdUseCase.swift */; };
 		142E515A21421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142E515921421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift */; };
+		142EDE7C21708DA300B07F18 /* ContactMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142EDE7B21708DA300B07F18 /* ContactMessageCell.swift */; };
+		142EDE7E21708DBA00B07F18 /* ContactMeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142EDE7D21708DBA00B07F18 /* ContactMeMessageCell.swift */; };
+		142EDE8021708EDE00B07F18 /* ContactMeTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142EDE7F21708EDE00B07F18 /* ContactMeTimeMessageCell.swift */; };
+		142EDE8221708EEE00B07F18 /* ContactTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142EDE8121708EEE00B07F18 /* ContactTimeMessageCell.swift */; };
 		143517A121352D3C0039874F /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143517A021352D3C0039874F /* BaseVC.swift */; };
 		143517A621352F200039874F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 143517A521352F200039874F /* LoginViewModel.swift */; };
 		1436689D2148BB7D00B2766E /* GetUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1436689C2148BB7D00B2766E /* GetUserUseCase.swift */; };
@@ -204,10 +212,18 @@
 		1418235F2135025800DC0E98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		14182370213507E500DC0E98 /* ViewFor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFor.swift; sourceTree = "<group>"; };
 		141823722135081E00DC0E98 /* ViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDelegate.swift; sourceTree = "<group>"; };
+		14238C6C2175B44B00EA90CA /* PickContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickContactViewModel.swift; sourceTree = "<group>"; };
+		14238C6F2175B66700EA90CA /* PickContactVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickContactVC.swift; sourceTree = "<group>"; };
+		14238C702175B66700EA90CA /* PickContactVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickContactVC.xib; sourceTree = "<group>"; };
+		14238C732175D8A500EA90CA /* ContactMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactMessage.swift; sourceTree = "<group>"; };
 		142E515321421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadConvoFromContactIdRequest.swift; sourceTree = "<group>"; };
 		142E515521421C2800FC0593 /* LoadConvoFromConvoIdRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadConvoFromConvoIdRequest.swift; sourceTree = "<group>"; };
 		142E515721421CE500FC0593 /* LoadConvoFromContactIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadConvoFromContactIdUseCase.swift; sourceTree = "<group>"; };
 		142E515921421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadConvoFromConvoIdUseCase.swift; sourceTree = "<group>"; };
+		142EDE7B21708DA300B07F18 /* ContactMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactMessageCell.swift; sourceTree = "<group>"; };
+		142EDE7D21708DBA00B07F18 /* ContactMeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactMeMessageCell.swift; sourceTree = "<group>"; };
+		142EDE7F21708EDE00B07F18 /* ContactMeTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactMeTimeMessageCell.swift; sourceTree = "<group>"; };
+		142EDE8121708EEE00B07F18 /* ContactTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTimeMessageCell.swift; sourceTree = "<group>"; };
 		143517A021352D3C0039874F /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		143517A521352F200039874F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1436689C2148BB7D00B2766E /* GetUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetUserUseCase.swift; sourceTree = "<group>"; };
@@ -393,6 +409,7 @@
 		141823522135025700DC0E98 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
+				14238C692175B42300EA90CA /* PickContact */,
 				1490412D216DAD6A00A61D9D /* ViewImageMessage */,
 				14A239D4214BC2EC0027743D /* PickMedia */,
 				146153FA213F68350032EE95 /* AddContact */,
@@ -560,6 +577,16 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		14238C692175B42300EA90CA /* PickContact */ = {
+			isa = PBXGroup;
+			children = (
+				14238C6C2175B44B00EA90CA /* PickContactViewModel.swift */,
+				14238C6F2175B66700EA90CA /* PickContactVC.swift */,
+				14238C702175B66700EA90CA /* PickContactVC.xib */,
+			);
+			path = PickContact;
+			sourceTree = "<group>";
+		};
 		142E515021421BDD00FC0593 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -605,6 +632,10 @@
 				147231D8215B8DF700D54C57 /* ImageMeTimeMessageCell.swift */,
 				147231DA215B950500D54C57 /* TextTimeMessageCell.swift */,
 				147231DC215B971600D54C57 /* ImageTimeMessageCell.swift */,
+				142EDE7B21708DA300B07F18 /* ContactMessageCell.swift */,
+				142EDE8121708EEE00B07F18 /* ContactTimeMessageCell.swift */,
+				142EDE7F21708EDE00B07F18 /* ContactMeTimeMessageCell.swift */,
+				142EDE7D21708DBA00B07F18 /* ContactMeMessageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -651,6 +682,7 @@
 				140C33F72138E1A400DC3535 /* Conversation.swift */,
 				14615409213F7C800032EE95 /* ContactRequest.swift */,
 				14843FE4214116AC00D5366B /* Message.swift */,
+				14238C732175D8A500EA90CA /* ContactMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -886,6 +918,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14238C722175B66700EA90CA /* PickContactVC.xib in Resources */,
 				1461541A213F8AD00032EE95 /* StrangerContactCell.xib in Resources */,
 				14461A5721379CEC0062FAC6 /* SeeProfileVC.xib in Resources */,
 				140C34102139243100DC3535 /* ChangePassVC.xib in Resources */,
@@ -1062,9 +1095,11 @@
 				1439D99721367FD30094C12C /* MyErrors.swift in Sources */,
 				14843FEF214136B500D5366B /* ConversationItem.swift in Sources */,
 				1439D99D21369FA30094C12C /* SignupViewModel.swift in Sources */,
+				142EDE8221708EEE00B07F18 /* ContactTimeMessageCell.swift in Sources */,
 				14461A5B21379DFF0062FAC6 /* SeeConversationVC.swift in Sources */,
 				1436689D2148BB7D00B2766E /* GetUserUseCase.swift in Sources */,
 				1485C31A214F4BC1003568B9 /* CameraCell.swift in Sources */,
+				142EDE7E21708DBA00B07F18 /* ContactMeMessageCell.swift in Sources */,
 				1496B93E21508F0A00ED61CD /* BaseCell.swift in Sources */,
 				1496B9422150977400ED61CD /* BaseMessageCell.swift in Sources */,
 				14615407213F68910032EE95 /* AddContactVC.swift in Sources */,
@@ -1121,6 +1156,7 @@
 				142E515421421C1A00FC0593 /* LoadConvoFromContactIdRequest.swift in Sources */,
 				14BCAE912163682500C3BA4A /* LogoutUsecase.swift in Sources */,
 				14B7BFEE215201A500236C3D /* ObserveNextMessageRequest.swift in Sources */,
+				14238C6D2175B44B00EA90CA /* PickContactViewModel.swift in Sources */,
 				14848AD12140C84500DAA9F8 /* UnfriendUseCase.swift in Sources */,
 				147231D9215B8DF700D54C57 /* ImageMeTimeMessageCell.swift in Sources */,
 				14D64EC52164B93A001C9057 /* ResendUseCase.swift in Sources */,
@@ -1132,10 +1168,12 @@
 				140C340F2139243100DC3535 /* ChangePassVC.swift in Sources */,
 				1461540A213F7C800032EE95 /* ContactRequest.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
+				142EDE7C21708DA300B07F18 /* ContactMessageCell.swift in Sources */,
 				147231DD215B971600D54C57 /* ImageTimeMessageCell.swift in Sources */,
 				147945D7213E80340055CE79 /* UserFirebaseSource.swift in Sources */,
 				140C33F22138D37900DC3535 /* SeeProfileViewModel.swift in Sources */,
 				14719A4B215DD4DB006B4D54 /* PrivateConversationCell.swift in Sources */,
+				14238C742175D8A500EA90CA /* ContactMessage.swift in Sources */,
 				1439D99921369D1B0094C12C /* SignupUseCase.swift in Sources */,
 				14461A5221379CC40062FAC6 /* SeeContactVC.swift in Sources */,
 				14BCAE8D21634FBC00C3BA4A /* UserRealm.swift in Sources */,
@@ -1161,6 +1199,7 @@
 				140C33FC2138E52100DC3535 /* SeeChatHistoryUseCase.swift in Sources */,
 				14615419213F8AD00032EE95 /* StrangerContactCell.swift in Sources */,
 				14461A792137EA970062FAC6 /* ContactRealmSource.swift in Sources */,
+				142EDE8021708EDE00B07F18 /* ContactMeTimeMessageCell.swift in Sources */,
 				14615415213F8AC60032EE95 /* RequestingContactCell.swift in Sources */,
 				14848AD52140C88A00DAA9F8 /* CancelFriendRequest.swift in Sources */,
 				14848ACD2140C80F00DAA9F8 /* CancelRequestUseCase.swift in Sources */,
@@ -1184,6 +1223,7 @@
 				14843FF221413B7800D5366B /* SingleConvoCell.swift in Sources */,
 				14848ACF2140C83600DAA9F8 /* SendRequestUseCase.swift in Sources */,
 				14461A682137A65D0062FAC6 /* ContactRepository.swift in Sources */,
+				14238C712175B66700EA90CA /* PickContactVC.swift in Sources */,
 				14CEE9802136584000A31FBB /* UserRepository.swift in Sources */,
 				14B4DA7D215C95AF002CF340 /* PickMediaViewController.swift in Sources */,
 				14182371213507E500DC0E98 /* ViewFor.swift in Sources */,

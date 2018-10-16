@@ -20,7 +20,7 @@ class AddContactViewModel: ViewModelDelegate {
     private let sendRequestUseCase = SendRequestUseCase()
     private let unfriendUseCase = UnfriendUseCase()
     
-    public let items = BehaviorRelay<[Item]>(value: [])
+    private let items = BehaviorRelay<[Item]>(value: [])
     
     init(displayLogic: AddContactDisplayLogic) {
         self.disposeBag = DisposeBag()

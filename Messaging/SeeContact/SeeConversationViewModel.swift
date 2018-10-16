@@ -6,8 +6,7 @@ protocol SeeConversationDisplayLogic : class {
     func goBack()
     func clearText()
     func goPickMedia()
-    func onNewData(items: [MessageItem])
-    func onNewSingleData(item: MessageItem)
+    func goPickContact()
     
     func notifyItems(with changes: [Change<MessageItem>]?)
     func notifyItem(with addRespond: (Bool, Int))
@@ -148,7 +147,7 @@ class SeeConversationViewModel : ViewModelDelegate {
             .bind(to: input.conversationLabel)
             .disposed(by: self.disposeBag)
         
-        input.sendImageTrigger
+        input.pickImageTrigger
             .drive(onNext: { [unowned self] (_) in
                 self.displayLogic?.goPickMedia()
             })
@@ -258,9 +257,15 @@ class SeeConversationViewModel : ViewModelDelegate {
             .bind(to: input.conversationLabel)
             .disposed(by: self.disposeBag)
         
-        input.sendImageTrigger
+        input.pickImageTrigger
             .drive(onNext: { [unowned self] (_) in
                 self.displayLogic?.goPickMedia()
+            })
+            .disposed(by: self.disposeBag)
+        
+        input.pickContactTrigger
+            .drive(onNext: { [unowned self] (_) in
+                self.displayLogic?.goPickContact()
             })
             .disposed(by: self.disposeBag)
         
@@ -298,6 +303,25 @@ class SeeConversationViewModel : ViewModelDelegate {
                 return self.resendUseCase
                     .execute(request: request)
                     .do()
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
+        input.sendContactPublish
+            .flatMap { [unowned self] (contact) -> Driver<Bool> in
+                return self.getUserUseCase.execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        
+                        let message = self.parseContactMessage(user, contact)
+                        
+                        return self.sendMessageUseCase
+                            .execute(request: SendMessageRequest(
+                                message: message,
+                                conversationId: conversationItem.conversation.id))
+                            .do()
+                    }
                     .trackError(errorTracker)
                     .asDriverOnErrorJustComplete()
             }
@@ -366,6 +390,15 @@ class SeeConversationViewModel : ViewModelDelegate {
                        messId: url.lastPathComponent, isSending: true)
     }
     
+    private func parseContactMessage(_ user: User, _ contact: Contact) -> Message {
+//        return Message(type: .contact, convId: nil, content: contact.userId,
+//                       atTime: self.getTime(), sentBy: user.userId,
+//                       messId: "", isSending: true)
+        // TODO: return ContactMessage
+        return ContactMessage(contact: contact, user: user, atTime: self.getTime(),
+                              isSending: true)
+    }
+    
     private func convert(localMessage: Message) -> MessageItem {
         switch localMessage.type {
         case .image:
@@ -432,8 +465,10 @@ extension SeeConversationViewModel {
         let sendMessTrigger: Driver<Void>
         let conversationLabel: Binder<String?>
         let textMessage: ControlProperty<String>
-        let sendImageTrigger: Driver<Void>
+        let pickImageTrigger: Driver<Void>
+        let pickContactTrigger: Driver<Void>
         let sendImagePublish: Driver<URL>
+        let sendContactPublish: Driver<Contact>
     }
     
     struct Output {
