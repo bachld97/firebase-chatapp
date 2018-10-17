@@ -2,6 +2,7 @@ import RxSwift
 import FirebaseDatabase
 
 class ContactFirebaseSource: ContactRemoteSource {
+ 
     var ref: DatabaseReference!
     
     init() {
@@ -15,7 +16,6 @@ class ContactFirebaseSource: ContactRemoteSource {
             let dbRequest = self.ref.child("contacts").observe(.value, with: { (snapshot) in
                 guard snapshot.exists() && snapshot.hasChild(user.userId) else {
                     observer.onNext([])
-                    // observer.onCompleted()
                     return
                 }
                 
@@ -28,7 +28,6 @@ class ContactFirebaseSource: ContactRemoteSource {
                     }
                 }
                 observer.onNext(res)
-                // observer.onCompleted()
             }) { (error) in
                 observer.onError(error)
             }
@@ -38,6 +37,29 @@ class ContactFirebaseSource: ContactRemoteSource {
             }
             }.flatMap { [unowned self] (userIds) -> Observable<[Contact]> in
                 return self.loadContactDetail(userIds: userIds)
+        }
+    }
+    
+    
+    func loadContact(withId contactId: String) -> Observable<Contact> {
+        return Observable.create { [unowned self] (observer) in
+            let contactRef = self.ref.child("users/\(contactId)")
+            let h = contactRef.observe(.value, with: { snap in
+                guard snap.exists() else {
+                    observer.onCompleted()
+                    return
+                }
+                
+                if let contactDict = snap.value as? [String : String] {
+                    let contactName = contactDict["full-name"]!
+                    observer.onNext(Contact(userId: contactId, userName: contactName, userAvatarUrl: nil))
+                }
+                observer.onCompleted()
+            })
+            
+            return Disposables.create {
+                contactRef.removeObserver(withHandle: h)
+            }
         }
     }
     
@@ -62,7 +84,7 @@ class ContactFirebaseSource: ContactRemoteSource {
             }
             
             return Disposables.create { [unowned self] in
-                self.ref.removeObserver(withHandle: dbRequest)
+                self.ref.child("users").removeObserver(withHandle: dbRequest)
             }
         }
     }

@@ -12,6 +12,7 @@ protocol SeeConversationDisplayLogic : class {
     func notifyItem(with addRespond: (Bool, Int))
     
     func goShowImage(_ imageUrl: String)
+    func goShowContact(_ contactId: String)
     func notifyTextCopied(with text: String)
 }
 
@@ -341,7 +342,12 @@ class SeeConversationViewModel : ViewModelDelegate {
         case .text:
             self.displayLogic?.notifyTextCopied(with: messageItem.message.content)
         case .contact:
-            print("Contact clicked: ID")
+            let id = messageItem.message.content
+            if id.contains("#") {
+                self.displayLogic?.goShowContact(String(id.split(separator: "#").first!))
+            } else {
+                self.displayLogic?.goShowContact(id)
+            }
         }
     }
     

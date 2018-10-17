@@ -119,12 +119,14 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
     }
     
     func notifyItems(with changes: [Change<MessageItem>]?) {
-        guard changes != nil else {
-            self.tableView?.reloadData()
-            return
-        }
+        self.tableView?.reloadData()
         
-        self.tableView?.reload(changes: changes!, completion: { (_) in })
+//        guard changes != nil else {
+//            self.tableView?.reloadData()
+//            return
+//        }
+//        
+//        self.tableView?.reload(changes: changes!, completion: { (_) in })
     }
     
     func notifyItem(with addRespond: (Bool, Int)) {
@@ -170,6 +172,13 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
         super.doToast(with: "Message copied to clipboard",
                       duration: 1.2)
         UIPasteboard.general.string = text
+    }
+    
+    func goShowContact(_ contactId: String) {
+        print("It works!")
+        self.resignFirstResponder()
+        let vc = SeeContactProfileVC.instance(userId: contactId)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

@@ -4,6 +4,14 @@ import RxSwift
 class ContactMeTimeMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
+            self.container.rx.tapGesture()
+                .when(.ended)
+                .asDriverOnErrorJustComplete()
+                .drive(onNext: { [unowned self] _ in
+                    self.clickPublish?.onNext(self.item)
+                })
+                .disposed(by: self.disposeBag)
+            
             self.timeContent.text = item.displayTime
             if item.message.isSending {
                 // self.resendButton.isHidden = true
@@ -30,13 +38,6 @@ class ContactMeTimeMessageCell : BaseMessageCell {
             self.contactId.text = contact.userId
             let url = UrlBuilder.buildUrl(forUserId: contact.userId)
             self.imageLoader.loadImage(url: url, into: self.contactAva)
-            
-            self.messageContact.rx.tap
-                .asDriver()
-                .drive(onNext: { [unowned self] _ in
-                    self.clickPublish?.onNext(self.item)
-                })
-                .disposed(by: self.disposeBag)
         }
     }
     

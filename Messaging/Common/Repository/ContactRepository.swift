@@ -7,10 +7,11 @@ protocol ContactRepository {
     func cancelFriendRequest(request: CancelFriendRequest) -> Observable<Bool>
     func addFriendRequest(request: AddFriendRequest) -> Observable<Bool>
     func unfriendRequest(request: UnfriendRequest) -> Observable<Bool>
+    func seeOneContact(withId contactId: String) -> Observable<Contact>
 }
 
 class ContactRepositoryFactory {
-    public static let sharedInstance = ContactRepositoryImpl(
+    public static let sharedInstance: ContactRepository = ContactRepositoryImpl(
         userRepository: UserRepositoryFactory.sharedInstance,
         remoteSource: ContactRemoteSourceFactory.sharedInstance,
         localSource: ContactLocalSourceFactory.sharedInstance)

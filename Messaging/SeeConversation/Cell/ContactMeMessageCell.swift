@@ -4,6 +4,14 @@ import RxSwift
 class ContactMeMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
+            self.container.rx.tapGesture()
+                .when(.ended)
+                .asDriverOnErrorJustComplete()
+                .drive(onNext: { [unowned self] _ in
+                    self.clickPublish?.onNext(self.item)
+                })
+                .disposed(by: self.disposeBag)
+            
             if item.message.isSending {
                 // self.resendButton.isHidden = true
                 self.container.backgroundColor = UIColor(red: 221.0 / 255.0, green: 190.0 / 255.0, blue: 200 / 255.0, alpha: 1)
@@ -31,13 +39,7 @@ class ContactMeMessageCell : BaseMessageCell {
             
             let url = UrlBuilder.buildUrl(forUserId: contact.userId)
             self.imageLoader.loadImage(url: url, into: self.contactAva)
-      
-            self.messageContact.rx.tap
-                .asDriver()
-                .drive(onNext: { [unowned self] _ in
-                    self.clickPublish?.onNext(self.item)
-                })
-                .disposed(by: self.disposeBag)
+
         }
     }
     

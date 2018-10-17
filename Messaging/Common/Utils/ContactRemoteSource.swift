@@ -9,6 +9,7 @@ protocol ContactRemoteSource {
     func removeFriendRequest(of user: User, for contact: Contact) ->  Observable<Bool>
     func sendFriendRequest(from user: User, to contact: Contact) ->  Observable<Bool>
     func removeFriend(of user: User, for contact: Contact)  ->  Observable<Bool>
+    func loadContact(withId contactId: String) -> Observable<Contact>
 }
 
 class ContactRemoteSourceFactory {

@@ -41,6 +41,12 @@ class ContactRepositoryImpl : ContactRepository {
         }
     }
     
+    func seeOneContact(withId contactId: String) -> Observable<Contact> {
+        return Observable.deferred { [unowned self] in
+            return self.remoteSource.loadContact(withId: contactId)
+        }
+    }
+    
     private func mergeContacts(_ localContacts: [Contact], _ remoteContacts: [Contact]) -> [Contact] {
         if remoteContacts.count != 0 {
             return remoteContacts.sorted(by: { $0.compareWith($1) })
