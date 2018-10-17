@@ -2,7 +2,6 @@
 class ContactMessage : Message {
     let contact: Contact
     
-    
     class func from(message: Message, contact: Contact) -> ContactMessage {
         return ContactMessage(contact: contact, senderId: message.getSentBy(),
                               atTime: message.getAtTime(),
@@ -15,7 +14,7 @@ class ContactMessage : Message {
          isFail: Bool = false) {
         self.contact = contact
         
-        super.init(type: .contact, convId: nil, content: contact.userId,
+        super.init(type: .contact, convId: nil, content: "\(contact.userId)#\(contact.userName)",
                    atTime: atTime, sentBy: senderId,
                    messId: "", isSending: isSending, isFail: isFail)
     }
@@ -24,7 +23,7 @@ class ContactMessage : Message {
                  isFail: Bool = false, messId: String, conId: String? = nil) {
         self.contact = contact
         
-        super.init(type: .contact, convId: conId, content: contact.userId,
+        super.init(type: .contact, convId: conId, content: "\(contact.userId)#\(contact.userName)",
                    atTime: atTime, sentBy: senderId,
                    messId: messId, isSending: isSending, isFail: isFail)
     }
@@ -53,6 +52,13 @@ class ContactMessage : Message {
         return ContactMessage(contact: contact, senderId: getSentBy(),
                               atTime: getAtTime(),
                               isSending: false, isFail: false,
+                              messId: getMessageId(), conId: getConversationId())
+    }
+    
+    override func withSendingAndFailStatus(_ isSending: Bool, _ isFail: Bool) -> Message {
+        return ContactMessage(contact: contact, senderId: getSentBy(),
+                              atTime: getAtTime(),
+                              isSending: isSending, isFail: isFail,
                               messId: getMessageId(), conId: getConversationId())
     }
 }

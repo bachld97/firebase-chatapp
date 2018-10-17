@@ -5,8 +5,9 @@ class ContactMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
             guard let contactMs = item.message as? ContactMessage else {
-                self.contactName.text = "User information not available"
-                self.contactId.text = "This user has deactivated."
+                self.contactName.text = "Contact"
+                self.contactId.text = "Loading contact information"
+                self.contactAva.image = nil
                 return
             }
             

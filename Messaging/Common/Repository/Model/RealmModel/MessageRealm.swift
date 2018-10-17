@@ -31,9 +31,26 @@ class MessageRealm: Object {
     func convert() -> Message {
         let type: MessageType = Type.getMessageType(fromString: self.type)
         
-        return Message(type: type, convId: self.conversationId, content: self.content,
-                       atTime: "\(self.atTime)", sentBy: self.sentBy,
-                       messId: self.messageId, isSending: self.isSending,
-                       isFail: self.isFail)
+        if type == .contact {
+            var contactInfo = content.split(separator: "#")
+                .map { String($0) }
+            
+            if contactInfo.isEmpty {
+                contactInfo.append(content)
+            }
+            
+            let contact = Contact(
+                userId: contactInfo.first!,
+                userName: contactInfo.last!,
+                userAvatarUrl: nil)
+            
+            return ContactMessage(contact: contact, senderId: sentBy, atTime: "\(atTime)")
+                .changeId(withServerId: messageId, withConvId: conversationId)
+            
+        } else {
+            return Message(type: type, convId: self.conversationId, content: self.content, atTime: "\(self.atTime)",
+                sentBy: self.sentBy, messId: self.messageId,
+                isSending: self.isSending, isFail: self.isFail)
+        }
     }
 }

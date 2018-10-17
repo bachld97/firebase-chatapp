@@ -7,8 +7,9 @@ class ContactTimeMessageCell : BaseMessageCell {
             self.timeContent.text = item.displayTime
             
             guard let contactMs = item.message as? ContactMessage else {
-                self.contactName.text = "User information not available"
-                self.contactId.text = "This user has deactivated."
+                self.contactName.text = "Contact"
+                self.contactId.text = "Loading contact information"
+                self.contactAva.image = nil
                 return
             }
             
@@ -63,9 +64,6 @@ class ContactTimeMessageCell : BaseMessageCell {
         let topC = NSLayoutConstraint(item: container, attribute: .top, relatedBy: .equal,
                                       toItem: self, attribute: .top, multiplier: 1,
                                       constant: smallPadding)
-//        let botC = NSLayoutConstraint(item: container, attribute: .bottom, relatedBy: .equal,
-//                                      toItem: self, attribute: .bottom, multiplier: 1,
-//                                      constant: smallPadding * -1)
         let leftC = NSLayoutConstraint(item: container, attribute: .leading, relatedBy: .equal,
                                        toItem: self, attribute: .leading, multiplier: 1,
                                        constant: normalPadding)
@@ -158,7 +156,7 @@ class ContactTimeMessageCell : BaseMessageCell {
         v.translatesAutoresizingMaskIntoConstraints = false
         v.backgroundColor = UIColor(red: 137 / 255.0, green: 229 / 255.0, blue: 163 / 255.0, alpha: 1)
         v.layer.cornerRadius = 16.0
-//        v.clipsToBounds = true
+        v.clipsToBounds = true
         return v
     }()
     

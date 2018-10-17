@@ -4,8 +4,6 @@ import RxSwift
 class ContactMeTimeMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
-            print("DEBUG: \(item.message.getMessageId())")
-            
             self.timeContent.text = item.displayTime
             if item.message.isSending {
                 // self.resendButton.isHidden = true
@@ -21,16 +19,15 @@ class ContactMeTimeMessageCell : BaseMessageCell {
             }
             
             guard let contactMs = item.message as? ContactMessage else {
-                self.contactName.text = "User information not available"
-                self.contactId.text = "This user has deactivated."
+                self.contactName.text = "Contact"
+                self.contactId.text = "Loading contact information"
+                self.contactAva.image = nil
                 return
             }
             
             let contact = contactMs.contact
-            
             self.contactName.text = contact.userName
             self.contactId.text = contact.userId
-            
             let url = UrlBuilder.buildUrl(forUserId: contact.userId)
             self.imageLoader.loadImage(url: url, into: self.contactAva)
             
@@ -65,10 +62,8 @@ class ContactMeTimeMessageCell : BaseMessageCell {
     }()
     
     override func prepareUI() {
-        // Do UI setup
         self.addSubview(container)
         self.addSubview(timeContent)
-        // Add Constraints for the container
         let smallPadding = MessageCellConstant.smallPadding
         let normalPadding = MessageCellConstant.normalPadding
         let mainPadding = MessageCellConstant.mainPadding
@@ -76,9 +71,6 @@ class ContactMeTimeMessageCell : BaseMessageCell {
         let topC = NSLayoutConstraint(item: container, attribute: .top, relatedBy: .equal,
                                       toItem: self, attribute: .top, multiplier: 1,
                                       constant: smallPadding)
-        //        let botC = NSLayoutConstraint(item: container, attribute: .bottom, relatedBy: .equal,
-        //                                      toItem: self, attribute: .bottom, multiplier: 1,
-        //                                      constant: smallPadding * -1)
         let rightC = NSLayoutConstraint(item: container, attribute: .trailing, relatedBy: .equal,
                                        toItem: self, attribute: .trailing, multiplier: 1,
                                        constant: normalPadding * -1)
@@ -171,12 +163,11 @@ class ContactMeTimeMessageCell : BaseMessageCell {
         v.translatesAutoresizingMaskIntoConstraints = false
         v.backgroundColor = UIColor(red: 137 / 255.0, green: 229 / 255.0, blue: 163 / 255.0, alpha: 1)
         v.layer.cornerRadius = 16.0
-        //        v.clipsToBounds = true
+        v.clipsToBounds = true
         return v
     }()
     
     private func addConstraintsForImage() {
-        // let mainPadding = MessageCellConstant.mainPadding
         let normalPadding: CGFloat = 8.0
         
         let topC = NSLayoutConstraint(item: contactAva, attribute: .top, relatedBy: .equal, toItem: container, attribute: .top, multiplier: 1, constant: normalPadding)

@@ -234,6 +234,10 @@ class ConversationRepositoryImpl : ConversationRepository {
             })
             
             if index != nil {
+//                let oldMess = res[index!]
+//                let isSending = oldMess.isSending || message.isSending
+//                let isFail = oldMess.isFail && message.isFail
+//                res[index!] = res[index!].withSendingAndFailStatus(isSending, isFail)
                 res[index!] = message
             } else {
                 res.append(message)

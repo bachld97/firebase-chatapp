@@ -5,21 +5,22 @@ class ContactMeMessageCell : BaseMessageCell {
     override var item: MessageItem! {
         didSet {
             if item.message.isSending {
-                //                self.resendButton.isHidden = true
+                // self.resendButton.isHidden = true
                 self.container.backgroundColor = UIColor(red: 221.0 / 255.0, green: 190.0 / 255.0, blue: 200 / 255.0, alpha: 1)
             } else {
                 if item.message.isFail {
-                    //                    self.resendButton.isHidden = false
+                    // self.resendButton.isHidden = false
                     self.container.backgroundColor = UIColor(red: 80.0 / 255.0, green: 80.0 / 255.0, blue: 200 / 255.0, alpha: 1)
                 } else {
-                    //                    self.resendButton.isHidden = true
+                    // self.resendButton.isHidden = true
                     self.container.backgroundColor = UIColor(red: 221.0 / 255.0, green: 234.0 / 255.0, blue: 1, alpha: 1)
                 }
             }
             
             guard let contactMs = item.message as? ContactMessage else {
-                self.contactName.text = "User information not available"
-                self.contactId.text = "This user has deactivated."
+                self.contactName.text = "Contact"
+                self.contactId.text = "Loading contact information"
+                self.contactAva.image = nil
                 return
             }
    
@@ -48,9 +49,7 @@ class ContactMeMessageCell : BaseMessageCell {
     }
     
     override func prepareUI() {
-        // Do UI setup
         self.addSubview(container)
-        // Add Constraints for the container
         let smallPadding = MessageCellConstant.smallPadding
         let normalPadding = MessageCellConstant.normalPadding
         let mainPadding = MessageCellConstant.mainPadding

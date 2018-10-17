@@ -17,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enable = true
         FirebaseApp.configure()
         Database.database().reference().keepSynced(false)
+        
+        if TARGET_OS_SIMULATOR != 0 {
+            Realm.Configuration.defaultConfiguration.fileURL = URL(fileURLWithPath: "/Users/cpu12071/Desktop/RealmDb/Messaging.realm")
+        }
+        
         return true
     }
 }

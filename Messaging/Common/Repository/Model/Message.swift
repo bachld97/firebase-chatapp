@@ -106,6 +106,17 @@ class Message {
                        messId: self.getMessageId(),
                        isSending: false, isFail: false)
     }
+    
+    
+    func withSendingAndFailStatus(_ isSending: Bool, _ isFail: Bool) -> Message {
+        return Message(type: self.type,
+                       convId: self.getConversationId(),
+                       content: self.getContent(),
+                       atTime: self.getAtTime(),
+                       sentBy: self.getSentBy(),
+                       messId: self.getMessageId(),
+                       isSending: isSending, isFail: isFail)
+    }
 }
 
 enum MessageType {
