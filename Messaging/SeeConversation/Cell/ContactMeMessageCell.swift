@@ -18,6 +18,8 @@ class ContactMeMessageCell : BaseMessageCell {
             }
             
             guard let contactMs = item.message as? ContactMessage else {
+                self.contactName.text = "User information not available"
+                self.contactId.text = "This user has deactivated."
                 return
             }
    
@@ -99,7 +101,6 @@ class ContactMeMessageCell : BaseMessageCell {
         tv.font = UIFont.boldSystemFont(ofSize: 14.0)
         tv.heightAnchor.constraint(equalToConstant: 20.0).isActive = true
         tv.textContainerInset = .zero
-        tv.text = "User not available"
         return tv
     }()
     
@@ -116,7 +117,6 @@ class ContactMeMessageCell : BaseMessageCell {
         tv.heightAnchor.constraint(equalToConstant: 18.0).isActive = true
         
         tv.textContainerInset = .zero
-        tv.text = "This user has deactivated."
         return tv
     }()
     

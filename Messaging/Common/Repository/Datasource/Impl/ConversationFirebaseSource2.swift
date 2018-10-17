@@ -488,7 +488,32 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     }
     
     private func handleMessageFromOther(_ message: Message) {
-        self.messagePublisher.onNext(message)
+        if message.type == .contact {
+            handleContactMessage(message)
+        } else {
+            self.messagePublisher.onNext(message)
+        }
+    }
+    
+    // /users/id
+    // TODO: Let Repository handle this case
+    private func handleContactMessage(_ message: Message) {
+        _ = ref.child("users/\(message.content)")
+            .observeSingleEvent(of: .value, with: { (snap) in
+                guard snap.exists() else {
+                    return
+                }
+                let id = message.content
+                
+                guard let dict = snap.value as? [String : String] else {
+                    return
+                }
+                
+                let name = dict["full-name"] ?? id
+                let contact = Contact(userId: id, userName: name, userAvatarUrl: nil)
+                let mess = ContactMessage.from(message: message, contact: contact)
+                self.messagePublisher.onNext(mess)
+            })
     }
     
     private func pendingContains(_ message: Message) -> Bool {

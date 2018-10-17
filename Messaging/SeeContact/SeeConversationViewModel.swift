@@ -391,11 +391,8 @@ class SeeConversationViewModel : ViewModelDelegate {
     }
     
     private func parseContactMessage(_ user: User, _ contact: Contact) -> Message {
-//        return Message(type: .contact, convId: nil, content: contact.userId,
-//                       atTime: self.getTime(), sentBy: user.userId,
-//                       messId: "", isSending: true)
-        // TODO: return ContactMessage
-        return ContactMessage(contact: contact, user: user, atTime: self.getTime(),
+
+        return ContactMessage(contact: contact, senderId: user.userId, atTime: self.getTime(),
                               isSending: true)
     }
     
