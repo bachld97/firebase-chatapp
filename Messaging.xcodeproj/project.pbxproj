@@ -28,6 +28,9 @@
 		1413F0D22176F88C008804FC /* SeeContactProfileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1413F0D02176F88C008804FC /* SeeContactProfileVC.xib */; };
 		1413F0D42176F9F5008804FC /* LoadUserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1413F0D32176F9F5008804FC /* LoadUserUseCase.swift */; };
 		1413F0D62176FA20008804FC /* LoadUserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1413F0D52176FA20008804FC /* LoadUserRequest.swift */; };
+		1413F0DA21773A74008804FC /* PickLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1413F0D821773A74008804FC /* PickLocationVC.swift */; };
+		1413F0DB21773A74008804FC /* PickLocationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1413F0D921773A74008804FC /* PickLocationVC.xib */; };
+		1413F0DD21773ACC008804FC /* PickLocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1413F0DC21773ACC008804FC /* PickLocationViewModel.swift */; };
 		141823542135025700DC0E98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823532135025700DC0E98 /* AppDelegate.swift */; };
 		141823562135025700DC0E98 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 141823552135025700DC0E98 /* ViewController.swift */; };
 		141823592135025700DC0E98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 141823572135025700DC0E98 /* Main.storyboard */; };
@@ -213,6 +216,9 @@
 		1413F0D02176F88C008804FC /* SeeContactProfileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeContactProfileVC.xib; sourceTree = "<group>"; };
 		1413F0D32176F9F5008804FC /* LoadUserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadUserUseCase.swift; sourceTree = "<group>"; };
 		1413F0D52176FA20008804FC /* LoadUserRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadUserRequest.swift; sourceTree = "<group>"; };
+		1413F0D821773A74008804FC /* PickLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickLocationVC.swift; sourceTree = "<group>"; };
+		1413F0D921773A74008804FC /* PickLocationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickLocationVC.xib; sourceTree = "<group>"; };
+		1413F0DC21773ACC008804FC /* PickLocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickLocationViewModel.swift; sourceTree = "<group>"; };
 		141823502135025700DC0E98 /* Messaging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messaging.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		141823532135025700DC0E98 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		141823552135025700DC0E98 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -408,6 +414,16 @@
 			path = SeeContactProfile;
 			sourceTree = "<group>";
 		};
+		1413F0D721773A5B008804FC /* PickLocation */ = {
+			isa = PBXGroup;
+			children = (
+				1413F0D821773A74008804FC /* PickLocationVC.swift */,
+				1413F0D921773A74008804FC /* PickLocationVC.xib */,
+				1413F0DC21773ACC008804FC /* PickLocationViewModel.swift */,
+			);
+			path = PickLocation;
+			sourceTree = "<group>";
+		};
 		141823472135025700DC0E98 = {
 			isa = PBXGroup;
 			children = (
@@ -431,6 +447,7 @@
 		141823522135025700DC0E98 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
+				1413F0D721773A5B008804FC /* PickLocation */,
 				1413F0CC2176F860008804FC /* SeeContactProfile */,
 				14238C692175B42300EA90CA /* PickContact */,
 				1490412D216DAD6A00A61D9D /* ViewImageMessage */,
@@ -868,6 +885,7 @@
 				1418234D2135025700DC0E98 /* Frameworks */,
 				1418234E2135025700DC0E98 /* Resources */,
 				3B5A3D4D76AEB9563C82009E /* [CP] Embed Pods Frameworks */,
+				18D0F4525C06CF827815E5F7 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -960,6 +978,7 @@
 				1418235E2135025800DC0E98 /* LaunchScreen.storyboard in Resources */,
 				1418235B2135025800DC0E98 /* Assets.xcassets in Resources */,
 				14A239DA214BC6A20027743D /* PickMediaVC.xib in Resources */,
+				1413F0DB21773A74008804FC /* PickLocationVC.xib in Resources */,
 				141823592135025700DC0E98 /* Main.storyboard in Resources */,
 				14843FF721413B9E00D5366B /* GroupConvoCell.xib in Resources */,
 				14615408213F68910032EE95 /* AddContactVC.xib in Resources */,
@@ -1022,6 +1041,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MessagingTests/Pods-MessagingTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		18D0F4525C06CF827815E5F7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Messaging/Pods-Messaging-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Messaging/Pods-Messaging-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		365450D4FFEEEEE2625EDEF7 /* [CP] Check Pods Manifest.lock */ = {
@@ -1144,6 +1183,7 @@
 				14A239D1214B4EBF0027743D /* UploadAvatarRequest.swift in Sources */,
 				14A239DC214BC6EF0027743D /* PickMediaViewModel.swift in Sources */,
 				14848ACB2140C7FC00DAA9F8 /* AcceptRequestUseCase.swift in Sources */,
+				1413F0DA21773A74008804FC /* PickLocationVC.swift in Sources */,
 				14719A47215DCE33006B4D54 /* ConversationItemDataSource.swift in Sources */,
 				14D64EC32164B8E5001C9057 /* ResendRequest.swift in Sources */,
 				14843FF621413B9E00D5366B /* GroupConvoCell.swift in Sources */,
@@ -1182,6 +1222,7 @@
 				14B7BFEE215201A500236C3D /* ObserveNextMessageRequest.swift in Sources */,
 				14238C6D2175B44B00EA90CA /* PickContactViewModel.swift in Sources */,
 				14848AD12140C84500DAA9F8 /* UnfriendUseCase.swift in Sources */,
+				1413F0DD21773ACC008804FC /* PickLocationViewModel.swift in Sources */,
 				147231D9215B8DF700D54C57 /* ImageMeTimeMessageCell.swift in Sources */,
 				14D64EC52164B93A001C9057 /* ResendUseCase.swift in Sources */,
 				14461A5821379CEC0062FAC6 /* SeeProfileVC.swift in Sources */,

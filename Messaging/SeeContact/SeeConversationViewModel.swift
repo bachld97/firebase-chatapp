@@ -7,12 +7,14 @@ protocol SeeConversationDisplayLogic : class {
     func clearText()
     func goPickMedia()
     func goPickContact()
+    func goPickLocation()
     
     func notifyItems(with changes: [Change<MessageItem>]?)
     func notifyItem(with addRespond: (Bool, Int))
     
     func goShowImage(_ imageUrl: String)
     func goShowContact(_ contactId: String)
+    
     func notifyTextCopied(with text: String)
 }
 
@@ -185,6 +187,19 @@ class SeeConversationViewModel : ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
         
+
+        input.pickContactTrigger
+            .drive(onNext: { [unowned self] (_) in
+                self.displayLogic?.goPickContact()
+            })
+            .disposed(by: self.disposeBag)
+        
+        input.pickLocationTrigger
+            .drive(onNext: { [unowned self] (_) in
+                self.displayLogic?.goPickLocation()
+            })
+            .disposed(by: self.disposeBag)
+        
         self.messageClickPublish
             .asDriverOnErrorJustComplete()
             .drive(onNext: { [unowned self] (messageItem) in
@@ -267,6 +282,12 @@ class SeeConversationViewModel : ViewModelDelegate {
         input.pickContactTrigger
             .drive(onNext: { [unowned self] (_) in
                 self.displayLogic?.goPickContact()
+            })
+            .disposed(by: self.disposeBag)
+        
+        input.pickLocationTrigger
+            .drive(onNext: { [unowned self] (_) in
+                self.displayLogic?.goPickLocation()
             })
             .disposed(by: self.disposeBag)
         
@@ -470,6 +491,7 @@ extension SeeConversationViewModel {
         let textMessage: ControlProperty<String>
         let pickImageTrigger: Driver<Void>
         let pickContactTrigger: Driver<Void>
+        let pickLocationTrigger: Driver<Void>
         let sendImagePublish: Driver<URL>
         let sendContactPublish: Driver<Contact>
     }

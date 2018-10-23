@@ -15,6 +15,8 @@ target 'Messaging' do
 	pod 'DeepDiff'
 	pod 'Firebase/Database'
 	pod 'Firebase/Storage'
+	pod 'GoogleMaps'
+	pod 'GooglePlaces'
 end
 
 target 'MessagingTests' do

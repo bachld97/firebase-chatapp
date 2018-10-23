@@ -16,6 +16,9 @@ class SeeConversationVC: BaseVC, ViewFor {
     
     @IBOutlet weak var pickContactButton: UIButton!
     @IBOutlet weak var pickImageButton: UIButton!
+    @IBOutlet weak var pickLocationButton: UIButton!
+    
+    
     
     private let sendContactPublish = PublishSubject<Contact>()
     private let sendImagePublish = PublishSubject<URL>()
@@ -78,6 +81,7 @@ class SeeConversationVC: BaseVC, ViewFor {
             textMessage: self.textMessageContent.rx.text.orEmpty,
             pickImageTrigger: self.pickImageButton.rx.tap.asDriver(),
             pickContactTrigger: self.pickContactButton.rx.tap.asDriver(),
+            pickLocationTrigger: self.pickLocationButton.rx.tap.asDriver(),
             sendImagePublish: self.sendImagePublish.asDriverOnErrorJustComplete(),
             sendContactPublish: self.sendContactPublish.asDriverOnErrorJustComplete())
         
@@ -125,7 +129,7 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
 //            self.tableView?.reloadData()
 //            return
 //        }
-//        
+//
 //        self.tableView?.reload(changes: changes!, completion: { (_) in })
     }
     
@@ -168,6 +172,12 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    func goPickLocation() {
+        self.resignFirstResponder()
+        let vc = PickLocationVC.instance(delegate: self)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func notifyTextCopied(with text: String) {
         super.doToast(with: "Message copied to clipboard",
                       duration: 1.2)
@@ -182,7 +192,7 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
     }
 }
 
-extension SeeConversationVC : PickMediaDelegate, PickContactDelegate {
+extension SeeConversationVC : PickMediaDelegate, PickContactDelegate, PickLocationDelegate {
     func onMediaItemPicked(mediaItemUrl: URL) {
         self.sendImagePublish.onNext(mediaItemUrl)
     }
