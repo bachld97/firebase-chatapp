@@ -8,7 +8,7 @@ class EmojiCollectionViewCell : UICollectionViewCell {
     }
     
     func prepareUI() {
-        self.backgroundColor = UIColor.lightGray
+//        self.backgroundColor = UIColor.lightGray
 
         self.addSubview(emojiDisplay)
         

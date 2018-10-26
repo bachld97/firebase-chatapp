@@ -269,6 +269,8 @@ class SeeConversationViewModel : ViewModelDelegate {
                         let message = self.parseTextMessage(user)
                         self.displayLogic?.clearText()
                         self.textMessageContent.accept("")
+                        self.sendMessageDisplay.value = self.thumbsUpText
+
                         
                         return self.sendMessageUseCase
                             .execute(request: SendMessageRequest(
@@ -279,7 +281,7 @@ class SeeConversationViewModel : ViewModelDelegate {
                     .asDriverOnErrorJustComplete()
                 
             }
-            .drive()
+            .drive( )
             .disposed(by: self.disposeBag)
         
         let request = GetConversationLabelRequest(
