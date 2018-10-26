@@ -31,8 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // GoogleMaps and Places
-        GMSServices.provideAPIKey(key)
         GMSPlacesClient.provideAPIKey(key)
+        GMSServices.provideAPIKey(key)
         return true
     }
 }

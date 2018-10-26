@@ -37,7 +37,6 @@ class ImageMessageCell : BaseMessageCell {
         return v
     }()
     
-    private var imageTask: URLSessionTask?
     override func prepareUI() {
         self.addSubview(contentImage)
         addConstraintsForImage()

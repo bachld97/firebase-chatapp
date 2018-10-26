@@ -51,6 +51,8 @@ class ConversationItem : Hashable {
             content = "[Image]"
         case .contact:
             content = "[Contact]"
+        case .location:
+            content = "[Location]"
         }
         
         self.displayContent = content

@@ -48,6 +48,8 @@ class Type {
             return .image
         } else if typeString.elementsEqual("contact") {
             return .contact
+        } else if typeString.elementsEqual("location") {
+            return .location
         } else {
             return .text
         }
@@ -55,6 +57,7 @@ class Type {
 
     public static func getMessageTypeString(fromType type: MessageType) -> String {
         switch type {
+        case .location: return "location"
         case .image: return "image"
         case .text: return "text"
         case .contact: return "contact"

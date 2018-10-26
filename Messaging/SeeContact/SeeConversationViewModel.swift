@@ -14,6 +14,7 @@ protocol SeeConversationDisplayLogic : class {
     
     func goShowImage(_ imageUrl: String)
     func goShowContact(_ contactId: String)
+    func goShowLocation(lat: Double, long: Double)
     
     func notifyTextCopied(with text: String)
 }
@@ -351,6 +352,25 @@ class SeeConversationViewModel : ViewModelDelegate {
             .disposed(by: self.disposeBag)
         
         
+        input.sendLocationPublish
+            .flatMap { [unowned self] (lat, long) -> Driver<Bool> in
+                return self.getUserUseCase.execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        
+                        let message = self.parseLocationMessage(user, lat, long)
+                        
+                        return self.sendMessageUseCase
+                            .execute(request: SendMessageRequest(
+                                message: message,
+                                conversationId: conversationItem.conversation.id))
+                            .do()
+                    }
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
         return Output(
             error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
@@ -358,6 +378,11 @@ class SeeConversationViewModel : ViewModelDelegate {
     private func handleMessageClick(_ messageItem: MessageItem) {
         
         switch messageItem.message.type {
+        case .location:
+            let coord = messageItem.message.getContent().split(separator: "_")
+            let lat = Double(coord.first!)!
+            let long = Double(coord.last!)!
+            self.displayLogic?.goShowLocation(lat: lat, long: long)
         case .image:
             self.displayLogic?.goShowImage(messageItem.message.getContent())
         case .text:
@@ -417,6 +442,16 @@ class SeeConversationViewModel : ViewModelDelegate {
                        messId: url.lastPathComponent, isSending: true)
     }
     
+    private func parseLocationMessage(_ user: User,
+                                      _ lat: Double, _ long: Double) -> Message {
+        return Message(type: .location,
+                       convId: nil,
+                       content: "\(lat)_\(long)",
+                       atTime: self.getTime(),
+                       sentBy: user.userId,
+                       messId: nil)
+    }
+    
     private func parseContactMessage(_ user: User, _ contact: Contact) -> Message {
 
         return ContactMessage(contact: contact, senderId: user.userId, atTime: self.getTime(),
@@ -425,6 +460,8 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     private func convert(localMessage: Message) -> MessageItem {
         switch localMessage.type {
+        case .location:
+            return MessageItem(messageItemType: .locationMe, message: localMessage)
         case .image:
             return MessageItem(messageItemType: .imageMe, message: localMessage)
         case .text:
@@ -441,6 +478,12 @@ class SeeConversationViewModel : ViewModelDelegate {
                 || !m.getSentBy().elementsEqual(messages[index - 1].getSentBy())
             
             switch m.type {
+            case .location:
+                if m.getSentBy().elementsEqual(user.userId) {
+                    res.append(MessageItem(messageItemType: .locationMe, message: m, showTime: showTime))
+                } else {
+                    res.append(MessageItem(messageItemType: .location, message: m, showTime: showTime))
+                }
             case .image:
                 if m.getSentBy().elementsEqual(user.userId) {
                     res.append(MessageItem(messageItemType: .imageMe, message: m, showTime: showTime))
@@ -494,6 +537,7 @@ extension SeeConversationViewModel {
         let pickLocationTrigger: Driver<Void>
         let sendImagePublish: Driver<URL>
         let sendContactPublish: Driver<Contact>
+        let sendLocationPublish: Driver<(Double, Double)>
     }
     
     struct Output {

@@ -44,4 +44,6 @@ enum MessageItemType {
     case imageMe
     case contact
     case contactMe
+    case location
+    case locationMe
 }

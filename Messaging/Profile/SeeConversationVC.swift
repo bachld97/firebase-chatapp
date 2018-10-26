@@ -10,18 +10,15 @@ class SeeConversationVC: BaseVC, ViewFor {
     typealias ViewModelType = SeeConversationViewModel
     
     @IBOutlet weak var textMessageContent: UITextField!
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var sendMessageButton: UIButton!
-    
     @IBOutlet weak var pickContactButton: UIButton!
     @IBOutlet weak var pickImageButton: UIButton!
     @IBOutlet weak var pickLocationButton: UIButton!
     
-    
-    
     private let sendContactPublish = PublishSubject<Contact>()
     private let sendImagePublish = PublishSubject<URL>()
+    private let sendLocationPublish = PublishSubject<(Double, Double)>()
     
     private let onCreatePublish = PublishSubject<Void>()
     
@@ -83,7 +80,8 @@ class SeeConversationVC: BaseVC, ViewFor {
             pickContactTrigger: self.pickContactButton.rx.tap.asDriver(),
             pickLocationTrigger: self.pickLocationButton.rx.tap.asDriver(),
             sendImagePublish: self.sendImagePublish.asDriverOnErrorJustComplete(),
-            sendContactPublish: self.sendContactPublish.asDriverOnErrorJustComplete())
+            sendContactPublish: self.sendContactPublish.asDriverOnErrorJustComplete(),
+            sendLocationPublish: self.sendLocationPublish.asDriverOnErrorJustComplete())
         
         let output = self.viewModel.transform(input: input)
         
@@ -112,6 +110,11 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.tableView?.register(ContactTimeMessageCell.self)
         self.tableView?.register(ContactMeMessageCell.self)
         self.tableView?.register(ContactMeTimeMessageCell.self)
+        
+        self.tableView?.register(LocationMeTimeMessageCell.self)
+        self.tableView?.register(LocationTimeMessageCell.self)
+        self.tableView?.register(LocationMeMessageCell.self)
+        self.tableView?.register(LocationMessageCell.self)
     }
 }
 
@@ -123,33 +126,17 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
     }
     
     func notifyItems(with changes: [Change<MessageItem>]?) {
-        self.tableView?.reloadData()
-        
-//        guard changes != nil else {
-//            self.tableView?.reloadData()
-//            return
-//        }
-//
-//        self.tableView?.reload(changes: changes!, completion: { (_) in })
+//         self.tableView?.reloadData()
+        guard changes != nil else {
+            self.tableView?.reloadData()
+            return
+        }
+
+        self.tableView?.reload(changes: changes!, completion: { (_) in })
     }
     
     func notifyItem(with addRespond: (Bool, Int)) {
         self.tableView?.reloadData()
-        
-//        if !addRespond.0 {
-//            let index = addRespond.1
-//            let indexPath = NSIndexPath(row: index, section: 0) as IndexPath
-//            self.tableView?.reloadRows(at: [indexPath], with: .automatic)
-//
-//        } else {
-//            let indexPath = NSIndexPath(row: 0, section: 0)
-//            self.tableView?.insertItemsAtIndexPaths([indexPath as IndexPath], animationStyle: .bottom)
-//            if addRespond.1 == 1 {
-//                // There is change in the current first item
-//                let indexPath = NSIndexPath(row: 1, section: 0) as IndexPath
-//                self.tableView?.reloadItemsAtIndexPaths([indexPath], animationStyle: .fade)
-//            }
-//        }
     }
     
     func goBack() {
@@ -185,14 +172,23 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
     }
     
     func goShowContact(_ contactId: String) {
-        print("It works!")
         self.resignFirstResponder()
         let vc = SeeContactProfileVC.instance(userId: contactId)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func goShowLocation(lat: Double, long: Double) {
+        self.resignFirstResponder()
+        let vc = SeeLocationVC.instance(lat: lat, long: long)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 extension SeeConversationVC : PickMediaDelegate, PickContactDelegate, PickLocationDelegate {
+    func onLocationPicked(latitude: Double, longitude: Double) {
+        self.sendLocationPublish.onNext((latitude, longitude))
+    }
+    
     func onMediaItemPicked(mediaItemUrl: URL) {
         self.sendImagePublish.onNext(mediaItemUrl)
     }

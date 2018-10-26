@@ -1,6 +1,9 @@
 import UIKit
 import GoogleMaps
+import GooglePlaces
 import MapKit
+import RxSwift
+import RxCocoa
 
 class PickLocationVC: UIViewController {
 
@@ -23,6 +26,11 @@ class PickLocationVC: UIViewController {
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var displayGroup: UIView!
     private weak var delegate: PickLocationDelegate?
+    private var resultsViewController: GMSAutocompleteResultsViewController?
+    private var searchController: UISearchController?
+    private var coordinateToShare: CLLocationCoordinate2D!
+    private let disposeBag = DisposeBag()
+    
     let locationManager = CLLocationManager()
     private var labelCanChange = true
     
@@ -33,17 +41,51 @@ class PickLocationVC: UIViewController {
         self.locationManager.requestWhenInUseAuthorization()
         self.locationManager.requestLocation()
         self.mapView.delegate = self
+        
+        self.resultsViewController = GMSAutocompleteResultsViewController()
+        self.resultsViewController?.delegate = self
+        
+        searchController = UISearchController(searchResultsController: resultsViewController)
+        searchController?.searchResultsUpdater = resultsViewController
+
+        searchController?.searchBar.sizeToFit()
+        navigationItem.titleView = searchController?.searchBar
+        definesPresentationContext = true
+        searchController?.hidesNavigationBarDuringPresentation = false
+        
+     
+        pickButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [unowned self] (_) in
+                guard let coord = self.coordinateToShare else {
+                    self.navigationController?.popViewController(animated: true)
+                    return
+                }
+                
+                self.delegate?.onLocationPicked(latitude: coord.latitude, longitude: coord.longitude)
+                self.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: self.disposeBag)
+    }
+}
+
+extension PickLocationVC: GMSAutocompleteResultsViewControllerDelegate {
+    func resultsController(_ resultsController: GMSAutocompleteResultsViewController,
+                           didAutocompleteWith place: GMSPlace) {
+        searchController?.isActive = false
+        // Do something with the selected place.
+        self.focusCoordinate(place.coordinate, with: place.name)
+//        print("Place name: \(place.name)")
+//        print("Place address: \(place.formattedAddress)")
+//        print("Place attributions: \(place.attributions)")
     }
     
-//    override func loadView() {
-//        let mapView = GMSMapView(frame: CGRect.zero)
-//        mapView.settings.myLocationButton = true
-//        mapView.isMyLocationEnabled = true
-//
-//        view = mapView
-//    }
-    
+    func resultsController(_ resultsController: GMSAutocompleteResultsViewController,
+                           didFailAutocompleteWithError error: Error){
+        print("Error: ", error.localizedDescription)
+    }
 }
+
 
 extension PickLocationVC : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -52,8 +94,7 @@ extension PickLocationVC : CLLocationManagerDelegate {
         }
         
 //        mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-        mapView.animate(to: GMSCameraPosition(
-            target: location.coordinate,
+        mapView.animate(to: GMSCameraPosition(target: location.coordinate,
             zoom: 15, bearing: 0, viewingAngle: 0))
         
         locationManager.stopUpdatingLocation()
@@ -77,7 +118,7 @@ extension PickLocationVC : CLLocationManagerDelegate {
 
 extension PickLocationVC : GMSMapViewDelegate {
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-        reverseGeocodeCoordinate(position.target)
+        // reverseGeocodeCoordinate(position.target)
     }
     
     override func willMove(toParentViewController parent: UIViewController?) {
@@ -89,9 +130,7 @@ extension PickLocationVC : GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didTapAt coordinate: CLLocationCoordinate2D) {
-//        mapView.camera = GMSCameraPosition(target: coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-        mapView.animate(to: GMSCameraPosition(
-            target: coordinate,
+        mapView.animate(to: GMSCameraPosition(target: coordinate,
             zoom: 15, bearing: 0, viewingAngle: 0))
         
         self.focusCoordinate(coordinate)
@@ -105,8 +144,38 @@ extension PickLocationVC : GMSMapViewDelegate {
         self.focusCoordinate(coordinate)
     }
     
+    private func focusCoordinate(_ coordinate: CLLocationCoordinate2D,
+                                 with placeAddress: String?) {
+        // move to coordinate
+        mapView.animate(to: GMSCameraPosition(target: coordinate,
+            zoom: 15, bearing: 0, viewingAngle: 0))
+        
+        guard let address = placeAddress else {
+            self.focusCoordinate(coordinate)
+            return
+        }
+        
+        // Mark the latest location
+        self.coordinateToShare = coordinate
+        
+        mapView.clear()
+        let marker = GMSMarker(position: coordinate)
+        marker.map = self.mapView
+        
+        self.addressLabel.text = address
+        let labelHeight = self.displayGroup.frame.height
+        self.mapView.padding = UIEdgeInsets(
+            top: self.view.safeAreaInsets.top,
+            left: 0, bottom: labelHeight, right: 0)
+        
+        UIView.animate(withDuration: 0.25) {
+            self.view.layoutIfNeeded()
+            self.displayGroup.isHidden = false
+        }
+    }
     
     private func focusCoordinate(_ coordinate: CLLocationCoordinate2D) {
+        self.coordinateToShare = coordinate
         mapView.clear()
         let marker = GMSMarker(position: coordinate)
         marker.map = self.mapView
@@ -136,5 +205,5 @@ extension PickLocationVC : GMSMapViewDelegate {
 }
 
 protocol PickLocationDelegate : class {
-    
+    func onLocationPicked(latitude: Double, longitude: Double)
 }

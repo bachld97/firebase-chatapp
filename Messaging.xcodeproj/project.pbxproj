@@ -180,6 +180,12 @@
 		14CEE97B2136562500A31FBB /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97A2136562500A31FBB /* LoginRequest.swift */; };
 		14CEE9802136584000A31FBB /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97F2136584000A31FBB /* UserRepository.swift */; };
 		14CEE9822136584900A31FBB /* UserRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9812136584900A31FBB /* UserRepositoryImpl.swift */; };
+		14CFB9862180524E002781CC /* LocationTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFB9852180524E002781CC /* LocationTimeMessageCell.swift */; };
+		14CFB98C2180654D002781CC /* LocationMeTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFB98B2180654D002781CC /* LocationMeTimeMessageCell.swift */; };
+		14CFB98E2180687F002781CC /* LocationMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFB98D2180687F002781CC /* LocationMessageCell.swift */; };
+		14CFB99021806965002781CC /* LocationMeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFB98F21806965002781CC /* LocationMeMessageCell.swift */; };
+		14CFB99421806CF9002781CC /* SeeLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CFB99221806CF9002781CC /* SeeLocationVC.swift */; };
+		14CFB99521806CF9002781CC /* SeeLocationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14CFB99321806CF9002781CC /* SeeLocationVC.xib */; };
 		14D64EC32164B8E5001C9057 /* ResendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D64EC22164B8E5001C9057 /* ResendRequest.swift */; };
 		14D64EC52164B93A001C9057 /* ResendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D64EC42164B93A001C9057 /* ResendUseCase.swift */; };
 		5859E7E5EBD1974D0D960EA4 /* Pods_Messaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688BB3FD82712A498F73AC1E /* Pods_Messaging.framework */; };
@@ -372,6 +378,12 @@
 		14CEE97A2136562500A31FBB /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		14CEE97F2136584000A31FBB /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		14CEE9812136584900A31FBB /* UserRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepositoryImpl.swift; sourceTree = "<group>"; };
+		14CFB9852180524E002781CC /* LocationTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTimeMessageCell.swift; sourceTree = "<group>"; };
+		14CFB98B2180654D002781CC /* LocationMeTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMeTimeMessageCell.swift; sourceTree = "<group>"; };
+		14CFB98D2180687F002781CC /* LocationMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMessageCell.swift; sourceTree = "<group>"; };
+		14CFB98F21806965002781CC /* LocationMeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationMeMessageCell.swift; sourceTree = "<group>"; };
+		14CFB99221806CF9002781CC /* SeeLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeLocationVC.swift; sourceTree = "<group>"; };
+		14CFB99321806CF9002781CC /* SeeLocationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeLocationVC.xib; sourceTree = "<group>"; };
 		14D64EC22164B8E5001C9057 /* ResendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendRequest.swift; sourceTree = "<group>"; };
 		14D64EC42164B93A001C9057 /* ResendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendUseCase.swift; sourceTree = "<group>"; };
 		4B07CD619E165CAEFC760603 /* Pods-Messaging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messaging.release.xcconfig"; path = "Pods/Target Support Files/Pods-Messaging/Pods-Messaging.release.xcconfig"; sourceTree = "<group>"; };
@@ -447,6 +459,7 @@
 		141823522135025700DC0E98 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
+				14CFB99121806CBF002781CC /* SeeLocation */,
 				1413F0D721773A5B008804FC /* PickLocation */,
 				1413F0CC2176F860008804FC /* SeeContactProfile */,
 				14238C692175B42300EA90CA /* PickContact */,
@@ -676,6 +689,10 @@
 				142EDE8121708EEE00B07F18 /* ContactTimeMessageCell.swift */,
 				142EDE7F21708EDE00B07F18 /* ContactMeTimeMessageCell.swift */,
 				142EDE7D21708DBA00B07F18 /* ContactMeMessageCell.swift */,
+				14CFB9852180524E002781CC /* LocationTimeMessageCell.swift */,
+				14CFB98B2180654D002781CC /* LocationMeTimeMessageCell.swift */,
+				14CFB98D2180687F002781CC /* LocationMessageCell.swift */,
+				14CFB98F21806965002781CC /* LocationMeMessageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -853,6 +870,15 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		14CFB99121806CBF002781CC /* SeeLocation */ = {
+			isa = PBXGroup;
+			children = (
+				14CFB99221806CF9002781CC /* SeeLocationVC.swift */,
+				14CFB99321806CF9002781CC /* SeeLocationVC.xib */,
+			);
+			path = SeeLocation;
+			sourceTree = "<group>";
+		};
 		3278A6DABA3D162198D7551F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -978,6 +1004,7 @@
 				1418235E2135025800DC0E98 /* LaunchScreen.storyboard in Resources */,
 				1418235B2135025800DC0E98 /* Assets.xcassets in Resources */,
 				14A239DA214BC6A20027743D /* PickMediaVC.xib in Resources */,
+				14CFB99521806CF9002781CC /* SeeLocationVC.xib in Resources */,
 				1413F0DB21773A74008804FC /* PickLocationVC.xib in Resources */,
 				141823592135025700DC0E98 /* Main.storyboard in Resources */,
 				14843FF721413B9E00D5366B /* GroupConvoCell.xib in Resources */,
@@ -1153,6 +1180,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1496B9522150B46D00ED61CD /* ImageLoader.swift in Sources */,
+				14CFB98C2180654D002781CC /* LocationMeTimeMessageCell.swift in Sources */,
+				14CFB9862180524E002781CC /* LocationTimeMessageCell.swift in Sources */,
 				147945CC213E31830055CE79 /* ContactCell.swift in Sources */,
 				147945D9213E80590055CE79 /* UserRealmSource.swift in Sources */,
 				1439D99721367FD30094C12C /* MyErrors.swift in Sources */,
@@ -1195,6 +1224,7 @@
 				1458BC2C21476257005A93AD /* GetConversationLabelRequest.swift in Sources */,
 				14BCAE8F21635A4600C3BA4A /* ContactRealm.swift in Sources */,
 				1439D99B21369D230094C12C /* SignupRequest.swift in Sources */,
+				14CFB99421806CF9002781CC /* SeeLocationVC.swift in Sources */,
 				140C34062138F74F00DC3535 /* AutoLoginUseCase.swift in Sources */,
 				147945D5213E80050055CE79 /* UserRemoteSource.swift in Sources */,
 				14848AD92140C89D00DAA9F8 /* UnfriendRequest.swift in Sources */,
@@ -1247,6 +1277,7 @@
 				14848ADF2141149D00DAA9F8 /* ConversationFirebaseSource.swift in Sources */,
 				140C33F82138E1A400DC3535 /* Conversation.swift in Sources */,
 				147945D1213E78CD0055CE79 /* Utils.swift in Sources */,
+				14CFB98E2180687F002781CC /* LocationMessageCell.swift in Sources */,
 				140C34042138EC0700DC3535 /* SeeChatHistoryViewModel.swift in Sources */,
 				147231D5215B444B00D54C57 /* MessageItemDataSource.swift in Sources */,
 				14A239DE214BC78F0027743D /* PickMediaDelegate.swift in Sources */,
@@ -1267,6 +1298,7 @@
 				140C33FC2138E52100DC3535 /* SeeChatHistoryUseCase.swift in Sources */,
 				14615419213F8AD00032EE95 /* StrangerContactCell.swift in Sources */,
 				14461A792137EA970062FAC6 /* ContactRealmSource.swift in Sources */,
+				14CFB99021806965002781CC /* LocationMeMessageCell.swift in Sources */,
 				142EDE8021708EDE00B07F18 /* ContactMeTimeMessageCell.swift in Sources */,
 				14615415213F8AC60032EE95 /* RequestingContactCell.swift in Sources */,
 				14848AD52140C88A00DAA9F8 /* CancelFriendRequest.swift in Sources */,

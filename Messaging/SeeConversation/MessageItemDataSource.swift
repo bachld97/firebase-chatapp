@@ -21,6 +21,11 @@ class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
             return item.showTime ? ImageTimeMessageCell.reuseIdentifier : ImageMessageCell.reuseIdentifier
         case .imageMe:
             return item.showTime ? ImageMeTimeMessageCell.reuseIdentifier : ImageMeMessageCell.reuseIdentifier
+        case .location:
+            return item.showTime ? LocationTimeMessageCell.reuseIdentifier : LocationMessageCell.reuseIdentifier
+        case .locationMe:
+            // Use this as a placeholder to displace lat/long to debug
+            return item.showTime ? LocationMeTimeMessageCell.reuseIdentifier : LocationMeMessageCell.reuseIdentifier
         }
     }
     
