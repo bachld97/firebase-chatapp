@@ -58,3 +58,15 @@ public func <-> <T : Comparable>(subject: PublishSubject<T?>, variable: Behavior
     
     return Disposables.create(bindToUIDisposable, bindToVariable)
 }
+
+public func <-><T: Comparable>(left: Variable<T>, right: Variable<T>) -> Disposable {
+    let leftToRight = left.asObservable()
+        .distinctUntilChanged()
+        .bind(to: right)
+    
+    let rightToLeft = right.asObservable()
+        .distinctUntilChanged()
+        .bind(to: left)
+    
+    return Disposables.create(leftToRight, rightToLeft)
+}

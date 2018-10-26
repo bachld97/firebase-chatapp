@@ -188,6 +188,8 @@
 		14CFB99521806CF9002781CC /* SeeLocationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14CFB99321806CF9002781CC /* SeeLocationVC.xib */; };
 		14D64EC32164B8E5001C9057 /* ResendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D64EC22164B8E5001C9057 /* ResendRequest.swift */; };
 		14D64EC52164B93A001C9057 /* ResendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D64EC42164B93A001C9057 /* ResendUseCase.swift */; };
+		14E001F32182C30100E9AF28 /* EmojiCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E001F22182C30100E9AF28 /* EmojiCollectionDataSource.swift */; };
+		14E001F92182CFE500E9AF28 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E001F82182CFE500E9AF28 /* EmojiCollectionViewCell.swift */; };
 		5859E7E5EBD1974D0D960EA4 /* Pods_Messaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688BB3FD82712A498F73AC1E /* Pods_Messaging.framework */; };
 /* End PBXBuildFile section */
 
@@ -386,6 +388,8 @@
 		14CFB99321806CF9002781CC /* SeeLocationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeLocationVC.xib; sourceTree = "<group>"; };
 		14D64EC22164B8E5001C9057 /* ResendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendRequest.swift; sourceTree = "<group>"; };
 		14D64EC42164B93A001C9057 /* ResendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendUseCase.swift; sourceTree = "<group>"; };
+		14E001F22182C30100E9AF28 /* EmojiCollectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionDataSource.swift; sourceTree = "<group>"; };
+		14E001F82182CFE500E9AF28 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
 		4B07CD619E165CAEFC760603 /* Pods-Messaging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messaging.release.xcconfig"; path = "Pods/Target Support Files/Pods-Messaging/Pods-Messaging.release.xcconfig"; sourceTree = "<group>"; };
 		688BB3FD82712A498F73AC1E /* Pods_Messaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B60F17E0E37B45990389656D /* Pods-Messaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messaging.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Messaging/Pods-Messaging.debug.xcconfig"; sourceTree = "<group>"; };
@@ -556,6 +560,7 @@
 			children = (
 				147231D4215B444B00D54C57 /* MessageItemDataSource.swift */,
 				1496B9432150981B00ED61CD /* MessageItem.swift */,
+				14E001F12182C27200E9AF28 /* EmojiMessage */,
 				142E515221421BF500FC0593 /* Cell */,
 				142E515121421BE800FC0593 /* Request */,
 				142E515021421BDD00FC0593 /* UseCase */,
@@ -879,6 +884,15 @@
 			path = SeeLocation;
 			sourceTree = "<group>";
 		};
+		14E001F12182C27200E9AF28 /* EmojiMessage */ = {
+			isa = PBXGroup;
+			children = (
+				14E001F22182C30100E9AF28 /* EmojiCollectionDataSource.swift */,
+				14E001F82182CFE500E9AF28 /* EmojiCollectionViewCell.swift */,
+			);
+			path = EmojiMessage;
+			sourceTree = "<group>";
+		};
 		3278A6DABA3D162198D7551F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1192,6 +1206,7 @@
 				1436689D2148BB7D00B2766E /* GetUserUseCase.swift in Sources */,
 				1485C31A214F4BC1003568B9 /* CameraCell.swift in Sources */,
 				142EDE7E21708DBA00B07F18 /* ContactMeMessageCell.swift in Sources */,
+				14E001F32182C30100E9AF28 /* EmojiCollectionDataSource.swift in Sources */,
 				1496B93E21508F0A00ED61CD /* BaseCell.swift in Sources */,
 				1496B9422150977400ED61CD /* BaseMessageCell.swift in Sources */,
 				14615407213F68910032EE95 /* AddContactVC.swift in Sources */,
@@ -1295,6 +1310,7 @@
 				143517A621352F200039874F /* LoginViewModel.swift in Sources */,
 				1439D995213660270094C12C /* ObservableType.swift in Sources */,
 				14615404213F68770032EE95 /* SearchContactRequest.swift in Sources */,
+				14E001F92182CFE500E9AF28 /* EmojiCollectionViewCell.swift in Sources */,
 				140C33FC2138E52100DC3535 /* SeeChatHistoryUseCase.swift in Sources */,
 				14615419213F8AD00032EE95 /* StrangerContactCell.swift in Sources */,
 				14461A792137EA970062FAC6 /* ContactRealmSource.swift in Sources */,

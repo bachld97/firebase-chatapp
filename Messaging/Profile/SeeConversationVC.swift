@@ -19,8 +19,12 @@ class SeeConversationVC: BaseVC, ViewFor {
     private let sendContactPublish = PublishSubject<Contact>()
     private let sendImagePublish = PublishSubject<URL>()
     private let sendLocationPublish = PublishSubject<(Double, Double)>()
+    // private let sendEmojiPublish = PublishSubject<String>()
     
     private let onCreatePublish = PublishSubject<Void>()
+    
+    @IBOutlet weak var emojiPanel: UICollectionView!
+    private let emojiDataSource = EmojiCollectionDataSource()
     
     private var items: RxTableViewSectionedReloadDataSource
         <SectionModel<String, SeeConversationViewModel.Item>>!
@@ -68,12 +72,49 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 90
         registerCells()
+        
+        self.emojiPanel.register(
+            EmojiCollectionViewCell.self,
+            forCellWithReuseIdentifier: "EmojiCollectionViewCell")
+        
+        self.layoutEmojis()
+        self.emojiPanel.dataSource = self.emojiDataSource
+        self.emojiPanel.delegate = self.emojiDataSource
+        self.emojiPanel.autoresizingMask = UIViewAutoresizing(
+            rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue)
+                | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
+//        self.layoutEmojis()
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.emojiPanel?.collectionViewLayout.invalidateLayout()
+    }
+    
+    func layoutEmojis() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 0)
+        
+        layout.minimumInteritemSpacing = 2.0
+        layout.minimumLineSpacing = 2.0
+        
+        layout.itemSize = CGSize(width: 40, height: 40)
+        
+        emojiPanel.collectionViewLayout = layout
     }
     
     override func bindViewModel() {
+        let buttonText = Variable("Send")
+        buttonText.asObservable()
+            .bind(to: sendMessageButton.rx.title())
+            .disposed(by: self.disposeBag)
+        
         let input = SeeConversationViewModel.Input(
             trigger: onCreatePublish.asDriverOnErrorJustComplete(),
             sendMessTrigger: self.sendMessageButton.rx.tap.asDriver(),
+            sendMessDisplay: buttonText,
             conversationLabel: self.navigationItem.rx.title,
             textMessage: self.textMessageContent.rx.text.orEmpty,
             pickImageTrigger: self.pickImageButton.rx.tap.asDriver(),
@@ -81,7 +122,8 @@ class SeeConversationVC: BaseVC, ViewFor {
             pickLocationTrigger: self.pickLocationButton.rx.tap.asDriver(),
             sendImagePublish: self.sendImagePublish.asDriverOnErrorJustComplete(),
             sendContactPublish: self.sendContactPublish.asDriverOnErrorJustComplete(),
-            sendLocationPublish: self.sendLocationPublish.asDriverOnErrorJustComplete())
+            sendLocationPublish: self.sendLocationPublish.asDriverOnErrorJustComplete(),
+            sendEmojiPublish: self.emojiDataSource.emojiPublish.asDriverOnErrorJustComplete())
         
         let output = self.viewModel.transform(input: input)
         
@@ -126,7 +168,6 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
     }
     
     func notifyItems(with changes: [Change<MessageItem>]?) {
-//         self.tableView?.reloadData()
         guard changes != nil else {
             self.tableView?.reloadData()
             return

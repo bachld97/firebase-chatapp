@@ -39,6 +39,4 @@ class PickMediaViewController: BaseVC {
         
         collectionView.autoresizingMask = UIViewAutoresizing(rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue) | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
     }
-    
-    
 }

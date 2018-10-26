@@ -40,6 +40,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let observeNextMessageUseCase = ObserveNextMessageUseCase()
     private let resendUseCase = ResendUseCase()
     
+    private let sendMessageDisplay = Variable("Send")
     
     // Click on the resend button
     private let resendMessagePublish = PublishSubject<MessageItem>()
@@ -54,6 +55,7 @@ class SeeConversationViewModel : ViewModelDelegate {
      * This value is overriden by server time anyway.
      */
     private var lastMessTime: Int64 = 0
+    private let thumbsUpText: String
     
     init(displayLogic: SeeConversationDisplayLogic, contactItem: ContactItem) {
         self.displayLogic = displayLogic
@@ -61,6 +63,8 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.disposeBag = DisposeBag()
         self.conversationItem = nil
         self.dataSource = MessasgeItemDataSource(resendMessagePublish, messageClickPublish)
+        
+        thumbsUpText = "\(UnicodeScalar(0x1f44d)!)"
     }
     
     init(displayLogic: SeeConversationDisplayLogic, conversationItem: ConversationItem) {
@@ -69,6 +73,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.disposeBag = DisposeBag()
         self.contactItem = nil
         self.dataSource = MessasgeItemDataSource(resendMessagePublish, messageClickPublish)
+        thumbsUpText = "\(UnicodeScalar(0x1f44d)!)"
     }
     
     func transform(input: Input) -> Output {
@@ -76,6 +81,8 @@ class SeeConversationViewModel : ViewModelDelegate {
         (input.textMessage <-> self.textMessageContent)
             .disposed(by: self.disposeBag)
         
+        (input.sendMessDisplay <-> self.sendMessageDisplay)
+            .disposed(by: self.disposeBag)
         
         if contactItem != nil {
             return transformWithContactItem(
@@ -83,7 +90,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         }
         
         if conversationItem != nil {
-            return transfromWithConversationItem(
+            return transformWithConversationItem(
                 input: input, conversationItem: conversationItem!)
         }
         
@@ -126,7 +133,12 @@ class SeeConversationViewModel : ViewModelDelegate {
                         guard !self.textMessageContent.value
                             .trimmingCharacters(in: .whitespacesAndNewlines)
                             .isEmpty else {
-                                return Observable.just(false)
+                                let message = self.createLikeMessage(user)
+                               
+                                return self.sendMessageToUserUseCase
+                                    .execute(request: SendMessageToUserRequest(
+                                        message: message,
+                                        toUser: contactItem.contact))
                         }
                         
                         let message = self.parseTextMessage(user)
@@ -211,7 +223,7 @@ class SeeConversationViewModel : ViewModelDelegate {
         return Output (error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
     
-    func transfromWithConversationItem(input: Input, conversationItem: ConversationItem) -> Output {
+    func transformWithConversationItem(input: Input, conversationItem: ConversationItem) -> Output {
         let errorTracker = ErrorTracker()
         input.trigger
             .flatMap { [unowned self] (_) -> Driver<[MessageItem]> in
@@ -247,7 +259,11 @@ class SeeConversationViewModel : ViewModelDelegate {
                         guard !self.textMessageContent.value
                             .trimmingCharacters(in: .whitespacesAndNewlines)
                             .isEmpty else {
-                                return Observable.just(false)
+                                let message = self.createLikeMessage(user)
+                                return self.sendMessageUseCase
+                                    .execute(request: SendMessageRequest(
+                                        message: message,
+                                        conversationId: conversationItem.conversation.id))
                         }
                         
                         let message = self.parseTextMessage(user)
@@ -371,6 +387,27 @@ class SeeConversationViewModel : ViewModelDelegate {
             .drive()
             .disposed(by: self.disposeBag)
         
+        input.sendEmojiPublish
+            .drive(onNext: { [unowned self] (emojiString) in
+                let oldString = self.textMessageContent.value
+                self.textMessageContent.accept("\(oldString)\(emojiString)")
+                self.sendMessageDisplay.value = "Send"
+            })
+            .disposed(by: self.disposeBag)
+        
+        input.textMessage
+            .asDriver()
+            .drive(onNext: { [unowned self] (s) in
+                if s.isEmpty {
+                    self.sendMessageDisplay.value = self.thumbsUpText
+                } else {
+                    self.sendMessageDisplay.value = "Send"
+                }
+            })
+            .disposed(by: self.disposeBag)
+        
+        
+        //
         return Output(
             error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
@@ -521,6 +558,17 @@ class SeeConversationViewModel : ViewModelDelegate {
                        messId: nil)
     }
     
+    private func createLikeMessage(_ user: User) -> Message {
+        let content = thumbsUpText
+        
+        return Message(type: .text,
+                       convId: nil,
+                       content: content,
+                       atTime: self.getTime(),
+                       sentBy: user.userId,
+                       messId: nil)
+    }
+    
     private func getTime() -> String {
         return "\(lastMessTime + 1)"
     }
@@ -530,6 +578,9 @@ extension SeeConversationViewModel {
     struct Input {
         let trigger: Driver<Void>
         let sendMessTrigger: Driver<Void>
+        
+        let sendMessDisplay: Variable<String>
+        
         let conversationLabel: Binder<String?>
         let textMessage: ControlProperty<String>
         let pickImageTrigger: Driver<Void>
@@ -538,6 +589,7 @@ extension SeeConversationViewModel {
         let sendImagePublish: Driver<URL>
         let sendContactPublish: Driver<Contact>
         let sendLocationPublish: Driver<(Double, Double)>
+        let sendEmojiPublish: Driver<String>
     }
     
     struct Output {
