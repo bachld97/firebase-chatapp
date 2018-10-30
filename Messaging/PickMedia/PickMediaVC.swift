@@ -85,7 +85,11 @@ class PickMediaVC: BaseVC, UICollectionViewDelegate, UICollectionViewDataSource,
                         contentMode: .aspectFill,
                         options: requestOptions,
                         resultHandler: { [unowned self] (image, error) in
-                            self.imageArray.append(image!)
+                            guard let unwrapped = image else {
+                                return
+                            }
+                            
+                            self.imageArray.append(unwrapped)
                             DispatchQueue.main.async {
                                 self.collectionView.reloadData()
                             }

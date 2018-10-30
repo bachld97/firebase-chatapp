@@ -3,9 +3,10 @@ import FirebaseDatabase
 import FirebaseStorage
 
 class ConversationFirebaseSource2: ConversationRemoteSource {
-    
+
     
     var ref: DatabaseReference!
+    var storageRef: StorageReference!
     
     private var currentConversationId: String?
     private var pendingMessages: [Message] = []
@@ -18,9 +19,31 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     
     init() {
         ref = Database.database().reference()
+        storageRef = Storage.storage().reference()
     }
     
     // MARK: Public
+    func downloadFile(messageId: String, fileName: String) -> Observable<String> {
+        return Observable.create { [unowned self] (obs) in
+            let fileRef = self.storageRef.child("messages/\(messageId)")
+            let ext = String(fileName.split(separator: ".").last!)
+            let localUrl = FileUtil.getSaveUrl(for: "\(messageId).\(ext)")
+            
+            let downloadTask = fileRef.write(toFile: localUrl) { (url, error) in
+                if let error = error {
+                    obs.onError(error)
+                } else {
+                    obs.onNext(fileName)
+                    obs.onCompleted()
+                }
+            }
+            
+            return Disposables.create {
+                downloadTask.cancel()
+            }
+        }
+    }
+    
     func loadChatHistory(of user: User) -> Observable<[Conversation]> {
         return Observable.create { [unowned self] (obs) in
             let dbRequest = self.ref.child("conversations")
@@ -109,6 +132,9 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
     func sendMessage(message: Message, to conversation: String, genId: Bool = true) -> Observable<Bool> {
         if message.type == .image {
             return sendImageMessage(message: message, to: conversation, genId: genId)
+        }
+        else if message.type == .file {
+            return sendFileMessage(message: message, to: conversation, genId: genId)
         }
         
         return Observable.deferred { [unowned self] in
@@ -428,27 +454,27 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
             } else {
                 messId = message.getMessageId()
             }
-           
+
             let toSend = message.changeId(withServerId: messId,
                                          withConvId: conversation)
             self.displayAsSending(toSend)
-            
+
             let urlString = message.getContent()
             let url = URL(fileURLWithPath: urlString)
-            
+
             let ref = Storage.storage().reference()
                 .child("messages/\(messId)")
-            
+
             let task = ref.putFile(from: url, metadata: nil) { metadata, error in
                 if error != nil {
                     obs.onError(error!)
                 } else {
                     var jsonMessage = self.mapToJson(message: message)
                     jsonMessage["content"] = UrlBuilder.buildUrl(forMessageId: messId)
-                    
+
                     self.ref.child("conversations/\(conversation)/last-message")
                         .updateChildValues(jsonMessage)
-                    
+
                     self.ref.child("messages/\(conversation)")
                         .child(messId)
                         .updateChildValues(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
@@ -456,7 +482,60 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
                                 // Delete old image, it is already copy to new location
                                 try FileManager().removeItem(at: url)
                             } catch { }
-                            
+
+                            if error == nil {
+                                self.handleSendSuccess(msgId: dbRef.key)
+                            } else {
+                                self.errorPublisher.onNext(error!)
+                            }
+                        })
+
+                    obs.onNext(true)
+                    obs.onCompleted()
+                }
+            }
+
+            self.pendingTasks.append(task)
+            return Disposables.create()
+        }
+    }
+    
+    private func sendFileMessage(message: Message, to conversation: String, genId: Bool) -> Observable<Bool> {
+        return Observable.create { [unowned self] obs in
+            let messId: String
+            if genId {
+                messId = self.ref.child("messages/\(conversation)")
+                    .childByAutoId()
+                    .key
+            } else {
+                messId = message.getMessageId()
+            }
+            
+            let toSend = message.changeId(withServerId: messId,
+                                          withConvId: conversation)
+            let content = message.getContent()
+            let urlString = content
+            let name = String(urlString.split(separator: "/").last!)
+            
+            self.displayAsSending(toSend.changeContent(withNewContent: name))
+            
+            let url = URL(fileURLWithPath: urlString)
+            
+            let ref = self.storageRef.child("messages/\(messId)")
+            
+            let task = ref.putFile(from: url, metadata: nil) { metadata, error in
+                if error != nil {
+                    obs.onError(error!)
+                } else {
+                    var jsonMessage = self.mapToJson(message: message)
+                        jsonMessage["content"] = name
+                    
+                    self.ref.child("conversations/\(conversation)/last-message")
+                        .updateChildValues(jsonMessage)
+                    
+                    self.ref.child("messages/\(conversation)")
+                        .child(messId)
+                        .updateChildValues(jsonMessage, withCompletionBlock: { [unowned self] (error, dbRef) in
                             if error == nil {
                                 self.handleSendSuccess(msgId: dbRef.key)
                             } else {
@@ -474,9 +553,13 @@ class ConversationFirebaseSource2: ConversationRemoteSource {
         }
     }
     
+    
+    
+    
+    
     private func displayAsSending(_ message: Message) {
         let toSend = message.markAsSending()
-        let timer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [unowned self] (timer) in
+        let timer = Timer.scheduledTimer(withTimeInterval: 30.0, repeats: false) { [unowned self] (timer) in
             self.handleSendFail()
         }
         RunLoop.current.add(timer, forMode: .commonModes)

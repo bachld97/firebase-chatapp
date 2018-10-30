@@ -8,6 +8,7 @@ protocol SeeConversationDisplayLogic : class {
     func goPickMedia()
     func goPickContact()
     func goPickLocation()
+    func goPickDocument()
     
     func notifyItems(with changes: [Change<MessageItem>]?)
     func notifyItem(with addRespond: (Bool, Int))
@@ -17,6 +18,9 @@ protocol SeeConversationDisplayLogic : class {
     func goShowLocation(lat: Double, long: Double)
     
     func notifyTextCopied(with text: String)
+    func notifyFileDownloaded(_ name: String)
+    
+    func viewFile(withUrl url: URL, withName name: String)
 }
 
 class SeeConversationViewModel : ViewModelDelegate {
@@ -39,6 +43,9 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let getContactNicknameUseCase = GetContactNicknameUseCase()
     private let observeNextMessageUseCase = ObserveNextMessageUseCase()
     private let resendUseCase = ResendUseCase()
+    
+    private let downloadFileUsecase = DownloadFileUseCase()
+    private let fileDownloadPublish = PublishSubject<(String,String)>()
     
     private let sendMessageDisplay = Variable("Send")
     
@@ -409,14 +416,67 @@ class SeeConversationViewModel : ViewModelDelegate {
             .disposed(by: self.disposeBag)
         
         
-        //
+        input.pickDocumentTrigger
+            .drive(onNext: { [unowned self] (_) in
+                self.displayLogic?.goPickDocument()
+            })
+            .disposed(by: self.disposeBag)
+        
+        input.sendFilePublish
+            .flatMap { [unowned self] (url) -> Driver<Bool> in
+                return self.getUserUseCase.execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        
+                        let message = self.parseFileMessage(user, url)
+                        
+                        return self.sendMessageUseCase
+                            .execute(request: SendMessageRequest(
+                                message: message,
+                                conversationId: conversationItem.conversation.id))
+                            .do()
+                    }
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
+        self.fileDownloadPublish
+            .asDriverOnErrorJustComplete()
+            .flatMap { [unowned self] (id, name) in
+                // TODO: Check if file already downloaded
+                // If downloaded just return
+                // return Observable.just(name)
+                let request = DownloadFileRequest(messageId: id, fileName: name)
+                return self.downloadFileUsecase
+                    .execute(request: request)
+                    .do()
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive(onNext: { [unowned self] (name) in
+                self.displayLogic?.notifyFileDownloaded(name)
+            })
+            .disposed(by: self.disposeBag)
+        
         return Output(
             error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
     
     private func handleMessageClick(_ messageItem: MessageItem) {
-        
         switch messageItem.message.type {
+        case .file:
+            let fileName = messageItem.message.getContent()
+            let messageId = messageItem.message.getMessageId()
+            let ext = String(fileName.split(separator: ".").last!)
+            let fileNameExt = "\(messageId).\(ext)"
+            
+            if FileUtil.fileExists(fileNameExt) {
+                let fileToView = FileUtil.getSaveUrl(for: fileNameExt)
+                self.displayLogic?.viewFile(withUrl: fileToView, withName: fileName)
+            } else {
+                self.fileDownloadPublish.onNext((messageId, fileName))
+            }
         case .location:
             let coord = messageItem.message.getContent().split(separator: "_")
             let lat = Double(coord.first!)!
@@ -475,6 +535,13 @@ class SeeConversationViewModel : ViewModelDelegate {
             .disposed(by: self.disposeBag)
     }
     
+    private func parseFileMessage(_ user: User, _ url: URL) -> Message {
+        // let name = url.lastPathComponent
+        return Message(type: .file, convId: nil, content: url.path,
+                       atTime: self.getTime(), sentBy: user.userId,
+                       messId: url.lastPathComponent, isSending: true)
+    }
+    
     private func parseImageMessage(_ user: User, _ url: URL) -> Message {
         return Message(type: .image, convId: nil, content: url.path,
                        atTime: self.getTime(), sentBy: user.userId,
@@ -499,6 +566,8 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     private func convert(localMessage: Message) -> MessageItem {
         switch localMessage.type {
+        case .file:
+            return MessageItem(messageItemType: .fileMe, message: localMessage)
         case .location:
             return MessageItem(messageItemType: .locationMe, message: localMessage)
         case .image:
@@ -517,6 +586,12 @@ class SeeConversationViewModel : ViewModelDelegate {
                 || !m.getSentBy().elementsEqual(messages[index - 1].getSentBy())
             
             switch m.type {
+            case .file:
+                if m.getSentBy().elementsEqual(user.userId) {
+                    res.append(MessageItem(messageItemType: .fileMe, message: m, showTime: showTime))
+                } else {
+                    res.append(MessageItem(messageItemType: .file, message: m, showTime: showTime))
+                }
             case .location:
                 if m.getSentBy().elementsEqual(user.userId) {
                     res.append(MessageItem(messageItemType: .locationMe, message: m, showTime: showTime))
@@ -580,18 +655,18 @@ extension SeeConversationViewModel {
     struct Input {
         let trigger: Driver<Void>
         let sendMessTrigger: Driver<Void>
-        
         let sendMessDisplay: Variable<String>
-        
         let conversationLabel: Binder<String?>
         let textMessage: ControlProperty<String>
         let pickImageTrigger: Driver<Void>
         let pickContactTrigger: Driver<Void>
         let pickLocationTrigger: Driver<Void>
+        let pickDocumentTrigger: Driver<Void>
         let sendImagePublish: Driver<URL>
         let sendContactPublish: Driver<Contact>
         let sendLocationPublish: Driver<(Double, Double)>
         let sendEmojiPublish: Driver<String>
+        let sendFilePublish: Driver<URL>
     }
     
     struct Output {

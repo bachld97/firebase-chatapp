@@ -53,6 +53,15 @@ class ConversationItem : Hashable {
             content = "[Contact]"
         case .location:
             content = "[Location]"
+        case .file:
+            let c = conversation.lastMess.getContent()
+            let fileName: String
+            if c.contains(" ") {
+                fileName = String(c.split(separator: " ").last!)
+            } else {
+                fileName = c
+            }
+            content = "[File] \(fileName)"
         }
         
         self.displayContent = content

@@ -11,8 +11,7 @@ protocol ConversationRepository {
     func observeNextMessage() -> Observable<Message>
     func getConversationLabel(conversation: Conversation) -> Observable<String>
     func getContactNickname(contact: Contact) -> Observable<String>
-
-//    func persistSendingMessage(message: Message) -> Observable<Message>
+    func downloadFile(messageId: String, fileName: String) -> Observable<String>
 }
 
 class ConversationRepositoryFactory {

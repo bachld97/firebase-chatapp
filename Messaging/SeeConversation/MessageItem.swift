@@ -38,6 +38,8 @@ final class MessageItem : Hashable {
 }
 
 enum MessageItemType {
+    case file
+    case fileMe
     case text
     case textMe
     case image

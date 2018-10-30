@@ -1,8 +1,16 @@
 import RxSwift
 
 class ConversationRepositoryImpl : ConversationRepository {
+   
     private var conversationId: String?
     private var lastId: String?
+    
+    func downloadFile(messageId: String, fileName: String) -> Observable<String> {
+        return Observable.deferred { [unowned self] in
+            return self.remoteSource
+                .downloadFile(messageId: messageId, fileName: fileName)
+        }
+    }
     
     func sendMessage(request: SendMessageRequest) -> Observable<Bool> {
         return remoteSource.sendMessage(message: request.message, to: request.conversationId, genId: true)

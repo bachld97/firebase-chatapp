@@ -14,6 +14,7 @@
             <connections>
                 <outlet property="emojiPanel" destination="MKX-ez-8qP" id="JXj-kb-cPw"/>
                 <outlet property="pickContactButton" destination="o0c-Gp-62u" id="xLQ-IA-7kU"/>
+                <outlet property="pickDocumentButton" destination="F6F-y0-YRa" id="1ke-JW-kNd"/>
                 <outlet property="pickImageButton" destination="IwT-lZ-Wes" id="0tG-ta-osc"/>
                 <outlet property="pickLocationButton" destination="dLt-HJ-7uE" id="ACu-Pc-KQW"/>
                 <outlet property="sendMessageButton" destination="H3Z-Mu-IjB" id="HQd-hl-7kg"/>
@@ -49,19 +50,24 @@
                     <rect key="frame" x="8" y="589" width="359" height="30"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IwT-lZ-Wes">
-                            <rect key="frame" x="0.0" y="0.0" width="109" height="30"/>
+                            <rect key="frame" x="0.0" y="0.0" width="78" height="30"/>
                             <color key="backgroundColor" red="0.73713511228561401" green="0.91377013921737671" blue="0.51758295297622681" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" title="Image"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o0c-Gp-62u">
-                            <rect key="frame" x="125" y="0.0" width="109" height="30"/>
+                            <rect key="frame" x="94" y="0.0" width="77.5" height="30"/>
                             <color key="backgroundColor" red="0.6470034122467041" green="0.63926112651824951" blue="0.92537754774093628" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" title="Contact"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dLt-HJ-7uE">
-                            <rect key="frame" x="250" y="0.0" width="109" height="30"/>
+                            <rect key="frame" x="187.5" y="0.0" width="78" height="30"/>
                             <color key="backgroundColor" red="1" green="0.57691551952436826" blue="0.56436992638599925" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal" title="Location"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F6F-y0-YRa">
+                            <rect key="frame" x="281.5" y="0.0" width="77.5" height="30"/>
+                            <color key="backgroundColor" red="1" green="0.97678148189546721" blue="0.66122686335264103" alpha="0.94999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" title="Document"/>
                         </button>
                     </subviews>
                 </stackView>

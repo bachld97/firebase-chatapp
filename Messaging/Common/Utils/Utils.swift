@@ -50,13 +50,17 @@ class Type {
             return .contact
         } else if typeString.elementsEqual("location") {
             return .location
-        } else {
+        } else if typeString.elementsEqual("file") {
+            return .file
+        }
+        else {
             return .text
         }
     }
 
     public static func getMessageTypeString(fromType type: MessageType) -> String {
         switch type {
+        case .file: return "file"
         case .location: return "location"
         case .image: return "image"
         case .text: return "text"

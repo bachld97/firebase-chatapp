@@ -10,6 +10,7 @@ protocol ConversationRemoteSource {
     func observeNextMessage(for user: User, fromLastId lastId: String?) -> Observable<Message>
 //    func getConversationLabel(conversationId: String) -> Observable<String>
     func getContactNickname(user: User, contact: Contact) -> Observable<String>
+    func downloadFile(messageId: String, fileName: String) -> Observable<String>
 }
 
 class ConversationRemoteSourceFactory {

@@ -15,10 +15,12 @@ class SeeConversationVC: BaseVC, ViewFor {
     @IBOutlet weak var pickContactButton: UIButton!
     @IBOutlet weak var pickImageButton: UIButton!
     @IBOutlet weak var pickLocationButton: UIButton!
+    @IBOutlet weak var pickDocumentButton: UIButton!
     
     private let sendContactPublish = PublishSubject<Contact>()
     private let sendImagePublish = PublishSubject<URL>()
     private let sendLocationPublish = PublishSubject<(Double, Double)>()
+    private let sendFilePublish = PublishSubject<URL>()
     // private let sendEmojiPublish = PublishSubject<String>()
     
     private let onCreatePublish = PublishSubject<Void>()
@@ -120,10 +122,12 @@ class SeeConversationVC: BaseVC, ViewFor {
             pickImageTrigger: self.pickImageButton.rx.tap.asDriver(),
             pickContactTrigger: self.pickContactButton.rx.tap.asDriver(),
             pickLocationTrigger: self.pickLocationButton.rx.tap.asDriver(),
+            pickDocumentTrigger: self.pickDocumentButton.rx.tap.asDriver(),
             sendImagePublish: self.sendImagePublish.asDriverOnErrorJustComplete(),
             sendContactPublish: self.sendContactPublish.asDriverOnErrorJustComplete(),
             sendLocationPublish: self.sendLocationPublish.asDriverOnErrorJustComplete(),
-            sendEmojiPublish: self.emojiDataSource.emojiPublish.asDriverOnErrorJustComplete())
+            sendEmojiPublish: self.emojiDataSource.emojiPublish.asDriverOnErrorJustComplete(),
+            sendFilePublish: self.sendFilePublish.asDriverOnErrorJustComplete())
         
         let output = self.viewModel.transform(input: input)
         
@@ -157,7 +161,12 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.tableView?.register(LocationTimeMessageCell.self)
         self.tableView?.register(LocationMeMessageCell.self)
         self.tableView?.register(LocationMessageCell.self)
+        
+        self.tableView?.register(FileMeTimeMessageCell.self)
+        self.tableView?.register(FileMeMessageCell.self)
     }
+    
+    private var interaction: UIDocumentInteractionController!
 }
 
 extension SeeConversationVC : SeeConversationDisplayLogic {
@@ -206,10 +215,21 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    func goPickDocument() {
+        self.resignFirstResponder()
+        let vc = PickFileVC.instance(delegate: self)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     func notifyTextCopied(with text: String) {
         super.doToast(with: "Message copied to clipboard",
                       duration: 1.2)
         UIPasteboard.general.string = text
+    }
+    
+    func notifyFileDownloaded(_ name: String) {
+        super.doToast(with: "File downloaded: \(name)",
+                      duration: 1.2)
     }
     
     func goShowContact(_ contactId: String) {
@@ -223,9 +243,28 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
         let vc = SeeLocationVC.instance(lat: lat, long: long)
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func viewFile(withUrl url: URL, withName name: String) {
+        interaction = UIDocumentInteractionController(url: url)
+        interaction.name = name
+        interaction.delegate = self
+        interaction.presentPreview(animated: true)
+    }
 }
 
-extension SeeConversationVC : PickMediaDelegate, PickContactDelegate, PickLocationDelegate {
+extension SeeConversationVC : UIDocumentInteractionControllerDelegate {
+    public func documentInteractionControllerViewControllerForPreview
+        (_ controller: UIDocumentInteractionController) -> UIViewController {
+        return self
+    }
+    
+    public func documentInteractionControllerDidEndPreview
+        (_ controller: UIDocumentInteractionController) {
+    }
+}
+
+
+extension SeeConversationVC : PickMediaDelegate, PickContactDelegate, PickLocationDelegate, PickFileDelegate {
     func onLocationPicked(latitude: Double, longitude: Double) {
         self.sendLocationPublish.onNext((latitude, longitude))
     }
@@ -235,10 +274,18 @@ extension SeeConversationVC : PickMediaDelegate, PickContactDelegate, PickLocati
     }
     
     func onMediaItemPickFail() {
-        print("Failed")
+        print("Failed: PickMedia")
     }
     
     func onContactChoosen(contact: Contact) {
         self.sendContactPublish.onNext(contact)
+    }
+    
+    func onFilePickFail() {
+        print("Failed: PickFile")
+    }
+    
+    func onFilePick(url: URL) {
+        self.sendFilePublish.onNext(url)
     }
 }

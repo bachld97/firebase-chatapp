@@ -141,7 +141,6 @@
 		14848AD92140C89D00DAA9F8 /* UnfriendRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848AD82140C89D00DAA9F8 /* UnfriendRequest.swift */; };
 		14848ADB214113C300DAA9F8 /* ConversationLocalSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADA214113C300DAA9F8 /* ConversationLocalSource.swift */; };
 		14848ADD2141140E00DAA9F8 /* ConversationRemoteSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADC2141140E00DAA9F8 /* ConversationRemoteSource.swift */; };
-		14848ADF2141149D00DAA9F8 /* ConversationFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */; };
 		1485C318214F4542003568B9 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485C317214F4542003568B9 /* PhotoCell.swift */; };
 		1485C31A214F4BC1003568B9 /* CameraCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1485C319214F4BC1003568B9 /* CameraCell.swift */; };
 		14904130216DAD9000A61D9D /* VIewImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1490412E216DAD9000A61D9D /* VIewImageVC.swift */; };
@@ -174,6 +173,10 @@
 		14BCAE912163682500C3BA4A /* LogoutUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BCAE902163682500C3BA4A /* LogoutUsecase.swift */; };
 		14C0A8F0215345B50026D775 /* MessageRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0A8EF215345B50026D775 /* MessageRealm.swift */; };
 		14C0A8F2215347980026D775 /* UUIDGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C0A8F1215347980026D775 /* UUIDGenerator.swift */; };
+		14C160F72186B44E00EF86E7 /* FileMeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C160F62186B44E00EF86E7 /* FileMeMessageCell.swift */; };
+		14C160F92186B45A00EF86E7 /* FileMeTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C160F82186B45A00EF86E7 /* FileMeTimeMessageCell.swift */; };
+		14C160FB2186C6B100EF86E7 /* DownloadFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C160FA2186C6B100EF86E7 /* DownloadFileUseCase.swift */; };
+		14C160FD2186C6C000EF86E7 /* DownloadFileRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C160FC2186C6C000EF86E7 /* DownloadFileRequest.swift */; };
 		14CEE96E2136332F00A31FBB /* RxBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE96D2136332F00A31FBB /* RxBinding.swift */; };
 		14CEE97221363C2200A31FBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE97121363C2200A31FBB /* User.swift */; };
 		14CEE9792136561E00A31FBB /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CEE9782136561E00A31FBB /* LoginUseCase.swift */; };
@@ -190,6 +193,9 @@
 		14D64EC52164B93A001C9057 /* ResendUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14D64EC42164B93A001C9057 /* ResendUseCase.swift */; };
 		14E001F32182C30100E9AF28 /* EmojiCollectionDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E001F22182C30100E9AF28 /* EmojiCollectionDataSource.swift */; };
 		14E001F92182CFE500E9AF28 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E001F82182CFE500E9AF28 /* EmojiCollectionViewCell.swift */; };
+		14E001FE2183207000E9AF28 /* PickFileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E001FC2183207000E9AF28 /* PickFileVC.swift */; };
+		14E001FF2183207000E9AF28 /* PickFileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14E001FD2183207000E9AF28 /* PickFileVC.xib */; };
+		14F583192187F77200C24A54 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F583182187F77200C24A54 /* FileUtil.swift */; };
 		5859E7E5EBD1974D0D960EA4 /* Pods_Messaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688BB3FD82712A498F73AC1E /* Pods_Messaging.framework */; };
 /* End PBXBuildFile section */
 
@@ -339,7 +345,6 @@
 		14848AD82140C89D00DAA9F8 /* UnfriendRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfriendRequest.swift; sourceTree = "<group>"; };
 		14848ADA214113C300DAA9F8 /* ConversationLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationLocalSource.swift; sourceTree = "<group>"; };
 		14848ADC2141140E00DAA9F8 /* ConversationRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRemoteSource.swift; sourceTree = "<group>"; };
-		14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationFirebaseSource.swift; sourceTree = "<group>"; };
 		1485C317214F4542003568B9 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		1485C319214F4BC1003568B9 /* CameraCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCell.swift; sourceTree = "<group>"; };
 		1490412E216DAD9000A61D9D /* VIewImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VIewImageVC.swift; sourceTree = "<group>"; };
@@ -374,6 +379,10 @@
 		14BCAE902163682500C3BA4A /* LogoutUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUsecase.swift; sourceTree = "<group>"; };
 		14C0A8EF215345B50026D775 /* MessageRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRealm.swift; sourceTree = "<group>"; };
 		14C0A8F1215347980026D775 /* UUIDGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUIDGenerator.swift; sourceTree = "<group>"; };
+		14C160F62186B44E00EF86E7 /* FileMeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMeMessageCell.swift; sourceTree = "<group>"; };
+		14C160F82186B45A00EF86E7 /* FileMeTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMeTimeMessageCell.swift; sourceTree = "<group>"; };
+		14C160FA2186C6B100EF86E7 /* DownloadFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFileUseCase.swift; sourceTree = "<group>"; };
+		14C160FC2186C6C000EF86E7 /* DownloadFileRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadFileRequest.swift; sourceTree = "<group>"; };
 		14CEE96D2136332F00A31FBB /* RxBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxBinding.swift; sourceTree = "<group>"; };
 		14CEE97121363C2200A31FBB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		14CEE9782136561E00A31FBB /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
@@ -390,6 +399,9 @@
 		14D64EC42164B93A001C9057 /* ResendUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendUseCase.swift; sourceTree = "<group>"; };
 		14E001F22182C30100E9AF28 /* EmojiCollectionDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionDataSource.swift; sourceTree = "<group>"; };
 		14E001F82182CFE500E9AF28 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
+		14E001FC2183207000E9AF28 /* PickFileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFileVC.swift; sourceTree = "<group>"; };
+		14E001FD2183207000E9AF28 /* PickFileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickFileVC.xib; sourceTree = "<group>"; };
+		14F583182187F77200C24A54 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 		4B07CD619E165CAEFC760603 /* Pods-Messaging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messaging.release.xcconfig"; path = "Pods/Target Support Files/Pods-Messaging/Pods-Messaging.release.xcconfig"; sourceTree = "<group>"; };
 		688BB3FD82712A498F73AC1E /* Pods_Messaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B60F17E0E37B45990389656D /* Pods-Messaging.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messaging.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Messaging/Pods-Messaging.debug.xcconfig"; sourceTree = "<group>"; };
@@ -463,6 +475,7 @@
 		141823522135025700DC0E98 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
+				14E001FB2183205200E9AF28 /* PickFile */,
 				14CFB99121806CBF002781CC /* SeeLocation */,
 				1413F0D721773A5B008804FC /* PickLocation */,
 				1413F0CC2176F860008804FC /* SeeContactProfile */,
@@ -657,6 +670,7 @@
 				1436689C2148BB7D00B2766E /* GetUserUseCase.swift */,
 				14B7BFEB2151EBFA00236C3D /* ObserveNextMessageUseCase.swift */,
 				14D64EC42164B93A001C9057 /* ResendUseCase.swift */,
+				14C160FA2186C6B100EF86E7 /* DownloadFileUseCase.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -673,6 +687,7 @@
 				14B7BFED215201A500236C3D /* ObserveNextMessageRequest.swift */,
 				14BB32A62153A0160076A991 /* PersistSendingMessageRequest.swift */,
 				14D64EC22164B8E5001C9057 /* ResendRequest.swift */,
+				14C160FC2186C6C000EF86E7 /* DownloadFileRequest.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -698,6 +713,8 @@
 				14CFB98B2180654D002781CC /* LocationMeTimeMessageCell.swift */,
 				14CFB98D2180687F002781CC /* LocationMessageCell.swift */,
 				14CFB98F21806965002781CC /* LocationMeMessageCell.swift */,
+				14C160F62186B44E00EF86E7 /* FileMeMessageCell.swift */,
+				14C160F82186B45A00EF86E7 /* FileMeTimeMessageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -729,7 +746,6 @@
 				147945D6213E80340055CE79 /* UserFirebaseSource.swift */,
 				147945D8213E80590055CE79 /* UserRealmSource.swift */,
 				149CC71D213FAA6900B376E9 /* ContactFirebaseSource.swift */,
-				14848ADE2141149D00DAA9F8 /* ConversationFirebaseSource.swift */,
 				1462D17021535A8F00722B6C /* ConversationRealmSource.swift */,
 			);
 			path = Impl;
@@ -871,6 +887,7 @@
 				14461A712137AD5B0062FAC6 /* ErrorTracker.swift */,
 				147945D0213E78CD0055CE79 /* Utils.swift */,
 				14C0A8F1215347980026D775 /* UUIDGenerator.swift */,
+				14F583182187F77200C24A54 /* FileUtil.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -891,6 +908,15 @@
 				14E001F82182CFE500E9AF28 /* EmojiCollectionViewCell.swift */,
 			);
 			path = EmojiMessage;
+			sourceTree = "<group>";
+		};
+		14E001FB2183205200E9AF28 /* PickFile */ = {
+			isa = PBXGroup;
+			children = (
+				14E001FC2183207000E9AF28 /* PickFileVC.swift */,
+				14E001FD2183207000E9AF28 /* PickFileVC.xib */,
+			);
+			path = PickFile;
 			sourceTree = "<group>";
 		};
 		3278A6DABA3D162198D7551F /* Pods */ = {
@@ -1020,6 +1046,7 @@
 				14A239DA214BC6A20027743D /* PickMediaVC.xib in Resources */,
 				14CFB99521806CF9002781CC /* SeeLocationVC.xib in Resources */,
 				1413F0DB21773A74008804FC /* PickLocationVC.xib in Resources */,
+				14E001FF2183207000E9AF28 /* PickFileVC.xib in Resources */,
 				141823592135025700DC0E98 /* Main.storyboard in Resources */,
 				14843FF721413B9E00D5366B /* GroupConvoCell.xib in Resources */,
 				14615408213F68910032EE95 /* AddContactVC.xib in Resources */,
@@ -1207,6 +1234,7 @@
 				1485C31A214F4BC1003568B9 /* CameraCell.swift in Sources */,
 				142EDE7E21708DBA00B07F18 /* ContactMeMessageCell.swift in Sources */,
 				14E001F32182C30100E9AF28 /* EmojiCollectionDataSource.swift in Sources */,
+				14C160FB2186C6B100EF86E7 /* DownloadFileUseCase.swift in Sources */,
 				1496B93E21508F0A00ED61CD /* BaseCell.swift in Sources */,
 				1496B9422150977400ED61CD /* BaseMessageCell.swift in Sources */,
 				14615407213F68910032EE95 /* AddContactVC.swift in Sources */,
@@ -1221,6 +1249,7 @@
 				1451585721350BB70038CE74 /* UseCase.swift in Sources */,
 				140C34002138E69200DC3535 /* ConversationRepository.swift in Sources */,
 				14615411213F8ABA0032EE95 /* RequestedContactCell.swift in Sources */,
+				14C160F72186B44E00EF86E7 /* FileMeMessageCell.swift in Sources */,
 				140C340A2139241600DC3535 /* ChangePassRequest.swift in Sources */,
 				146153FC213F68450032EE95 /* AddContactViewModel.swift in Sources */,
 				143517A121352D3C0039874F /* BaseVC.swift in Sources */,
@@ -1230,6 +1259,7 @@
 				1413F0DA21773A74008804FC /* PickLocationVC.swift in Sources */,
 				14719A47215DCE33006B4D54 /* ConversationItemDataSource.swift in Sources */,
 				14D64EC32164B8E5001C9057 /* ResendRequest.swift in Sources */,
+				14F583192187F77200C24A54 /* FileUtil.swift in Sources */,
 				14843FF621413B9E00D5366B /* GroupConvoCell.swift in Sources */,
 				140C34082139240600DC3535 /* ChangePassVIewModel.swift in Sources */,
 				1412CA47215A2B0E0071FA44 /* ImageMessageCell.swift in Sources */,
@@ -1276,6 +1306,7 @@
 				147231DB215B950500D54C57 /* TextTimeMessageCell.swift in Sources */,
 				14461A642137A1650062FAC6 /* SeeContactUseCase.swift in Sources */,
 				1458BC222147596E005A93AD /* SendMessageToUserRequest.swift in Sources */,
+				14C160FD2186C6C000EF86E7 /* DownloadFileRequest.swift in Sources */,
 				140C340F2139243100DC3535 /* ChangePassVC.swift in Sources */,
 				1461540A213F7C800032EE95 /* ContactRequest.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
@@ -1289,7 +1320,6 @@
 				14461A5221379CC40062FAC6 /* SeeContactVC.swift in Sources */,
 				14BCAE8D21634FBC00C3BA4A /* UserRealm.swift in Sources */,
 				14848ADB214113C300DAA9F8 /* ConversationLocalSource.swift in Sources */,
-				14848ADF2141149D00DAA9F8 /* ConversationFirebaseSource.swift in Sources */,
 				140C33F82138E1A400DC3535 /* Conversation.swift in Sources */,
 				147945D1213E78CD0055CE79 /* Utils.swift in Sources */,
 				14CFB98E2180687F002781CC /* LocationMessageCell.swift in Sources */,
@@ -1342,8 +1372,10 @@
 				14238C712175B66700EA90CA /* PickContactVC.swift in Sources */,
 				14CEE9802136584000A31FBB /* UserRepository.swift in Sources */,
 				1413F0D12176F88C008804FC /* SeeContactProfileVC.swift in Sources */,
+				14C160F92186B45A00EF86E7 /* FileMeTimeMessageCell.swift in Sources */,
 				14B4DA7D215C95AF002CF340 /* PickMediaViewController.swift in Sources */,
 				14182371213507E500DC0E98 /* ViewFor.swift in Sources */,
+				14E001FE2183207000E9AF28 /* PickFileVC.swift in Sources */,
 				14C0A8F0215345B50026D775 /* MessageRealm.swift in Sources */,
 				1496B93C21508DA900ED61CD /* Reusable.swift in Sources */,
 				14CEE97221363C2200A31FBB /* User.swift in Sources */,

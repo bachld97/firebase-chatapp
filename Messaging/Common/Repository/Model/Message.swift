@@ -124,4 +124,5 @@ enum MessageType {
     case image
     case contact
     case location
+    case file
 }
