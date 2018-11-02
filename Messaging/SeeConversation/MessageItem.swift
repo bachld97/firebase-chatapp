@@ -1,6 +1,6 @@
 import UIKit
 
-final class MessageItem : Hashable {
+class MessageItem : Hashable {
     
     var hashValue: Int {
         return message.getMessageId().hashValue

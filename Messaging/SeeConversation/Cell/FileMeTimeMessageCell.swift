@@ -42,6 +42,15 @@ class FileMeTimeMessageCell: BaseMessageCell {
                     self.container.backgroundColor = UIColor(red: 221.0 / 255.0, green: 234.0 / 255.0, blue: 1, alpha: 1)
                 }
             }
+            
+            if let documentItem = item as? DocumentMessageItem {
+                if documentItem.isDocumentDownloaded {
+                    self.downloadStatusImage.image = UIImage(named: "ic_open")
+                    print("Document downloaded")
+                } else {
+                    self.downloadStatusImage.image = UIImage(named: "ic_download_new")
+                }
+            }
         }
     }
     

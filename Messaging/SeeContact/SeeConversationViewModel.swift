@@ -476,6 +476,13 @@ class SeeConversationViewModel : ViewModelDelegate {
                 self.displayLogic?.viewFile(withUrl: fileToView, withName: fileName)
             } else {
                 self.fileDownloadPublish.onNext((messageId, fileName))
+                let updateItem = DocumentMessageItem(
+                    messageItemType: messageItem.messageItemType,
+                    message: messageItem.message,
+                    isDocumentDownloaded: true,
+                    showTime: messageItem.showTime)
+                let updateInfo = self.dataSource.addOrUpdateSingleItem(item: updateItem)
+                self.displayLogic?.notifyItem(with: updateInfo)
             }
         case .location:
             let coord = messageItem.message.getContent().split(separator: "_")
@@ -567,7 +574,10 @@ class SeeConversationViewModel : ViewModelDelegate {
     private func convert(localMessage: Message) -> MessageItem {
         switch localMessage.type {
         case .file:
-            return MessageItem(messageItemType: .fileMe, message: localMessage)
+            let ext = String(localMessage.getContent().split(separator: ".").last!)
+            let fileName = "\(localMessage.getMessageId()).\(ext)"
+            let isDownloaded = FileUtil.fileExists(fileName)
+            return DocumentMessageItem(messageItemType: .fileMe, message: localMessage, isDocumentDownloaded: isDownloaded)
         case .location:
             return MessageItem(messageItemType: .locationMe, message: localMessage)
         case .image:
@@ -587,10 +597,21 @@ class SeeConversationViewModel : ViewModelDelegate {
             
             switch m.type {
             case .file:
+                let ext = String(m.getContent().split(separator: ".").last!)
+                let fileName = "\(m.getMessageId()).\(ext)"
+                let isDownloaded = FileUtil.fileExists(fileName)
+                
                 if m.getSentBy().elementsEqual(user.userId) {
-                    res.append(MessageItem(messageItemType: .fileMe, message: m, showTime: showTime))
+                    res.append(DocumentMessageItem(
+                            messageItemType: .fileMe, message: m,
+                            isDocumentDownloaded: isDownloaded, showTime: showTime
+                    ))
+                    
                 } else {
-                    res.append(MessageItem(messageItemType: .file, message: m, showTime: showTime))
+                    res.append(DocumentMessageItem(
+                        messageItemType: .file, message: m,
+                        isDocumentDownloaded: isDownloaded, showTime: showTime
+                    ))
                 }
             case .location:
                 if m.getSentBy().elementsEqual(user.userId) {

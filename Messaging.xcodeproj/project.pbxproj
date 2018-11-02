@@ -123,6 +123,7 @@
 		147945D7213E80340055CE79 /* UserFirebaseSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D6213E80340055CE79 /* UserFirebaseSource.swift */; };
 		147945D9213E80590055CE79 /* UserRealmSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D8213E80590055CE79 /* UserRealmSource.swift */; };
 		147945DB213E85860055CE79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 147945DA213E85850055CE79 /* GoogleService-Info.plist */; };
+		147953982189A3FD00506B2C /* DocumentMessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147953972189A3FD00506B2C /* DocumentMessageItem.swift */; };
 		14843FE5214116AC00D5366B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14843FE4214116AC00D5366B /* Message.swift */; };
 		14843FEC214122B900D5366B /* SeeChatHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14843FEA214122B900D5366B /* SeeChatHistoryVC.swift */; };
 		14843FED214122B900D5366B /* SeeChatHistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14843FEB214122B900D5366B /* SeeChatHistoryVC.xib */; };
@@ -327,6 +328,7 @@
 		147945D6213E80340055CE79 /* UserFirebaseSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFirebaseSource.swift; sourceTree = "<group>"; };
 		147945D8213E80590055CE79 /* UserRealmSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRealmSource.swift; sourceTree = "<group>"; };
 		147945DA213E85850055CE79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		147953972189A3FD00506B2C /* DocumentMessageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentMessageItem.swift; sourceTree = "<group>"; };
 		14843FE4214116AC00D5366B /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		14843FEA214122B900D5366B /* SeeChatHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeChatHistoryVC.swift; sourceTree = "<group>"; };
 		14843FEB214122B900D5366B /* SeeChatHistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeChatHistoryVC.xib; sourceTree = "<group>"; };
@@ -580,6 +582,7 @@
 				14461A5921379DFF0062FAC6 /* SeeConversationVC.swift */,
 				14461A5A21379DFF0062FAC6 /* SeeConversationVC.xib */,
 				147945CE213E73570055CE79 /* SeeConversationViewModel.swift */,
+				147953972189A3FD00506B2C /* DocumentMessageItem.swift */,
 			);
 			path = SeeConversation;
 			sourceTree = "<group>";
@@ -1325,6 +1328,7 @@
 				14CFB98E2180687F002781CC /* LocationMessageCell.swift in Sources */,
 				140C34042138EC0700DC3535 /* SeeChatHistoryViewModel.swift in Sources */,
 				147231D5215B444B00D54C57 /* MessageItemDataSource.swift in Sources */,
+				147953982189A3FD00506B2C /* DocumentMessageItem.swift in Sources */,
 				14A239DE214BC78F0027743D /* PickMediaDelegate.swift in Sources */,
 				1458BC2A21476249005A93AD /* GetContactNicknameRequest.swift in Sources */,
 				1458BC2821475FC9005A93AD /* GetContactNicknameUseCase.swift in Sources */,
