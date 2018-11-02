@@ -2,26 +2,6 @@ import RxSwift
 import RxCocoa
 import DeepDiff
 
-protocol SeeConversationDisplayLogic : class {
-    func goBack()
-    func clearText()
-    func goPickMedia()
-    func goPickContact()
-    func goPickLocation()
-    func goPickDocument()
-    
-    func notifyItems(with changes: [Change<MessageItem>]?)
-    func notifyItem(with addRespond: (Bool, Int))
-    
-    func goShowImage(_ imageUrl: String)
-    func goShowContact(_ contactId: String)
-    func goShowLocation(lat: Double, long: Double)
-    
-    func notifyTextCopied(with text: String)
-    func notifyFileDownloaded(_ name: String)
-    
-    func viewFile(withUrl url: URL, withName name: String)
-}
 
 class SeeConversationViewModel : ViewModelDelegate {
     private weak var displayLogic: SeeConversationDisplayLogic?
@@ -58,6 +38,8 @@ class SeeConversationViewModel : ViewModelDelegate {
     private let messageConverter = MessageConverter()
     private let messageParser = MessageParser()
     private let thumbsUpText: String = "\(UnicodeScalar(0x1f44d)!)"
+
+    private let audioController = AudioController()
     
     init(displayLogic: SeeConversationDisplayLogic, contactItem: ContactItem) {
         self.displayLogic = displayLogic
@@ -436,9 +418,6 @@ class SeeConversationViewModel : ViewModelDelegate {
         self.fileDownloadPublish
             .asDriverOnErrorJustComplete()
             .flatMap { [unowned self] (id, name) in
-                // TODO: Check if file already downloaded
-                // If downloaded just return
-                // return Observable.just(name)
                 let request = DownloadFileRequest(messageId: id, fileName: name)
                 return self.downloadFileUsecase
                     .execute(request: request)
@@ -473,7 +452,13 @@ class SeeConversationViewModel : ViewModelDelegate {
     }
     
     private func handleAudioMessage(_ messageItem: MessageItem) {
-        
+        // let url = URL(fileURLWithPath: messageItem.message.getContent())
+        let url = URL(string: messageItem.message.getContent())
+        guard let unwrappedUrl = url else {
+            // self.displayLogic?.showAudioError()
+            return
+        }
+        self.audioController.playAudio(url: unwrappedUrl)
     }
     
     private func handleDocumentMessage(_ messageItem: MessageItem) {
@@ -514,7 +499,6 @@ class SeeConversationViewModel : ViewModelDelegate {
     }
     
     private func handleContactMessage(_ messageItem: MessageItem) {
-    
         let id = messageItem.message.content
         if id.contains("#") {
             self.displayLogic?.goShowContact(String(id.split(separator: "#").first!))
@@ -626,4 +610,21 @@ extension SeeConversationViewModel {
         case image(message: Message)
         case imageMe(message: Message)
     }
+}
+
+protocol SeeConversationDisplayLogic : class {
+    func goBack()
+    func clearText()
+    func goPickMedia()
+    func goPickContact()
+    func goPickLocation()
+    func goPickDocument()
+    func notifyItems(with changes: [Change<MessageItem>]?)
+    func notifyItem(with addRespond: (Bool, Int))
+    func goShowImage(_ imageUrl: String)
+    func goShowContact(_ contactId: String)
+    func goShowLocation(lat: Double, long: Double)
+    func notifyTextCopied(with text: String)
+    func notifyFileDownloaded(_ name: String)
+    func viewFile(withUrl url: URL, withName name: String)
 }
