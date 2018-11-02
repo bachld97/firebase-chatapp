@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="90" id="KGk-i7-Jjw" customClass="RequestingContactCell" customModule="Messaging" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="89.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5DR-Te-tqe">
+                        <rect key="frame" x="8" y="8" width="56" height="55"/>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="55" id="NJe-CK-nh3"/>
+                            <constraint firstAttribute="width" constant="56" id="f6p-Zt-bA4"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Le Duy Bach" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8fi-fp-lNC">
+                        <rect key="frame" x="80" y="8" width="224" height="23"/>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bachld10832" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJA-7u-DE5">
+                        <rect key="frame" x="80" y="31" width="208" height="18"/>
+                        <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="15"/>
+                        <color key="textColor" red="0.55938689720000001" green="0.55938689720000001" blue="0.55938689720000001" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dy9-Lk-zLx">
+                        <rect key="frame" x="80" y="53" width="101" height="29"/>
+                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="14"/>
+                        <state key="normal" title="Cancel request">
+                            <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="8fi-fp-lNC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="6g7-R1-IJw"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="qJA-7u-DE5" secondAttribute="trailing" constant="16" id="Iti-VF-rkS"/>
+                    <constraint firstItem="qJA-7u-DE5" firstAttribute="leading" secondItem="5DR-Te-tqe" secondAttribute="trailing" constant="16" id="SG8-Ce-G2J"/>
+                    <constraint firstItem="qJA-7u-DE5" firstAttribute="top" secondItem="8fi-fp-lNC" secondAttribute="bottom" id="bOy-Bh-eJN"/>
+                    <constraint firstItem="8fi-fp-lNC" firstAttribute="leading" secondItem="5DR-Te-tqe" secondAttribute="trailing" constant="16" id="gtL-Lp-I7v"/>
+                    <constraint firstItem="dy9-Lk-zLx" firstAttribute="top" secondItem="qJA-7u-DE5" secondAttribute="bottom" constant="4" id="jaZ-ds-yZs"/>
+                    <constraint firstItem="dy9-Lk-zLx" firstAttribute="leading" secondItem="5DR-Te-tqe" secondAttribute="trailing" constant="16" id="n7l-BX-qUd"/>
+                    <constraint firstItem="5DR-Te-tqe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="r4y-Ln-j8y"/>
+                    <constraint firstItem="5DR-Te-tqe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="rd0-di-p7m"/>
+                    <constraint firstAttribute="trailing" secondItem="8fi-fp-lNC" secondAttribute="trailing" constant="16" id="yEm-Sa-tQs"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="avaImageView" destination="5DR-Te-tqe" id="2kt-Eb-yYl"/>
+                <outlet property="cancelButton" destination="dy9-Lk-zLx" id="UqF-Y6-WAB"/>
+                <outlet property="idLabel" destination="qJA-7u-DE5" id="8Ti-9U-FPu"/>
+                <outlet property="nameLabel" destination="8fi-fp-lNC" id="u5F-Qn-SAa"/>
+            </connections>
+            <point key="canvasLocation" x="26" y="75"/>
+        </tableViewCell>
+    </objects>
+</document>

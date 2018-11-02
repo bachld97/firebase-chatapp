@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ContactCell" customModule="Messaging" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="72"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="71.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4Fe-V1-CL7">
+                        <rect key="frame" x="8" y="8" width="56" height="56"/>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="56" id="VHx-N0-MZN"/>
+                            <constraint firstAttribute="width" constant="56" id="dxr-If-DMx"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bachld10832" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TiG-Ha-mq1">
+                        <rect key="frame" x="80" y="41" width="208" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="JUz-bH-5Ui"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Helvetica-Light" family="Helvetica" pointSize="15"/>
+                        <color key="textColor" red="0.55938689720812185" green="0.55938689720812185" blue="0.55938689720812185" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Le Duy Bach" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ih6-qx-SVY">
+                        <rect key="frame" x="80" y="16" width="224" height="23"/>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Ih6-qx-SVY" firstAttribute="leading" secondItem="4Fe-V1-CL7" secondAttribute="trailing" constant="16" id="5yI-Gc-rjn"/>
+                    <constraint firstItem="TiG-Ha-mq1" firstAttribute="top" secondItem="Ih6-qx-SVY" secondAttribute="bottom" constant="2" id="8MP-H7-60T"/>
+                    <constraint firstItem="4Fe-V1-CL7" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Itd-Am-pIg"/>
+                    <constraint firstItem="TiG-Ha-mq1" firstAttribute="leading" secondItem="4Fe-V1-CL7" secondAttribute="trailing" constant="16" id="Nxb-nv-jYT"/>
+                    <constraint firstAttribute="bottom" secondItem="4Fe-V1-CL7" secondAttribute="bottom" constant="8" id="Rrt-Jd-X8p"/>
+                    <constraint firstItem="Ih6-qx-SVY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="enD-Y9-P46"/>
+                    <constraint firstAttribute="trailing" secondItem="Ih6-qx-SVY" secondAttribute="trailing" constant="16" id="hXh-SZ-ftV"/>
+                    <constraint firstItem="4Fe-V1-CL7" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="itd-k6-L4K"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="TiG-Ha-mq1" secondAttribute="trailing" constant="16" id="rDQ-kO-lI1"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="avaImageView" destination="4Fe-V1-CL7" id="e1Y-dk-bWI"/>
+                <outlet property="fullnameLabel" destination="Ih6-qx-SVY" id="wib-Am-rRa"/>
+                <outlet property="usernameLabel" destination="TiG-Ha-mq1" id="Pme-fb-vCi"/>
+            </connections>
+            <point key="canvasLocation" x="25" y="54"/>
+        </tableViewCell>
+    </objects>
+</document>

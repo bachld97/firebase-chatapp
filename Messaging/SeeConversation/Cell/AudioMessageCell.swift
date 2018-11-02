@@ -1,0 +1,3 @@
+class AudioMessageCell : BaseMessageCell {
+    
+}
