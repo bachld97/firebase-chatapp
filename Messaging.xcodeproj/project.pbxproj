@@ -219,11 +219,11 @@
 		140C34012138E95000DC3535 /* ConversationRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationRepositoryImpl.swift; sourceTree = "<group>"; };
 		140C34032138EC0700DC3535 /* SeeChatHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeChatHistoryViewModel.swift; sourceTree = "<group>"; };
 		140C34052138F74F00DC3535 /* AutoLoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLoginUseCase.swift; sourceTree = "<group>"; };
-		140C34072139240600DC3535 /* ChangePassVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassVIewModel.swift; path = Messaging/Login/ChangePassVIewModel.swift; sourceTree = SOURCE_ROOT; };
-		140C34092139241600DC3535 /* ChangePassRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassRequest.swift; path = Messaging/Login/ChangePassRequest.swift; sourceTree = SOURCE_ROOT; };
-		140C340B2139242000DC3535 /* ChangePassUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassUseCase.swift; path = Messaging/Login/ChangePassUseCase.swift; sourceTree = SOURCE_ROOT; };
-		140C340D2139243100DC3535 /* ChangePassVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassVC.swift; path = Messaging/Login/ChangePassVC.swift; sourceTree = SOURCE_ROOT; };
-		140C340E2139243100DC3535 /* ChangePassVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ChangePassVC.xib; path = Messaging/Login/ChangePassVC.xib; sourceTree = SOURCE_ROOT; };
+		140C34072139240600DC3535 /* ChangePassVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassVIewModel.swift; path = Messaging/ChangePass/ChangePassVIewModel.swift; sourceTree = SOURCE_ROOT; };
+		140C34092139241600DC3535 /* ChangePassRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassRequest.swift; path = Messaging/ChangePass/ChangePassRequest.swift; sourceTree = SOURCE_ROOT; };
+		140C340B2139242000DC3535 /* ChangePassUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassUseCase.swift; path = Messaging/ChangePass/ChangePassUseCase.swift; sourceTree = SOURCE_ROOT; };
+		140C340D2139243100DC3535 /* ChangePassVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChangePassVC.swift; path = Messaging/ChangePass/ChangePassVC.swift; sourceTree = SOURCE_ROOT; };
+		140C340E2139243100DC3535 /* ChangePassVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ChangePassVC.xib; path = Messaging/ChangePass/ChangePassVC.xib; sourceTree = SOURCE_ROOT; };
 		1412CA442159DAB60071FA44 /* ConversationFirebaseSource2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationFirebaseSource2.swift; sourceTree = "<group>"; };
 		1412CA46215A2B0E0071FA44 /* ImageMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageMessageCell.swift; sourceTree = "<group>"; };
 		1413F0CD2176F879008804FC /* SeeContactProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeContactProfileViewModel.swift; sourceTree = "<group>"; };
@@ -272,16 +272,16 @@
 		14461A5321379CDD0062FAC6 /* MainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		14461A5521379CEB0062FAC6 /* SeeProfileVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SeeProfileVC.xib; sourceTree = "<group>"; };
 		14461A5621379CEC0062FAC6 /* SeeProfileVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeProfileVC.swift; sourceTree = "<group>"; };
-		14461A5921379DFF0062FAC6 /* SeeConversationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeConversationVC.swift; path = Messaging/Profile/SeeConversationVC.swift; sourceTree = SOURCE_ROOT; };
-		14461A5A21379DFF0062FAC6 /* SeeConversationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SeeConversationVC.xib; path = Messaging/Profile/SeeConversationVC.xib; sourceTree = SOURCE_ROOT; };
+		14461A5921379DFF0062FAC6 /* SeeConversationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SeeConversationVC.swift; path = Messaging/SeeConversation/SeeConversationVC.swift; sourceTree = SOURCE_ROOT; };
+		14461A5A21379DFF0062FAC6 /* SeeConversationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SeeConversationVC.xib; path = Messaging/SeeConversation/SeeConversationVC.xib; sourceTree = SOURCE_ROOT; };
 		14461A5D21379E620062FAC6 /* SeeContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeContactViewModel.swift; sourceTree = "<group>"; };
 		14461A632137A1650062FAC6 /* SeeContactUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeContactUseCase.swift; sourceTree = "<group>"; };
 		14461A652137A3C60062FAC6 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		14461A672137A65D0062FAC6 /* ContactRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRepository.swift; sourceTree = "<group>"; };
 		14461A692137A6DE0062FAC6 /* ContactRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRepositoryImpl.swift; sourceTree = "<group>"; };
 		14461A712137AD5B0062FAC6 /* ErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTracker.swift; sourceTree = "<group>"; };
-		14461A732137E8CC0062FAC6 /* ContactRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactRemoteSource.swift; path = Messaging/Common/Utils/ContactRemoteSource.swift; sourceTree = SOURCE_ROOT; };
-		14461A752137E8D80062FAC6 /* ContactLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactLocalSource.swift; path = Messaging/Common/Utils/ContactLocalSource.swift; sourceTree = SOURCE_ROOT; };
+		14461A732137E8CC0062FAC6 /* ContactRemoteSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactRemoteSource.swift; path = Messaging/Common/Repository/Datasource/ContactRemoteSource.swift; sourceTree = SOURCE_ROOT; };
+		14461A752137E8D80062FAC6 /* ContactLocalSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContactLocalSource.swift; path = Messaging/Common/Repository/Datasource/ContactLocalSource.swift; sourceTree = SOURCE_ROOT; };
 		14461A782137EA970062FAC6 /* ContactRealmSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRealmSource.swift; sourceTree = "<group>"; };
 		1447A96D2146764C00F7E1CF /* SendMessageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageUseCase.swift; sourceTree = "<group>"; };
 		1447A96F2146765600F7E1CF /* SendMessageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageRequest.swift; sourceTree = "<group>"; };
@@ -626,7 +626,7 @@
 				14BCAE902163682500C3BA4A /* LogoutUsecase.swift */,
 			);
 			name = SeeProfile;
-			path = PersonalProfile;
+			path = SeeProfile;
 			sourceTree = "<group>";
 		};
 		1418236E2135073200DC0E98 /* ChangePass */ = {
@@ -638,6 +638,7 @@
 				140C340D2139243100DC3535 /* ChangePassVC.swift */,
 				140C340E2139243100DC3535 /* ChangePassVC.xib */,
 			);
+			name = ChangePass;
 			path = ChangePass;
 			sourceTree = "<group>";
 		};
