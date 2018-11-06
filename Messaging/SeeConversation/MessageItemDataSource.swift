@@ -9,8 +9,8 @@ class MessasgeItemDataSource : BaseDatasource<BaseMessageCell, MessageItem> {
     
     private let getReuseIdentifier = { (item: MessageItem) -> String in
         switch item.messageItemType {
-        case .audio:
-            return item.showTime ? AudioTimeMessageCell.reuseIdentifier : AudioMessageCell.reuseIdentifier
+        case .audio: // TODO: Change to correct type
+            return item.showTime ? AudioMessageCell.reuseIdentifier : AudioMessageCell.reuseIdentifier
         case .file: // TODO: Make Cell for FileTimeMessageCell and FileMessageCell
             return item.showTime ? FileMeTimeMessageCell.reuseIdentifier : FileMeMessageCell.reuseIdentifier
         case .fileMe:

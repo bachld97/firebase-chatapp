@@ -5,19 +5,15 @@ class AudioController {
     
     private var player: AVPlayer? = nil
     private var currentUrl: URL?
-
+    
     func playAudio(url : URL) {
-//        if (currentUrl?.path ?? "").elementsEqual(url.path) {
-//            // player?.seek(to: 0)
-//            player?.play()
-//        }
-        
-        if player == nil {
+        if (currentUrl?.path ?? "").elementsEqual(url.path) {
+            self.resumeAudio()
+        } else  {
             player = AVPlayer(url: url)
+            self.currentUrl = url
             player?.play()
         }
-
-        print(player?.currentTime())
     }
     
     func pauseAudio() {

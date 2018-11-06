@@ -164,6 +164,9 @@ class SeeConversationVC: BaseVC, ViewFor {
         
         self.tableView?.register(FileMeTimeMessageCell.self)
         self.tableView?.register(FileMeMessageCell.self)
+        
+        self.tableView?.register(AudioMessageCell.self)
+        self.tableView?.register(AudioTimeMessageCell.self)
     }
     
     private var interaction: UIDocumentInteractionController!

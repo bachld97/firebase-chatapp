@@ -202,6 +202,7 @@
 		14E001F92182CFE500E9AF28 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E001F82182CFE500E9AF28 /* EmojiCollectionViewCell.swift */; };
 		14E001FE2183207000E9AF28 /* PickFileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E001FC2183207000E9AF28 /* PickFileVC.swift */; };
 		14E001FF2183207000E9AF28 /* PickFileVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14E001FD2183207000E9AF28 /* PickFileVC.xib */; };
+		14F5323621912ECE00B429B8 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F5323521912ECE00B429B8 /* Setting.swift */; };
 		14F583192187F77200C24A54 /* FileUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F583182187F77200C24A54 /* FileUtil.swift */; };
 		5859E7E5EBD1974D0D960EA4 /* Pods_Messaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 688BB3FD82712A498F73AC1E /* Pods_Messaging.framework */; };
 /* End PBXBuildFile section */
@@ -415,6 +416,7 @@
 		14E001F82182CFE500E9AF28 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
 		14E001FC2183207000E9AF28 /* PickFileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickFileVC.swift; sourceTree = "<group>"; };
 		14E001FD2183207000E9AF28 /* PickFileVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PickFileVC.xib; sourceTree = "<group>"; };
+		14F5323521912ECE00B429B8 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		14F583182187F77200C24A54 /* FileUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtil.swift; sourceTree = "<group>"; };
 		4B07CD619E165CAEFC760603 /* Pods-Messaging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Messaging.release.xcconfig"; path = "Pods/Target Support Files/Pods-Messaging/Pods-Messaging.release.xcconfig"; sourceTree = "<group>"; };
 		688BB3FD82712A498F73AC1E /* Pods_Messaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Messaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -916,6 +918,7 @@
 				147945D0213E78CD0055CE79 /* Utils.swift */,
 				14C0A8F1215347980026D775 /* UUIDGenerator.swift */,
 				14F583182187F77200C24A54 /* FileUtil.swift */,
+				14F5323521912ECE00B429B8 /* Setting.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1406,6 +1409,7 @@
 				14461A682137A65D0062FAC6 /* ContactRepository.swift in Sources */,
 				14238C712175B66700EA90CA /* PickContactVC.swift in Sources */,
 				14CEE9802136584000A31FBB /* UserRepository.swift in Sources */,
+				14F5323621912ECE00B429B8 /* Setting.swift in Sources */,
 				1413F0D12176F88C008804FC /* SeeContactProfileVC.swift in Sources */,
 				14C160F92186B45A00EF86E7 /* FileMeTimeMessageCell.swift in Sources */,
 				14B4DA7D215C95AF002CF340 /* PickMediaViewController.swift in Sources */,

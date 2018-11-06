@@ -27,18 +27,20 @@ class TextMeTimeMessageCell: BaseMessageCell {
                 })
                 .disposed(by: self.disposeBag)
             
+            let cellBackground: UIColor
             if item.message.isSending {
                 self.resendButton.isHidden = true
-                self.tvWrapper.backgroundColor = UIColor(red: 221.0 / 255.0, green: 190.0 / 255.0, blue: 200 / 255.0, alpha: 1)
-            } else {
-                if item.message.isFail {
-                    self.resendButton.isHidden = false
-                    self.tvWrapper.backgroundColor = UIColor(red: 80.0 / 255.0, green: 80.0 / 255.0, blue: 200 / 255.0, alpha: 1)
-                } else {
-                    self.resendButton.isHidden = true
-                    self.tvWrapper.backgroundColor = UIColor(red: 221.0 / 255.0, green: 234.0 / 255.0, blue: 1, alpha: 1)
-                }
+                cellBackground = Setting.getCellColor(forState: .isSending)
             }
+            else if item.message.isFail {
+                self.resendButton.isHidden = false
+                cellBackground = Setting.getCellColor(forState: .isFail)
+            } else {
+                self.resendButton.isHidden = true
+                cellBackground = Setting.getCellColor(for: .currentUser)
+            }
+            
+            self.tvWrapper.backgroundColor = cellBackground
         }
     }
     

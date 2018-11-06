@@ -451,14 +451,41 @@ class SeeConversationViewModel : ViewModelDelegate {
         }
     }
     
+    private var previouslyPlayingAudioMessage : AudioMessageItem?
     private func handleAudioMessage(_ messageItem: MessageItem) {
-        // let url = URL(fileURLWithPath: messageItem.message.getContent())
         let url = URL(string: messageItem.message.getContent())
         guard let unwrappedUrl = url else {
             // self.displayLogic?.showAudioError()
+            print("Audio message: Error")
             return
         }
-        self.audioController.playAudio(url: unwrappedUrl)
+        
+        guard let audioMessage = messageItem as? AudioMessageItem else {
+            return
+        }
+        
+        if previouslyPlayingAudioMessage?
+            .message .getMessageId()
+            .elementsEqual(messageItem.message.getMessageId()) ?? false {
+            previouslyPlayingAudioMessage = nil
+        }
+        
+        // Stop old if it was playing
+        if previouslyPlayingAudioMessage != nil {
+            let oldAudioMessage = previouslyPlayingAudioMessage!
+            if oldAudioMessage.isPlaying {
+                oldAudioMessage.isPlaying = false
+                let response = self.dataSource.addOrUpdateSingleItem(item: oldAudioMessage)
+                self.displayLogic?.notifyItem(with: response)
+            }
+        }
+        
+        if !audioMessage.isPlaying {
+            self.audioController.pauseAudio()
+        } else {
+            self.audioController.playAudio(url: unwrappedUrl)
+        }
+        self.previouslyPlayingAudioMessage = audioMessage
     }
     
     private func handleDocumentMessage(_ messageItem: MessageItem) {

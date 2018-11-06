@@ -58,7 +58,7 @@ class TextMessageCell : BaseMessageCell {
     private let tvWrapper: UIView = {
         let v = UIView()
         v.translatesAutoresizingMaskIntoConstraints = false
-        v.backgroundColor = UIColor(red: 137 / 255.0, green: 229 / 255.0, blue: 163 / 255.0, alpha: 1)
+        v.backgroundColor = Setting.getCellColor(for: .otherUser)
         v.layer.cornerRadius = 16.0
         return v
     }()
@@ -69,9 +69,9 @@ class TextMessageCell : BaseMessageCell {
         let mainPadding = MessageCellConstant.mainPadding
         
         let topC = NSLayoutConstraint(item: tvWrapper, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: smallPadding)
-        let botC = NSLayoutConstraint(item: tvWrapper, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: smallPadding * -1)
+        let botC = NSLayoutConstraint(item: tvWrapper, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -smallPadding)
         let leftC = NSLayoutConstraint(item: tvWrapper, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: normalPadding)
-        let rightC = NSLayoutConstraint(item: tvWrapper, attribute: .trailing, relatedBy: .lessThanOrEqual, toItem: self, attribute: .trailing, multiplier: 1, constant: mainPadding * -1)
+        let rightC = NSLayoutConstraint(item: tvWrapper, attribute: .trailing, relatedBy: .lessThanOrEqual, toItem: self, attribute: .trailing, multiplier: 1, constant: -mainPadding)
         
         addConstraints([topC, botC, leftC, rightC])
         

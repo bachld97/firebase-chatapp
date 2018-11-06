@@ -27,7 +27,15 @@ class MessageConverter {
             
             switch m.type {
             case .audio:
-                fatalError("Not implemented")
+                if m.getSentBy().elementsEqual(user.userId) {
+                    
+                    
+                } else {
+                    res.append(AudioMessageItem(
+                        messageItemType: .audio, message: m,
+                        showTime: showTime))
+
+                }
             case .file:
                 let ext = String(m.getContent().split(separator: ".").last!)
                 let fileName = "\(m.getMessageId()).\(ext)"
