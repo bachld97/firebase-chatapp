@@ -430,9 +430,22 @@ class SeeConversationViewModel : ViewModelDelegate {
             })
             .disposed(by: self.disposeBag)
         
+        
+        input.cleanupTrigger
+            .drive(onNext: { [unowned self] (_) in
+                self.cleanup()
+            })
+            .disposed(by: self.disposeBag)
+
         return Output(
             error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
+    
+    
+    private func cleanup() {
+        self.audioController.stopAudio()
+    }
+    
     
     private func handleMessageClick(_ messageItem: MessageItem) {
         switch messageItem.message.type {
@@ -456,45 +469,57 @@ class SeeConversationViewModel : ViewModelDelegate {
     }
     
     private func stopPlayingAudio() {
-        if previouslyPlayingAudioMessage != nil {
-            let oldAudioMessage = previouslyPlayingAudioMessage!
-            if oldAudioMessage.isPlaying {
-                oldAudioMessage.isPlaying = false
-                let response = self.dataSource.addOrUpdateSingleItem(item: oldAudioMessage)
-                self.audioController.pauseAudio()
-                self.displayLogic?.notifyItem(with: response)
-            }
+        guard previouslyPlayingAudioMessage != nil else {
+            return
         }
+        
+        let oldAudioMessage = previouslyPlayingAudioMessage!
+        oldAudioMessage.isPlaying = false
+        let response = self.dataSource.addOrUpdateSingleItem(item: oldAudioMessage)
+        self.audioController.pauseAudio()
+        self.displayLogic?.notifyItem(with: response)
+        previouslyPlayingAudioMessage = nil
     }
     
     private var previouslyPlayingAudioMessage : AudioMessageItem?
     private func handleAudioMessage(_ messageItem: MessageItem) {
-        let url = URL(string: messageItem.message.getContent())
-        guard let unwrappedUrl = url else {
-            // self.displayLogic?.showAudioError()
-            print("Audio message: Error")
-            return
-        }
-        
         guard let audioMessage = messageItem as? AudioMessageItem else {
             return
         }
-        
-        if previouslyPlayingAudioMessage?
-            .message .getMessageId()
-            .elementsEqual(messageItem.message.getMessageId()) ?? false {
-            previouslyPlayingAudioMessage = nil
-        }
-        
-        // Stop old if it was playing
-        stopPlayingAudio()
 
-        if !audioMessage.isPlaying {
-            self.audioController.pauseAudio()
+        if self.previouslyPlayingAudioMessage == nil {
+            self.justPlayAudio(url: URL(string: audioMessage.message.getContent()))
+            self.previouslyPlayingAudioMessage = audioMessage
         } else {
-            self.audioController.playAudio(url: unwrappedUrl)
+            let oldAudioMessage = self.previouslyPlayingAudioMessage!
+            if oldAudioMessage.message.getMessageId()
+                .elementsEqual(audioMessage.message.getMessageId()) {
+                // Same audio, should toggle
+                if oldAudioMessage.isPlaying {
+                    self.audioController.resumeAudio()
+                } else {
+                    self.audioController.pauseAudio()
+                }
+            } else {
+                // Different audio, should stop old if isPlaying
+                oldAudioMessage.isPlaying = false
+                let response = self.dataSource.addOrUpdateSingleItem(item: oldAudioMessage)
+                self.displayLogic?.notifyItem(with: response)
+
+                // Start new one
+                self.justPlayAudio(url: URL(string: audioMessage.message.getContent()))
+                self.previouslyPlayingAudioMessage = audioMessage
+            }
         }
-        self.previouslyPlayingAudioMessage = audioMessage
+    }
+    
+    private func justPlayAudio(url: URL?) {
+        guard let unwrappedUrl = url else {
+            // self.displayLogic?.reportAudioError()
+            return
+        }
+        
+        self.audioController.playAudio(url: unwrappedUrl)
     }
     
     private func handleDocumentMessage(_ messageItem: MessageItem) {
@@ -620,6 +645,7 @@ class SeeConversationViewModel : ViewModelDelegate {
 extension SeeConversationViewModel {
     struct Input {
         let trigger: Driver<Void>
+        let cleanupTrigger: Driver<Void>
         let sendMessTrigger: Driver<Void>
         let sendMessDisplay: Variable<String>
         let conversationLabel: Binder<String?>

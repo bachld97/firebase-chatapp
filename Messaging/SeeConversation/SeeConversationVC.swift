@@ -85,8 +85,6 @@ class SeeConversationVC: BaseVC, ViewFor {
         self.emojiPanel.autoresizingMask = UIViewAutoresizing(
             rawValue: UIViewAutoresizing.RawValue(UInt8(UIViewAutoresizing.flexibleWidth.rawValue)
                 | UInt8(UIViewAutoresizing.flexibleHeight.rawValue)))
-//        self.layoutEmojis()
-        
     }
     
     override func viewWillLayoutSubviews() {
@@ -108,6 +106,10 @@ class SeeConversationVC: BaseVC, ViewFor {
     }
     
     override func bindViewModel() {
+        let viewWillDisappear = self.rx.sentMessage(#selector(UIViewController.viewWillDisappear(_:)))
+            .mapToVoid()
+            .asDriverOnErrorJustComplete()
+        
         let buttonText = Variable("Send")
         buttonText.asObservable()
             .bind(to: sendMessageButton.rx.title())
@@ -115,6 +117,7 @@ class SeeConversationVC: BaseVC, ViewFor {
         
         let input = SeeConversationViewModel.Input(
             trigger: onCreatePublish.asDriverOnErrorJustComplete(),
+            cleanupTrigger: viewWillDisappear,
             sendMessTrigger: self.sendMessageButton.rx.tap.asDriver(),
             sendMessDisplay: buttonText,
             conversationLabel: self.navigationItem.rx.title,
@@ -189,7 +192,14 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
     }
     
     func notifyItem(with addRespond: (Bool, Int)) {
-        self.tableView?.reloadData()
+        let (added, changeOrIndex) = addRespond
+        if added {
+            self.tableView?.reloadData()
+        } else {
+            let index = changeOrIndex
+            let indexPath = IndexPath(row: index, section: 0)
+            self.tableView?.reloadRows(at: [indexPath], with: .none)
+        }
     }
     
     func goBack() {

@@ -14,7 +14,8 @@ class AudioController {
         }
     }
     
-    func startAudio(url: URL) {
+    private func startAudio(url: URL) {
+        stkPlayer?.stop()
         stkPlayer = STKAudioPlayer()
         stkPlayer?.play(url)
         self.currentUrl = url
@@ -26,5 +27,10 @@ class AudioController {
     
     func resumeAudio() {
         stkPlayer?.resume()
+    }
+    
+    func stopAudio() {
+        stkPlayer?.stop()
+        stkPlayer = nil
     }
 }
