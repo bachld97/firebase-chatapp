@@ -26,16 +26,16 @@ class AudioMessageCell : BaseMessageCell {
                     self.handleMusicToggle(audioItem)
                 })
                 .disposed(by: self.disposeBag)
-            
-            
         }
     }
+    
     
     private func handleMusicToggle(_ audioItem: AudioMessageItem) {
         audioItem.isPlaying = !audioItem.isPlaying
         self.clickPublish?.onNext(self.item)
         self.updateMusicToggleUI(isPlaying: audioItem.isPlaying)
     }
+    
     
     private var disposeBag = DisposeBag()
     override func prepareForReuse() {
@@ -55,6 +55,7 @@ class AudioMessageCell : BaseMessageCell {
         return v
     }()
 
+    
     private var musicToggleButton: UIButton = {
         let b = UIButton()
         b.translatesAutoresizingMaskIntoConstraints = false

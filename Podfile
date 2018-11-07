@@ -17,6 +17,7 @@ target 'Messaging' do
 	pod 'Firebase/Storage'
 	pod 'GoogleMaps'
 	pod 'GooglePlaces'
+	pod 'StreamingKit'
 end
 
 target 'MessagingTests' do

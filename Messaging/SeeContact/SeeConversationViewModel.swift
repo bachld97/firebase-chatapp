@@ -439,15 +439,31 @@ class SeeConversationViewModel : ViewModelDelegate {
         case .audio:
             self.handleAudioMessage(messageItem)
         case .file:
+            self.stopPlayingAudio()
             self.handleDocumentMessage(messageItem)
         case .location:
+            self.stopPlayingAudio()
             self.handleLocationMessage(messageItem)
         case .image:
+            self.stopPlayingAudio()
             self.handleImageMessage(messageItem)
         case .text:
             self.handleTextMessage(messageItem)
         case .contact:
+            self.stopPlayingAudio()
             self.handleContactMessage(messageItem)
+        }
+    }
+    
+    private func stopPlayingAudio() {
+        if previouslyPlayingAudioMessage != nil {
+            let oldAudioMessage = previouslyPlayingAudioMessage!
+            if oldAudioMessage.isPlaying {
+                oldAudioMessage.isPlaying = false
+                let response = self.dataSource.addOrUpdateSingleItem(item: oldAudioMessage)
+                self.audioController.pauseAudio()
+                self.displayLogic?.notifyItem(with: response)
+            }
         }
     }
     
@@ -471,15 +487,8 @@ class SeeConversationViewModel : ViewModelDelegate {
         }
         
         // Stop old if it was playing
-        if previouslyPlayingAudioMessage != nil {
-            let oldAudioMessage = previouslyPlayingAudioMessage!
-            if oldAudioMessage.isPlaying {
-                oldAudioMessage.isPlaying = false
-                let response = self.dataSource.addOrUpdateSingleItem(item: oldAudioMessage)
-                self.displayLogic?.notifyItem(with: response)
-            }
-        }
-        
+        stopPlayingAudio()
+
         if !audioMessage.isPlaying {
             self.audioController.pauseAudio()
         } else {

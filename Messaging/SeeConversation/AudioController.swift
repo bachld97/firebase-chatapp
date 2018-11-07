@@ -1,26 +1,30 @@
 import Foundation
-import AVFoundation
+import StreamingKit
 
 class AudioController {
     
-    private var player: AVPlayer? = nil
+    private var stkPlayer: STKAudioPlayer? = nil
     private var currentUrl: URL?
     
     func playAudio(url : URL) {
         if (currentUrl?.path ?? "").elementsEqual(url.path) {
             self.resumeAudio()
         } else  {
-            player = AVPlayer(url: url)
-            self.currentUrl = url
-            player?.play()
+            self.startAudio(url: url)
         }
     }
     
+    func startAudio(url: URL) {
+        stkPlayer = STKAudioPlayer()
+        stkPlayer?.play(url)
+        self.currentUrl = url
+    }
+    
     func pauseAudio() {
-        player?.pause()
+        stkPlayer?.pause()
     }
     
     func resumeAudio() {
-        player?.play()
+        stkPlayer?.resume()
     }
 }

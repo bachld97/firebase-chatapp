@@ -85,6 +85,7 @@ PODS:
     - RxCocoa (~> 4.0)
     - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
+  - StreamingKit (0.1.30)
   - Toast (4.0.0)
 
 DEPENDENCIES:
@@ -101,6 +102,7 @@ DEPENDENCIES:
   - RxDataSources
   - RxGesture
   - RxSwift
+  - StreamingKit
   - Toast
 
 SPEC REPOS:
@@ -128,6 +130,7 @@ SPEC REPOS:
     - RxDataSources
     - RxGesture
     - RxSwift
+    - StreamingKit
     - Toast
 
 SPEC CHECKSUMS:
@@ -154,8 +157,9 @@ SPEC CHECKSUMS:
   RxDataSources: cb7c31e652a87ebb919da45f716bbb87b3765f6b
   RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
+  StreamingKit: 70ca8608c206864b4d54a577eacb3c8bf7c72209
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: 08f26b68f8bf4d87085980003654a57e6fa8676a
+PODFILE CHECKSUM: dda18fce9e818194daae06ecf76f4ae8e86f3f40
 
 COCOAPODS: 1.5.3
