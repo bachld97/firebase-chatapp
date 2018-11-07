@@ -44,7 +44,7 @@ class AudioMessageCell : BaseMessageCell {
     }
     
     
-    private var container: UIView = {
+    var container: UIView = {
         let v = UIView()
         v.translatesAutoresizingMaskIntoConstraints = false
         v.isUserInteractionEnabled = true
