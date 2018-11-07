@@ -32,5 +32,6 @@ class AudioController {
     func stopAudio() {
         stkPlayer?.stop()
         stkPlayer = nil
+        currentUrl = nil
     }
 }

@@ -443,6 +443,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     
     private func cleanup() {
+        stopPlayingAudio()
         self.audioController.stopAudio()
     }
     
@@ -452,18 +453,18 @@ class SeeConversationViewModel : ViewModelDelegate {
         case .audio:
             self.handleAudioMessage(messageItem)
         case .file:
-            self.stopPlayingAudio()
+            // self.stopPlayingAudio()
             self.handleDocumentMessage(messageItem)
         case .location:
-            self.stopPlayingAudio()
+            // self.stopPlayingAudio()
             self.handleLocationMessage(messageItem)
         case .image:
-            self.stopPlayingAudio()
+            // self.stopPlayingAudio()
             self.handleImageMessage(messageItem)
         case .text:
             self.handleTextMessage(messageItem)
         case .contact:
-            self.stopPlayingAudio()
+            // self.stopPlayingAudio()
             self.handleContactMessage(messageItem)
         }
     }
