@@ -1,3 +1,4 @@
+import AVKit
 import UIKit
 import RxCocoa
 import RxSwift 
@@ -170,6 +171,8 @@ class SeeConversationVC: BaseVC, ViewFor {
         
         self.tableView?.register(AudioMessageCell.self)
         self.tableView?.register(AudioTimeMessageCell.self)
+        
+        self.tableView?.register(VideoTimeMessageCell.self)
     }
     
     private var interaction: UIDocumentInteractionController!
@@ -262,6 +265,19 @@ extension SeeConversationVC : SeeConversationDisplayLogic {
         interaction.name = name
         interaction.delegate = self
         interaction.presentPreview(animated: true)
+    }
+    
+    func goVideoPlayer(videoUrl: URL) {
+        self.resignFirstResponder()
+        let player = AVPlayer(url: videoUrl)
+        let vc = AVPlayerViewController()
+        vc.player = player
+        
+        present(vc, animated: true) {
+            player.play()
+        }
+//        let vc = VideoPlayerVC.instance(url: videoUrl)
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

@@ -130,6 +130,9 @@
 		147945D9213E80590055CE79 /* UserRealmSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147945D8213E80590055CE79 /* UserRealmSource.swift */; };
 		147945DB213E85860055CE79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 147945DA213E85850055CE79 /* GoogleService-Info.plist */; };
 		147953982189A3FD00506B2C /* DocumentMessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147953972189A3FD00506B2C /* DocumentMessageItem.swift */; };
+		1481E564219595AB00D0B3A2 /* VideoPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481E562219595AB00D0B3A2 /* VideoPlayerVC.swift */; };
+		1481E565219595AB00D0B3A2 /* VideoPlayerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1481E563219595AB00D0B3A2 /* VideoPlayerVC.xib */; };
+		1481E56721959C8F00D0B3A2 /* VideoTimeMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481E56621959C8F00D0B3A2 /* VideoTimeMessageCell.swift */; };
 		14843FE5214116AC00D5366B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14843FE4214116AC00D5366B /* Message.swift */; };
 		14843FEC214122B900D5366B /* SeeChatHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14843FEA214122B900D5366B /* SeeChatHistoryVC.swift */; };
 		14843FED214122B900D5366B /* SeeChatHistoryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14843FEB214122B900D5366B /* SeeChatHistoryVC.xib */; };
@@ -342,6 +345,9 @@
 		147945D8213E80590055CE79 /* UserRealmSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRealmSource.swift; sourceTree = "<group>"; };
 		147945DA213E85850055CE79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		147953972189A3FD00506B2C /* DocumentMessageItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentMessageItem.swift; sourceTree = "<group>"; };
+		1481E562219595AB00D0B3A2 /* VideoPlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerVC.swift; sourceTree = "<group>"; };
+		1481E563219595AB00D0B3A2 /* VideoPlayerVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoPlayerVC.xib; sourceTree = "<group>"; };
+		1481E56621959C8F00D0B3A2 /* VideoTimeMessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoTimeMessageCell.swift; sourceTree = "<group>"; };
 		14843FE4214116AC00D5366B /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		14843FEA214122B900D5366B /* SeeChatHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeChatHistoryVC.swift; sourceTree = "<group>"; };
 		14843FEB214122B900D5366B /* SeeChatHistoryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeChatHistoryVC.xib; sourceTree = "<group>"; };
@@ -491,6 +497,7 @@
 		141823522135025700DC0E98 /* Messaging */ = {
 			isa = PBXGroup;
 			children = (
+				1481E55D2195937800D0B3A2 /* PlayVideo */,
 				14E001FB2183205200E9AF28 /* PickFile */,
 				14CFB99121806CBF002781CC /* SeeLocation */,
 				1413F0D721773A5B008804FC /* PickLocation */,
@@ -736,6 +743,7 @@
 				14C160F82186B45A00EF86E7 /* FileMeTimeMessageCell.swift */,
 				14420503218C0F1E00A89D7A /* AudioMessageCell.swift */,
 				14420505218C0F4500A89D7A /* AudioTimeMessageCell.swift */,
+				1481E56621959C8F00D0B3A2 /* VideoTimeMessageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -806,6 +814,15 @@
 				14615406213F68910032EE95 /* AddContactVC.xib */,
 			);
 			path = AddContact;
+			sourceTree = "<group>";
+		};
+		1481E55D2195937800D0B3A2 /* PlayVideo */ = {
+			isa = PBXGroup;
+			children = (
+				1481E562219595AB00D0B3A2 /* VideoPlayerVC.swift */,
+				1481E563219595AB00D0B3A2 /* VideoPlayerVC.xib */,
+			);
+			path = PlayVideo;
 			sourceTree = "<group>";
 		};
 		14848AC72140C78100DAA9F8 /* UseCase */ = {
@@ -1067,6 +1084,7 @@
 				14461A5C21379DFF0062FAC6 /* SeeConversationVC.xib in Resources */,
 				147945DB213E85860055CE79 /* GoogleService-Info.plist in Resources */,
 				14843FF321413B7800D5366B /* SingleConvoCell.xib in Resources */,
+				1481E565219595AB00D0B3A2 /* VideoPlayerVC.xib in Resources */,
 				14615416213F8AC60032EE95 /* RequestingContactCell.xib in Resources */,
 				1439D9A121369FAE0094C12C /* SignupVC.xib in Resources */,
 				1413F0D22176F88C008804FC /* SeeContactProfileVC.xib in Resources */,
@@ -1345,6 +1363,7 @@
 				14C160FD2186C6C000EF86E7 /* DownloadFileRequest.swift in Sources */,
 				140C340F2139243100DC3535 /* ChangePassVC.swift in Sources */,
 				1461540A213F7C800032EE95 /* ContactRequest.swift in Sources */,
+				1481E564219595AB00D0B3A2 /* VideoPlayerVC.swift in Sources */,
 				141823562135025700DC0E98 /* ViewController.swift in Sources */,
 				142EDE7C21708DA300B07F18 /* ContactMessageCell.swift in Sources */,
 				147231DD215B971600D54C57 /* ImageTimeMessageCell.swift in Sources */,
@@ -1388,6 +1407,7 @@
 				14848AD52140C88A00DAA9F8 /* CancelFriendRequest.swift in Sources */,
 				14848ACD2140C80F00DAA9F8 /* CancelRequestUseCase.swift in Sources */,
 				1452081D218C2F71001890EF /* AudioMessageItem.swift in Sources */,
+				1481E56721959C8F00D0B3A2 /* VideoTimeMessageCell.swift in Sources */,
 				14615400213F68650032EE95 /* SearchContactUseCase.swift in Sources */,
 				140C34022138E95000DC3535 /* ConversationRepositoryImpl.swift in Sources */,
 				142E515A21421DF600FC0593 /* LoadConvoFromConvoIdUseCase.swift in Sources */,

@@ -39,8 +39,7 @@ class MessageItem : Hashable {
 
 enum MessageItemType {
     case audio
-    // case videoMe
-    
+    case video
     case file
     case fileMe
     case text

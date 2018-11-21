@@ -14,6 +14,7 @@ class _ImageLoader {
         imgView.kf.setImage(with: url)
     }
     
+    
     func loadMessageImage(url urlString: String, id: String, into imgView: UIImageView) {
         imgView.kf.cancelDownloadTask()
         let url: URL?

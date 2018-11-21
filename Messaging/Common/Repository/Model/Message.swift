@@ -120,6 +120,7 @@ class Message {
 }
 
 enum MessageType {
+    case video
     case audio
     case text
     case image

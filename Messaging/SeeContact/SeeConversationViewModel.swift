@@ -80,7 +80,7 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     func transformWithContactItem(input: Input, contactItem: ContactItem) -> Output {
         let errorTracker = ErrorTracker()
-        
+
         input.trigger
             .flatMap { [unowned self] (_) -> Driver<[MessageItem]> in
                 let request = LoadConvoFromContactRequest(contact: contactItem.contact)
@@ -201,6 +201,127 @@ class SeeConversationViewModel : ViewModelDelegate {
             })
             .disposed(by: self.disposeBag)
         
+        self.resendMessagePublish
+            .asDriverOnErrorJustComplete()
+            .flatMap { [unowned self] (msgItem) -> Driver<Bool> in
+                let request = ResendRequest(message: msgItem.message)
+                return self.resendUseCase
+                    .execute(request: request)
+                    .do()
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
+        input.sendContactPublish
+            .flatMap { [unowned self] (contact) -> Driver<Bool> in
+                return self.getUserUseCase.execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        
+                        let message = self.parseContactMessage(user, contact)
+                        let conversationId = ConvId.get(for: user, with: contactItem.contact)
+                        return self.sendMessageUseCase
+                            .execute(request: SendMessageRequest(
+                                message: message,
+                                conversationId: conversationId))
+                            .do()
+                    }
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
+        
+        input.sendLocationPublish
+            .flatMap { [unowned self] (lat, long) -> Driver<Bool> in
+                return self.getUserUseCase.execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        
+                        let message = self.parseLocationMessage(user, lat, long)
+                        
+                        let conversationId = ConvId.get(for: user, with: contactItem.contact)
+                        return self.sendMessageUseCase
+                            .execute(request: SendMessageRequest(
+                                message: message,
+                                conversationId: conversationId))
+                            .do()
+                    }
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
+        input.sendEmojiPublish
+            .drive(onNext: { [unowned self] (emojiString) in
+                let oldString = self.textMessageContent.value
+                self.textMessageContent.accept("\(oldString)\(emojiString)")
+                self.sendMessageDisplay.value = "Send"
+            })
+            .disposed(by: self.disposeBag)
+        
+        input.textMessage
+            .asDriver()
+            .drive(onNext: { [unowned self] (s) in
+                if s.isEmpty {
+                    self.sendMessageDisplay.value = self.thumbsUpText
+                } else {
+                    self.sendMessageDisplay.value = "Send"
+                }
+            })
+            .disposed(by: self.disposeBag)
+        
+        
+        input.pickDocumentTrigger
+            .drive(onNext: { [unowned self] (_) in
+                self.displayLogic?.goPickDocument()
+            })
+            .disposed(by: self.disposeBag)
+        
+        input.sendFilePublish
+            .flatMap { [unowned self] (url) -> Driver<Bool> in
+                return self.getUserUseCase.execute(request: ())
+                    .flatMap { [unowned self] (user) -> Observable<Bool> in
+                        
+                        let message = self.parseFileMessage(user, url)
+                        
+                        let conversationId = ConvId.get(for: user, with: contactItem.contact)
+                        return self.sendMessageUseCase
+                            .execute(request: SendMessageRequest(
+                                message: message,
+                                conversationId: conversationId))
+                            .do()
+                    }
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive()
+            .disposed(by: self.disposeBag)
+        
+        self.fileDownloadPublish
+            .asDriverOnErrorJustComplete()
+            .flatMap { [unowned self] (id, name) in
+                let request = DownloadFileRequest(messageId: id, fileName: name)
+                return self.downloadFileUsecase
+                    .execute(request: request)
+                    .do()
+                    .trackError(errorTracker)
+                    .asDriverOnErrorJustComplete()
+            }
+            .drive(onNext: { [unowned self] (name) in
+                self.displayLogic?.notifyFileDownloaded(name)
+            })
+            .disposed(by: self.disposeBag)
+        
+        
+        input.cleanupTrigger
+            .drive(onNext: { [unowned self] (_) in
+                self.cleanup()
+            })
+            .disposed(by: self.disposeBag)
+
         return Output (error: errorTracker.asDriver(), dataSource: self.dataSource)
     }
     
@@ -450,6 +571,8 @@ class SeeConversationViewModel : ViewModelDelegate {
     
     private func handleMessageClick(_ messageItem: MessageItem) {
         switch messageItem.message.type {
+        case .video:
+            self.handleVideoMessage(messageItem)
         case .audio:
             self.handleAudioMessage(messageItem)
         case .file:
@@ -467,6 +590,11 @@ class SeeConversationViewModel : ViewModelDelegate {
             // self.stopPlayingAudio()
             self.handleContactMessage(messageItem)
         }
+    }
+    
+    private func handleVideoMessage(_ messageItem: MessageItem) {
+        let videoUrl = UrlBuilder.buildUrl(forVideoMessage: messageItem.message.getMessageId())
+        self.displayLogic?.goVideoPlayer(videoUrl: videoUrl)
     }
     
     private func stopPlayingAudio() {
@@ -690,4 +818,5 @@ protocol SeeConversationDisplayLogic : class {
     func notifyTextCopied(with text: String)
     func notifyFileDownloaded(_ name: String)
     func viewFile(withUrl url: URL, withName name: String)
+    func goVideoPlayer(videoUrl: URL)
 }

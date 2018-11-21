@@ -1,6 +1,18 @@
 import UIKit
+import Foundation
 
 class UrlBuilder {
+    public static func buildUrl(forVideoMessage id: String) -> URL {
+        let path = "https://firebasestorage.googleapis.com/v0/b/fir-chat-47b52.appspot.com/o/messages%2F\(id)-content.mp4?alt=media"
+        return URL(string: path)!
+    }
+    
+    
+    public static func buildUrl(forThumbnailOf id: String) -> String {
+        let path = "https://firebasestorage.googleapis.com/v0/b/fir-chat-47b52.appspot.com/o/messages%2F\(id)-thumbnail?alt=media"
+        return path
+    }
+    
     public static func load(urlString: String?, into iv: UIImageView) -> URLSessionTask? {
         
         iv.image = nil
@@ -54,13 +66,17 @@ class Type {
             return .file
         } else if typeString.elementsEqual("audio") {
             return .audio
-        } else {
+        } else if typeString.elementsEqual("video") {
+            return .video
+        }
+        else {
             return .text
         }
     }
 
     public static func getMessageTypeString(fromType type: MessageType) -> String {
         switch type {
+        case .video: return "video"
         case .audio: return "audio"
         case .file: return "file"
         case .location: return "location"

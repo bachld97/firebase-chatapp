@@ -39,6 +39,8 @@ class ConversationItem : Hashable {
         
         let content: String
         switch conversation.lastMess.type {
+        case .video:
+            content = "[Video file]"
         case.audio:
             content = "[Audio file]"
         case .text:

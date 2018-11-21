@@ -1,6 +1,8 @@
 class MessageConverter {
     func convert(localMessage: Message) -> MessageItem {
         switch localMessage.type {
+        case .video:
+            fatalError("Not implemented")
         case .audio:
             fatalError("Not implemented")
         case .file:
@@ -26,6 +28,10 @@ class MessageConverter {
                 || !m.getSentBy().elementsEqual(messages[index - 1].getSentBy())
             
             switch m.type {
+            case .video:
+                res.append(
+                    MessageItem(messageItemType: .video, message: m,
+                                showTime: showTime))
             case .audio:
                 if m.getSentBy().elementsEqual(user.userId) {
                     
@@ -34,7 +40,6 @@ class MessageConverter {
                     res.append(AudioMessageItem(
                         messageItemType: .audio, message: m,
                         showTime: showTime))
-
                 }
             case .file:
                 let ext = String(m.getContent().split(separator: ".").last!)
